@@ -1,0 +1,322 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: experience@nium.com
+    name: NIUM Platform
+    url: https://www.nium.com
+  description: NIUM Platform
+  license:
+    name: Copyright (c) 2023 NIUM
+  title: NIUM Platform
+  version: 10.31.2023
+servers:
+- url: https://gatewaysandbox.nium.com/
+tags:
+- name: Payin
+  description: REST API's for Payin
+paths:
+  /api/v1/inward/payment/manual:
+    post:
+      parameters:
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PayinApiResponse2'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: BadRequest
+        '401':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: Not Found
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: Internal Server Error
+      tags:
+      - Payin
+      deprecated: false
+      operationId: Simulatereceivepayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InwardPaymentManualRequestDTO'
+        description: inwardPaymentManualRequestDTO
+        required: true
+      summary: Simulate Receive Transaction
+      x-info:
+        apiType: external
+      security:
+      - default: []
+      description: "This API can be used in 'Sandbox testing' to simulate inward receive\
+        \ transaction and credit funds into the wallet for testing purposes.\n >\u2139\
+        \uFE0F INFO \n>This API is for testing purpose only and not to be used in\
+        \ production.\n>Use a unique bankReferenceNumber for every new simulated receive\
+        \ payment transaction request."
+components:
+  schemas:
+    PayinApiError:
+      properties:
+        errors:
+          description: List of errors occurred.
+          example:
+          - field1 is not valid
+          - field2 is not valid
+          items:
+            type: string
+          type: array
+        message:
+          description: Error message descriptor.
+          example: Error message descriptor.
+          type: string
+        status:
+          description: 'HttpStatus of the request : BAD_REQUEST, INTERNAL_SERVER_ERROR.'
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          example: BAD_REQUEST
+          type: string
+      title: ApiError
+      type: object
+    PayinApiResponse2:
+      properties:
+        message:
+          description: This field will return the success message if the limit updated
+            successfully.
+          example: Limits updated successfully
+          type: string
+        success:
+          description: This flag indicates the success of the request.
+          example: true
+          type: boolean
+      title: ApiResponse2
+      type: object
+    InwardPaymentManualRequestDTO:
+      properties:
+        additionalInfo:
+          additionalProperties:
+            type: string
+          description: This object accepts the additional information
+          type: object
+        amount:
+          description: This field contains the amount.
+          example: 10
+          format: double
+          type: number
+        bankReferenceNumber:
+          description: This field contains the bank reference number
+          example: '712347512376'
+          type: string
+        bankSource:
+          description: This field contains the source of payment/fund.
+          enum:
+          - DBS_HK
+          - DBS_SG
+          - JPM_SG
+          - JPM_AU
+          - JPM_UK
+          - MONOOVA_AU
+          - BOL_LT
+          - CB_GB
+          - CFSB_US
+          - BARCLAYS
+          - CITI_SG
+          - CITI_MX
+          - CFSB_USINTL
+          - GMO_JP
+          - NETBANK_PH
+          - GOCARDLESS
+          - DIRECTFAST_SG
+          - BANKINGCIRCLE_PL
+          example: DBS_SG
+          type: string
+        country:
+          description: This field contains the country.
+          example: SG
+          type: string
+        currency:
+          description: This field contains the 3-letter currency code.
+          enum:
+          - SGD
+          - AUD
+          - EUR
+          - HKD
+          - USD
+          - GBP
+          - AED
+          - CAD
+          - CHF
+          - CZK
+          - DKK
+          - HUF
+          - ILS
+          - MXN
+          - NOK
+          - NZD
+          - PLN
+          - RON
+          - RUB
+          - SEK
+          - ZAR
+          - CNY
+          - JPY
+          - THB
+          - TRY
+          - PHP
+          example: SGD
+          type: string
+        iccExpiry:
+          description: This field contains the expiry time for ICC.
+          example: '2023-07-05 07:26:38.026'
+          type: string
+        instructionType:
+          description: This field contains the payment instruction type
+          enum:
+          - INQUIRY
+          - PROCESS
+          example: PROCESS
+          type: string
+        narrative:
+          description: This field contains the narrative.
+          example: FROM NIUM
+          type: string
+        remitterAccountNumber:
+          description: This field contains the remitter account number.
+          example: HLFX11029100808072
+          type: string
+        remitterBankCode:
+          description: This field contains the remitter bank code.
+          example: BYLADEM1KUB
+          type: string
+        remitterBankName:
+          description: This field contains the remitter bank name.
+          example: DBS_SG
+          type: string
+        remitterName:
+          description: This field contains the remitter name.
+          example: John K
+          type: string
+        remitterNameLocalLanguage:
+          description: This field contains the remitter name local language.
+          example: "\u30A8\u30E0\u30FB\u30A8\u30B9\u30FB\u30B7\u30E3\u30FC\u30DE\u30FC"
+          type: string
+        transactionId:
+          description: This field contains the transaction reference number/ID.
+          example: FW242141
+          type: string
+        transactionSource:
+          description: This field contains the ICC transaction source.
+          example: ACH
+          type: string
+        type:
+          description: This field contains the ICC entry type.
+          example: CREDIT or DEBIT
+          type: string
+        virtualAccountNumber:
+          description: This field contains the virtual account number.
+          example: '907654315445678'
+          type: string
+      title: InwardPaymentManualRequestDTO
+      type: object
+  securitySchemes:
+    default:
+      in: header
+      name: x-api-key
+      type: apiKey
+security:
+- default: []

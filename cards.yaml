@@ -1,0 +1,4896 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: experience@nium.com
+    name: NIUM Platform
+    url: https://www.nium.com
+  description: NIUM Platform
+  license:
+    name: Copyright (c) 2023 NIUM
+  title: NIUM Platform
+  version: 10.31.2023
+servers:
+- url: https://gatewaysandbox.nium.com/
+tags:
+- name: Simulators
+  description: REST API's for Simulators
+- name: Lifecycle
+  description: REST API's for Lifecycle
+- name: Security
+  description: REST API's for Security
+- name: 3DS
+  description: REST API's for 3DS
+- name: Controls
+  description: REST API's for Controls
+- name: Cards Reference Data
+  description: REST API's for Cards  Reference Data
+paths:
+  /api/v1/txn:
+    post:
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/LocalIsoResponse'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      tags:
+      - Simulators
+      deprecated: false
+      operationId: simulateAuthorization
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/LocalIsoRequest'
+        description: message
+        required: true
+      summary: Simulate Authorize Card Transaction
+      x-info:
+        apiType: external
+      parameters:
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      security:
+      - default: []
+      description: This API is used to simulate the `Authorize` or `Authorization`
+        card transaction type.
+  /api/v1/settlement/run:
+    post:
+      parameters:
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      tags:
+      - Simulators
+      deprecated: false
+      operationId: simulateClearing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettlementRequestDTO'
+        description: settlementRequestDTO
+        required: true
+      summary: Simulate Settlement Transaction
+      x-info:
+        apiType: external
+      security:
+      - default: []
+      description: This API can be used to run simulation of a given settlement transaction
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card:
+    post:
+      parameters:
+      - description: The unique client identifier generated and shared before the
+          API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+      - description: The unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCardV2ResponseDTO'
+              example:
+                cardHashId: dd0a1721-2821-48fc-bbce-6c737bc47174
+                cardActivationStatus: VIRTUAL_ACTIVE
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      tags:
+      - Lifecycle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Select one of the following card type:
+                  oneOf:
+                  - $ref: '#/components/schemas/AddCardRequestPHY'
+                  - $ref: '#/components/schemas/AddCardRequestVIR'
+                  - $ref: '#/components/schemas/AddCardRequestVIRUP2PHY'
+                  discriminator:
+                    propertyName: cardType
+                    mapping:
+                      PHY: '#/components/schemas/AddCardRequestPHY'
+                      VIR: '#/components/schemas/AddCardRequestVIR'
+                      VIRUP2PHY: '#/components/schemas/AddCardRequestVIRUP2PHY'
+            examples:
+              Physical card:
+                value:
+                  cardProductId: '100'
+                  cardType: PHY
+                  nameOnCard: John Doe
+                  additionalLine: John Doe
+                  delivery:
+                    addressLine1: 350 Brettenham Road
+                    addressLine2: Walthamstow
+                    city: London
+                    landmark: 'null'
+                    country: GB
+                    state: London
+                    postCode: E17 5AU
+                  issuanceMode: NORMAL_DELIVERY_LOCAL
+                  plasticId: '100100'
+                  corporateId: '123456'
+              Virtual card:
+                value:
+                  cardProductId: '100'
+                  cardType: VIR
+                  cardExpiry: '1126'
+                  nameOnCard: John Doe
+                  additionalLine: John Doe
+                  issuanceMode: NORMAL_DELIVERY_LOCAL
+                  plasticId: '100100'
+                  corporateId: '123456'
+        description: The request body to add a new card.
+        required: true
+      summary: Add Card V2
+      deprecated: false
+      description: This API allows you to issue a card for a customer.
+      operationId: addCardV2
+      x-auth-type: Application & Application User
+      x-info:
+        apiType: external
+      x-throttling-tier: Unlimited
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/activate:
+    post:
+      tags:
+      - Lifecycle
+      summary: Activate Card V2
+      description: This API allows you to activate a card after delivery to the customer.
+      operationId: ActivateCard
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateCardRequestV2DTO'
+        required: true
+        description: Activate card request
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivateCardResponseV2DTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}:
+    get:
+      tags:
+      - Lifecycle
+      summary: Card Details V2
+      description: This API allows you to get details about a card.
+      operationId: cardDetailsV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardDetails'
+              example:
+                totalPages: 1
+                totalElements: 1
+                content:
+                - blockAndReplaceStatus:
+                    blockReason: cardLost
+                    replacedOn: '2023-01-01'
+                  cardHashId: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
+                  deliveredTo:
+                    addressLine1: 20 W 34th St.
+                    addressLine2: Suite 200
+                    city: New York
+                    country: SG
+                    landmark: Empire State Building
+                    postCode: '10001'
+                    state: New York
+                  demographics:
+                    countryCode: AU
+                    currentDeliveryAddress:
+                      addressLine1: 20 W 34th St.
+                      addressLine2: Suite 200
+                      city: New York
+                      country: SG
+                      landmark: Empire State Building
+                      postCode: '10001'
+                      state: New York
+                    email: johnsmith@xyzmail.com
+                    firstName: John
+                    lastName: Smith
+                    middleName: W
+                    mobile: '0412345111'
+                  details:
+                    cardProductId: '100'
+                    cardStatus: VIRTUAL_ACTIVE
+                    cardType: GPR_VIR
+                    issuanceType: primaryCard
+                    maskedCardNumber: 4572-50xx-xxxx-0123
+                    plasticId: '750065001'
+                    proxyNumber: '0007570020000010123'
+                    regionCode: AU
+                    childCustomerHashID: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
+                  embossing:
+                    additionalLine: John Doe
+                    createdOn: '2021-03-12 04:16:46'
+                    dispatchAWB: string
+                    dispatchedOn: string
+                    issuanceMode: NORMAL_DELIVERY_LOCAL
+                    nameOnCard: John Doe
+                    printedOn: string
+                    processedOn: '2021-03-12 04:16:46'
+                  lastUpdatedOn: '2021-03-12 04:16:46'
+                  tokens:
+                  - createdAt: '2023-04-18T07:20:12.483Z'
+                    deviceId: 04312E7B342C80014328036811932950DA075B1C4DD45672
+                    deviceType: '01'
+                    providerType: applePay
+                    status: DEACTIVATED
+                    tokenNumber: 0004611350190078050
+                    tokenReferenceNumber: DNITHE400000000000000037
+                    tokenRequesterId: googlePay
+                    updatedAt: '2023-04-18T07:20:12.483Z'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      tags:
+      - Lifecycle
+      summary: Update Card Details V2
+      operationId: updateCardDetailsV2
+      parameters:
+      - name: clientHashId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: clientHashId
+      - name: customerHashId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: customerHashId
+      - name: walletHashId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: walletHashId
+      - name: cardHashId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: cardHashId
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContactInfoRequestDTO'
+        required: true
+        description: updateContactInfoRequestDTO
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse2'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+      description: This API allows you to update the contact information of the cardholder.
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/cards:
+    get:
+      tags:
+      - Lifecycle
+      summary: Card List V2
+      description: This API returns all the cards issued for a given customer wallet.
+      operationId: cardListV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: childCustomerHashId
+        in: query
+        required: false
+        schema:
+          type: string
+        description: This field refers to a unique identifier, known as the customerHashId,
+          assigned to an individual customer who is associated with a corporate customer
+          at the parent level. This identifier distinguishes and tracks the child-level
+          customer within a given client's program. By utilizing this identifier,
+          it becomes possible to establish and maintain the appropriate linkage between
+          the child customer and their parent corporate customer, ensuring accurate
+          association and management of customer data.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+        description: "This field accepts the page number to be returned. The acceptable\
+          \ values are 0-N. \nThis field works with size field such that total number\
+          \ of records/size of each page = number of pages(N). \nThis field can then\
+          \ give a particular page."
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+        description: This field accepts the number of elements per page.
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponseCardDetails'
+              example:
+                totalPages: 1
+                totalElements: 1
+                content:
+                - blockAndReplaceStatus:
+                    blockReason: cardLost
+                    replacedOn: '2023-01-01'
+                  cardHashId: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
+                  deliveredTo:
+                    addressLine1: 20 W 34th St.
+                    addressLine2: Suite 200
+                    city: New York
+                    country: SG
+                    landmark: Empire State Building
+                    postCode: '10001'
+                    state: New York
+                  demographics:
+                    countryCode: AU
+                    currentDeliveryAddress:
+                      addressLine1: 20 W 34th St.
+                      addressLine2: Suite 200
+                      city: New York
+                      country: SG
+                      landmark: Empire State Building
+                      postCode: '10001'
+                      state: New York
+                    email: johnsmith@xyzmail.com
+                    firstName: John
+                    lastName: Smith
+                    middleName: W
+                    mobile: '0412345111'
+                  details:
+                    cardProductId: '100'
+                    cardStatus: VIRTUAL_ACTIVE
+                    cardType: GPR_VIR
+                    issuanceType: primaryCard
+                    maskedCardNumber: 4572-50xx-xxxx-0123
+                    plasticId: '750065001'
+                    proxyNumber: '0007570020000010123'
+                    regionCode: AU
+                    childCustomerHashID: aedf0c79-7342-2a30-b2c2-8642f6bfc322
+                  embossing:
+                    additionalLine: John Doe
+                    createdOn: '2021-03-12 04:16:46'
+                    dispatchAWB: string
+                    dispatchedOn: string
+                    issuanceMode: NORMAL_DELIVERY_LOCAL
+                    nameOnCard: John Doe
+                    printedOn: string
+                    processedOn: '2021-03-12 04:16:46'
+                  lastUpdatedOn: '2021-03-12 04:16:46'
+                  tokens:
+                  - createdAt: '2023-04-18T07:20:12.483Z'
+                    deviceId: 04312E7B342C80014328036811932950DA075B1C4DD45672
+                    deviceType: '01'
+                    providerType: applePay
+                    status: DEACTIVATED
+                    tokenNumber: 0004611350190078050
+                    tokenReferenceNumber: DNITHE400000000000000037
+                    tokenRequesterId: googlePay
+                    updatedAt: '2023-04-18T07:20:12.483Z'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/blockAndReplace:
+    post:
+      tags:
+      - Lifecycle
+      summary: Block and Replace Card
+      description: Use this API to block and replace a card.
+      operationId: blockAndReplaceCardV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockAndReplaceCardRequestDTO'
+            example:
+              cardExpiry: '1124'
+              reason: fraud
+              plasticId: '123456789'
+              replaceCard: true
+              useCurrentAddress: true
+              delivery:
+                addressLine1: 350 Brettenham Road
+                addressLine2: Walthamstow
+                city: London
+                landmark: 'null'
+                country: GB
+                state: London
+                postCode: E17 5AU
+              email: xyz@gmail.com
+              countryCode: GB
+              mobile: '1247875649'
+        required: true
+        description: A card can be blocked and replaced using the Block And Replace
+          Card API.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockAndReplaceCardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/lockAction:
+    put:
+      tags:
+      - Lifecycle
+      summary: Lock/Unlock Cards
+      operationId: lockUnlockCardV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LockStatusUpdateRequestDTO'
+        required: true
+        description: lockStatusUpdateRequestDTO
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LockStatusUpdateResponseDTO'
+              examples:
+                Lock success:
+                  value:
+                    status: success
+                    message: card is sucessfully locked
+                Unlock success:
+                  value:
+                    status: success
+                    message: card is sucessfully unlocked
+                Lock failure:
+                  value:
+                    status: faliure
+                    message: Card is already locked
+                Unlock failure:
+                  value:
+                    status: faliure
+                    message: Card is already unlocked
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+      description: This API allows you to temporarily lock or unlock a card.
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/renewCard:
+    post:
+      tags:
+      - Lifecycle
+      summary: Renew Card
+      description: Use this API for card renewal.
+      operationId: RenewCard
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewCardRequest'
+            examples:
+              useCurrentAddress:true:
+                value:
+                  cardExpiry: '1122'
+                  useCurrentAddress: true
+              useCurrentAddress:false:
+                value:
+                  cardExpiry: '1122'
+                  useCurrentAddress: false
+                  delivery:
+                    addressLine1: 350 Brettenham Road
+                    addressLine2: Walthamstow
+                    city: London
+                    landmark: 'null'
+                    country: GB
+                    state: London
+                    postCode: E17 5AU
+                  email: example@gmail.com
+                  countryCode: GB
+                  mobile: string
+        required: true
+        description: A card can be renewed using the Renew Card API on or before 45
+          days from the expiration date.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/assignCard:
+    post:
+      tags:
+      - Lifecycle
+      summary: Assign Card
+      description: This API is used to assign a card to a customer. In this use case,
+        the client has an unassigned card with him/her. The client hands over the
+        card to the customer and assigns it to him/her.
+      operationId: AssignCard
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignCardDTO'
+        required: true
+        description: assignCardDTO
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAssignResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card:
+    post:
+      tags:
+      - Lifecycle
+      summary: Add Card
+      description: "This API allows you to issue a card for a customer. \n >\u26A0\
+        \uFE0F WARNING \n >This API version is deprecated. Eventually, a deprecated\
+        \ API version becomes unsupported. [Add Card V2](ref:addcardv2) is the latest\
+        \ version of this API."
+      operationId: AddCard
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCardRequest'
+            example:
+              cardIssuanceAction: NEW
+              cardFeeCurrencyCode: SGD
+              cardExpiry: '1122'
+              cardType: GPR_VIR
+              embossingLine1: John Doe
+              embossingLine2: John Doe
+              issuanceMode: NORMAL_DELIVERY_LOCAL
+              logoIdentifier: '100'
+              plasticId: '100100'
+        required: true
+        description: addCardRequest
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCardResponseDTO'
+              example:
+                cardHashId: dd0a1721-2821-48fc-bbce-6c737bc47174
+                cardActivationStatus: VIRTUAL_ACTIVE
+                maskedCardNumber: 4611-35xx-xxxx-9772
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}:
+    get:
+      tags:
+      - Lifecycle
+      summary: Card Details
+      description: "This API allows you to fetch the card details of a particular\
+        \ card.\n >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually,\
+        \ a deprecated API version becomes unsupported. [Card Details V2](ref:carddetailsv2)\
+        \ is the latest version of this API."
+      operationId: CardDetails
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/activate:
+    post:
+      tags:
+      - Lifecycle
+      summary: Activate Card
+      description: This API allows you to activate a card after delivery to a customer.
+      operationId: ActivateCard_1
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivateCardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/cardAction:
+    post:
+      tags:
+      - Lifecycle
+      summary: Block/Unblock Cards
+      description: "This API helps you perform the following operations:\nPermanent\
+        \ block card\nTemporary block card\nUnblock card.\n >\u26A0\uFE0F WARNING\
+        \ \n >This API version is deprecated. Eventually, a deprecated API version\
+        \ becomes unsupported. For a temporary lock and unlock, [Lock/Unlock Card\
+        \ API](ref:lockunlockcardv2) is the latest version of this API. For a permanent\
+        \ block and replacing the card, [Block and Replace API](ref:blockandreplacecardv2)\
+        \ is the latest version of this API."
+      operationId: BlockUnblockCards
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockCodeDTO'
+        required: true
+        description: blockCode
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockCodeCardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/replaceCard:
+    post:
+      tags:
+      - Lifecycle
+      summary: Issue Replacement Card
+      description: "Use this API for issuing a card replacement.\n >\u26A0\uFE0F WARNING\
+        \ \n >This API version is deprecated. Eventually, a deprecated API version\
+        \ becomes unsupported. For a permanent block and replacing the card, [Block\
+        \ and Replace API](ref:blockandreplacecardv2) is the latest version of this\
+        \ API."
+      operationId: IssueReplacementCard
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: Unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceCardRequest'
+        required: true
+        description: A card can be replaced using the Replace Card API only if it
+          is permanently blocked. A permanently blocked card cannot be replaced on
+          the same date as date of issuance. For example, a customer issued a card
+          today and request to block the card permanently, on the same day. However,
+          a customer may not call the Replace Card API to issue a replacement on the
+          same date.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/cards:
+    get:
+      tags:
+      - Lifecycle
+      summary: Card List
+      description: This API will return all the cards issued, for a given wallet.
+      operationId: CardList
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/retrieve:
+    get:
+      tags:
+      - Security
+      summary: Fetch card data encrypted
+      description: This API allows you to fetch the unmasked card number, CVV2 and
+        expiry (encrypted) for a card
+      operationId: fetchCardDataEncryptedV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCardDetailsResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/pin:
+    get:
+      tags:
+      - Security
+      summary: Fetch ATM Pin
+      description: This API allows you to fetch the base-64 encoded ATM PIN for physical
+        cards and virtual upgrade to physical in the production environment. This
+        API does not work for virtual cards. This is allowed only for the EU and UK
+        cards.
+      operationId: FetchATMPin
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchPinResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      tags:
+      - Security
+      summary: Set/Reset PIN
+      description: This API allows you to set a new PIN or change the PIN for a card
+        in the production environment. This API only applies to a physical card or
+        a virtual card upgraded to a physical card. This is allowed only for cards
+        issued in APAC, not for EU/UK cards.
+      operationId: SetResetPIN
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PinUpdateRequestDTO'
+        required: true
+        description: pinUpdate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PinUpdateResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/pin/status:
+    get:
+      tags:
+      - Security
+      summary: Fetch Pin Status
+      description: This API allows you to fetch the PIN status of an active card.
+      operationId: FetchPinStatus
+      parameters:
+      - name: clientHashId
+        in: path
+        description: The unique client identifier generated and shared before the
+          API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: The unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: The unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: The unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchPinStatusResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/pin/unblock:
+    post:
+      tags:
+      - Security
+      summary: Unblock PIN
+      description: This API allows you to unblock PIN and reset retry count for a
+        card. This API is only applicable for the APAC region.
+      operationId: UnblockCardPIN
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: Unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Please enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PinUpdateResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/cvv:
+    get:
+      tags:
+      - Security
+      summary: Fetch CVV2
+      description: "This API allows you to fetch the base-64 encoded CVV2 and expiry\
+        \ for a card. \n >\u26A0\uFE0F WARNING \n >This API version is deprecated.\
+        \ Eventually, a deprecated API version becomes unsupported. [Fetch Card Data\
+        \ Encrypted](ref:fetchcarddataencryptedv2) is the latest version of this API."
+      operationId: FetchCVV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: Unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CvvResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/unmask:
+    get:
+      tags:
+      - Security
+      summary: Unmask Card
+      description: "This API allows you to unmask a card number before using it for\
+        \ an e-commerce transaction. \n >\u26A0\uFE0F WARNING \n >This API version\
+        \ is deprecated. Eventually, a deprecated API version becomes unsupported.\
+        \ [Fetch Card Data Encrypted](ref:fetchcarddataencryptedv2) is the latest\
+        \ version of this API."
+      operationId: UnmaskCard
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: Unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnmaskCardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/3ds/passcode/status:
+    get:
+      tags:
+      - 3DS
+      summary: 3DS passcode enrollment status
+      operationId: passcodeEnrollmentStatus
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: query
+        description: Unique card identifier generated while new/add-on card issuance.
+        required: false
+        schema:
+          type: string
+      - description: Please enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PasscodeStatusDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+      description: API allows to retrieve the status of passcode enrollments for all
+        cards associated with wallet. Results can be filtered by `cardHashId`
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/3ds/passcode:
+    post:
+      tags:
+      - 3DS
+      summary: Add or Update passcode
+      description: API to update the 3DS passcode for a specific card.
+      operationId: setPasscode
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+      - name: walletHashId
+        in: path
+        description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        required: true
+        schema:
+          type: string
+      - name: cardHashId
+        in: path
+        description: Unique card identifier generated while new/add-on card issuance.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasscodeRequestDTO'
+        required: true
+        description: passcodeRequestDTO
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PasscodeResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v2/client/{clientHashId}/3ds/oob/callback:
+    post:
+      tags:
+      - 3DS
+      summary: 3DS OOB Callback V2
+      description: API to notify Nium on success or failure of OOB authentication
+      operationId: processOobCallbackV2
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OobCallbackRequestDTO'
+        required: true
+        description: oobCallbackRequestDTO
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/notifications/3ds/oob/callback:
+    post:
+      tags:
+      - 3DS
+      summary: Process OOB callback
+      operationId: ProcessOOBcallback
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OOBCallbackRequestDTO'
+        required: true
+        description: oobCallbackRequestDTO
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OOBCallbackResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+      description: API to notify Nium on success of OOB authentication
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/channels:
+    get:
+      parameters:
+      - description: Unique card identifier generated while new/add-on card issuance.
+        in: path
+        name: cardHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseOfTransactionChannelsResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API will get the restriction set at card level for all the
+        channels, for example, instore, online, ATM, cross border, and magnetic stripe.
+      operationId: GetChannelRestriction
+      summary: Get Channel Restriction
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      parameters:
+      - description: Unique card identifier generated while new/add-on card issuance.
+        in: path
+        name: cardHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiResponseOfstring'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API will restrict transaction at card level for a given channel,
+        for example, in instore, online, ATM, cross border and magnetic stripe.
+      operationId: UpdateChannelRestriction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChannelActionRequestDTO'
+        description: channelActionRequestDTO
+        required: true
+      summary: Update Channel Restriction
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/channels/mcc:
+    get:
+      parameters:
+      - description: Unique card identifier generated while new/add-on card issuance.
+        in: path
+        name: cardHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MCCRestrictionDTO'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API allows you to fetch MCC based channel restrictions at
+        the card level.
+      operationId: GetMCCChannelRestrictions
+      summary: Get MCC Channel Restrictions
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      parameters:
+      - description: Unique card identifier generated while new/add-on card issuance.
+        in: path
+        name: cardHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiResponse2'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API allows you to create MCC based channel restrictions at
+        the card level.
+      operationId: UpdateMCCChannelRestrictions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MCCRestrictionDTO'
+        description: "The API will work as below:\n\u2022 If the status is Active\
+          \ and channelStrategy is WHITE_LIST, then the MCC in the list only gets\
+          \ processed and the rest will be blocked\n\u2022 If the status is Inactive\
+          \ then the MCC whitelist restriction will be Inactive.\n\u2022 If the status\
+          \ is Active and channelStrategy is BLACK_LIST then only the MCC in the list\
+          \ will get blocked and the rest will be allowed.\n\u2022 If the status is\
+          \ Inactive then the MCC blacklist restriction will be Inactive\n\u2022 Either\
+          \ blacklist or whitelist can be enabled at one point in time."
+        required: true
+      summary: Update MCC Channel Restrictions
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/limits:
+    get:
+      parameters:
+      - description: Unique card identifier generated while new/add-on card issuance.
+        in: path
+        name: cardHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionLimitsDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API allows you to fetch card limits.
+      operationId: GetCardLimits
+      summary: Fetch Card Limits
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      parameters:
+      - description: Unique card identifier generated while new/add-on card issuance.
+        in: path
+        name: cardHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiResponse2'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API allows you to set card limits.
+      operationId: SetCardLimits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionLimitsDTO'
+        description: transactionLimitsDTO
+        required: true
+      summary: Card Limits
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/limits:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionWalletLimitsDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Controls
+      deprecated: false
+      description: This API allows you to fetch card level limits for all cards belonging
+        to a customer.
+      operationId: LimitsForAllCardsForACustomer
+      summary: Limits For All Cards For A Customer
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/referenceRate:
+    get:
+      tags:
+      - Cards Reference Data
+      summary: Reference Exchange Rate
+      description: This API allows you to get the reference exchange rate.
+      operationId: ReferenceExchangeRate
+      parameters:
+      - name: cardScheme
+        in: query
+        description: 'This field accepts the card scheme provider name:
+
+          Visa
+
+          Mastercard'
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+      - name: clientHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - name: fromAmount
+        in: query
+        description: From Amount also known as transaction amount that will be converted
+          from the fromCurrency and to the toCurrency.
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: number
+          format: double
+          default: 0
+      - name: fromCurrency
+        in: query
+        description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+          of the transaction currency. Should be one of the applicable EEA currencies
+          (EUR, BGN, HRK, CZK, DKK, HUF, PLN, RON, SEK, GBP, ISK, CHF and NOK).
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+      - name: toCurrency
+        in: query
+        description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+          of the cardholder billing currency. Should be one of the applicable EEA
+          currencies (EUR, BGN, HRK, CZK, DKK, HUF, PLN, RON, SEK, GBP, ISK, CHF and
+          NOK)
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceRateResponseDto'
+                title: ReferenceRateResponseDto
+        '401':
+          description: Unauthorized
+          content: {}
+        '403':
+          description: Forbidden
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - default: []
+      x-info:
+        apiType: external
+components:
+  schemas:
+    ApiError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Http status code of the response.
+          example: 200 OK
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+          description: Response message.
+          example: Transaction business updated successfully.
+        errors:
+          type: array
+          description: Error description if any.
+          example:
+          - field1 is not valid
+          - field2 is not valid
+          items:
+            type: string
+            description: List of errors occurred
+            example: '["field1 is not valid","field2 is not valid"]'
+      title: Api error
+    LockStatusUpdateRequestDTO:
+      required:
+      - action
+      type: object
+      properties:
+        action:
+          type: string
+          description: 'The field accepts the lock action to be applied on the card.The
+            possible values are:
+
+            lock
+
+            unlock'
+          example: lock
+      title: Lock status update request
+    LockStatusUpdateResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This field will contain the status of the request after processing.
+            It shall be success if the lock/unlock is successful.
+          example: Success
+        message:
+          type: string
+          description: This field will return a success message if the request processes
+            successfully else this will return an error message.
+      title: Lock status update response
+    ApiResponse2:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: This flag indicates the success of the request.
+          example: true
+        message:
+          type: string
+          description: This field will return the success message if the limit updated
+            successfully.
+          example: Limits updated successfully
+      title: Api response 2
+    Address:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          description: Address line1 field captures the first line of the address,
+            typically including house number, street name, and any unit/apartment
+            number
+          example: 20 W 34th St.
+        addressLine2:
+          type: string
+          description: Address line2 is an optional field for adding extra details
+            to the address.
+          example: Suite 200
+        city:
+          type: string
+          description: City field is where the city or town name of the address
+          example: New York
+        country:
+          type: string
+          description: Country is two-letter ISO2 country code of the address
+          example: SG
+        state:
+          type: string
+          description: State field is where the name of the state, province, or region
+            should be entered for the address
+          example: New York
+        zip:
+          type: string
+      title: Address
+    ActivateCardResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This field shows the status of the activation request.
+          example: Active
+      title: Card status
+    AddCardRequestV2:
+      properties:
+        cardProductId:
+          description: Pre-defined product Id, defined at NIUM and communicated to
+            client for card issuance.
+          example: '100'
+          type: string
+        cardType:
+          description: 'This field accepts the card type to be issued. The acceptable
+            values are:
+
+            " + "PHY: This value is used to issue a physical card
+
+            " + "VIR: This value is used to issue a virtual card
+
+            " + "VIRUP2PHY: This value is used to issue a virtual upgrade to physical
+            card'
+          type: string
+          enum:
+          - PHY
+          - VIR
+          - VIRUP2PHY
+        nameOnCard:
+          description: 'This field can be used to print the customer name. The value
+            sent in this field will be printed on the card.If this field is left empty,
+            line 1 will not be printed on the card.
+
+            This field accepts alphanumeric characters along with space(s)
+
+            The maximum character limit is 26.'
+          example: John Doe
+          type: string
+        additionalLine:
+          description: "This field can be used to send the company name or employeeID.\
+            \ Anything sent in this field will be printed on the card. \nThis field\
+            \ accepts alphanumeric characters along with space(s).\nThe maximum character\
+            \ limit is 26."
+          example: John Doe
+          type: string
+        email:
+          description: Email of the card holder.
+          example: example@domain.com
+          type: string
+        childCustomerHashId:
+          description: This field refers to a unique identifier, known as customerHashId,
+            assigned to an individual customer who is associated with a corporate
+            customer at the parent level. This identifier serves the purpose of distinguishing
+            and tracking the child-level customer within a given client's program.
+            By utilizing this identifier, it becomes possible to establish and maintain
+            the appropriate linkage between the child customer and their parent corporate
+            customer, ensuring accurate association and management of customer data.
+          example: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
+          type: string
+        countryCode:
+          description: Country code of recipient's phone number accepted in [2-letter
+            ISO Alpha-2 country code](doc:currency-and-country-codes).
+          example: '01'
+          type: string
+        mobile:
+          description: Mobile field is where the recipient's mobile phone number.
+          example: '9876543210'
+          type: string
+        issuanceMode:
+          description: 'This field is only required for physical cards(PHY) mode of
+            delivery of a card. Possible values are:
+
+            NORMAL_DELIVERY_LOCAL
+
+            EXPRESS_DELIVERY_LOCAL
+
+            INTERNATIONAL_DELIVERY'
+          enum:
+          - NORMAL_DELIVERY_LOCAL
+          - BULK_ISSUE_LOCAL
+          - BULK_ISSUE_INTERNATIONAL_AU
+          - BULK_ISSUE_INTERNATIONAL_EU
+          - EXPRESS_DELIVERY_LOCAL
+          - INTERNATIONAL_DELIVERY
+          example: NORMAL_DELIVERY_LOCAL
+          type: string
+        plasticId:
+          description: Pre-defined plastic Id defined at NIUM and communicated to
+            client. It is used to determine the card design
+          example: '100100'
+          type: string
+      required:
+      - cardProductId
+      - cardType
+      - plasticId
+      title: Add Card V2
+      type: object
+    AddCardV2ResponseDTO:
+      type: object
+      properties:
+        cardHashId:
+          type: string
+          description: Unique card identifier generated while new/add-on card issuance.
+          format: uuid
+          example: dd0a1721-2821-48fc-bbce-6c737bc47174
+        cardActivationStatus:
+          type: string
+          description: Card activation status values are VIRTUAL_ACTIVE and INACTIVE
+          example: VIRTUAL_ACTIVE
+      title: AddCardV2ResponseDTO
+    UpdateContactInfoRequestDTO:
+      type: object
+      properties:
+        email:
+          maxLength: 60
+          minLength: 0
+          type: string
+          description: Card holder Email
+          example: example@mail.com
+        countryCode:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: Country code for mobile number in [ISO Alpha-2](doc:currency-and-country-codes)
+            format.
+          example: SG
+        mobile:
+          pattern: \d{0,30}
+          type: string
+          description: Card holder mobile number
+          example: '9876543210'
+        delivery:
+          $ref: '#/components/schemas/Address'
+          description: Customer's delivery address
+        nameOnCard:
+          pattern: ^[a-zA-Z\s]{1,26}$
+          type: string
+          description: 'This field can be used to print the customer name. The value
+            sent in this field will be updated on the card.If this field is left empty,
+            line 1 will not be printed on the card.
+
+            This field accepts alphanumeric characters along with space(s)
+
+            The maximum character limit is 26.'
+          example: John Doe
+      title: Update contact info request
+    BlockAndReplaceCardRequestDTO:
+      required:
+      - reason
+      - replaceCard
+      type: object
+      properties:
+        reason:
+          type: string
+          description: 'This field accepts the reason for card block. The possible
+            values are:
+
+            fraud
+
+            lost
+
+            stolen
+
+            damaged'
+          example: fraud
+          enum:
+          - fraud, lost, stolen, damaged
+        replaceCard:
+          type: boolean
+          description: A Flag that specifies whether to replace card or not
+          example: true
+        plasticId:
+          type: string
+          description: Pre-defined plastic Id defined at NIUM and communicated to
+            client. It is used to determine the card design
+          example: '100100'
+        cardExpiry:
+          type: string
+          description: The expiry date is applicable only for Virtual cards and not
+            applicable for physical cards. This field is in MMYY format. For Virtual
+            cards, the expiry date can be a maximum of 5 years from when the API is
+            used.
+          example: '1122'
+        useCurrentAddress:
+          type: boolean
+          description: Boolean "useCurrentAddress" specifies whether to use existing
+            address in the system or new address passed in address object
+          example: false
+        delivery:
+          $ref: '#/components/schemas/Address'
+          description: Customer's delivery address
+        email:
+          type: string
+          description: Card holder Email
+          example: example@mail.com
+        countryCode:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: Country is two-letter ISO2 country code for mobile
+          example: GB
+        mobile:
+          pattern: \d{0,30}
+          type: string
+          description: Mobile field is where the recipient's mobile phone number.
+            This field is mandatory when useBillingAddress is true
+          example: '9876543210'
+      description: A card can be blocked and replaced using the Block And Replace
+        Card API
+      title: Block and replace card request
+    BlockAndReplaceCardResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        newCardHashId:
+          type: string
+        maskedCardNumber:
+          type: string
+      title: Block and replace card response
+    ActivateCardRequestV2DTO:
+      required:
+      - activationCode
+      type: object
+      properties:
+        activationCode:
+          pattern: \d{8}$
+          type: string
+          description: This field can be used to send the activation code.
+          example: '90090012'
+      title: ActivateCardRequestV2DTO
+    ActivateCardResponseV2DTO:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This field contains the status of the activation request.
+          example: Active
+        message:
+          type: string
+          description: This field contains the status description of the activation
+            request.
+          example: Card Activated successfully
+      title: ActivateCardResponseV2DTO
+    OobCallbackRequestDTO:
+      required:
+      - authTransactionId
+      - referenceNumber
+      - statusCode
+      type: object
+      properties:
+        authTransactionId:
+          type: string
+          description: This field represents the unique authorization ID of the transaction
+            received during the OOB authentication.
+        referenceNumber:
+          type: string
+          description: A reference number is a unique ID associated with the OOB request
+            from your system.
+        statusCode:
+          type: string
+          description: "The OOB authentication status code indicated if the transaction\
+            \ is approved or declined. The allowed values are: 001 \u2014 OOB authentication\
+            \ approved, 002 \u2014 OOB authentication declined."
+          enum:
+          - 001, 002
+        message:
+          type: string
+          description: An optional field to attach a message associated with the authentication.
+      title: OobCallbackRequestDTO
+    BlockAndReplaceStatus:
+      type: object
+      properties:
+        blockReason:
+          type: string
+          description: This field contains the card block reason.
+          example: cardLost
+        replacedOn:
+          type: string
+          description: This field contains the card replacement date
+          example: '2022-01-01'
+      description: Card block/replace status
+      title: Block and replace status
+    CardDetails:
+      type: object
+      properties:
+        cardHashId:
+          type: string
+          description: This field contains the unique card identifier generated while
+            new/add-on card issuance.
+          format: uuid
+          example: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
+        details:
+          $ref: '#/components/schemas/CardInfo'
+          description: Card details
+        embossing:
+          $ref: '#/components/schemas/EmbossingDetails'
+          description: Embossing details
+        lastUpdatedOn:
+          type: string
+          description: This field contains the last updated timestamp
+          example: '2021-03-12 04:16:46'
+        blockAndReplaceStatus:
+          $ref: '#/components/schemas/BlockAndReplaceStatus'
+          description: Card block/replace status
+        demographics:
+          $ref: '#/components/schemas/Demographics'
+          description: Demographic details
+        deliveredTo:
+          $ref: '#/components/schemas/Address'
+          description: Delivery location of the card recipient.
+        tokens:
+          type: array
+          description: This array contains the token details.
+          items:
+            $ref: '#/components/schemas/CardTokensDTO'
+      title: Card details
+    CardInfo:
+      type: object
+      properties:
+        cardProductId:
+          type: string
+          description: Pre-defined product Id, defined at NIUM and communicated to
+            client for card issuance.
+          example: '100'
+        plasticId:
+          type: string
+          description: This field contains the pre-defined plastic Id which is used
+            to determine card design.
+          example: '750065001'
+        regionCode:
+          type: string
+          description: This field contains the 2-letter [region code](doc:currency-and-country-codes)
+            for the card.
+          example: AU
+        maskedCardNumber:
+          type: string
+          description: This field contains the 16-digit masked card number in format
+            1234-56xx-xxxx-3456.
+          example: 4572-50xx-xxxx-0123
+        proxyNumber:
+          type: string
+          description: This field contains the reference number for the card.
+          example: '0007570020000010123'
+        cardType:
+          type: string
+          description: This field contains the issued card type.
+          example: GPR_VIR
+        issuanceType:
+          type: string
+          description: This field contains the type of the card issued.
+          example: primaryCard
+        cardStatus:
+          type: string
+          description: This field contains the activation status of the card.
+          example: VIRTUAL_ACTIVE
+          enum:
+          - INACTIVE,ACTIVE,VIRTUAL_ACTIVE,TEMP_BLOCK,P_BLOCK
+        childCustomerHashId:
+          type: string
+          description: This field refers to a unique identifier, known as customerHashId,
+            assigned to an individual customer who is associated with a corporate
+            customer at the parent level. This identifier serves the purpose of distinguishing
+            and tracking the child-level customer within a given client's program.
+            By utilizing this identifier, it becomes possible to establish and maintain
+            the appropriate linkage between the child customer and their parent corporate
+            customer, ensuring accurate association and management of customer data.
+      description: Card details
+      title: Card information
+    CardTokensDTO:
+      type: object
+      properties:
+        providerType:
+          type: string
+          description: 'This field contains the wallet provider.It can contain two
+            values -
+
+            googlePay
+
+            applePay'
+          example: applePay
+          enum:
+          - googlePay,applePay,samsungPay,unknown
+        tokenReferenceNumber:
+          type: string
+          description: This field contains the reference number for the token provided
+            against the provisioning request.
+          example: DNITHE400000000000000037
+        tokenNumber:
+          type: string
+          description: This field contains the token value created for the provisioned
+            card.
+          example: 0004611350190078050
+        tokenRequesterId:
+          type: string
+          description: This field contains the identifier for the provisioning service.
+          example: 40010030273
+          enum:
+          - googlePay,applePay
+        deviceId:
+          type: string
+          description: This field contains the unique ID of the device on which the
+            card is provisioned.
+          example: 04312E7B342C80014328036811932950DA075B1C4DD45672
+        deviceType:
+          type: string
+          description: This field contains the device type in numeric format used
+            for provisioning.
+          example: '01'
+        status:
+          type: string
+          description: This field contains the token status.
+          example: DEACTIVATED
+          enum:
+          - ACTIVE,SUSPENDED,DEACTIVATED,UNKNOWN
+        createdAt:
+          type: string
+          description: This field contains the date and time of token creation in
+            the format - YYYY-MM-DD HH:mm:ss.
+          example: '2021-05-28 06:06:11'
+        updatedAt:
+          type: string
+          description: This field contains the date and time of token update in the
+            format - YYYY-MM-DD HH:mm:ss.
+          example: '2021-05-28 06:24:33'
+      description: This array contains the token details.
+      title: Card tokens
+    Demographics:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: This field contains the first name of the card holder.
+          example: John
+        middleName:
+          type: string
+          description: This field contains the middle name of the card holder.
+          example: W
+        lastName:
+          type: string
+          description: This field contains the last name of the card holder.
+          example: Smith
+        email:
+          type: string
+          description: This field contains the email ID of the card holder.
+          example: johnsmith@xyzmail.com
+        countryCode:
+          type: string
+          description: This field contains the 2-letter [ISO-2 country code](doc:currency-and-country-codes)
+            for identifying the country prefix to a mobile number.
+          example: AU
+        mobile:
+          type: string
+          description: This field contains the mobile number of the card holder--digits
+            only--without the country code.
+          example: '0412345111'
+        currentDeliveryAddress:
+          $ref: '#/components/schemas/Address'
+          description: Current delivery address
+      description: Demographic details
+      title: Demographics
+    EmbossingDetails:
+      type: object
+      properties:
+        nameOnCard:
+          type: string
+          description: This field contains the printed name on card.
+          example: John Doe
+        additionalLine:
+          type: string
+          description: This field contains the printed additional line on card.
+          example: John Doe
+        issuanceMode:
+          type: string
+          description: This field contains the mode of delivery of a card.
+          example: NORMAL_DELIVERY_LOCAL
+        createdOn:
+          type: string
+          description: This field contains the card created date
+          example: '2021-03-12 04:16:46'
+        processedOn:
+          type: string
+          description: This field contains the card processed date
+          example: '2021-03-12 04:16:46'
+        printedOn:
+          type: string
+          description: This field contains the card printed date
+        dispatchedOn:
+          type: string
+          description: This field contains the card dispatched date
+        dispatchAWB:
+          type: string
+          description: This field contains the card dispatched airway bill
+      description: Embossing details
+      title: Embossing details
+    PageResponseCardDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardDetails'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    OOBCallbackRequestDTO:
+      required:
+      - authTransactionId
+      - referenceNumber
+      - statusCode
+      type: object
+      properties:
+        authTransactionId:
+          type: string
+        referenceNumber:
+          type: string
+        statusCode:
+          type: string
+          enum:
+          - SSS000
+          - VCL001
+          - VCL002
+          - VCU001
+          - VCU601
+          - VCU602
+          - VCU603
+          - VCU701
+          - VWA001
+          - VCF001
+          - VCT001
+          - VCD001
+          - VII001
+          - VII002
+          - UAS001
+          - ISE999
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - P_BLOCK
+          - SUSPEND
+          - PENDING
+          - APPROVED
+          - REJECTED
+          - UPLOADED
+          - REVIEWED
+          - FAILED
+          - SUCCESS
+          - ASSIGNED
+          - UNASSIGNED
+          - TEMP_BLOCK
+          - All
+          - ARCHIVED
+          - VIRTUAL_ACTIVE
+          - CLOSED
+          - RENEWED
+          - DAMAGED
+          - DO_NOT_HONOUR
+          - LOST_CARD
+          - REFER_TO_ISSUER
+          - CARD_PIN_BLOCKED
+          - CARD_VOIDED
+          - CARD_DESTROYED
+          - STOLEN_CARD
+          - CARD_EXPIRED
+          - FRAUD
+          - TEMP_BLOCK
+      title: OOB callback request
+    OOBCallbackResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - P_BLOCK
+          - SUSPEND
+          - PENDING
+          - APPROVED
+          - REJECTED
+          - UPLOADED
+          - REVIEWED
+          - FAILED
+          - SUCCESS
+          - ASSIGNED
+          - UNASSIGNED
+          - TEMP_BLOCK
+          - All
+          - ARCHIVED
+          - VIRTUAL_ACTIVE
+          - CLOSED
+          - RENEWED
+          - DAMAGED
+          - DO_NOT_HONOUR
+          - LOST_CARD
+          - REFER_TO_ISSUER
+          - CARD_PIN_BLOCKED
+          - CARD_VOIDED
+          - CARD_DESTROYED
+          - STOLEN_CARD
+          - CARD_EXPIRED
+          - FRAUD
+          - TEMP_BLOCK
+      title: OOBCallbackResponseDTO
+    AddCardRequest:
+      required:
+      - cardExpiry
+      - cardFeeCurrencyCode
+      - cardIssuanceAction
+      - cardType
+      - logoIdentifier
+      - plasticId
+      type: object
+      properties:
+        logoIdentifier:
+          type: string
+          description: Pre-defined logo Id, defined at NIUM and communicated to client
+            for card issuance.
+          format: uuid
+          example: '100'
+        plasticId:
+          maxLength: 10
+          minLength: 0
+          type: string
+          description: Pre-defined plastic Id defined at Nium and communicated to
+            client. It is used to determine the card design
+          example: '100100'
+        cardType:
+          type: string
+          description: 'This field accepts the card type to be issued. The acceptable
+            values are:
+
+            GPR_PHY: This value is used to issue a physical card
+
+            GPR_VIR: This value is used to issue a virtual card
+
+            GPR_VIR_UP2PHY: This value is used to issue a virtual upgrade to physical
+            card'
+          example: GPR_VIR
+          enum:
+          - GPR_VIR
+          - GPR_PHY
+          - GPR_VIR_UP2PHY
+          - VIR
+          - PHY
+          - VIRUP2PHY
+        cardIssuanceAction:
+          type: string
+          description: 'This field determines if the card issued is primary or add-on.
+            The possible values are:
+
+            NEW(for a new card)
+
+            ADD_ON(for add on card)
+
+            Note that a customer may have only one primary Physical(GPR_PHY) card,
+            one primary Virtual(GPR_VIR) and only one primary virtual upgrade to physical
+            card(GPR_VIR_UP2PHY). Any further cards can be issued as add-on cards.'
+          example: NEW
+        cardFeeCurrencyCode:
+          maxLength: 3
+          minLength: 3
+          type: string
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for one of the opted currencies in which the card issuance fee is to be
+            charged
+          example: SGD
+        cardExpiry:
+          maxLength: 4
+          minLength: 0
+          type: string
+          description: The expiry date is applicable only for Virtual cards and not
+            applicable for physical cards. This field is in MMYY format. For Virtual
+            cards, the expiry date can be a maximum of 5 years from when the API is
+            used.
+          example: '1122'
+        embossingLine1:
+          maxLength: 26
+          minLength: 1
+          type: string
+          description: 'This field can be used to print the customer name. The value
+            sent in this field will be printed on the card.If this field is left empty,
+            line 1 will not be printed on the card.
+
+            This field accepts alphanumeric characters along with space(s)
+
+            The maximum character limit is 26.'
+          example: John Doe
+        embossingLine2:
+          maxLength: 26
+          minLength: 1
+          type: string
+          description: "This field can be used to send the company name or employeeID.\
+            \ Anything sent in this field will be printed on the card. \nThis field\
+            \ accepts alphanumeric characters along with space(s).\nThe maximum character\
+            \ limit is 26."
+          example: John Doe
+        issuanceMode:
+          type: string
+          description: 'This field is only required for physical cards(GPR_PHY) mode
+            of delivery of a card. Possible values are:
+
+            NORMAL_DELIVERY_LOCAL
+
+            EXPRESS_DELIVERY_LOCAL
+
+            INTERNATIONAL_DELIVERY'
+          example: NORMAL_DELIVERY_LOCAL
+        demogOverridden:
+          type: boolean
+          description: 'This flag specifies if the demogOverriden is true or false
+
+            The default value of demogOverridden is false. It should always be sent
+            as false for issuing a primary card.'
+          example: false
+        countryCode:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: This field accepts the [2-letter ISO Alpha-2 country code](doc:currency-and-country-codes)
+            for the add-on cardholder. This field is mandatory when demogOverridden
+            is true.
+          example: IN
+        mobile:
+          maxLength: 20
+          minLength: 6
+          type: string
+          description: This field accepts the mobile number for the add-on cardholder.
+            This field is mandatory when demogOverridden is true
+        email:
+          maxLength: 60
+          minLength: 4
+          type: string
+          description: This field accepts the email ID for the add-on cardholder.
+            This field is mandatory when demogOverridden is true
+          example: example@gmail.com
+        firstName:
+          maxLength: 40
+          minLength: 1
+          type: string
+          description: This field accepts the firstname for the add-on cardholder.
+            This field is mandatory when demogOverridden is true
+        lastName:
+          maxLength: 40
+          minLength: 1
+          type: string
+          description: This field accepts the lastname for the add-on cardholder.
+            This field is mandatory when demogOverridden is true
+        middleName:
+          maxLength: 40
+          minLength: 1
+          type: string
+          description: The middle name of the customer
+        cardHashId:
+          type: string
+          description: This is the cardHashId of the primary(NEW) card which is already
+            issued. It is mandatory to send this value when ADD_ON card is being issued.
+            This field is not needed for NEW card
+          format: uuid
+          example: fadf2ddd-b726-46bf-3c0a-965b096478f4
+      title: Add card request
+    AddCardResponseDTO:
+      type: object
+      properties:
+        cardHashId:
+          type: string
+          description: Unique card identifier generated while new/add-on card issuance.
+          format: uuid
+          example: dd0a1721-2821-48fc-bbce-6c737bc47174
+        cardActivationStatus:
+          type: string
+          description: Card activation status values are VIRTUAL_ACTIVE and INACTIVE
+          example: VIRTUAL_ACTIVE
+        maskedCardNumber:
+          type: string
+          description: This is the 16-digit masked card number in format 1234-56xx-xxxx-3456
+          example: 4611-35xx-xxxx-9772
+      title: Add card response
+    ReplaceCardRequest:
+      required:
+      - cardFeeCurrencyCode
+      type: object
+      properties:
+        cardExpiry:
+          type: string
+          description: The expiry date is applicable only for Virtual cards and not
+            applicable for physical cards. This field is in MMYY format. For Virtual
+            cards, the expiry date can be a maximum of 5 years from when the API is
+            used.
+          example: '1124'
+        cardFeeCurrencyCode:
+          maxLength: 3
+          minLength: 3
+          type: string
+          description: This field accepts 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            in which the client wants to levy the card issuance fee.
+          example: SGD
+        plasticId:
+          type: string
+      description: A card can be replaced using the Replace Card API only if it is
+        permanently blocked. A permanently blocked card cannot be replaced on the
+        same date as date of issuance. For example, a customer issued a card today
+        and request to block the card permanently, on the same day. However, a customer
+        may not call the Replace Card API to issue a replacement on the same date.
+      title: Replace card request
+    RenewCardRequest:
+      type: object
+      properties:
+        cardExpiry:
+          type: string
+          description: The expiry date is applicable only for Virtual cards and not
+            applicable for physical cards. This field is in MMYY format. For Virtual
+            cards, the expiry date can be a maximum of 5 years from when the API is
+            used.
+          example: '1126'
+        useCurrentAddress:
+          type: boolean
+          description: "Flag indicates if the address details for the renewed card\
+            \ must be current address on file or a new address.\nThis flag should\
+            \ only be used for physical cards. \nSkip this parameter for virtual cards.\
+            \ \n **Note**: `delivery` field is mandatory if the value for this flag\
+            \ is true"
+          example: false
+        delivery:
+          $ref: '#/components/schemas/Address'
+          description: 'Delivery address object for card delivery, This object is
+            conditional
+
+            . If useCurrentAddress is false, then pass this object
+
+            If useCurrentAddress is true, then pass this object as null
+
+            If this object is passed, addressline1, postcode, country are mandatory'
+        email:
+          maxLength: 60
+          minLength: 0
+          type: string
+          description: Email Address to be mapped to the renewed card.
+          example: renewal@abccorp.com
+        countryCode:
+          type: string
+          description: Mobile country code to be mapped to the renewed card, it is
+            two-letter ISO2 country code.
+          example: SG
+        mobile:
+          pattern: \d{0,30}
+          type: string
+          description: Mobile number to be mapped to the renewed card
+          example: '1234567890'
+      description: A card can be renewed using the Renew Card API on or before 45
+        days from the date of expiry
+      title: Renew card request
+    PinUpdateRequestDTO:
+      required:
+      - pinBlock
+      type: object
+      properties:
+        pinBlock:
+          type: string
+          description: This field accepts the base64 encoded pin block.
+          example: MTA0NzM=
+      title: Pin update request
+    PinUpdateResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This field will contain the status of the request after processing.
+            It shall be success if the pin set/change is successful.
+          example: success
+      title: Pin update response
+    BlockCodeDTO:
+      required:
+      - blockAction
+      type: object
+      properties:
+        reason:
+          type: string
+          description: 'This field accepts the reason for card block. It is required
+            only in case of a permanent block [blockAction = permanentBlock]. Otherwise,
+            it is not necessary.The possible values are:
+
+            fraud
+
+            cardLost
+
+            cardStolen
+
+            damaged'
+          example: fraud
+          enum:
+          - fraud, cardLost, cardStolen,damaged
+        blockAction:
+          type: string
+          description: 'The field accepts the block action to be applied on the card.The
+            possible values are:
+
+            permanentBlock
+
+            temporaryBlock
+
+            unblock'
+          example: permanentBlock
+        remarks:
+          maxLength: 255
+          minLength: 0
+          type: string
+        comments:
+          type: string
+      title: Block code
+    BlockCodeCardResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This field will contain the status of the request after processing.
+            It shall be success if the block/unblock is successful.
+          example: Success
+      title: Block code status
+    PasscodeRequestDTO:
+      required:
+      - passcode
+      type: object
+      properties:
+        passcode:
+          type: string
+          description: This field contains Base64 encoded passcode.
+          example: MTIzNDU2
+      title: PasscodeRequestDTO
+    PasscodeResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          description: HTTP response
+          example: SUCCESS
+      title: PasscodeResponseDTO
+    AssignCardDTO:
+      required:
+      - accountNumber
+      - cardNumberLast4Digits
+      type: object
+      properties:
+        accountNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: 'This field accepts the 19-digit account number (also known
+            as card proxy number) printed on the non-personalized physical card. Alternately,
+            the leading zeros may also be ignored in which case only the last 16-digits
+            are required.
+
+            For example, account number can be entered as 0007560010000160875, 007560010000160875,
+            07560010000160875 or 7560010000160875'
+          example: '0007560030000012140'
+        cardNumberLast4Digits:
+          maxLength: 4
+          minLength: 4
+          type: string
+          description: This field accepts the last 4 digit of the card number
+          example: '2197'
+      title: Assign card
+    CardAssignResponseDTO:
+      type: object
+      properties:
+        cardHashId:
+          type: string
+          description: Unique card identifier generated while new/add-on card issuance.
+          format: uuid
+          example: c2ed4095-f342-b7e6-3e8b-d83e8241ec86
+        cardActivationStatus:
+          type: string
+          description: This field contains the card activation status. The values
+            are VIRTUAL_ACTIVE and INACTIVE. In case of Assign Card flow, expected
+            status is INACTIVE.
+          example: INACTIVE
+          enum:
+          - VIRTUAL_ACTIVE,INACTIVE
+        maskedCardNumber:
+          type: string
+          description: This field contains the 16-digit masked card number in format
+            1234-56xx-xxxx-3456.
+          example: xxxxxxxxxxxx0830
+      title: Card assign response
+    RetrieveCardDetailsResponseDTO:
+      type: object
+      properties:
+        cvv:
+          type: string
+          description: This field contains the base64 encoded 3-digit CVV for the
+            card.
+          example: NjAx
+        expiry:
+          type: string
+          description: This field contains the base64 encoded expiry date of the card
+            in MM/YY format.
+          example: MjYwMQ==
+        unMaskedCardNumber:
+          type: string
+          description: This field contains the complete 16 digit card number in base64
+            encoded format.
+          example: NDYxMTk5MDM0MzU3ODEwNQ==
+      title: Retrieve card details response
+    CardResponseDTO:
+      type: object
+      properties:
+        cardHashId:
+          type: string
+          description: This field contains the unique card identifier generated while
+            new/add-on card issuance.
+          format: uuid
+          example: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
+        cardType:
+          type: string
+          description: 'This field contains the card type to be issued. The acceptable
+            values are:
+
+            GPR_PHY: This value is used to issue a physical card.
+
+            GPR_VIR: This value is used to issue a virtual card.
+
+            GPR_VIR_UP2PHY: This value is used to issue a virtual upgrade to physical
+            card.'
+          example: GPR_VIR
+        cardStatus:
+          type: string
+          description: This field contains the activation status of the card.
+          example: VIRTUAL_ACTIVE
+          enum:
+          - INACTIVE,ACTIVE,VIRTUAL_ACTIVE,TEMP_BLOCK,P_BLOCK
+        maskedCardNumber:
+          type: string
+          description: This field contains the 16-digit masked card number in format
+            1234-56xx-xxxx-3456.
+          example: 4572-50xx-xxxx-0123
+        proxyNumber:
+          type: string
+          description: This field contains the reference number for the card.
+          example: '0007570020000010123'
+        logoId:
+          type: string
+          description: This field contains the pre-defined logo for card issuance.
+          example: '177'
+        plasticId:
+          type: string
+          description: This field contains the pre-defined plastic ID which is used
+            to determine card design.
+          example: '750065001'
+        regionCode:
+          type: string
+          description: This field contains the 2-letter [region code](doc:currency-and-country-codes)
+            for the card.
+          example: AU
+        blockReason:
+          type: string
+          description: This field contains the reason for card block.
+          example: fraud
+          enum:
+          - fraud,cardLost,cardStolen,damaged
+        replacedOn:
+          type: string
+          description: This field contains the timestamp when the card was replaced,
+            otherwise null.
+          example: 'null'
+        issuanceMode:
+          type: string
+          description: This field contains the mode of delivery of a card.
+          example: NORMAL_DELIVERY_LOCAL
+          enum:
+          - NORMAL_DELIVERY_LOCAL,EXPRESS_DELIVERY_LOCAL,INTERNATIONAL_DELIVERY
+        issuanceType:
+          type: string
+          description: This field contains the type of the card issued.The values
+            can be primaryCard, additionalCard, or replaceCard.
+          example: primaryCard
+        embossingLine1:
+          type: string
+          description: This field contains the printed name on line 1.
+          example: John Smith
+        embossingLine2:
+          type: string
+          description: This field contains the printed name on line 2.
+        firstName:
+          type: string
+          description: This field contains the first name of the card holder.
+          example: John
+        middleName:
+          type: string
+          description: This field contains the middle name of the card holder.
+          example: W
+        lastName:
+          type: string
+          description: This field contains the last name of the card holder.
+          example: Smith
+        email:
+          type: string
+          description: This field contains the email ID of the card holder.
+          example: johnsmith@xyzmail.com
+        countryCode:
+          type: string
+          description: This field contains the 2-letter [ISO-2 country code](doc:currency-and-country-codes)
+            for identifying the country prefix to a mobile number.
+          example: AU
+        mobile:
+          type: string
+          description: This field contains the mobile number of the card holder--digits
+            only--without the country code.
+          example: '0412345111'
+        demogOverridden:
+          type: boolean
+          description: This field is required in case of ADD_ON cards. If sent as
+            false, the card shall be issued in the name of the customer(primary card
+            holder). If sent as true, the card shall be issued in the name of the
+            add-on card holder whose full details need to be provided.
+          example: false
+        createdAt:
+          type: string
+          description: This field contains the date and time of card creation
+          example: '2021-03-12 04:16:46'
+        updatedAt:
+          type: string
+          description: This field contains the date and time of card updation
+          example: '2021-03-12 04:16:46'
+        tokens:
+          type: array
+          description: This array contains the token details.
+          items:
+            $ref: '#/components/schemas/CardTokensDTO'
+      title: Card response
+    UnmaskCardResponseDTO:
+      type: object
+      properties:
+        unMaskedCardNumber:
+          type: string
+          description: This field contains the complete 16 digit card number in plain
+            text.
+          example: '4611350100002726'
+      title: Unmask card response
+    FetchPinResponseDTO:
+      type: object
+      properties:
+        pin:
+          type: string
+          description: This field contains the four digit Base64 encoded pin for the
+            card.
+          example: MjM0NQ==
+      title: Fetch pin response
+    FetchPinStatusResponseDTO:
+      type: object
+      properties:
+        status:
+          type: string
+      title: Fetch pin status response
+    CvvResponseDTO:
+      type: object
+      properties:
+        cvv:
+          type: string
+          description: This field contains the 3-digit Base64 encoded CVV for the
+            card.
+          example: MzIx
+        expiry:
+          type: string
+          description: This field contains the Base64 encoded expiry date of the card
+            in YYMM format.
+          example: MjYwNg==
+      title: Cvv response
+    PasscodeStatusDTO:
+      type: object
+      properties:
+        cardHashId:
+          type: string
+          description: Unique card identifier generated while new/add-on card issuance.
+          example: c1dd9515-eac5-43ea-807c-7d6bdb6259af
+        passcodeEnrolled:
+          type: boolean
+          description: Passcode enrollment status
+          example: true
+        createdDateTime:
+          type: string
+          description: Passcode enrollment created date and time
+          example: '2022-11-22T11:55:08.687Z'
+        updatedDateTime:
+          type: string
+          description: Passcode enrollment updated date and time
+          example: '2022-11-23T10:55:08.687Z'
+      title: PasscodeStatusDTO
+    Labels:
+      properties:
+        acquirerExemptionReason:
+          type: string
+        acsOutcome:
+          type: string
+        ecommerceIndicator:
+          type: string
+        multiClearingSequenceInd:
+          type: string
+        recurringTransactionIndicator:
+          type: string
+        scaIndicator:
+          type: string
+        scaReasonIndicator:
+          type: string
+      title: Labels
+      type: object
+    SettlementRequestDTO:
+      properties:
+        authorizationCode:
+          description: This field contains the 6 digit authorization code
+          example: NUF5L7
+          type: string
+        billingAmount:
+          description: This field contains the billing amount
+          example: 10
+          format: double
+          type: number
+        billingCurrency:
+          description: This field contains the 3-letter ISO3 billing currency code
+          example: SGD
+          type: string
+        cardHashId:
+          description: This field contains the unique card identifier
+          example: 4b500a79-9386-4b50-a1e1-7299f6bfa131
+          type: string
+        cardNumber:
+          description: This field contains the complete 16 digit card number
+          example: '4611350100002726'
+          type: string
+        clientHashId:
+          description: This field contains the unique client identifier
+          example: dcfe0a79-9bj6-f6bf-78e1-7ab9f89fa1fl
+          type: string
+        clientId:
+          description: This field contains the unique client ID
+          example: 1234
+          format: int64
+          type: integer
+        customerHashId:
+          description: 'This field contains the unique customer identifier '
+          example: d9386a79-7n86-6750-b1c1-0299h4bfa196
+          type: string
+        exchangeRate:
+          description: This field contains the exchange rate from the source currency
+            to the destination currency
+          example: '1.32'
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+        logoId:
+          description: This field accepts the pre-defined logo Id
+          example: '001'
+          type: string
+        logoIdentifier:
+          description: This field accepts the pre-defined logo Identifier
+          example: '100'
+          type: string
+        maskCardNumber:
+          description: This field contains the 16-digit masked card number
+          example: 4573-75xx-xxxx-0149
+          type: string
+        merchantCategoryCode:
+          description: This field contains the 4-digit mcc code
+          example: '3799'
+          type: string
+        merchantCountryCode:
+          description: This field contains the merchant country code
+          example: AUS
+          type: string
+        merchantId:
+          description: This field contains the unique merchant identifier
+          example: '23995053'
+          type: string
+        merchantNameLocation:
+          description: This field contains the full merchant name and location data
+          example: COCA-COLA AMATIL         BRISBANE AIRPSG
+          type: string
+        originalAuthorizationCode:
+          description: This field contains the authorization code of the original
+            transaction
+          example: NUF5L7
+          type: string
+        posEntryMode:
+          description: This field contains the pos entry code that identifies the
+            actual method used to capture the account number, expiration date, and
+            the PIN
+          example: '1020'
+          type: string
+        settlementDate:
+          description: This field contains the settlement date
+          example: '20210419'
+          type: string
+        settlementId:
+          description: This field contains the settlement id
+          example: 1234
+          format: int64
+          type: integer
+        subBin:
+          description: This field is optional & accepts the sub-bin
+          example: NUC01020
+          type: string
+        tokenNumber:
+          description: This field contains the token number
+          example: 0004611350190078050
+          type: string
+        tokenRequesterId:
+          description: This field contains the token requester id
+          example: '40010030273'
+          type: string
+        transactionAmount:
+          description: This field contains the transaction amount.
+          example: 10
+          format: double
+          type: number
+        transactionCurrency:
+          description: This field contains the 3-letter ISO3 transaction currency
+            code.
+          example: SGD
+          type: string
+        transactionType:
+          description: This field contains the type of transaction, it can be C or
+            D
+          example: C
+          type: string
+        visaTransactionId:
+          description: This field contains the Unique ID provided for transaction
+            by VISA
+          example: 019164261950302
+          type: string
+      title: Settlement request
+      type: object
+    WalletApiError:
+      properties:
+        errors:
+          description: List of errors occurred.
+          example:
+          - field1 is not valid
+          - field2 is not valid
+          items:
+            type: string
+          type: array
+        message:
+          description: Error message descriptor.
+          example: Error message descriptor.
+          type: string
+        status:
+          description: 'HttpStatus of the request : BAD_REQUEST, INTERNAL_SERVER_ERROR.'
+          enum:
+          - 200 OK
+          - 400 BAD_REQUEST
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 500 INTERNAL_SERVER_ERROR
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          example: BAD_REQUEST
+          type: string
+      title: ApiError
+      type: object
+    WalletApiResponse2:
+      properties:
+        message:
+          description: This field will return the success message if the limit updated
+            successfully.
+          example: Limits updated successfully
+          type: string
+        success:
+          description: This flag indicates the success of the request.
+          example: true
+          type: boolean
+      title: ApiResponse2
+      type: object
+    ApiResponseOfTransactionChannelsResponseDTO:
+      properties:
+        body:
+          $ref: '#/components/schemas/TransactionChannelsResponseDTO'
+          description: This field will return the response message from the server.
+          example: Success
+        code:
+          description: This field will return the HTTP status code with its interpretation.
+          example: 200 OK
+          type: string
+        message:
+          description: This field will return the response message.
+          example: Success
+          type: string
+        status:
+          description: This field signifies if the request was successful or has an
+            error.
+          enum:
+          - 200 OK
+          - 400 BAD_REQUEST
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 500 INTERNAL_SERVER_ERROR
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          example: OK
+          type: string
+      title: ApiResponseOfTransactionChannelsResponseDTO
+      type: object
+    WalletApiResponseOfstring:
+      properties:
+        body:
+          description: This field will return the response message from the server.
+          example: Success
+          type: string
+        code:
+          description: This field will return the HTTP status code with its interpretation.
+          example: 200 OK
+          type: string
+        message:
+          description: This field will return the response message.
+          example: Success
+          type: string
+        status:
+          description: This field signifies if the request was successful or has an
+            error.
+          enum:
+          - 200 OK
+          - 400 BAD_REQUEST
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 500 INTERNAL_SERVER_ERROR
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          example: OK
+          type: string
+      title: ApiResponseOfstring
+      type: object
+    ChannelActionRequestDTO:
+      properties:
+        action:
+          description: Block or unblock the channel at a card level. Valid values
+            are BLOCK and UNBLOCK. One channel can be blocked at a time.
+          enum:
+          - BLOCK
+          - UNBLOCK
+          example: BLOCK
+          type: string
+        channel:
+          description: Channel which needs to be restricted.The valid values are IN_STORE,
+            ONLINE, ATM, CROSS_BORDER, MAG_STRIPE.
+          enum:
+          - IN_STORE
+          - ONLINE
+          - ATM
+          - CROSS_BORDER
+          - MAG_STRIPE
+          example: IN_STORE
+          type: string
+      required:
+      - action
+      - channel
+      title: Channel action request
+      type: object
+    MCCRestrictionDTO:
+      properties:
+        channelStrategy:
+          description: 'This field accepts the two values:
+
+            WHITE_LIST
+
+            BLACK_LIST
+
+            If this field is not passed then the default value will be WHITE_LIST.
+            If the WHITE_LIST is selected along with the Active status, it means mcc
+            whitelisting is active for the provided list.'
+          enum:
+          - BLACK_LIST
+          - WHITE_LIST
+          example: BLACK_LIST
+          type: string
+        description:
+          description: This field accepts the description for enabling or disabling
+            the mcc restriction.
+          example: Restrict Above MCC Codes
+          type: string
+        merchantCategoryCodes:
+          description: This array accepts the list of 4-digit mcc codes.
+          example:
+          - '3547'
+          items:
+            type: string
+          type: array
+        status:
+          description: 'This field accepts the status and values for this field can
+            be: Active or Inactive. The default value of this field is Active.'
+          enum:
+          - Active
+          - Inactive
+          example: Active
+          type: string
+      required:
+      - description
+      - merchantCategoryCodes
+      title: MCC restriction
+      type: object
+    TransactionChannelResponseDTO:
+      properties:
+        channel:
+          description: This field contains the individual channel name.
+          enum:
+          - IN_STORE
+          - ONLINE
+          - ATM
+          - CROSS_BORDER
+          - MAG_STRIPE
+          - MCC
+          example: IN_STORE
+          type: string
+        status:
+          description: This field contains the status of the individual channel.
+          enum:
+          - Active
+          - Inactive
+          example: Inactive
+          type: string
+      title: Transaction channel response
+      type: object
+    TransactionChannelsResponseDTO:
+      properties:
+        channels:
+          description: This is an array which contains the different spend channels
+            available for a card and their restriction status.
+          items:
+            $ref: '#/components/schemas/TransactionChannelResponseDTO'
+          type: array
+      title: TransactionChannelsResponseDTO
+      type: object
+    TransactionLimitDTO:
+      properties:
+        additionalPercentage:
+          description: This field contains the threshold percentage which is calculated
+            on the value as a threshold or margin which is to be allowed for authorization
+            when a transaction exceeds the specified limits. The format is Decimal(3,4).
+          example: 10
+          format: double
+          type: number
+        createdAt:
+          description: This field contains the timestamp of limit generation.
+          example: 1614323976033
+          format: date-time
+          type: string
+        maskedCardNumber:
+          description: This is the 16-digit masked card number in format 1234-56xx-xxxx-3456.
+          example: 9876-50xx-xxxx-4321
+          type: string
+        status:
+          description: 'This field defines whether a particular limit is active or
+            not. It can accept one of the two values: Active or Inactive.'
+          enum:
+          - Active
+          - Inactive
+          type: string
+        type:
+          description: 'This field accepts the limit type to be set. It can take the
+            following values:
+
+            PER_TRANSACTION_AMOUNT_LIMIT
+
+            DAILY_AMOUNT_LIMIT
+
+            MONTHLY_AMOUNT_LIMIT
+
+            LIFETIME_AMOUNT_LIMIT
+
+            LIFETIME_COUNT_LIMIT
+
+            TRANSACTION_DURATION_LIMIT'
+          enum:
+          - PER_TRANSACTION_AMOUNT_LIMIT
+          - DAILY_AMOUNT_LIMIT
+          - MONTHLY_AMOUNT_LIMIT
+          - LIFETIME_AMOUNT_LIMIT
+          - LIFETIME_COUNT_LIMIT
+          - TRANSACTION_DURATION_LIMIT
+          example: MONTHLY_AMOUNT_LIMIT
+          type: string
+        updatedAt:
+          description: This field contains the timestamp of limit updation.
+          example: 1614323976033
+          format: date-time
+          type: string
+        value:
+          description: This field accepts the values for each card-level limits. It
+            accepts a date range in the yyyymmdd-yyyymmdd format and UTC +00 time
+            zone as a string when type is TRANSACTION_DURATION_LIMIT. Otherwise, it
+            accepts the limit value.
+          example: '90.0'
+          type: string
+      required:
+      - additionalPercentage
+      - status
+      - type
+      - value
+      title: Transaction limit
+      type: object
+    TransactionLimitsDTO:
+      properties:
+        cardHashId:
+          description: Unique card identifier generated while new/add-on card issuance.
+          type: string
+        transactionLimits:
+          description: This array contains an object for each card limit parameter.
+            This object contains the below data elements. Refer to the example for
+            exact structure.
+          items:
+            $ref: '#/components/schemas/TransactionLimitDTO'
+          type: array
+      required:
+      - transactionLimits
+      title: Transaction limits
+      type: object
+    TransactionWalletLimitsDTO:
+      properties:
+        transactionWalletLimits:
+          description: This array contains all the limits applicable for each card.
+          items:
+            $ref: '#/components/schemas/TransactionLimitsDTO'
+          type: array
+      title: Transaction wallet limits
+      type: object
+    ReferenceRateResponseDto:
+      title: ReferenceRateResponseDto
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          description: This field contains the date on which fx rate has to be calculated.
+            The timezone is UTC +00.
+          example: '2022-03-15T06:46:03.000Z'
+        cardScheme:
+          type: string
+          description: This field contains the card scheme provider name.
+          example: VISA
+        cardSchemeFxRate:
+          type: number
+          description: This is the fx rate from cards scheme.
+          format: double
+          example: 1
+        cardSchemeFxRateLastUpdatedAt:
+          type: string
+          description: Last updated timestamp of card scheme fx rate. The timezone
+            is UTC +00.
+          example: '2022-03-15T06:46:03.000Z'
+        cardSchemeFxRateWithFxMarkup:
+          type: number
+          description: This is the cards scheme fx rate with fx markup.
+          format: double
+          example: 1
+        cardSchemeMarkupOverEcb:
+          type: number
+          description: The markup rate over ecb rate. Available for currencies listed
+            in [Euro foreign exchange reference rates](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html)
+          format: double
+          example: 0.349
+        ecbRate:
+          type: number
+          description: The ecb exchange rate fetched for the conversion. Available
+            for currencies listed in [Euro foreign exchange reference rates](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html)
+          format: double
+          example: 1.349
+        ecbRateLastUpdatedAt:
+          type: string
+          description: Last updated timestamp of ecb rate. The timezone is UTC +00.
+            Available for currencies listed in [Euro foreign exchange reference rates](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html)
+          example: '2022-03-15T06:46:03.000Z'
+        fromAmount:
+          type: number
+          description: An amount to be converted.
+          format: double
+          example: 1
+        fromCurrency:
+          type: string
+          description: This field contains the 3-letter [ISO-4217 currency code](https://www.iso.org/iso-4217-currency-codes.html)
+            for the source amount.
+          example: SGD
+        fxMarkup:
+          type: number
+          description: This is the fx markup rate.
+          format: double
+          example: 1
+          default: 0
+        toAmountWithEcbRate:
+          type: number
+          description: The ecb exchange rate with to amount.
+          format: double
+          example: 2.349
+        toAmountWithTransactionFeeAndFxMarkup:
+          type: number
+          description: The amount with transaction fee and fx markup rate.
+          format: double
+          example: 1
+        toCurrency:
+          type: string
+          description: This field contains the 3-letter [ISO-4217 currency code](https://www.iso.org/iso-4217-currency-codes.html)
+            for the destination amount.
+          example: USD
+        transactionFee:
+          type: number
+          description: This is the transaction fee.
+          format: double
+          example: 0.1
+    LocalIsoRequest:
+      properties:
+        acceptorId42:
+          description: This field contains the 15 character acceptor id
+          type: string
+        acceptorNameLocation43:
+          description: This field contains the acceptor name and location
+          type: string
+        acceptorTerminalId41:
+          description: This field contains the 8 character acceptor terminal id
+          type: string
+        aiCountryCode19:
+          description: This field contains the 3 character ai country code
+          example: '702'
+          type: string
+        aiIdentityCode32:
+          description: This field contains the ai identity code
+          type: string
+        authorizationCode38:
+          description: This field contains the 6 character authorization code
+          type: string
+        billingAmount6:
+          description: This field contains the 12 character billing amount
+          example: '000000000100'
+          type: string
+        billingAmountFee30:
+          description: This field contains the billing amount fee30
+          type: string
+        billingAmountFee8:
+          description: This field contains the billing amount fee8
+          type: string
+        billingConversionRate10:
+          description: This field contains the billing conversion rate10
+          type: string
+        billingCurrencyCode51:
+          description: This field contains the 3 character billing currency code
+          example: '840'
+          type: string
+        captureDateYYMM17:
+          description: This field contains the capture date
+          example: '2411'
+          type: string
+        cardSequenceNumber23:
+          description: This field contains the card sequence number
+          type: string
+        conversionDateYYMM16:
+          description: This field contains the conversion date
+          example: '2411'
+          type: string
+        expiryDateYYMM14:
+          description: This field contains the expiry date
+          example: '2411'
+          type: string
+        fiCountryCode21:
+          description: This field contains the 3 character fi country code
+          example: '702'
+          type: string
+        fiIdentityCode33:
+          description: This field contains the fi identity code
+          type: string
+        localDate13:
+          description: This field contains the local date13
+          type: string
+        localTime12:
+          description: This field contains the local time12
+          type: string
+        merchantType18:
+          description: This field contains the 4 character merchant type
+          example: '4563'
+          type: string
+        messageType0:
+          description: This field contains the 4 character message type
+          example: '0100'
+          type: string
+        mid62:
+          description: This field contains the mid62
+          type: string
+        miscData58:
+          description: This field contains the misc data
+          type: string
+        networkInternationalId24:
+          description: This field contains the network international id
+          type: string
+        originalDataElement90:
+          description: This field contains the original data element
+          type: string
+        pan2:
+          description: This field contains the 16 character pan2
+          example: '4611350118036518'
+          type: string
+        posConditionCode25:
+          description: This field contains the 2 character pos condition code
+          example: '07'
+          type: string
+        posEntryCapabilityCode60:
+          description: This field contains the pos entry capability code
+          example: '05'
+          type: string
+        posEntryMode22:
+          description: This field contains the 4 character pos entry mode
+          example: '1020'
+          type: string
+        posPinCaptureCode26:
+          description: This field contains the pos pin capture code
+          type: string
+        processingCode3:
+          description: This field contains the 6 character processing code
+          example: '000000'
+          type: string
+        replacementAmount95:
+          description: This field contains the replacement amount
+          type: string
+        responseCode39:
+          description: This field contains the 2 character response code
+          type: string
+        rrn:
+          description: This field contains the rrn
+          type: string
+        settlementAmount5:
+          description: This field contains the settlement amount
+          type: string
+        settlementAmountFee29:
+          description: This field contains the settlement amount fee
+          type: string
+        settlementConversionRate9:
+          description: This field contains the settlement conversion rate9
+          type: string
+        settlementCurrencyCode50:
+          description: This field contains the settlement currency code
+          example: '702'
+          type: string
+        settlementDateYYMM15:
+          description: This field contains the settlement date
+          example: '2411'
+          type: string
+        settlementProcessingAmountFee31:
+          description: This field contains the settlement processing amount fee
+          type: string
+        stan:
+          description: This field contains the stan
+          type: string
+        traceIdentifier115:
+          description: This field contains the trace identifier
+          type: string
+        track2Data35:
+          description: This field contains the track 2 Data
+          type: string
+        transactionAmount4:
+          description: This field contains the 12 character transaction amount
+          example: '000000000100'
+          type: string
+        transactionAmountFee28:
+          description: This field contains the transaction amount fee
+          type: string
+        transactionCurrencyCode49:
+          description: This field contains the 3 character transaction currency code
+          example: '702'
+          type: string
+      title: Local iso request
+      type: object
+    LocalIsoResponse:
+      properties:
+        additionalAmount:
+          description: This field contains balance inquiry amount
+          type: string
+        authorizationCode:
+          description: This field contains the authorization code
+          type: string
+        dateOfTransaction:
+          description: This field contains the date of transaction
+          type: string
+        responseCode:
+          description: This field contains the response code value
+          type: string
+        rrn:
+          description: This field contains the rrn
+          type: string
+        stan:
+          description: This field contains the stan
+          type: string
+        status:
+          description: This field contains the status
+          type: string
+      title: Local iso response
+      type: object
+    AddCardRequestPHY:
+      allOf:
+      - $ref: '#/components/schemas/AddCardRequestV2'
+      - properties:
+          delivery:
+            $ref: '#/components/schemas/CardAddress'
+      title: Physical card
+      type: object
+    AddCardRequestVIR:
+      allOf:
+      - properties:
+          cardExpiry:
+            description: The expiry date is applicable only for Virtual cards and
+              not applicable for physical cards. This field is in MMYY format. For
+              Virtual cards, the expiry date can be a maximum of 5 years from when
+              the API is used.
+            example: '1126'
+            type: string
+      - $ref: '#/components/schemas/AddCardRequestV2'
+      required:
+      - cardExpiry
+      title: Virtual Card
+      type: object
+    AddCardRequestVIRUP2PHY:
+      allOf:
+      - $ref: '#/components/schemas/AddCardRequestVIR'
+      - $ref: '#/components/schemas/AddCardRequestPHY'
+      title: Virtual to Physical card upgrade
+      type: object
+    CardAddress:
+      properties:
+        addressLine1:
+          description: Address line1 field captures the first line of the address,
+            typically including house number, street name, and any unit/apartment
+            number
+          example: 20 W 34th St.
+          type: string
+        addressLine2:
+          description: Address line2 is an optional field for adding extra details
+            to the address.
+          example: Suite 200
+          type: string
+        city:
+          description: City field is where the city or town name of the address
+          example: New York
+          type: string
+        country:
+          description: Country is two-letter [ISO Alpha-2 country code](doc:currency-and-country-codes)
+            of the address
+          example: SG
+          type: string
+        landmark:
+          description: Landmark is an optional field used to specify a nearby recognizable
+            location or point of reference to assist
+          example: Empire State Building
+          type: string
+        postCode:
+          description: Post code field is where the postal code or ZIP code of the
+            address
+          example: '10001'
+          type: string
+        state:
+          description: State field is where the name of the state, province, or region
+            should be entered for the address
+          example: New York
+          type: string
+      title: Address
+      description: "Delivery address object for card delivery. This is a required\
+        \ field for physical cards.\n **Note**: When this object is used in an API\
+        \ request, addressline1, postcode, and country are mandatory fields."
+      type: object
+  securitySchemes:
+    default:
+      in: header
+      name: x-api-key
+      type: apiKey
+security:
+- default: []

@@ -1,0 +1,2576 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: experience@nium.com
+    name: NIUM Platform
+    url: https://www.nium.com
+  description: NIUM Platform
+  license:
+    name: Copyright (c) 2023 NIUM
+  title: NIUM Platform
+  version: 10.31.2023
+servers:
+- url: https://gatewaysandbox.nium.com/
+tags:
+- name: Client Prefund Account
+  description: REST API's for Client Prefund Account
+- name: Client Settings
+  description: REST API's for Client Settings
+- name: Client Transactions
+  description: REST API's for Client Prefund Account
+paths:
+  /api/v1/client/{clientHashId}/prefund:
+    post:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientPrefundResponseDTO'
+              example:
+                amount: 1000000
+                message: Prefund request added successfully.
+                status: Pending
+                systemReferenceNumber: CP8643048966
+                uniquePayerId: 'null'
+                uniquePaymentId: GB27CLRB04068000020745
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: Internal Server Error
+      tags:
+      - Client Prefund Account
+      deprecated: false
+      description: This API allows our clients to raise a prefund request in the system.
+      operationId: ClientPrefundRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrefundRequestDTO'
+            example:
+              amount: 1000000
+              bankReferenceNumber: '1676699361'
+              clientAccountNumber: '510388598001'
+              comments: National Handmade Granite calculate
+              currencyCode: GBP
+              dateOfTransfer: '2023-02-17'
+              niumAccountNumber: '123876812367'
+              requesterId: '1676699361'
+        description: prefundRequestDTO
+        required: true
+      summary: Client Prefund Request
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/prefundList:
+    get:
+      parameters:
+      - description: amount
+        in: query
+        name: amount
+        required: false
+        schema:
+          type: string
+      - description: bankReferenceNumber
+        in: query
+        name: bankReferenceNumber
+        required: false
+        schema:
+          type: string
+      - description: Unique client Id assigned to the client during the onboarding
+          process.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: currency
+        in: query
+        name: currency
+        required: false
+        schema:
+          type: string
+      - description: endDate
+        in: query
+        name: endDate
+        required: false
+        schema:
+          type: string
+      - allowEmptyValue: false
+        description: 'The sort order for the results. Acceptable values are ASC or
+          DESC.
+
+          The default order value is DESC.'
+        in: query
+        name: order
+        required: false
+        schema:
+          default: DESC
+          type: string
+      - allowEmptyValue: false
+        description: 'This API may have lot of data in response and supports pagination.
+          Entire response data is divided into pages with size as the upper limit
+          on the number of data. Integer values from 0 onwards are acceptable.
+
+          Default page is 0.'
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+      - description: prefundStatus
+        in: query
+        name: prefundStatus
+        required: false
+        schema:
+          type: string
+      - allowEmptyValue: false
+        description: 'The upper limit on the number of items to be fetched with each
+          call. Integer values from 1 onwards are acceptable.
+
+          Default size is 20.'
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+      - description: startDate
+        in: query
+        name: startDate
+        required: false
+        schema:
+          type: string
+      - description: systemReferenceNumber
+        in: query
+        name: systemReferenceNumber
+        required: false
+        schema:
+          type: string
+      - description: uniquePayerId
+        in: query
+        name: uniquePayerId
+        required: false
+        schema:
+          type: string
+      - description: uniquePaymentId
+        in: query
+        name: uniquePaymentId
+        required: false
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                pagination:
+                  totalElements: 8
+                  totalPages: 1
+                prefundList:
+                - amount: 1000000
+                  bankReferenceNumber: '1676699618'
+                  clientAccountNumber: '510388598001'
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Cotton indexing Soft
+                  createdAt: '2023-02-18 05:53:38'
+                  createdBy: applicationLevelUser
+                  currencyCode: GBP
+                  dateOfCreation: '2023-02-18 05:53:38'
+                  dateOfTransfer: '2023-02-17'
+                  imageUrl: null
+                  niumAccountNumber: '123876812367'
+                  status: Pending
+                  systemReferenceNumber: CP8643048966
+                  uniquePayerId: 'null'
+                  uniquePaymentId: GB27CLRB04068000020745
+                  updatedAt: '2023-02-18 05:53:38'
+                  updatedBy: applicationLevelUser
+                - amount: 1000000
+                  bankReferenceNumber: '1676699344'
+                  clientAccountNumber: '510388598001'
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Steel Flat
+                  createdAt: '2023-02-18 05:49:05'
+                  createdBy: applicationLevelUser
+                  currencyCode: GBP
+                  dateOfCreation: '2023-02-18 05:49:05'
+                  dateOfTransfer: '2023-02-17'
+                  imageUrl: null
+                  niumAccountNumber: '123876812367'
+                  status: Pending
+                  systemReferenceNumber: CP5759556666
+                  uniquePayerId: null
+                  uniquePaymentId: GB27CLRB04068000020745
+                  updatedAt: '2023-02-18 05:49:05'
+                  updatedBy: applicationLevelUser
+                - amount: 100000
+                  bankReferenceNumber: '1676558247'
+                  clientAccountNumber: '510388598001'
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Buckinghamshire Virgin
+                  createdAt: '2023-02-16 14:37:27'
+                  createdBy: applicationLevelUser
+                  currencyCode: SGD
+                  dateOfCreation: '2023-02-16 14:37:27'
+                  dateOfTransfer: '2023-02-16'
+                  imageUrl: null
+                  niumAccountNumber: '123876812367'
+                  status: Pending
+                  systemReferenceNumber: CP2174324012
+                  uniquePayerId: null
+                  uniquePaymentId: '8850932754656'
+                  updatedAt: '2023-02-16 14:37:27'
+                  updatedBy: applicationLevelUser
+                - amount: 119
+                  bankReferenceNumber: REF66607443
+                  clientAccountNumber: 01012039010
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Created by STP processing
+                  createdAt: '2023-02-13 07:47:04'
+                  createdBy: SYSTEM
+                  currencyCode: SGD
+                  dateOfCreation: '2023-02-13 07:47:04'
+                  dateOfTransfer: '2023-02-13'
+                  imageUrl: null
+                  niumAccountNumber: null
+                  status: Approved
+                  systemReferenceNumber: CP6354451725
+                  uniquePayerId: null
+                  uniquePaymentId: '8850932754656'
+                  updatedAt: '2023-02-13 07:57:58'
+                  updatedBy: SYSTEM
+                - amount: 119
+                  bankReferenceNumber: REF88623700
+                  clientAccountNumber: 01012039010
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Created by STP processing
+                  createdAt: '2023-02-13 07:46:48'
+                  createdBy: SYSTEM
+                  currencyCode: SGD
+                  dateOfCreation: '2023-02-13 07:46:48'
+                  dateOfTransfer: '2023-02-13'
+                  imageUrl: null
+                  niumAccountNumber: null
+                  status: Approved
+                  systemReferenceNumber: CP4703667388
+                  uniquePayerId: null
+                  uniquePaymentId: '8850932754656'
+                  updatedAt: '2023-02-13 07:46:49'
+                  updatedBy: SYSTEM
+                - amount: 119
+                  bankReferenceNumber: REF19347912
+                  clientAccountNumber: 01012039010
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Created by STP processing
+                  createdAt: '2023-02-13 07:43:58'
+                  createdBy: SYSTEM
+                  currencyCode: SGD
+                  dateOfCreation: '2023-02-13 07:43:58'
+                  dateOfTransfer: '2023-02-13'
+                  imageUrl: null
+                  niumAccountNumber: null
+                  status: Approved
+                  systemReferenceNumber: CP3548687406
+                  uniquePayerId: null
+                  uniquePaymentId: '8850932754656'
+                  updatedAt: '2023-02-13 07:43:58'
+                  updatedBy: SYSTEM
+                - amount: 119
+                  bankReferenceNumber: REF92688572
+                  clientAccountNumber: 01012039010
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Created by STP processing
+                  createdAt: '2023-02-13 07:43:35'
+                  createdBy: SYSTEM
+                  currencyCode: SGD
+                  dateOfCreation: '2023-02-13 07:43:35'
+                  dateOfTransfer: '2023-02-13'
+                  imageUrl: null
+                  niumAccountNumber: null
+                  status: Approved
+                  systemReferenceNumber: CP0918193198
+                  uniquePayerId: null
+                  uniquePaymentId: '8850932754656'
+                  updatedAt: '2023-02-13 07:43:35'
+                  updatedBy: SYSTEM
+                - amount: 100
+                  bankReferenceNumber: REF43046825
+                  clientAccountNumber: 01012039010
+                  clientCode: baa14fc3-dd5a-4629-8842-65848be6f597
+                  clientName: PLATFORM DEMO
+                  comments: Created by STP processing
+                  createdAt: '2023-02-13 07:43:19'
+                  createdBy: SYSTEM
+                  currencyCode: SGD
+                  dateOfCreation: '2023-02-13 07:43:19'
+                  dateOfTransfer: '2023-02-13'
+                  imageUrl: null
+                  niumAccountNumber: null
+                  status: Approved
+                  systemReferenceNumber: CP0989489876
+                  uniquePayerId: null
+                  uniquePaymentId: '8850932754656'
+                  updatedAt: '2023-02-13 07:43:19'
+                  updatedBy: SYSTEM
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinApiError'
+          description: Internal Server Error
+      tags:
+      - Client Prefund Account
+      deprecated: false
+      description: This API allows you to fetch the details of client prefund requests.
+      operationId: FetchClientPrefundRequest
+      summary: Fetch Client Prefund Request
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/balances:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AccountResponseDTO'
+                type: array
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Client Prefund Account
+      deprecated: false
+      description: This API allows you to fetch the available prefund balance for
+        a client.
+      operationId: ClientPrefundBalances
+      summary: Client Prefund Balances
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDetailResponseDTO2'
+              example:
+                accountValidation: false
+                allowThirdPartyFunding: false
+                applePaySupport: false
+                cardTxnNarrative: 'null'
+                cardTxnProductCode: 'null'
+                cardTxnRedirectUrl: 'null'
+                clientHashId: 82c68bab-3c04-3451-8d7b-cb38ad713d97
+                clientIdNumber: ''
+                complianceCallbackUrl: 'null'
+                complianceStatusCallbackUrl: https://acme-notification.com/callback/compliance?customerHashId=%s
+                contactNo: '+6588008100'
+                countryCode: SG
+                currencies:
+                - authorizationOrder: 0
+                  currencyCode: SGD
+                  decimalUnit: 2
+                  remittanceAllowed: false
+                - authorizationOrder: 1
+                  currencyCode: AUD
+                  decimalUnit: 2
+                  remittanceAllowed: false
+                - authorizationOrder: 2
+                  currencyCode: HKD
+                  decimalUnit: 2
+                  remittanceAllowed: false
+                - authorizationOrder: 3
+                  currencyCode: USD
+                  decimalUnit: 2
+                  remittanceAllowed: false
+                - authorizationOrder: 4
+                  currencyCode: EUR
+                  decimalUnit: 2
+                  remittanceAllowed: false
+                currencyAuthorizationType: MULTI
+                customerAuthUrl: 'null'
+                deduplicationFlag: false
+                ecomTxnValidationBaseUrl: https://<ClientBaseURL>
+                ecomTxnValidationPreference: OTP_AND_PASSCODE
+                ekycRedirectUrl: https://acme-notification.com/callback/redirect?customerHashId=%s
+                email: admin@acme.com
+                fundingInstrumentType: RESTRICTED
+                googlePaySupport: false
+                licenseEntity: THIRD_PARTY
+                logoUrl: 'null'
+                markup: 0.5
+                minimumCustomerAge: 18
+                multiCurrencySupported: false
+                name: Acme Inc
+                notificationWebhook: https://acme-notification.com/webhook
+                paymentIds:
+                - bankName: DBS_SG
+                  currencyCode: SGD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '8850932057194'
+                - bankName: DBS_HK
+                  currencyCode: HKD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '7770215'
+                - bankName: JPM_SG
+                  currencyCode: SGD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '20024394487'
+                - bankName: JPM_SG
+                  currencyCode: HKD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '20024394487'
+                - bankName: JPM_SG
+                  currencyCode: AUD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '20024394487'
+                - bankName: JPM_SG
+                  currencyCode: USD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '20024394487'
+                - bankName: JPM_SG
+                  currencyCode: EUR
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '20024394487'
+                - bankName: JPM_AU
+                  currencyCode: HKD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '800205697'
+                - bankName: JPM_AU
+                  currencyCode: AUD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '800205697'
+                - bankName: JPM_AU
+                  currencyCode: USD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '800205697'
+                - bankName: JPM_AU
+                  currencyCode: EUR
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '800205697'
+                - bankName: CFSB_US
+                  currencyCode: USD
+                  uniquePayerId: 'null'
+                  uniquePaymentId: '85140004534'
+                prefundName: Acme Inc
+                regulatoryRegion: SG
+                samsungPaySupport: false
+                whitelistedRemitterAccounts: []
+                allowInterClientWalletTransfer: true
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductApiError'
+          description: Internal Server Error
+      tags:
+      - Client Settings
+      deprecated: false
+      description: This API will help you to fetch the configuration details of a
+        client.
+      operationId: ClientDetails
+      summary: Client Details
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v2/client/{clientHashId}/fees:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientFeeDetailsResponseDTO'
+                type: array
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Client Settings
+      deprecated: false
+      description: 'This API provides all the fees that have been set at the client
+        level by NIUM.
+
+        Refer to the following [Fees User Guide](doc:fees) for the Glossary of Fees
+        for pre-defined fees supported on the system'
+      operationId: FeeDetails
+      summary: Fee Details
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/transactions:
+    get:
+      parameters:
+      - description: This parameter can be used to filter the transactions based on
+          the authorization code. In case of fund wallet transactions you can provide
+          the systemReferenceNumber as value.
+        in: query
+        name: authCode
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on auth currency
+          and accepts 3-letter [ISO-4217 transaction currency code](https://docs.nium.com/apis/docs/currency-and-country-codes).
+        in: query
+        name: authCurrency
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on businessTransaction
+          flag.
+        in: query
+        name: businessTransaction
+        required: false
+        schema:
+          type: boolean
+      - description: This field can apply the filter based on the unique card identifier
+          generated during new/add-on card issuance.
+        in: query
+        name: cardHashId
+        required: false
+        schema:
+          type: string
+      - description: This field contains the unique child customer identifier generated
+          when new child customer created.
+        in: query
+        name: childCustomerHashId
+        required: false
+        schema:
+          type: string
+      - description: "Unique client identifier generated and shared before API handshake.\n\
+          >\u2139\uFE0F INFO \n>Query parameters are optional. If query parameters\
+          \ are not passed then by default three months transactions will be returned."
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique identifier generated with customer creation.
+        in: query
+        name: customerHashId
+        required: false
+        schema:
+          type: string
+      - description: End date for fetching the transaction details. The format for
+          endDate is YYYY-MM-DD.
+        in: query
+        name: endDate
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on 4-digit Merchant
+          Category Codes.
+        in: query
+        name: mcc
+        required: false
+        schema:
+          type: string
+      - description: This parameter describes the merchant's type of business product
+          or service, also known as the Merchant Category Code (MCC) such as Airlines,
+          Restaurants etc.
+        in: query
+        name: merchantCategories
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on the merchant
+          city field.
+        in: query
+        name: merchantCity
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on comma-separated
+          list of 2-letter ISO merchant countries.
+        in: query
+        name: merchantCountries
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on the merchant
+          country field.
+        in: query
+        name: merchantCountry
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on the merchant
+          name field.
+        in: query
+        name: merchantName
+        required: false
+        schema:
+          type: string
+      - description: The sort order for the results.
+        example: DESC
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - description: This API may have lot of data in response and supports pagination.
+          Entire response data is divided into pages with size as the upper limit
+          on the number of data. Integer values from 0 onwards are acceptable.\nDefault
+          page is 0.
+        example: 0
+        in: query
+        name: page
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: This parameter can filter the transactions based on comma-separated
+          paymentInstrumentHashId.
+        in: query
+        name: paymentInstrumentHashId
+        required: false
+        schema:
+          type: string
+      - description: Property
+        in: query
+        name: property
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on the settlement
+          date of the transaction in format yyyyMMdd.
+        in: query
+        name: settlementDate
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on settlement
+          status. The detailed list of possible values is available in the response
+          of this API.
+        in: query
+        name: settlementStatus
+        required: false
+        schema:
+          type: string
+      - description: This will decide the number of elements per page. Typical values
+          can be 1-20.
+        example: 20
+        in: query
+        name: size
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: From date for fetching the transaction details. The format for
+          startDate is YYYY-MM-DD.
+        in: query
+        name: startDate
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on status. The
+          detailed list of possible values is available in the response of this API.
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - 'NULL'
+          - IN_PROGRESS
+          - ACTION_REQUIRED
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - COMPLETED
+          - ERROR
+          - REJECT
+          - EXPIRED
+          type: string
+      - description: This parameter can filter the transactions based on systemTraceAuditNumber.
+        in: query
+        name: systemTraceAuditNumber
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions, based on the exact
+          value of tagKey defined against transactions. This can be used as an independent
+          search parameter.
+        in: query
+        name: tagKey
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions, based on the approximating
+          value of tagValue(that may be mapped for a tagKey defined against transactions).
+          This can be used as an independent search parameter.
+        in: query
+        name: tagValue
+        required: false
+        schema:
+          type: string
+      - description: This field contains the 3-letter [ISO-4217 transaction currency
+          code](https://www.iso.org/iso-4217-currency-codes.html).
+        in: query
+        name: transactionCurrency
+        required: false
+        schema:
+          type: string
+      - description: This field contains the transaction can be one of the complete
+          list of transactions mentioned in [Glossary of Transaction Types](https://docs.nium.com/baas/get-transactions#glossary-of-transaction-types).
+        in: query
+        name: transactionType
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on transactionsLabelsKey.
+        in: query
+        name: transactionsLabelsKey
+        required: false
+        schema:
+          type: string
+      - description: This parameter can filter the transactions based on transactionsLabelsValue.
+        in: query
+        name: transactionsLabelsValue
+        required: false
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: query
+        name: walletHashId
+        required: false
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientTransactionsResponseDTO'
+              example:
+                content:
+                - tags:
+                    department: ACCOUNTS
+                    internalReferenceNumber: '123456789'
+                    sourcingChannel: DIGITAL
+                    testKey1: testkeyvalue1
+                  acquirerCountryCode: 'null'
+                  acquiringInstitutionCode: 'null'
+                  authAmount: 62
+                  authCode: FW4526424507
+                  authCurrencyCode: SGD
+                  billingAmount: 62
+                  billingConversionRate: 'null'
+                  billingCurrencyCode: SGD
+                  billingReplacementAmount: 0
+                  businessTransaction: false
+                  cardHashID: 'null'
+                  cardTransactionAmount: 62
+                  comments: Bank transfer wallet credit
+                  complianceStatus: RFI_REQUESTED
+                  createdAt: '2021-03-26 14:22:48'
+                  currentWithHoldingBalance: 0
+                  customerHashID: a6ffe915-b280-4758-acdc-666469529ac7
+                  dateOfTransaction: '2021-03-26'
+                  debit: false
+                  effectiveAuthAmount: 62
+                  labels:
+                    bankReferenceNumber: DUMMYBANKREF
+                    destinationCountry: SG
+                    iccPayMode: FAST
+                    iccReceivedAt: '2019-04-15T12:26:01.31Z'
+                    iccSource: DBSSG
+                    remitterAccountNumber: '9876'
+                    remitterBankName: Bank of Singapore
+                    remitterName: Paul Walker
+                    uniquePayerId: DBS cards
+                    uniquePaymentId: '8850932067971'
+                  localDate: 'null'
+                  localTime: 'null'
+                  maskedCardNumber: 'null'
+                  mcc: 'null'
+                  merchantCategory: ''
+                  merchantCity: 'null'
+                  merchantCountry: 'null'
+                  merchantID: 'null'
+                  merchantLatitude: 'null'
+                  merchantLongitude: 'null'
+                  merchantName: 'null'
+                  merchantNameLocation: 'null'
+                  merchantTaggedName: 'null'
+                  merchantZoomIndex: 'null'
+                  originalAuthorizationCode: 'null'
+                  partnerReferenceNumber: 'null'
+                  paymentInstrumentHashId: 'null'
+                  posConditionCode: 'null'
+                  posEntryCapabilityCode: 'null'
+                  posEntryMode: '1020'
+                  previousBalance: 1191
+                  processingCode: 'null'
+                  receiptFileName: 'null'
+                  receiptType: 'null'
+                  retrievalReferenceNumber: FW4526424507
+                  rfiDetails:
+                  - description: agreementOfSale
+                    documentType: POA
+                    mandatory: true
+                    remarks: Provide an agreement for sale
+                    requiredData:
+                    - fieldLabel: Agreement Of Sale
+                      fieldValue: identificationDocument
+                      type: document
+                    rfiHashId: 9c28bbfb-4c83-44cb-9a07-8e9f0596558a
+                    rfiId: 8261ad61-bac1-4987-9ef4-a4dab9a516f1
+                    rfiStatus: RFI_RESPONDED
+                    transactionEntityType: DEBTOR
+                    type: document
+                  rhaTransactionId: 'null'
+                  settlementAmount: 62
+                  settlementAuthAmount: 62
+                  settlementDate: 'null'
+                  settlementStatus: UNSETTLED
+                  settlementTransactionAmount: 62
+                  status: PENDING
+                  systemTraceAuditNumber: FW4526424507
+                  terminalID: 'null'
+                  transactionCurrencyCode: SGD
+                  transactionReplacementAmount: 0
+                  transactionType: Wallet_Credit_Mode_Offline
+                  updatedAt: '2021-03-26 14:22:54'
+                  walletHashID: 385b5ccb-f9f4-47de-b9d8-3fb2f3d9224c
+                totalElements: 1
+                totalPages: 1
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Client Transactions
+      deprecated: false
+      description: This API allows you to fetch transaction details at the client
+        level.
+      operationId: ClientTransactions
+      summary: Client Transactions
+      x-info:
+        apiType: external
+      security:
+      - default: []
+components:
+  schemas:
+    PayinApiError:
+      properties:
+        errors:
+          description: List of errors occurred.
+          example:
+          - field1 is not valid
+          - field2 is not valid
+          items:
+            type: string
+          type: array
+        message:
+          description: Error message descriptor.
+          example: Error message descriptor.
+          type: string
+        status:
+          description: 'HttpStatus of the request : BAD_REQUEST, INTERNAL_SERVER_ERROR.'
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+          example: BAD_REQUEST
+          type: string
+      title: ApiError
+      type: object
+    ClientPrefundResponseDTO:
+      properties:
+        amount:
+          description: This field contains the amount transferred to account.
+          example: 1000
+          format: double
+          type: number
+        message:
+          description: This field will return a success message if the prefund request
+            added successfully
+          example: Prefund request added successfully
+          type: string
+        status:
+          description: This field contains the status.
+          enum:
+          - Pending
+          - Approved
+          - Rejected
+          example: Pending
+          type: string
+        systemReferenceNumber:
+          description: This field contains the transaction reference number or identifier
+            generated by card issuance platform for the client prefund request.
+          example: CP8790469553
+          type: string
+        uniquePayerId:
+          description: This field contains the unique email ID provided to the customer
+            in addition to uniquePaymentId for supported regions and configuration,
+            or else it will be null, for example, abc12_ca@nium.com.
+          example: 'null'
+          type: string
+        uniquePaymentId:
+          description: This field contains the virtual account number per currency
+            provided to customers for supported regions and configuration, for example,
+            IBAN in EU, virtual account number from Moonova in AU, or else, it will
+            be null.
+          example: 'null'
+          type: string
+      title: Client prefund response
+      type: object
+    PrefundRequestDTO:
+      properties:
+        amount:
+          description: This field accepts the amount transferred to account
+          example: 1000
+          format: double
+          type: number
+        bankReferenceNumber:
+          description: This field accepts the reference number provided by the bank
+            during fund transfer
+          example: '712347512376'
+          type: string
+        beneAccountNumber:
+          description: This field accepts the virtual account number
+          example: 800207849
+          type: string
+        clientAccountNumber:
+          description: This field accepts the client's bank account number for reference
+            from which the client has transferred money.
+          example: '615234671328'
+          type: string
+        comments:
+          description: This field accepts the comments which need to be passed, if
+            any.
+          example: Client Prefund
+          type: string
+        currencyCode:
+          description: This field accepts the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes).
+          example: SGD
+          type: string
+        dateOfTransfer:
+          description: This field accepts the date of the client's prefund transfer
+            to the NIUM bank account. This request can be raised for a transfer within
+            30 days.
+          example: '2019-11-24'
+          type: string
+        niumAccountNumber:
+          description: This field accepts the NIUM account number to which the client
+            has transferred the money.
+          example: '133876812367'
+          type: string
+        requesterId:
+          description: This field accepts the client's unique requester ID.
+          example: '8123768123'
+          type: string
+      required:
+      - amount
+      - currencyCode
+      title: Prefund request
+      type: object
+    ProductApiError:
+      properties:
+        errors:
+          description: List of errors occurred.
+          example:
+          - field1 is not valid
+          - field2 is not valid
+          items:
+            type: string
+          type: array
+        message:
+          description: Error message descriptor.
+          example: Error message descriptor.
+          type: string
+        status:
+          description: 'HttpStatus of the request : BAD_REQUEST, INTERNAL_SERVER_ERROR.'
+          enum:
+          - 200 OK
+          - 400 BAD_REQUEST
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 500 INTERNAL_SERVER_ERROR
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          example: BAD_REQUEST
+          type: string
+      title: ApiError
+      type: object
+    AutoSweepBankDetails:
+      properties:
+        bankAccountDetails:
+          $ref: '#/components/schemas/BankAccountDetails'
+        clientRegisteredAddress:
+          $ref: '#/components/schemas/RegisteredAddress'
+      title: AutoSweep bank details
+      type: object
+    BankAccountDetails:
+      properties:
+        accountName:
+          type: string
+          description: Name of the beneficiary for the bank account.
+        accountNumber:
+          type: string
+          description: The bank account number.
+        bankName:
+          type: string
+          description: Name of the bank.
+        currency:
+          type: string
+          description: The currency in which the auto sweep has to occur.
+        routingType:
+          type: string
+          description: The routing type of the bank account.
+        routingValue:
+          type: string
+          description: The routing value of the bank account.
+      title: Bank account details
+      type: object
+    ClientCurrencyResponseDTO:
+      properties:
+        authorizationOrder:
+          description: This is the authorization order based on priority for available
+            currencies. The order starts from 0 as a highest priority.
+          example: false
+          format: int32
+          type: integer
+        currencyCode:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes).
+          example: SGD
+          type: string
+        decimalUnit:
+          description: This field contains the decimal unit which will be used for
+            rounding off, for example 0
+          example: 0
+          format: int32
+          type: integer
+        fxSellAllowed:
+          description: This field indicates if forex sell is allowed or not for the
+            currency.
+          example: false
+          type: boolean
+        remittanceAllowed:
+          description: This field specifies if the remittance is allowed with the
+            respective currency or not.
+          example: false
+          type: boolean
+      title: Client currency response
+      type: object
+    ClientDetailResponseDTO2:
+      properties:
+        accountValidation:
+          description: This is applicable to RHA clients. This field will ensure whether
+            the account-validation transactions are forwarded to client or not
+          example: false
+          type: boolean
+        allowInterClientWalletTransfer:
+          description: This field indicates if inter client wallet transfer is enabled.
+          example: false
+          type: boolean
+        allowThirdPartyFunding:
+          description: This field specifies if third party funding is allowed or not.
+          example: false
+          type: boolean
+        applePaySupport:
+          description: This field contains the flag for apple pay support.
+          example: false
+          type: boolean
+        autoSweepBankDetails:
+          $ref: '#/components/schemas/AutoSweepBankDetails'
+        billingAddressAsCorporate:
+          description: This field indicates whether an individual customer at the
+            child level should have the same billing address as the business address
+            of the corporate customer at the parent level.
+          example: false
+          type: boolean
+        cardTxnNarrative:
+          description: This field specifies the default transaction narrative.
+          example: 'null'
+          type: string
+        cardTxnProductCode:
+          description: This field specifies the internal card transaction product
+            code.
+          example: 'null'
+          type: string
+        cardTxnRedirectUrl:
+          description: This field contains the card transaction redirected URL.
+          example: 'null'
+          type: string
+        childMustHaveParent:
+          description: This field indicates whether an individual customer must be
+            treated as a child card and be associated with a corporate customer at
+            the parent level.
+          example: false
+          type: boolean
+        clientHashId:
+          description: This field contains the unique client identifier generated
+            and shared before API handshake.
+          example: 82c68bab-3c04-3451-8d7b-cb38ad713d97
+          format: uuid
+          type: string
+        clientIdNumber:
+          description: This field shall be deprecated in future.
+          type: string
+        complianceCallbackUrl:
+          description: This field specifies the compliance callback URL.
+          example: 'null'
+          type: string
+        complianceStatusCallbackUrl:
+          description: This field contains the redirection URL for compliance callback.
+          example: https://acme-notification.com/callback/compliance?customerHashId=%s
+          type: string
+        confirmationOfPayee:
+          description: This field indicates whether Confirmation of Payee is allowed
+            or not.
+          example: false
+          type: boolean
+        contactNo:
+          description: This field contains the client's contact number.
+          example: '6588008100'
+          type: string
+        countryCode:
+          description: This field contains the 3-letter ISO-4217 currency code.
+          example: SG
+          type: string
+        currencies:
+          description: This is an array objects which holds currency details.
+          items:
+            $ref: '#/components/schemas/ClientCurrencyResponseDTO'
+          type: array
+        currencyAuthorizationType:
+          description: This field denotes the authorization type of a client. The
+            valid values are SINGLE, DUAL, MULTI, and AUTO_SWEEP.
+          enum:
+          - SINGLE
+          - DUAL
+          - MULTI
+          - AUTO_SWEEP
+          example: MULTI
+          type: string
+        customFeeEnabled:
+          description: This field contains the client preference to levy custom fee.
+          example: false
+          type: boolean
+        customerAuthUrl:
+          description: This field contains the customer authorization URL.
+          example: 'null'
+          type: string
+        deduplicationFlag:
+          description: This field contains the mobile/email uniqueness flag.
+          example: false
+          type: boolean
+        ekycRedirectUrl:
+          type: string
+        email:
+          description: This field contains the client's email Id.
+          example: admin@acme.com
+          type: string
+        fundingInstrumentType:
+          description: This field is used to define whether the customer is allowed
+            to fund their wallet or not. If yes that is not RESTRICTED, then either
+            using DEBIT CARD or both DEBIT and CREDIT cards.
+          enum:
+          - RESTRICTED
+          - ONLY_DEBIT
+          - CREDIT_AND_DEBIT
+          example: RESTRICTED
+          type: string
+        googlePaySupport:
+          description: This field contains the flag for google pay support.
+          example: false
+          type: boolean
+        licenseEntity:
+          description: 'This field contains the license ownership for a client.The
+            possible values are:'
+          enum:
+          - NIUM
+          - THIRD_PARTY
+          example: THIRD_PARTY
+          type: string
+        logoUrl:
+          description: This field contains the client's logo URL.
+          example: 'null'
+          type: string
+        markup:
+          description: This field contains the cross currency transaction markup value.
+          example: 0.5
+          format: double
+          type: number
+        minimumCustomerAge:
+          description: This field contains the minimum customer age which should be
+            18 years. Discuss with your NIUM account manager for any special use-cases.
+          example: 18
+          format: int32
+          type: integer
+        name:
+          description: This field contains the name of a client.
+          example: Acme In
+          type: string
+        notificationWebhook:
+          description: This field contains the Webhook notification redirection URL.
+          example: https://acme-notification.com/webhook
+          type: string
+        paymentIds:
+          description: This is an array object which holds the client payment Id response
+            details.
+          items:
+            $ref: '#/components/schemas/PaymentIdsDTO'
+          type: array
+        postFundedPayout:
+          description: This field contains the Post Funded Payout of the client.
+          example: false
+          type: boolean
+        prefundName:
+          description: This field contains the name defined for ICC transactions
+          example: Acme Inc
+          type: string
+        regulatoryRegion:
+          description: This field contains the regulatory region of the client.
+          enum:
+          - SG
+          - EU
+          - AU
+          - HK
+          - UK
+          example: SG
+          type: string
+        samsungPaySupport:
+          description: This field contains the flag for samsung pay support.
+          example: false
+          type: boolean
+        whitelistedRemitterAccounts:
+          description: This is an array object which holds the remitter accounts which
+            are whitelisted for the client.
+          items:
+            $ref: '#/components/schemas/RemitterAccountWhiteList'
+          type: array
+      title: Client detail response
+      type: object
+    PaymentIdsDTO:
+      properties:
+        accountName:
+          description: This field contains the name of the account.
+          example: John
+          type: string
+        accountType:
+          description: This field contains the type of an account.
+          enum:
+          - LOCAL
+          - GLOBAL
+          - LOCAL+GLOBAL
+          example: LOCAL
+          type: string
+        bankAddress:
+          description: This field contains the full address of the bank.
+          example: 108,MG Road
+          type: string
+        bankName:
+          description: 'This field contains the bank name.The possible values are:'
+          enum:
+          - BOL_LT
+          - MONOOVA_AU
+          - DBS_HK
+          - DBS_SG
+          - JPM_AU
+          - JPM_SG
+          - CB_GB
+          - CFSB_US
+          example: DBS_SG
+          type: string
+        bankNameFull:
+          description: This field contains the full name of the bank.
+          example: DBS
+          type: string
+        currencyCode:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes).
+          example: SGD
+          type: string
+        routingCodeType1:
+          description: This field contains the routing code type 1.
+          type: string
+        routingCodeType2:
+          description: This field contains the routing code type 2.
+          type: string
+        routingCodeValue1:
+          description: This field contains the routing code type 1 value.
+          type: string
+        routingCodeValue2:
+          description: This field contains the routing code type 2 value.
+          type: string
+        uniquePayerId:
+          description: This is a unique email Id provided to the customer in addition
+            to uniquePaymentId for supported regions and configuration, or else it
+            will be null, for example, abc12_ca@nium.com.
+          example: 'null'
+          type: string
+        uniquePaymentId:
+          description: This field is the virtual account number per currency provided
+            to customers for supported regions and configuration, for example, IBAN
+            in EU, virtual account number from Moonova in AU, or else, it will be
+            null.
+          example: '8850932057194'
+          type: string
+      title: PaymentIds
+      type: object
+    RegisteredAddress:
+      properties:
+        addressLine1:
+          description: 'This field accepts the address line1 of the registered address
+            for the new corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
+        addressLine2:
+          description: 'This field accepts the address line2 of the registered address
+            for the new corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Optional
+
+            UK: Optional
+
+            SG: Optional'
+          type: string
+        city:
+          description: 'This field accepts the city name of the registered address
+            for the new corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
+        country:
+          description: 'This field accepts the [2-letter ISO Alpha-2](https://nium-documents.s3-eu-west-1.amazonaws.com/spend-documents/Country+Code.pdf)
+            country code of the registered address for the corporate entity to be
+            onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
+        postcode:
+          description: 'This field accepts the zip code or postal code of the registered
+            address for the corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
+        state:
+          description: 'This field accepts the state for the new corporate entity
+            to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
+      title: RegisteredAddress
+      type: object
+    RemitterAccountWhiteList:
+      properties:
+        active:
+          description: This field will return true if the remittance account is active
+            else this will return false
+          example: false
+          type: boolean
+        remitterAccountNumber:
+          description: This field contains the remitter account number, for example,
+            9890098900
+          example: '9890098900'
+          type: string
+        remitterAllowedCurrency:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the allowed remittance currencies.
+          type: string
+      title: Remitter account allowlist
+      type: object
+    AccountResponseDTO:
+      properties:
+        accountType:
+          description: This field contains the name of the currency pool, for example,
+            "currency pool".
+          enum:
+          - NIUM_POOL
+          - CLIENT_POOL
+          - WALLET_POOL
+          - INCOME_POOL
+          - EXPENSE_POOL
+          - RECEIVABLE_POOL
+          - UNSETTLED_POOL
+          - PAYABLE_POOL
+          - SUSPENSE_POOL
+          - HOLD_POOL
+          - REMIT_POOL
+          - NETWORK_POOL
+          example: CLIENT_POOL
+          type: string
+        balance:
+          description: This field contains the available balance in the pool mentioned
+            in accountType field.
+          example: 0
+          format: double
+          type: number
+        createdAt:
+          description: This field contains the date and time of create for an account
+            type.
+          example: '2020-07-14 05:16:09'
+          format: date-time
+          type: string
+        currency:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            in which the balance is specified.
+          example: '0.0'
+          type: string
+        isDefault:
+          description: This flag will be true only for base currency and false for
+            other currencies.
+          example: 'true'
+          type: string
+        updatedAt:
+          description: This field contains the date and time of last update for an
+            account type.
+          example: '2020-07-14 05:16:09'
+          format: date-time
+          type: string
+      title: Account
+      type: object
+    WalletApiError:
+      properties:
+        errors:
+          description: List of errors occurred.
+          example:
+          - field1 is not valid
+          - field2 is not valid
+          items:
+            type: string
+          type: array
+        message:
+          description: Error message descriptor.
+          example: Error message descriptor.
+          type: string
+        status:
+          description: 'HttpStatus of the request : BAD_REQUEST, INTERNAL_SERVER_ERROR.'
+          enum:
+          - 200 OK
+          - 400 BAD_REQUEST
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 500 INTERNAL_SERVER_ERROR
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          example: BAD_REQUEST
+          type: string
+      title: ApiError
+      type: object
+    ClientFeeDetailsResponseDTO:
+      properties:
+        default:
+          type: boolean
+        fees:
+          description: This is an array which contains the fees details.
+          items:
+            $ref: '#/components/schemas/FeeResponseDTO'
+          type: array
+        segment:
+          description: This field contains the fee segment associated with a client.
+          example: Silver
+          type: string
+        status:
+          description: 'This field contains the status and the possible values are:
+
+            Active
+
+            Inactive'
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - SUSPENDED
+          - UPLOADED
+          - APPROVED
+          - REJECTED
+          - FAILED
+          - SUCCESS
+          - FAILURE
+          - PARTIALLY SUCCESS
+          - SYNC
+          - NOT SYNC
+          - PENDING
+          - REQUIRES_ACTION
+          - CLEAR
+          - DECLINED
+          - ACCOUNT_BLOCKED
+          - AMOUNT_BLOCKED
+          example: ACTIVE
+          type: string
+      title: Client fee details response
+      type: object
+    ClientTransactionsResponseDTO:
+      properties:
+        content:
+          description: This field contains an array that holds additional data.
+          items:
+            $ref: '#/components/schemas/TransactionResponseDTO'
+          type: array
+        totalElements:
+          description: This field contains the number of elements in the response
+            body.
+          format: int64
+          type: integer
+        totalPages:
+          description: This field contains the number of pages in response body.
+          format: int32
+          type: integer
+      title: Client transactions response
+      type: object
+    FeeResponseDTO:
+      properties:
+        authCurrency:
+          description: This field contains the 3-letter [ISO-4217 authorization currency
+            code](doc:currency-and-country-codes).
+          example: SGD
+          type: string
+        feeCurrency:
+          description: This field contains the 3-letter [ISO-4217 fee currency code](doc:currency-and-country-codes).
+          example: ANY
+          type: string
+        feeName:
+          description: This field contains the name of the fee or markup.
+          enum:
+          - ATM_FEE
+          - ECOM_FEE
+          - VIR_CARD_FEE
+          - PLASTIC_FEE
+          - ADDON_CARD_FEE
+          - REPLACEMENT_FEE
+          - WALLET_REFUND_FEE
+          - REMIT_BANK_FEE
+          - REMIT_BANK_FEE_SWIFT_BEN
+          - REMIT_BANK_FEE_SWIFT_OUR
+          - REMIT_BANK_FEE_SWIFT
+          - REMIT_CASH_FEE
+          - REMIT_WALLET_FEE
+          - REMIT_CARD_FEE
+          - REMIT_PROXY_FEE
+          - TRANSACTION_MARKUP
+          - FX_MARKUP
+          - FX_MARKUP_AUTO_SWEEP
+          - FX_MARKUP_AUTO_SWEEP_EOD
+          - FX_MARKUP_AUTO_SWEEP_RECEIVE
+          - FX_MARKUP_LOCKANDHOLD_1
+          - INTERNATIONAL_ATM_FEE
+          - ATM_DECLINE_FEE
+          - NON_ATM_DECLINE_FEE
+          - ACCOUNT_OPENING_FEE
+          - ACCOUNT_MAINTENANCE_FEE
+          - ACCOUNT_INACTIVE_FEE
+          - P2P_FEE
+          - WALLET_CREDIT_THIRD_PARTY_FEE
+          - WALLET_CREDIT_OFFLINE_FEE
+          - WALLET_CREDIT_CARD_FEE
+          - WALLET_CREDIT_DIRECT_DEBIT_FEE
+          - AUTO_SWEEP_FEE_EOD
+          - AUTO_SWEEP_FEE_RECEIVE
+          - FX_MARKUP_SETTLE_2DAYS
+          - FX_MARKUP_SETTLE_NEXTDAY
+          - FX_MARKUP_SETTLE_ENDOFDAY
+          - FX_MARKUP_SETTLE_IMMEDIATE
+          - FX_MARKUP_LOCK_5MINS
+          - FX_MARKUP_LOCK_15MINS
+          - FX_MARKUP_LOCK_1HOUR
+          - FX_MARKUP_LOCK_4HOURS
+          - FX_MARKUP_LOCK_8HOURS
+          - FX_MARKUP_LOCK_24HOURS
+          - FX_MARKUP_CANCELLATION
+          - FX_MARKUP_REVERSAL
+          - DOMESTIC_LINKED_CARD_FEE
+          example: ATM_FEE
+          type: string
+        feeValue:
+          description: This field contains the actual value of the fee. It can be
+            an amount or percentage.
+          example: 1.5
+          format: double
+          type: number
+        fixed:
+          description: This field determines if the fee is a fixed amount or a percentage.
+            It is true for a fixed amount and false for a percentage.
+          example: true
+          type: boolean
+        slabFrom:
+          description: This field contains the starting point of the slab of transaction
+            amount on which the fee is applicable.
+          example: 0
+          format: double
+          type: number
+        slabTo:
+          description: This field contains the ending point of the slab of transaction
+            amount on which the fee is applicable.
+          example: 999999999
+          format: double
+          type: number
+        status:
+          description: 'This field contains the fee status and the possible values
+            are:
+
+            Active
+
+            Inactive
+
+            '
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - SUSPENDED
+          - UPLOADED
+          - APPROVED
+          - REJECTED
+          - FAILED
+          - SUCCESS
+          - FAILURE
+          - PARTIALLY SUCCESS
+          - SYNC
+          - NOT SYNC
+          - PENDING
+          - REQUIRES_ACTION
+          - CLEAR
+          - DECLINED
+          - ACCOUNT_BLOCKED
+          - AMOUNT_BLOCKED
+          example: ACTIVE
+          type: string
+        thresholdFeeValue:
+          description: This field contains the value of the threshold fee. It can
+            be fixed or percentage.
+          example: 9999
+          format: double
+          type: number
+        transactionCurrency:
+          description: This field contains the 3-letter [ISO-4217 transaction currency
+            code](doc:currency-and-country-codes).
+          example: ANY
+          type: string
+      title: Fee response
+      type: object
+    WalletRfiAttributeResponse:
+      properties:
+        label:
+          description: This field contains the field label for the RFI.
+          type: string
+        type:
+          description: This field contains the field type. The possible values are
+            data or document.
+          type: string
+        value:
+          description: This field contains the field value for the RFI. This will
+            be used while responding to transaction RFI.
+          type: string
+      title: RfiAttributeResponse
+      type: object
+    TransactionResponseDTO:
+      properties:
+        tags:
+          additionalProperties:
+            type: string
+          description: This object contains the user defined key-value pairs provided
+            by the client.
+          type: object
+        acquirerCountryCode:
+          description: This field contains the country code of the acquirer.
+          type: string
+        acquiringInstitutionCode:
+          description: This field contains the acquiring institution code that identifies
+            the financial institution acting as the acquirer of the transaction.
+          type: string
+        authAmount:
+          description: This field contains an authorization amount of the transaction.
+          format: double
+          type: number
+        authCode:
+          description: This field contains the authorization code.
+          type: string
+        authCurrencyCode:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            of the auth currency, the currency in which amount is deducted from wallet.
+          type: string
+        billingAmount:
+          description: This field contains the equivalent transaction amount in base
+            currency.
+          format: double
+          type: number
+        billingConversionRate:
+          description: This field contains the conversion rate of transaction currency
+            to billing currency which is present for all card transactions.
+          type: string
+        billingCurrencyCode:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the billing currency or base currency
+          type: string
+        billingReplacementAmount:
+          description: The corrected amount of a transaction in a partial reversal.
+            This is defined by ISO-8583 as a fixed length field with four subfields,
+            but only the first subfield is used. A 12 position field for the corrected,
+            billing amount of a customer's transaction, in the billing currency. The
+            field is right justified, with lead zero fill.
+          format: double
+          type: number
+        businessTransaction:
+          description: This flag is used to mark or unmark a transaction as a business
+            transaction.
+          type: boolean
+        cardHashID:
+          description: This field contains the unique card identifier generated while
+            new/add-on card issuance.
+          type: string
+        cardTransactionAmount:
+          description: This field contains the amount of a card transaction.
+          format: double
+          type: number
+        childCustomerHashId:
+          description: This field refers to a unique identifier, known as customerHashId,
+            assigned to an individual customer who is associated with a corporate
+            customer at the parent level. This identifier serves the purpose of distinguishing
+            and tracking the child-level customer within a given client's program.
+            By utilizing this identifier, it becomes possible to establish and maintain
+            the appropriate linkage between the child customer and their parent corporate
+            customer, ensuring accurate association and management of customer data.
+          type: string
+        clientHashId:
+          description: Unique client identifier generated and shared before API handshake.
+          type: string
+        comments:
+          description: This field contains the auto-generated comments with details
+            on the transactions such as reason for transaction decline.
+          type: string
+        complianceStatus:
+          description: 'This field contains the compliance status of the transaction.The
+            possible values are:
+
+            NULL
+
+            IN_PROGRESS
+
+            ACTION_REQUIRED
+
+            RFI_REQUESTED
+
+            RFI_RESPONDED
+
+            COMPLETED
+
+            ERROR
+
+            REJECT
+
+            EXPIRED'
+          enum:
+          - NONE
+          - IN_PROGRESS
+          - COMPLETED
+          - ACTION_REQUIRED
+          - ERROR
+          - REJECT
+          - EXPIRED
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - UNKNOWN
+          - INITIATED
+          - PENDING
+          - CLEAR
+          - CLOSED
+          type: string
+        createdAt:
+          description: This field contains the date and time of transaction when created
+            in UTC.
+          format: date-time
+          type: string
+        currentWithHoldingBalance:
+          description: This field will be deprecated in the future.
+          format: double
+          type: number
+        customerHashId:
+          description: This field contains the unique customer identifier generated
+            while new customer created.
+          type: string
+        dateOfTransaction:
+          description: This field contains the date on which the transaction occurred
+            in yyyy-MM-dd format.
+          format: date-time
+          type: string
+        debit:
+          description: This field contains the flag signifies if the transaction is
+            a debit transaction.
+          type: boolean
+        effectiveAuthAmount:
+          description: This field contains an effective authorization amount which
+            includes fees, markup, etc.
+          format: double
+          type: number
+        labels:
+          additionalProperties:
+            type: string
+          description: This object will contain different key-value pairs depending
+            upon the type of transaction. Essentially, this object will contain different
+            labels based on the type of transaction. The list will change over time
+            depending on different use-cases. Refer to the [Glossary of Labels](/apis/docs/transaction-response-labels).
+          type: object
+        localDate:
+          description: This field contains the local date of the transaction.
+          type: string
+        localTime:
+          description: This field contains the local time of the transaction.
+          type: string
+        maskedCardNumber:
+          description: This field contains the 16-digit masked card number in format
+            1234-56xx-xxxx-3456.
+          type: string
+        mcc:
+          description: This field contains the four-digit Merchant Category Code.
+          type: string
+        merchantCategory:
+          description: This field contains the merchant category such as Airlines,
+            Hotels, Shopping, etc.
+          type: string
+        merchantCity:
+          description: This field contains the city name of the merchant.
+          type: string
+        merchantCountry:
+          description: This field contains the country of the merchant.
+          type: string
+        merchantID:
+          description: This field contains the unique merchant identifier.
+          type: string
+        merchantLatitude:
+          description: This field contains the latitude of the merchant captured during
+            geo-tagging.
+          type: string
+        merchantLongitude:
+          description: This field contains the longitude of the merchant captured
+            during geo-tagging.
+          type: string
+        merchantName:
+          description: This field contains the name of the merchant.
+          type: string
+        merchantNameLocation:
+          description: This field contains the full merchant name and location data
+            as received from network.
+          type: string
+        merchantTaggedName:
+          description: This field contains the tagged name of the merchant.
+          type: string
+        merchantZoomIndex:
+          description: This field contains the merchant map zoom index.
+          type: string
+        originalAuthorizationCode:
+          description: This field contains the authorization code of the original
+            transaction in case of reversal.
+          type: string
+        partnerReferenceNumber:
+          description: This field contains the provided by an RHA client in response
+            to an authorization.
+          type: string
+        paymentInstrumentHashId:
+          description: This field contains the unique payment instrument identifier
+            generated for the linked card.
+          type: string
+        posConditionCode:
+          description: 'This field contains the pos condition code that describes
+            the condition under which the transaction takes place at the point of
+            service.
+
+            00 - Normal transaction
+
+            01 - Cardholder not present
+
+            03 - Merchant suspicious
+
+            08 - Mail/telephone order
+
+            51 - Account Verification Message(AVM)
+
+            55 - ICC Capable Branch ATM
+
+            59 - Electronic Commerce
+
+            90 - Recurring Payment'
+          type: string
+        posEntryCapabilityCode:
+          description: 'This field provides information about the terminal used at
+            the point of service.Type of terminal field values include:0 - Unspecified
+
+            2 - Unattended terminal(customer-operated)
+
+            4 - Electronic cash register
+
+            7 - Telephone device
+
+            8 - MCAS device
+
+            9 - Mobile acceptance solution(mPOS)
+
+            Capability of terminal field values include:
+
+            0 - Unspecified
+
+            1 - Terminal not used
+
+            2 - Magnetic stripe read capability
+
+            3 - Bar code read capability
+
+            4 - OCR read capability
+
+            5 - Integrated circuit card read capability
+
+            9 - Terminal does not read card data
+
+            '
+          type: string
+        posEntryMode:
+          description: "This field contains the pos entry code that identifies the\
+            \ actual method used to capture the account number and expiration date,\
+            \ and the PIN capture capability of the terminal.This is a fixed\u2011\
+            length field with three subfields, as follows:\n1. Positions 1\u20112\
+            \ - PAN and Date Entry Mode: This is a two\u2011digit code that identifies\
+            \ the actual method used at the point of service to enter the cardholder\
+            \ account number and card expiry date.\n00 - Unknown\n01 - Keyed transaction\n\
+            02 - Magnetic stripe read\n05 - Chip was read at the terminal\n07 - Contactless\n\
+            90 - Magnetic stripe read and transmitted unaltered\n91 - Contactless\
+            \ - Magnetic stripe data (MSD) transmitted\n2. Position 3 - PIN Entry\
+            \ Capability: This is a one\u2011digit code that identifies the capability\
+            \ of the authorization terminal, if one was used, to capture PINs. This\
+            \ coding does not necessarily mean that a PIN was entered or is included\
+            \ in this message:\n0 - Unknown\n1 - Terminal can accept PINs\n2 - Terminal\
+            \ cannot accept PINs\n3 - mPOS terminal can accept software-based PINs\
+            \ (Mastercard only)\n3. Position 4 - Unused(filler): This is one digit\
+            \ of filler, which must be zero.\n"
+          type: string
+        previousBalance:
+          description: This field contains the previous balance in the wallet.
+          format: double
+          type: number
+        processingCode:
+          description: This field contains the processing code is a 6 character Visa
+            field. Refer to the [link](https://en.wikipedia.org/wiki/ISO_8583#Processing_code)
+            for more details on the processing code.
+          type: string
+        receiptFileName:
+          description: This field contains the name of the receipt file.
+          type: string
+        receiptType:
+          description: "This field contains the receipt type.Expected values are as\
+            \ follows: \nimage/png\nimage/jpg\nimage/jpeg\napplication/pdf"
+          type: string
+        retrievalReferenceNumber:
+          description: This field contains the 12 digit number that is used with other
+            data elements as a key to identify and track all messages related to a
+            given customer transaction.
+          type: string
+        rfiDetails:
+          description: This field is an array that holds RFI details.
+          items:
+            $ref: '#/components/schemas/TransactionRfiDetailsResponse'
+          type: array
+        rhaTransactionId:
+          description: This field contains the transaction Id for an RHA client.
+          type: string
+        settlementAmount:
+          description: This field contains the settlement amount of a transaction.
+            This amount is valid only for a settled transaction.
+          format: double
+          type: number
+        settlementAuthAmount:
+          description: This field contains the settlement auth amount of a transaction.
+            This amount is valid only for a settled transaction.
+          format: double
+          type: number
+        settlementBillingAmount:
+          format: double
+          type: number
+        settlementCurrency:
+          type: string
+        settlementDate:
+          description: This field contains the settlement date in case of a Settled
+            transaction. Otherwise, it is null.
+          type: string
+        settlementStatus:
+          description: "This field contains the settlement status.This field can take\
+            \ the following values:\nUnsettled\nSettled\n Released\nDisputed\nDisputeClosed\n\
+            Waived"
+          enum:
+          - APPROVED
+          - DECLINED
+          - BLOCKED
+          - SETTLED
+          - UNSETTLED
+          - REVERSAL
+          - RELEASED
+          - PENDING
+          - WAIVED
+          - DISPUTED
+          - DISPUTE_CLOSED
+          - IN_PROGRESS
+          - REJECTED
+          - RETURNED
+          - AWAITING_FUNDS
+          - EXPIRED
+          - CANCELLED
+          - SCHEDULED
+          - NA
+          type: string
+        settlementTransactionAmount:
+          format: double
+          type: number
+        status:
+          description: 'This field contains the status. This field can take the following
+            values:
+
+            Pending: Transaction authorization is awaiting success or failure.
+
+            Approved: Transaction is successfully authorized.
+
+            Rejected: Transaction is rejected due to NIUM risk and compliance policies.
+
+            Declined: Transaction is declined.
+
+            Reversal: Transaction is reversed.
+
+            Blocked: Transaction is blocked'
+          enum:
+          - APPROVED
+          - DECLINED
+          - BLOCKED
+          - SETTLED
+          - UNSETTLED
+          - REVERSAL
+          - RELEASED
+          - PENDING
+          - WAIVED
+          - DISPUTED
+          - DISPUTE_CLOSED
+          - IN_PROGRESS
+          - REJECTED
+          - RETURNED
+          - AWAITING_FUNDS
+          - EXPIRED
+          - CANCELLED
+          - SCHEDULED
+          - NA
+          type: string
+        systemTraceAuditNumber:
+          description: This field contains the system trace audit number assigned
+            to uniquely identify a transaction.
+          type: string
+        terminalID:
+          description: This field contains the unique terminal ID.
+          type: string
+        transactionCurrencyCode:
+          description: This field contains the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the transaction currency.
+          type: string
+        transactionReplacementAmount:
+          description: The corrected amount of a transaction in a partial reversal.
+            This is defined by ISO-8583 as a fixed length field with four subfields,
+            but only the first subfield is used. A 12 position field for the corrected,
+            actual amount of a customer's transaction, in the transaction currency.
+            The field is right justified, with lead zero fill.
+          format: double
+          type: number
+        transactionType:
+          description: This field contains the transaction can be one of the complete
+            list of transactions mentioned in [Transaction Types](doc:transactions#transaction-types).
+          enum:
+          - Debit
+          - Reversal
+          - Original_Credit
+          - Original_Credit_Reversal
+          - Balance_Inquiry
+          - Partial_Reversal
+          - Reversal_Advice
+          - Decline_Advice
+          - Incremental_Auth_Reversal
+          - Auto_Sweep
+          - Auto_Sweep_Payout
+          - Auto_Sweep_Payout_Reversal
+          - Settlement_Debit
+          - Settlement_Credit
+          - Settlement_Reversal
+          - Settlement_Direct_Reversal
+          - Settlement_Direct_Debit
+          - Fee_Debit
+          - Fee_Reversal
+          - Fee_Waiver
+          - Client_Prefund
+          - Client_Refund
+          - Wallet_Refund
+          - Wallet_Credit_Mode_Card
+          - Wallet_Credit_Mode_Prefund
+          - Wallet_Credit_Mode_Prefund_Cross_Currency
+          - Wallet_Credit_Mode_Offline
+          - Wallet_Credit_Mode_Offline_Cross_Currency
+          - Wallet_Credit_Mode_Offline_ThirdParty
+          - Wallet_Credit_Mode_Direct_Debit
+          - Wallet_Credit_Mode_Direct_Debit_Reversal
+          - Customer_Wallet_Credit_Fund_Transfer
+          - Customer_Wallet_Debit_Fund_Transfer
+          - Wallet_Fund_Transfer
+          - Client_Fund_Transfer
+          - Wallet_Hold
+          - Wallet_Unhold
+          - Remittance_Debit
+          - Remittance_Debit_External
+          - Remittance_Reversal
+          - Remittance_Client_Auto_Sweep
+          - Remittance_Client_Auto_Sweep_Reversal
+          - Remittance_Debit_Prescreening
+          - Remittance_Debit_External_Prescreening
+          - Remittance_Bene_Microdeposit
+          - Remittance_Bene_Microdeposit_Reversal
+          - Regulatory_Auto_Sweep
+          - Regulatory_Block
+          - Regulatory_Block_Release
+          - Regulatory_Debit
+          - Regulatory_Debit_Reversal
+          - Transfer_Local
+          - Transfer_Local_Reversal
+          - Cashback_Credit
+          - Cashback_Credit_Client
+          - Chargeback_Credit
+          - Customer_Wallet_Debit_Intra_Region
+          - Customer_Wallet_Credit_Intra_Region
+          - Customer_Wallet_Debit_Cross_Region
+          - Customer_Wallet_Credit_Cross_Region
+          - Direct_Debit_Payout
+          - NA
+          type: string
+        updatedAt:
+          description: This field contains the date and time when the transaction
+            was last updated in UTC.
+          format: date-time
+          type: string
+        walletHashId:
+          description: This field contains the unique wallet identifier generated
+            while new wallet created.
+          type: string
+      title: Transaction response
+      type: object
+    TransactionRfiDetailsResponse:
+      properties:
+        description:
+          description: This field contains the description of the RFI.
+          type: string
+        documentType:
+          description: This field contains the type of the document if applicable,
+            for example, POI, POA, etc.
+          type: string
+        mandatory:
+          description: This flag signifies if the RFI is mandatory or not.
+          type: boolean
+        remarks:
+          description: This field contains the remarks provided while raising the
+            RFI.
+          type: string
+        requiredData:
+          description: This array contains the required data for the RFI.
+          items:
+            $ref: '#/components/schemas/WalletRfiAttributeResponse'
+          type: array
+        rfiHashId:
+          description: This field contains the unique RFI hash ID.
+          type: string
+        rfiId:
+          description: This field contains the unique identifier for group of RFI
+            raised for the customer transaction.
+          type: string
+        rfiStatus:
+          description: This field contains Transaction RFI status.
+          enum:
+          - NONE
+          - IN_PROGRESS
+          - COMPLETED
+          - ACTION_REQUIRED
+          - ERROR
+          - REJECT
+          - EXPIRED
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - UNKNOWN
+          - INITIATED
+          - PENDING
+          - CLEAR
+          - CLOSED
+          type: string
+        transactionEntityType:
+          description: 'This field contains the type of the transaction entity. The
+            possible values are:
+
+            DEBTOR
+
+            CREDITOR'
+          enum:
+          - DEBTOR
+          - CREDITOR
+          type: string
+        type:
+          description: This field contains the type of RFI. It could be document or
+            data.
+          type: string
+      title: TransactionRfiDetailsResponse
+      type: object
+  securitySchemes:
+    default:
+      in: header
+      name: x-api-key
+      type: apiKey
+security:
+- default: []
