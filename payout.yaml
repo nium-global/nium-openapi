@@ -275,7 +275,7 @@ paths:
   /api/v2/client/{clientHashId}/customer/{customerHashId}/beneficiaries/{beneficiaryHashId}:
     get:
       parameters:
-      - description: Unique  beneficiary hash ID.
+      - description: Unique beneficiary hash ID.
         in: path
         name: beneficiaryHashId
         required: true

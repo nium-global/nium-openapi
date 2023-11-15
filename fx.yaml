@@ -21,7 +21,7 @@ tags:
 - name: Quotes (Previous Version)
   description: The previous version of the Quotes API
 - name: Conversions (Previous Version)
-  description: The  Previous version of the Conversions API
+  description: The Previous version of the Conversions API
 paths:
   /api/v2/exchangeRate:
     get:
