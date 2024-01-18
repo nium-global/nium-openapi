@@ -6,11 +6,11 @@ info:
     url: https://www.nium.com
   description: NIUM Platform
   license:
-    name: Copyright (c) 2023 NIUM
+    name: Copyright (c) 2024 NIUM
   title: NIUM Platform
   version: 2023.12.12
 servers:
-- url: https://gatewaysandbox.nium.com/
+- url: https://gateway.nium.com/
 security:
 - default: []
 tags:
