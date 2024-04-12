@@ -43,7 +43,7 @@
 #### Deprecation Notices
 
 *   We'll be deprecating [Fetch Supported Corridors V2](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv2) within the next six months. As we prepare to do so, we'll surface more details. If you have any questions, reach out to the [Nium Support team](mailto:support@nium.com) at anytime.
-
+---
 ### Feb 20, 2024
 
 #### Enhancements
@@ -61,6 +61,7 @@
     
 *   We've removed the **BEN** enum from the `payout#swiftFeeType` field in the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney#:~:text=This%20object%20accepts%20the%20payout%20details.) request.
 
+---
 ### Feb 6, 2024
 
 #### New features
@@ -86,6 +87,7 @@
 
 *   We've made some improvments and fixes to our Google Pay Push Provisioning SDK to support EU and UK address verification. For details on our Google Pay Push Provisioning SDK, see [Google Pay Push Provisioning.](https://docs.nium.com/apis/docs/google-pay-push-provisioning-1)
 
+---
 ### Jan 23, 2024
 
 #### New feature
@@ -117,6 +119,7 @@
 
 Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P) and business-to-person (B2P) use cases.
 
+---
 ### Dec 19, 2023
 
 #### New feature
@@ -131,6 +134,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 *   The minimum supported value for VND local transactions is updated to 2000 VND due to the restrictions put in place by Nium's bank partner.
 
+---
 ### Dec 5, 2023
 
 #### New feature
@@ -154,9 +158,10 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 *   Local ZAR currency payouts for P2P use cases have been temporarily deactivated due to a technical issue with our payment partner. Nium continues to support payouts for other use cases such as B2P and B2B. We are working closely with our partner to resolve this issue at the earliest.
 
+---
 ### Nov 21, 2023
 
-### New features
+#### New features
 
 *   Introduced a new [Proof of Payment (POP)](https://docs.nium.com/apis/reference/pop) API to generate proof for the transactions that are in PAID status. You can use this API to download the proof of payment.
     
@@ -171,6 +176,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
     Refer to the [Direct Debit AU](https://docs.nium.com/apis/docs/direct-debit-au) user guide for more details on this feature.
 
+---
 ### Nov 7, 2023
 
 #### Enhancement
@@ -186,9 +192,10 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   `forwardBankCode`: Bank identification code (BIC) of the next participant bank to which the payment has been forwarded.
     *   `remarks`: Detailed description of the `reasonCode`. This interpretation is provided by Nium.
 
+---
 ### Oct 24, 2023
 
-### New features
+#### New features
 
 *   We have added several new features to the Nium portal in sandbox environment including, global wallets view, reports for payout transactions, configure webhook events, invite new users to your sandbox, and transparency with chronometer in the transaction details. Read the [announcement blog](https://www.nium.com/resources/nium-portal-faster-time-to-market) for more details.
 
@@ -200,7 +207,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   AOC document can be used by your underlying customers for providing account details for collections across different payment platforms.
     *   Additionally, AOC are required for loan applications or when dealing with government agencies.
 
-### API breaking changes
+#### API breaking changes
 
 *   **Document details are required when onboarding in EU**
     
@@ -210,13 +217,14 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
     See [EU required Parameters](https://docs.nium.com/apis/docs/cc-eu-required-parameters) and [EU required documents](https://docs.nium.com/apis/docs/cc-eu-required-documents) for more details.
 
-### Enhancements
+#### Enhancements
 
 *   Ability to update name on card for corporate cards. We have enhanced [Update Card Details V2](https://docs.nium.com/apis/reference/updatecarddetailsv2) API which will allow customers or cardholders to update card data at individual card level including the name on card.
 *   We have included new delivery options for EU & UK. In [Add Card V2](https://docs.nium.com/apis/reference/addcardv2) API the `issuanceMode` field has two new options `international_delivery_track`, and `international_delivery_track_sign`.
 *   Added transparency about timing of the interbank FX rate. In order to ensure that you know the exact time at which we obtained the last traded interbank FX rate being used in an FX quote, a new field called `rateCaptureTime` was added in the API response for creating a quote and fetching an existing quote. The `rateCaptureTime` field has the timestamp at which we got it from our rate service provider.
 
 
+---
 ### Oct 10, 2023
 
 #### Enhancements
@@ -266,6 +274,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   The `gpi` object with the above described four parameters will also be available in the webhook response.
     *   We will send a new event notification whenever there is a change in `reasonCode` or `forwardBankName`.
 
+---
 ### Sep 26, 2023
 
 #### New feature
@@ -288,6 +297,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
     For additional information, refer to the [FX overview guide](https://docs.nium.com/apis/docs/fx-overview#rate).
 
+---
 ### Sep 12, 2023
 
 *   Added a new RFI template called `otherData` for corporate onboarding.
@@ -303,6 +313,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   [Template in the response of the Fetch RFI Details API](https://docs.nium.com/apis/docs/cc-rfi-examples#otherdata-template-in-the-response-of-the-fetch-rfi-details-api)
     *   [Request body for the Respond to RFI API](https://docs.nium.com/apis/docs/cc-rfi-examples#otherdata-request-body-for-the-respond-to-rfi-api)
 
+---
 ### Aug 29, 2023
 
 #### Enhancements
@@ -339,6 +350,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   After you perform authentication using Biometrics or other means, you can provide the success or failure to Nium against the Transaction ID.
     *   [OOB Callback v1](https://docs.nium.com/apis/reference/processoobcallback) API will be deprecated and becomes unsupported on **March 31, 2024**.
 
+---
 ### Aug 15, 2023
 
 #### Enhancements
@@ -382,6 +394,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   The enums list added `CERTIFICATE_OF_GOOD_STANDING`, and the `remarks` field is available for missing documents for both eKYB and Manual KYB clients.
     *   By **August 22**, Manual KYB clients can use the remarks field for `CERTIFICATE_OF_GOOD_STANDING` documents.
 
+---
 ### Aug 1, 2023
 
 #### New Features
@@ -405,6 +418,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 *   In the [Unified Add Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer), [Customer Details V2](https://docs.nium.com/apis/reference/customerdetailsv2), and [Customer List V3 APIs](https://docs.nium.com/apis/reference/customerlistv3), the `preferredName` field has been changed from required to optional, meaning it is no longer required for customer onboarding purposes. You now have the flexibility to provide this information if needed, but it is not required when using the API for customer registration.
 *   The [P2P Transfer](https://docs.nium.com/apis/reference/p2ptransfer) API is deprecated and becomes unsupported on January 31, 2023.
 
+---
 ### July 19, 2023
 
 #### New features
@@ -443,6 +457,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
 *   Enhanced the ability for a client to embed the card widget within the client’s domain. A new `clientDomain` field is introduced in the request body of the [Get Card Widget](https://docs.nium.com/apis/reference/customergetcardwidget) API. This field contains the domain name where the widget needs to be embedded.
 
+---
 ### July 5, 2023
 
 #### API breaking changes
@@ -468,6 +483,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 *   The `designation` parameter in [Unified Add Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer), [Customer List V3](https://docs.nium.com/apis/reference/customerlistv3), and [Customer Details V2](https://docs.nium.com/apis/reference/customerdetailsv2) APIs, is deprecated and becomes unsupported on December 16, 2023.
 
+---
 ### Jun 20, 2023
 
 #### New features
@@ -522,6 +538,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   There has been a change in the transaction amount between authorization and clearing.  
         Example: The cardholder has left a tip in a restaurant due to which the transaction amount during clearing is higher than the transaction amount at the time of authorization.
 
+---
 ### Jun 6, 2023
 
 #### Enhancement
@@ -548,8 +565,8 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 #### Enhancement
     
 *   [Search and filter transactions in the Transaction Report of the [client portal](https://spend.nium.com/cards-ui/authenticate/login), with additional filter options using a card hash ID, transaction status, or settlement status. The transaction status and settlement status now support searching with multiple values.
-
-#### May 23, 2023
+---
+### May 23, 2023
 
 #### New features
 
@@ -630,6 +647,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   `deliveryZipCode`
 
 
+---
 ### May 9, 2023
 
 #### New features
@@ -721,6 +739,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
     Refer to the [Deprecated APIs](https://docs.nium.com/apis/docs/deprecated-apis) page for the complete list.
 
+---
 ### Apr 25, 2023
 
 #### New features
