@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.4.10
+  version: 2024.4.23
 servers:
 - url: https://gatewaysandbox.nium.com/
 security:
@@ -2009,7 +2009,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2027,7 +2027,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2090,7 +2090,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2108,7 +2108,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2165,7 +2165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2183,7 +2183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2311,7 +2311,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2329,7 +2329,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -7188,7 +7188,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlockCustomerRequestV2DTO'
+              $ref: '#/components/schemas/BlockCustomerRequestDTO'
         description: blockCustomerRequestDTO
         required: true
       summary: Block/Unblock Customer
@@ -8497,7 +8497,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddCustomerFeesResponseDTO'
+                $ref: '#/components/schemas/ViewCustomerFeesResponseDTO'
           description: OK
         '400':
           content:
@@ -8578,7 +8578,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModifyCustomerFeesResponseDTO'
+                $ref: '#/components/schemas/ViewCustomerFeesResponseDTO'
           description: OK
         '400':
           content:
@@ -14258,12 +14258,6 @@ paths:
         required: true
         schema:
           type: string
-      - description: This field accepts type of Client e.g. FI, NonFI, default NonFI.
-        in: query
-        name: clientType
-        required: false
-        schema:
-          type: string
       - description: This field accepts the type of customer.
         in: query
         name: customerType
@@ -14514,18 +14508,27 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/InwardPaymentManualRequestDTO'
+            examples:
+              Simulate_Receiving_Transaction:
+                value:
+                  amount: 1000000
+                  currency: SGD
+                  bankReferenceNumber: 1234
+                  bankSource: DBS_SG
+                  country: SGD
+                summary: Simulate Receiving a Transaction
         description: inwardPaymentManualRequestDTO
         required: true
-      summary: Simulate Receive Transaction
+      summary: Simulate Receiving a Transaction
       x-info:
         apiType: external
       security:
       - default: []
-      description: "This API can be used in 'Sandbox testing' to simulate inward receive\
-        \ transaction and credit funds into the wallet for testing purposes.\n >\u2139\
-        \uFE0F INFO \n>This API is for testing purpose only and not to be used in\
-        \ production.\n>Use a unique bankReferenceNumber for every new simulated receive\
-        \ payment transaction request."
+      description: "This API can be used in Sandbox testing to simulate the inward\
+        \ receipt of transaction and credit funds into a wallet for testing purposes.\n\
+        \ >\u2139\uFE0F INFO \n>This API is for testing purpose only and not to be\
+        \ used in production.\n>Use a unique bankReferenceNumber every time you simulate\
+        \ receiving a transaction."
   /api/v1/simulations/client/{clientHashId}/customer/{customerHashId}/fundingInstruments/{fundingInstrumentId}/updateStatus:
     post:
       parameters:
@@ -14777,6 +14780,64 @@ paths:
       - default: []
 components:
   schemas:
+    NewErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedErrorErrorCodes'
+    TypedErrorErrorCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INVALID_CLIENT_HASH_ID
+          - INVALID_CUSTOMER_HASH_ID
+          - INVALID_WALLET_HASH_ID
+          - INVALID_CARD_HASH_ID
+          - CARD_IS_PERMANENTLY_BLOCKED
+          - CARD_EXPIRED
+          - VALIDATION_ERROR
+        description:
+          type: string
+        field:
+          type: string
+    Standard403Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - access_forbidden
+        description:
+          type: string
+          enum:
+          - Access to resource not allowed
+    Standard500Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+        description:
+          type: string
+          enum:
+          - An internal error occurred
+    Standard401Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - unauthorized
+        description:
+          type: string
+          enum:
+          - Access Denied
     ApiError:
       type: object
       properties:
@@ -14868,64 +14929,6 @@ components:
             description: List of errors occurred
             example: '["field1 is not valid","field2 is not valid"]'
       title: Api error
-    NewErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/TypedErrorErrorCodes'
-    TypedErrorErrorCodes:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - INVALID_CLIENT_HASH_ID
-          - INVALID_CUSTOMER_HASH_ID
-          - INVALID_WALLET_HASH_ID
-          - INVALID_CARD_HASH_ID
-          - CARD_IS_PERMANENTLY_BLOCKED
-          - CARD_EXPIRED
-          - VALIDATION_ERROR
-        description:
-          type: string
-        field:
-          type: string
-    Standard403Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - access_forbidden
-        description:
-          type: string
-          enum:
-          - Access to resource not allowed
-    Standard500Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-        description:
-          type: string
-          enum:
-          - An internal error occurred
-    Standard401Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - unauthorized
-        description:
-          type: string
-          enum:
-          - Access Denied
     LockStatusUpdateRequestDTO:
       required:
       - action
@@ -16927,12 +16930,6 @@ components:
           type: string
         authorizationCode:
           description: This field contains the authorization code
-          type: string
-        billingAmount:
-          description: This field contains the billing amount
-          type: string
-        billingCurrency:
-          description: This field contains the billing currency
           type: string
         dateOfTransaction:
           description: This field contains the date of transaction
@@ -19036,7 +19033,7 @@ components:
             territory.
       title: Association details
       type: object
-    BlockCustomerRequestV2DTO:
+    BlockCustomerRequestDTO:
       properties:
         action:
           description: "This field accepts the action type of block/unblock. The possible\
@@ -19045,12 +19042,9 @@ components:
           enum:
           - TEMPORARY_BLOCK
           - PERMANENT_BLOCK
+          - TERMINATE
+          - CLOSE
           - UNBLOCK
-          type: string
-        blockType:
-          enum:
-          - INTERNAL
-          - EXTERNAL
           type: string
         comment:
           description: 'This field accepts comment which describes the action or reason.
@@ -19063,8 +19057,10 @@ components:
             \u2022 CUSTOMER_REQUEST\n\u2022 CLIENT_REQUEST\n\u2022 DECEASED\n\u2022\
             \ ACCOUNT_CLOSURE\n\u2022 SUSPICIOUS_ACTIVITY\n\u2022 FRAUDULENT_ACTIVITY\n\
             \u2022 POTENTIAL_SANCTION\n\u2022 SANCTIONED_CUSTOMER\n\u2022 BLACKLISTED_CUSTOMER\n\
-            => TEMPORARY_BLOCK:\n\u2022 CUSTOMER_REQUEST\n\u2022 CLIENT_REQUEST\n\u2022\
-            \ SUSPICIOUS_ACTIVITY\n\u2022 POTENTIAL_SANCTION\n=> UNBLOCK:\n\u2022\
+            \u2022 UNRESPONSIVE_CUSTOMER\n\u2022 DORMANCY\n\u2022 OTHER\n=> TEMPORARY_BLOCK:\n\
+            \u2022 CUSTOMER_REQUEST\n\u2022 CLIENT_REQUEST\n\u2022 SUSPICIOUS_ACTIVITY\n\
+            \u2022 POTENTIAL_SANCTION\n\u2022 DORMANT\n\u2022 NON_COMPLIANCE\n\u2022\
+            \ POSSIBLE_PEP_MATCH\n\u2022 POSSIBLE_ADVERSE_MEDIA\n=> UNBLOCK:\n\u2022\
             \ CUSTOMER_REQUEST\n\u2022 CLIENT_REQUEST"
           enum:
           - CUSTOMER_REQUEST
@@ -19077,11 +19073,14 @@ components:
           - SANCTIONED_CUSTOMER
           - BLACKLISTED_CUSTOMER
           - NO_OBJECTION
+          - UNRESPONSIVE_CUSTOMER
+          - DORMANCY
+          - OTHER
           type: string
       required:
       - action
       - reason
-      title: BlockCustomerRequestV2DTO
+      title: BlockCustomerRequestDTO
       type: object
     BusinessDetailsResponseDTO:
       properties:
@@ -19977,6 +19976,8 @@ components:
             of customer.
           example: 2992c5c6-823b-4fa9-a64b-add0ea88bb66
           format: uuid
+          type: string
+        customerKycStatus:
           type: string
         dateOfBirth:
           description: 'This field accepts the date of birth of the customer in YYYY-MM-DD
@@ -21163,6 +21164,13 @@ components:
         gender:
           description: This field accepts the gender of the customer.
           type: string
+        identificationDoc:
+          description: This is an array of actual Base-64 documents as required. The
+            maximum allowed size of this payload is 10 MB. A separate object is needed
+            for each document image.
+          items:
+            $ref: '#/components/schemas/ComplianceIdentificationDocDTO'
+          type: array
         intendedUseOfAccount:
           description: "**Conditional**\nThis field accepts the customer\u2019s intended\
             \ use of account. \nNote: This field is mandatory for EU and UK."
@@ -25908,14 +25916,6 @@ components:
       - transactionCurrency
       title: AddCustomerFeesRequestDTO
       type: object
-    AddCustomerFeesResponseDTO:
-      properties:
-        feeReferenceId:
-          description: This field contains the unique identifier
-          example: dd84f492-766d-45bc-970b-043ce233af05
-          type: string
-      title: AddCustomerFeesResponseDTO
-      type: object
     Amount:
       properties:
         amount:
@@ -26098,12 +26098,6 @@ components:
           example: SGD
           type: string
       title: ModifyCustomerFeesRequestDTO
-      type: object
-    ModifyCustomerFeesResponseDTO:
-      properties:
-        message:
-          type: string
-      title: ModifyCustomerFeesResponseDTO
       type: object
     OpenBankingPaymentResponseDTO:
       properties:
@@ -28321,6 +28315,7 @@ components:
           - validation_error
           - direct_debit_disabled
           - invalid_bank_account
+          - invalid_input
           type: string
         description:
           type: string
@@ -31106,10 +31101,10 @@ components:
           description: This field accepts Remitter's birth date.
           type: string
         idExpiryDate:
-          description: TExpiry Date of the Identification Document.
+          description: The expiration date of the identification document.
           type: string
         idIssueDate:
-          description: Issue Date of the Identification Document.
+          description: The date the identification document was issued.
           type: string
         identificationNumber:
           description: ID number of the selected identificationType.
@@ -31128,17 +31123,17 @@ components:
           description: This field accepts Remitter's nationality.
           type: string
         originatingFICity:
-          description: This field accepts the city of the financial institution where
-            the request was initiated.
+          description: The city of the financial institution where the request was
+            initiated.
           type: string
         originatingFICountry:
-          description: This field accepts the country of the financial institution
-            where the request was initiated.
+          description: The country of the financial institution where the request
+            was initiated.
           type: string
         originatingFIName:
-          description: This field accepts the name of the financial institution where
-            the request was initiated. This is typically applicable for requests that
-            did not originate at the financial institution who is a direct Nium customer.
+          description: The name of the financial institution where the request was
+            initiated. Typically applicable for requests that don't originate from
+            a financial institution that is a direct customer of Nium.
           type: string
         placeOfBirth:
           description: This field accepts Remitter's place of birth.
@@ -31310,9 +31305,8 @@ components:
     PayinApiResponse2:
       properties:
         message:
-          description: This field will return the success message if the limit updated
-            successfully.
-          example: Limits updated successfully
+          description: This field returns `true` if the request was successful.
+          example: ICC request has been processed and published successfully
           type: string
         success:
           description: This flag indicates the success of the request.
@@ -31338,25 +31332,27 @@ components:
         additionalInfo:
           additionalProperties:
             type: string
-          description: This object accepts the additional information
+          description: This object accepts additional information about the corridor
+            being used.
           type: object
         amount:
-          description: This field contains the amount.
+          description: The amount of the transaction to simulate.
           example: 10
           format: double
           type: number
         bankReferenceNumber:
-          description: This field contains the bank reference number
+          description: This field contains the bank reference number.
           example: '712347512376'
           type: string
         bankSource:
-          description: This field contains the source of payment/fund.
+          description: This field details the source of the funds.
           enum:
           - DBS_HK
           - DBS_SG
           - JPM_SG
           - JPM_AU
           - JPM_UK
+          - JPM_CA
           - MONOOVA_AU
           - BOL_LT
           - CB_GB
@@ -31373,7 +31369,7 @@ components:
           example: DBS_SG
           type: string
         branchCode:
-          description: this field contains bank branch code.
+          description: This field contains bank's branch code.
           example: 535
           type: string
         country:
@@ -31427,7 +31423,7 @@ components:
           example: FROM NIUM
           type: string
         payMode:
-          description: this field contains payment mode.
+          description: This field details the payment mode.
           example: ACH
           type: string
         remitterAccountNumber:
@@ -31514,16 +31510,16 @@ components:
       properties:
         countryIP:
           description: Accepts the country IP address of the device the customer is
-            using to initate the request.
+            using to initiate the request.
           example: 66.249.74.64
           type: string
         deviceInfo:
           description: This field accepts the details of the device the customer used
-            to initate the request.
+            to initiate the request.
           example: macOS
           type: string
         ipAddress:
-          description: The IP address of the device the customer is using to initate
+          description: The IP address of the device the customer is using to initiate
             the request.
           example: 45.48.241.198
           type: string
@@ -31561,7 +31557,7 @@ components:
           example: SGD
           type: string
         destinationWalletHashId:
-          description: "The walletHashId of Nium\u2019s customer who is the recepient\
+          description: "The walletHashId of Nium\u2019s customer who is the recipient\
             \ of the funds."
           example: c69f684f-a306-4c4a-8daa-1e91ce7c85f8
           type: string
