@@ -1,3 +1,22 @@
+### April 16, 2024
+
+#### Enhancements
+
+*   Our eKYC Onboarding APIs are now available for individual customers in Canada. For more details, see [CA onboarding](https://developersandbox.nium.com/apis/docs/ca-onboarding-individual).
+        
+*   Our OpenAPI spec is now available on GitHub. You can download and review our OpenAPI spec to help you build your integration with Nium. For more details, see our [Nium OpenAPI](https://github.com/nium-global/nium-openapi/) repo.
+
+*   We've added [▶ Run in Postman](https://www.postman.com/nium-api/workspace/nium/collection/31522218-58e10ab7-1db6-4ec0-8146-80529969db98) buttons to several guides. These buttons give you quick access to our Postman collection and enable you to see how requests run in real-time. For an example, see [Individual Customer Onboarding](https://docs.nium.com/apis/docs/overview-individual-customer/).
+    
+*   We've added additional fields to the `remitter` object used in the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) request to provide more details about the payout sender. Fields added include:
+    
+    *   `idExpiryDate`
+    *   `idIssueDate`
+    *   `originatingFICity`
+    *   `originatingFICountry`
+    
+    For more details, see [Transfer Money](https://docs.nium.com/apis/reference/transfermoney).
+---
 ### Mar 5, 2024
 
 #### New Features
