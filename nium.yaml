@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.4.23
+  version: 2024.5.7
 servers:
 - url: https://gatewaysandbox.nium.com/
 security:
@@ -2009,7 +2009,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2027,7 +2027,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -2090,7 +2090,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2108,7 +2108,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -2165,7 +2165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2183,7 +2183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -2311,7 +2311,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2329,7 +2329,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -3175,9 +3175,7 @@ paths:
       tags:
       - Client Prefund Account
       deprecated: false
-      description: "This API allows our clients to raise a prefund request in the\
-        \ system. <a target=\"_blank\" href=\"https://www.postman.com/nium-api/workspace/nium/request/31522218-48a40fee-2f41-4595-9c96-abe13bf05ac7\"\
-        \ class=\"button_postman\">\u25B6 Run in Postman</a>"
+      description: This API allows our clients to raise a prefund request in the system.
       operationId: ClientPrefundRequest
       requestBody:
         content:
@@ -3504,9 +3502,7 @@ paths:
       tags:
       - Client Prefund Account
       deprecated: false
-      description: "This API allows you to fetch the details of client prefund requests.\
-        \ <a target=\"_blank\" href=\"https://www.postman.com/nium-api/workspace/nium/request/31522218-126aeb80-8b32-4b82-95ee-4307c1c7b27d\"\
-        \ class=\"button_postman\">\u25B6 Run in Postman</a>"
+      description: This API allows you to fetch the details of client prefund requests.
       operationId: FetchClientPrefundRequest
       summary: Fetch Client Prefund Request
       x-info:
@@ -3571,9 +3567,8 @@ paths:
       tags:
       - Client Prefund Account
       deprecated: false
-      description: "This API allows you to fetch the available prefund balance for\
-        \ a client. <a target=\"_blank\" href=\"https://www.postman.com/nium-api/workspace/nium/request/31522218-b485177a-c7fb-4178-8c04-ec1335db7897\"\
-        \ class=\"button_postman\">\u25B6 Run in Postman</a>"
+      description: This API allows you to fetch the available prefund balance for
+        a client.
       operationId: ClientPrefundBalances
       summary: Client Prefund Balances
       x-info:
@@ -3740,9 +3735,8 @@ paths:
       tags:
       - Client Settings
       deprecated: false
-      description: "This API will help you to fetch the configuration details of a\
-        \ client. <a target=\"_blank\" href=\"https://www.postman.com/nium-api/workspace/nium/request/31522218-dd6759e6-dced-4c92-80ab-92c7492e5d02\"\
-        \ class=\"button_postman\">\u25B6 Run in Postman</a>"
+      description: This API will help you to fetch the configuration details of a
+        client.
       operationId: ClientDetails
       summary: Client Details
       x-info:
@@ -4212,9 +4206,8 @@ paths:
       tags:
       - Client Transactions
       deprecated: false
-      description: "This API allows you to fetch transaction details at the client\
-        \ level. <a target=\"_blank\" href=\"https://www.postman.com/nium-api/workspace/nium/request/31522218-38e2f37c-aec2-44d6-b030-51bd88f43b56\"\
-        \ class=\"button_postman\">\u25B6 Run in Postman</a>"
+      description: This API allows you to fetch transaction details at the client
+        level.
       operationId: ClientTransactions
       summary: Client Transactions
       x-info:
@@ -8935,6 +8928,670 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/bankAccounts:
+    get:
+      tags:
+      - Bank Accounts
+      summary: Fetch linked bank accounts
+      description: This paginated API is used to fetch linked bank accounts.
+      operationId: fetchLinkedBankAccounts
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: startingAfter
+        in: query
+        description: Used to return the `limit` number of records after (including)
+          the given starting position.
+        schema:
+          type: string
+      - name: endingBefore
+        in: query
+        description: Used to return the `limit` number of records up to (excluding)
+          the given ending position. Effectively returns the previous page for a given
+          cursor.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The number of items to be returned on each page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 50
+          minimum: 1
+          type: integer
+          default: 10
+      - name: tagKey
+        in: query
+        description: The tag key used to filter the results.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: tagValue
+        in: query
+        description: The tag value used to filter the results.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: accountNumber
+        in: query
+        description: The account number used to filter the results.
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/AccountNumber'
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBankAccountResponse'
+              example:
+                bankAccounts:
+                - bankAccountId: 7e894dad-edff-438d-8cc2-f198007fe957
+                  accountNumber: 1234512345
+                  routingCodes:
+                  - type: ach_code
+                    value: 111222333
+                  country: US
+                  currency: USD
+                  verification: completed
+                  authentication: completed
+                  authenticationType: microdeposit_otp
+                  isCustomerAccount: true
+                  tags:
+                    key1: value1
+                    key2: value2
+                  createdAt: '2024-02-15T23:40:30.543Z'
+                  updatedAt: '2024-02-16T23:40:30.543Z'
+                - bankAccountId: 6374edaa-4198-43ce-9597-7da1751ee0ec
+                  accountNumber: 123456789
+                  routingCodes:
+                  - type: ach_code
+                    value: 987654321
+                  country: US
+                  currency: USD
+                  verification: completed
+                  authentication: completed
+                  authenticationType: microdeposit_amounts
+                  isCustomerAccount: true
+                  tags:
+                    key1: value1
+                    key2: value2
+                  createdAt: '2024-02-15T23:40:30.543Z'
+                  updatedAt: '2024-02-16T23:40:30.543Z'
+                pagination:
+                  totalRecords: 2
+                  totalPages: 1
+                  currentCursor: 7e894dad-edff-438d-8cc2-f198007fe957
+                  nextCursor: null
+        '400':
+          description: Error response when the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchLinkedBankAccountsErrorResponse'
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '403':
+          description: Error response when the requested resource is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      tags:
+      - Bank Accounts
+      summary: Create a linked bank account
+      description: This API creates a linked bank account.
+      operationId: linkBankAccount
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        description: Bank account link request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankAccountLinkRequest'
+            examples:
+              Customer_Account_With_Authentication:
+                summary: Link customer's bank account
+                value:
+                  country: US
+                  currency: USD
+                  accountNumber: 123456789
+                  routingCodes:
+                  - type: ach_code
+                    value: 987654321
+                  authenticationType: microdeposit_amounts
+                  isCustomerAccount: true
+                  tags:
+                    key1: value1
+                    key2: value2
+        required: true
+      responses:
+        '200':
+          description: Bank account linked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountResponse'
+              examples:
+                Customer_Account_With_Authentication:
+                  summary: Link customer's bank account
+                  value:
+                    bankAccountId: 6374edaa-4198-43ce-9597-7da1751ee0ec
+                    accountNumber: 123456789
+                    routingCodes:
+                    - type: ach_code
+                      value: 987654321
+                    country: US
+                    currency: USD
+                    verification: in_progress
+                    authentication: in_progress
+                    authenticationType: microdeposit_amounts
+                    isCustomerAccount: true
+                    tags:
+                      key1: value1
+                      key2: value2
+                    createdAt: '2024-02-15T23:40:30.543Z'
+                    updatedAt: '2024-02-15T23:40:30.543Z'
+        '400':
+          description: Error response when the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkBankAccountErrorResponse'
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '403':
+          description: Error response when the requested resource is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      x-codegen-request-body-name: BankAccountLinkRequest
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/bankAccounts/{bankAccountId}/confirm:
+    post:
+      tags:
+      - Bank Accounts
+      summary: Confirm linked bank account authentication
+      description: This API is used to confirm authentication of a linked bank account.
+      operationId: confirmLinkedBankAccount
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: bankAccountId
+        in: path
+        description: Unique identifier of the linked bank account.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/BankAccountId'
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        description: Bank account confirmation request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankAccountConfirmationRequest'
+            examples:
+              With_Microdeposit_Amounts:
+                summary: Microdeposit amounts verification
+                value:
+                  amounts:
+                  - 0.15
+                  - 0.53
+              With_Microdeposit_Otp:
+                summary: Microdeposit OTP verification
+                value:
+                  otp: abc
+        required: true
+      responses:
+        '200':
+          description: Bank account authentication confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountResponse'
+              examples:
+                With_Microdeposit_Amounts:
+                  summary: Microdeposit amounts verification
+                  value:
+                    bankAccountId: 6374edaa-4198-43ce-9597-7da1751ee0ec
+                    accountNumber: 123456789
+                    routingCodes:
+                    - type: ach_code
+                      value: 987654321
+                    country: US
+                    currency: USD
+                    verification: completed
+                    authentication: completed
+                    authenticationType: microdeposit_amounts
+                    isCustomerAccount: true
+                    tags:
+                      key1: value1
+                      key2: value2
+                    createdAt: '2024-02-15T23:40:30.543Z'
+                    updatedAt: '2024-02-16T23:40:30.543Z'
+                With_Microdeposit_Otp:
+                  summary: Microdeposit OTP verification
+                  value:
+                    bankAccountId: 7e894dad-edff-438d-8cc2-f198007fe957
+                    accountNumber: 1234512345
+                    routingCodes:
+                    - type: ach_code
+                      value: 111222333
+                    country: US
+                    currency: USD
+                    verification: completed
+                    authentication: completed
+                    authenticationType: microdeposit_otp
+                    isCustomerAccount: true
+                    tags:
+                      key1: value1
+                      key2: value2
+                    createdAt: '2024-02-15T23:40:30.543Z'
+                    updatedAt: '2024-02-16T23:40:30.543Z'
+        '400':
+          description: Error response when the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmBankAccountErrorResponse'
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '403':
+          description: Error response when the requested resource is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+        '404':
+          description: Error response when the requested resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      x-codegen-request-body-name: BankAccountConfirmationRequest
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/bankAccounts/{bankAccountId}:
+    get:
+      tags:
+      - Bank Accounts
+      summary: Fetch linked bank account
+      description: This API is used to fetch a linked bank account.
+      operationId: fetchLinkedBankAccount
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: bankAccountId
+        in: path
+        description: Unique identifier of the linked bank account.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/BankAccountId'
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountResponse'
+              examples:
+                Customer_Account_Authenticated:
+                  summary: Customer account authenticated
+                  value:
+                    bankAccountId: 6374edaa-4198-43ce-9597-7da1751ee0ec
+                    accountNumber: 123456789
+                    routingCodes:
+                    - type: ach_code
+                      value: 987654321
+                    country: US
+                    currency: USD
+                    verification: completed
+                    authentication: completed
+                    authenticationType: microdeposit_amounts
+                    isCustomerAccount: true
+                    tags:
+                      key1: value1
+                      key2: value2
+                    createdAt: '2024-02-15T23:40:30.543Z'
+                    updatedAt: '2024-02-15T23:40:30.543Z'
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '403':
+          description: Error response when the requested resource is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+        '404':
+          description: Error response when the requested resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    put:
+      tags:
+      - Bank Accounts
+      summary: Update linked bank account
+      description: This API is used to update a linked bank account.
+      operationId: updateLinkedBankAccount
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: bankAccountId
+        in: path
+        description: Unique identifier of the linked bank account.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/BankAccountId'
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        description: Bank account update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankAccountUpdateRequest'
+            examples:
+              Update_Tags:
+                summary: Update account tags
+                value:
+                  tags:
+                    key2: newValue2
+                    newKey: newValue
+        required: true
+      responses:
+        '200':
+          description: Bank account updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountResponse'
+              examples:
+                Update_Tags:
+                  summary: Update account tags
+                  value:
+                    bankAccountId: 6374edaa-4198-43ce-9597-7da1751ee0ec
+                    accountNumber: 123456789
+                    routingCodes:
+                    - type: ach_code
+                      value: 987654321
+                    country: US
+                    currency: USD
+                    verification: completed
+                    authentication: completed
+                    authenticationType: microdeposit_amounts
+                    isCustomerAccount: true
+                    tags:
+                      key2: newValue2
+                      newKey: newValue
+                    createdAt: '2024-02-15T23:40:30.543Z'
+                    updatedAt: '2024-02-16T23:40:30.543Z'
+        '400':
+          description: Error response when the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBankAccountErrorResponse'
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '403':
+          description: Error response when the requested resource is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+        '404':
+          description: Error response when the requested resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      x-codegen-request-body-name: BankAccountUpdateRequest
+      security:
+      - default: []
+    delete:
+      tags:
+      - Bank Accounts
+      summary: Delete linked bank account
+      description: This API is used to delete a linked bank account.
+      operationId: unlinkBankAccount
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: bankAccountId
+        in: path
+        description: Unique identifier of the linked bank account.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/BankAccountId'
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: Bank account unlinked
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '403':
+          description: Error response when the requested resource is forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+        '404':
+          description: Error response when the requested resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/fees:
     post:
       parameters:
@@ -10901,6 +11558,91 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/fundingInstruments:
+    post:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkAccountResponseV2'
+          description: Funding instrument created
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddFundingInstrumentV2ErrorResponse'
+          description: Error response when the request is invalid.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinStandard401Error'
+          description: Error response when the request is unauthorized.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinStandard403Error'
+          description: Error response when the requested resource is forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard404Error'
+          description: Error response when the requested resource is not found.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayinStandard500Error'
+          description: Error response when an internal error occurs.
+      tags:
+      - Customer Funding
+      deprecated: false
+      description: This API is used to add a direct debit funding instrument with
+        a bank account.
+      operationId: AddFundingInstrumentV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerLinkAccountRequestV2'
+        description: customerLinkAccountRequest
+      summary: Add funding instrument V2
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/paymentId:
     post:
       parameters:
@@ -11447,91 +12189,6 @@ paths:
       description: This API allows you to download an account ownership certificate.
       operationId: AccountOwnershipCertificate
       summary: Account Ownership Certificate
-      x-info:
-        apiType: external
-      security:
-      - default: []
-  /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/fundingInstruments:
-    post:
-      parameters:
-      - description: Unique client identifier generated and shared before API handshake.
-        in: path
-        name: clientHashId
-        required: true
-        schema:
-          format: uuid
-          type: string
-      - description: Unique customer identifier generated on customer creation.
-        in: path
-        name: customerHashId
-        required: true
-        schema:
-          format: uuid
-          type: string
-      - description: Unique wallet identifier generated simultaneously with customer
-          creation.
-        in: path
-        name: walletHashId
-        required: true
-        schema:
-          format: uuid
-          type: string
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          type: string
-          example: '{{$guid}}'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LinkAccountResponseV2'
-          description: Funding instrument created
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AddFundingInstrumentV2ErrorResponse'
-          description: Error response when the request is invalid.
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayinStandard401Error'
-          description: Error response when the request is unauthorized.
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayinStandard403Error'
-          description: Error response when the requested resource is forbidden.
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard404Error'
-          description: Error response when the requested resource is not found.
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayinStandard500Error'
-          description: Error response when an internal error occurs.
-      tags:
-      - Customer Funding
-      deprecated: false
-      description: This API is used to add a direct debit funding instrument with
-        a bank account.
-      operationId: AddFundingInstrumentV2
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomerLinkAccountRequestV2'
-        description: customerLinkAccountRequest
-      summary: Add funding instrument V2
       x-info:
         apiType: external
       security:
@@ -14605,6 +15262,77 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/simulations/client/{clientHashId}/customer/{customerHashId}/bankAccounts/{bankAccountId}/microDeposits:
+    get:
+      tags:
+      - Customer
+      summary: Fetch micro-deposit details
+      description: This API is used to fetch the micro-deposit details that were sent
+        to a linked bank account pending authentication for E2E testing.
+      operationId: fetchMicroDepositDetails
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          type: string
+          format: UUID
+      - name: bankAccountId
+        in: path
+        description: Unique identifier of the linked bank account.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/BankAccountId'
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicroDepositDetails'
+              example:
+                amounts:
+                - 0.03
+                - 0.32
+        '401':
+          description: Error response when the request is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+        '404':
+          description: Error response when the requested resource is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
+        '500':
+          description: Error response when an internal error occurs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
+      deprecated: false
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/transfers:
     post:
       parameters:
@@ -14780,64 +15508,6 @@ paths:
       - default: []
 components:
   schemas:
-    NewErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/TypedErrorErrorCodes'
-    TypedErrorErrorCodes:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - INVALID_CLIENT_HASH_ID
-          - INVALID_CUSTOMER_HASH_ID
-          - INVALID_WALLET_HASH_ID
-          - INVALID_CARD_HASH_ID
-          - CARD_IS_PERMANENTLY_BLOCKED
-          - CARD_EXPIRED
-          - VALIDATION_ERROR
-        description:
-          type: string
-        field:
-          type: string
-    Standard403Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - access_forbidden
-        description:
-          type: string
-          enum:
-          - Access to resource not allowed
-    Standard500Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-        description:
-          type: string
-          enum:
-          - An internal error occurred
-    Standard401Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - unauthorized
-        description:
-          type: string
-          enum:
-          - Access Denied
     ApiError:
       type: object
       properties:
@@ -14929,6 +15599,64 @@ components:
             description: List of errors occurred
             example: '["field1 is not valid","field2 is not valid"]'
       title: Api error
+    NewErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedErrorErrorCodes'
+    TypedErrorErrorCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INVALID_CLIENT_HASH_ID
+          - INVALID_CUSTOMER_HASH_ID
+          - INVALID_WALLET_HASH_ID
+          - INVALID_CARD_HASH_ID
+          - CARD_IS_PERMANENTLY_BLOCKED
+          - CARD_EXPIRED
+          - VALIDATION_ERROR
+        description:
+          type: string
+        field:
+          type: string
+    Standard403Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - access_forbidden
+        description:
+          type: string
+          enum:
+          - Access to resource not allowed
+    Standard500Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+        description:
+          type: string
+          enum:
+          - An internal error occurred
+    Standard401Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - unauthorized
+        description:
+          type: string
+          enum:
+          - Access Denied
     LockStatusUpdateRequestDTO:
       required:
       - action
@@ -17046,7 +17774,7 @@ components:
         rollingLimitPeriod:
           format: int32
           type: integer
-      title: All Direct Debit Limits
+      title: AllLimitsDTO
       type: object
     PayinApiError:
       properties:
@@ -17239,7 +17967,7 @@ components:
           $ref: '#/components/schemas/LimitsDTO'
         standardDirectDebitLimits:
           $ref: '#/components/schemas/LimitsDTO'
-      title: Available Direct Debit Limits
+      title: DirectDebitAvailableLimitsDTO
       type: object
     DirectDebitClientCurrencyLimitsDTO:
       properties:
@@ -17257,7 +17985,7 @@ components:
           $ref: '#/components/schemas/AllLimitsDTO'
         standardDirectDebitLimits:
           $ref: '#/components/schemas/AllLimitsDTO'
-      title: Maximum Direct Debit Limits
+      title: DirectDebitMaximumLimitsDTO
       type: object
     LimitsDTO:
       properties:
@@ -17270,7 +17998,7 @@ components:
         rollingLimit:
           format: double
           type: number
-      title: Direct Debit Limits
+      title: LimitsDTO
       type: object
     LimitsResponseDTO:
       properties:
@@ -19042,8 +19770,6 @@ components:
           enum:
           - TEMPORARY_BLOCK
           - PERMANENT_BLOCK
-          - TERMINATE
-          - CLOSE
           - UNBLOCK
           type: string
         comment:
@@ -24273,6 +24999,19 @@ components:
             SG: Optional'
           format: uuid
           type: string
+        deviceDetails:
+          $ref: '#/components/schemas/DeviceDetails'
+          description: 'This object accepts the device details for onboarding the
+            new corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
         region:
           description: 'This field accepts the region code for which onboarding has
             been triggered. The acceptable value are:
@@ -24619,6 +25358,18 @@ components:
             SG: Optional'
           type: string
       title: CustomerTagDTO
+      type: object
+    DeviceDetails:
+      properties:
+        countryIP:
+          type: string
+        deviceInfo:
+          type: string
+        ipAddress:
+          type: string
+        sessionId:
+          type: string
+      title: DeviceDetails
       type: object
     ProductDocument:
       properties:
@@ -26326,6 +27077,15 @@ components:
           type: string
       title: ViewCustomerFeesResponseDTO
       type: object
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        field:
+          type: string
     ApplicationCommonResponse:
       type: object
       properties:
@@ -26373,6 +27133,379 @@ components:
           type: string
         expiryInMinutes:
           type: string
+    externalAccountServiceStandard401Error:
+      type: object
+      properties:
+        code:
+          type: string
+          default: unauthorized
+          enum:
+          - unauthorized
+        description:
+          type: string
+          default: Access Denied
+          enum:
+          - Access Denied
+    externalAccountServiceStandard403Error:
+      type: object
+      properties:
+        code:
+          type: string
+          default: access_forbidden
+          enum:
+          - access_forbidden
+        description:
+          type: string
+          default: Access to resource not allowed
+          enum:
+          - Access to resource not allowed
+    externalAccountServiceStandard404Error:
+      type: object
+      properties:
+        code:
+          type: string
+          default: resource_not_found
+          enum:
+          - resource_not_found
+        description:
+          type: string
+          default: Resource not found
+          enum:
+          - Resource not found
+    externalAccountServiceStandard500Error:
+      type: object
+      properties:
+        code:
+          type: string
+          default: internal_error
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+        description:
+          type: string
+          default: An internal error occurred
+          enum:
+          - An internal error occurred
+    TagValue:
+      type: string
+    IsCustomerAccount:
+      type: boolean
+      description: Whether or not the bank account belongs to the customer
+    externalAccountServiceRoutingInfo:
+      required:
+      - type
+      - value
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the routing code.
+          enum:
+          - swift
+          - transit_number
+          - sort_code
+          - branch_code
+          - ach_code
+        value:
+          type: string
+          description: The value of the routing code.
+          example: '200000'
+      description: The routing code associated with the bank account.
+    BankAccountId:
+      type: string
+      description: Unique identifier of a linked bank account.
+      format: uuid
+    AccountNumber:
+      type: string
+      description: The bank account number
+    Country:
+      maxLength: 2
+      minLength: 2
+      type: string
+      description: ISO 3166-2 country code.
+    externalAccountServiceCurrency:
+      maxLength: 3
+      minLength: 3
+      type: string
+      description: ISO 4217 currency code.
+    AuthenticationType:
+      type: string
+      description: 'The authentication type to use.
+
+        * `microdeposit_amounts`: The specified account receives two micro-deposit
+        transactions. The amounts of the transactions are used for authentication.
+
+        * `microdeposit_otp`: The specified account receives a single micro-deposit
+        transaction with a one-time-password (OTP) in the statement narrative. The
+        OTP is used for authentication.
+
+        '
+      enum:
+      - microdeposit_amounts
+      - microdeposit_otp
+    BankAccountLinkRequest:
+      title: BankAccountLinkRequest
+      required:
+      - accountNumber
+      - country
+      - currency
+      - isCustomerAccount
+      - routingCodes
+      properties:
+        country:
+          $ref: '#/components/schemas/Country'
+        currency:
+          $ref: '#/components/schemas/externalAccountServiceCurrency'
+        accountNumber:
+          $ref: '#/components/schemas/AccountNumber'
+        routingCodes:
+          type: array
+          description: The bank account's routing codes.
+          items:
+            $ref: '#/components/schemas/externalAccountServiceRoutingInfo'
+        authenticationType:
+          $ref: '#/components/schemas/AuthenticationType'
+        isCustomerAccount:
+          $ref: '#/components/schemas/IsCustomerAccount'
+        tags:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TagValue'
+          description: A set of key-value pairs for use by the client. A maximum of
+            15 tags are allowed.
+      description: Bank account link request.
+    LinkBankAccountErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkBankAccountError'
+    LinkBankAccountError:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: 'The detailed error code associated with HTTP status 400.
+
+              * `validation_error`: The input violates the model constraints.
+
+              * `invalid_input`: The given request contains a field which is invalid.
+
+              * `account_not_supported`: The given bank account is not supported.
+
+              '
+            enum:
+            - validation_error
+            - invalid_input
+            - account_not_supported
+    BankAccountConfirmationRequest:
+      title: BankAccountConfirmationRequest
+      properties:
+        amounts:
+          type: array
+          description: The micro-deposit amounts received, in any order.
+          items:
+            type: number
+            format: float
+        otp:
+          type: string
+          description: The OTP received in the statement narrative.
+    FetchLinkedBankAccountsErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FetchLinkedBankAccountsError'
+    FetchLinkedBankAccountsError:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: 'The detailed error code associated with HTTP status 400.
+
+              * `validation_error`: The input violates the model constraints.
+
+              * `invalid_input`: The given request contains a field which is invalid.
+
+              '
+            enum:
+            - validation_error
+            - invalid_input
+    ConfirmBankAccountErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfirmBankAccountError'
+    ConfirmBankAccountError:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: 'The detailed error code associated with HTTP status 400.
+
+              * `validation_error`: The input violates the model constraints.
+
+              * `invalid_authentication_type`: The request did not contain the correct
+              authentication field for the given bank account''s authentication type.
+
+              * `incorrect_authentication_value`: The request''s authentication value
+              was incorrect.
+
+              * `authentication_failed`: The maximum number of authentication attempts
+              has been reached. Authentication has failed.
+
+              * `invalid_bank_account_action`: The bank account action is invalid.
+
+              '
+            enum:
+            - validation_error
+            - invalid_authentication_type
+            - incorrect_authentication_value
+            - authentication_failed
+            - invalid_bank_account_action
+    BankAccountUpdateRequest:
+      title: BankAccountUpdateRequest
+      properties:
+        tags:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TagValue'
+          description: A set of key-value pairs for use by the client. A maximum of
+            15 tags are allowed.
+    UpdateBankAccountErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateBankAccountError'
+    UpdateBankAccountError:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: 'The detailed error code associated with HTTP status 400.
+
+              * `validation_error`: The input violates the model constraints.
+
+              * `invalid_input`: The given request contains a field which is invalid.
+
+              '
+            enum:
+            - validation_error
+            - invalid_input
+    BankAccountActionState:
+      type: string
+      description: 'The state of the action being performed on the bank account.
+
+        * `not_started`: The action has not been initiated.
+
+        * `in_progress`: The action is in progress.
+
+        * `failed`: The action has failed.
+
+        * `completed`: The action is completed successfully.
+
+        '
+      enum:
+      - not_started
+      - in_progress
+      - failed
+      - completed
+    BankAccountResponse:
+      title: BankAccountResponse
+      type: object
+      properties:
+        bankAccountId:
+          $ref: '#/components/schemas/BankAccountId'
+        accountNumber:
+          $ref: '#/components/schemas/AccountNumber'
+        routingCodes:
+          type: array
+          description: The bank account's routing codes.
+          items:
+            $ref: '#/components/schemas/externalAccountServiceRoutingInfo'
+        country:
+          $ref: '#/components/schemas/Country'
+        currency:
+          $ref: '#/components/schemas/externalAccountServiceCurrency'
+        verification:
+          $ref: '#/components/schemas/BankAccountActionState'
+        authentication:
+          $ref: '#/components/schemas/BankAccountActionState'
+        authenticationType:
+          $ref: '#/components/schemas/AuthenticationType'
+        isCustomerAccount:
+          $ref: '#/components/schemas/IsCustomerAccount'
+        tags:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TagValue'
+          description: A set of key-value pairs for use by the client. A maximum of
+            15 tags are allowed.
+        createdAt:
+          type: string
+          description: The date and time when this bank account was first linked.
+          format: date-time
+        updatedAt:
+          type: string
+          description: The date and time when this bank account was last updated at.
+          format: date-time
+      description: Bank account response.
+    PaginatedBankAccountResponse:
+      title: PaginatedBankAccountResponse
+      type: object
+      properties:
+        bankAccounts:
+          type: array
+          description: Page of bank accounts.
+          items:
+            $ref: '#/components/schemas/BankAccountResponse'
+        pagination:
+          $ref: '#/components/schemas/CursorPagination'
+      description: Paginated bank account response.
+    CursorPagination:
+      required:
+      - currentCursor
+      - nextCursor
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: The total number of records available to be returned.
+          example: 95
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        totalPages:
+          type: integer
+          description: The total number of pages available for querying.
+          example: 5
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        currentCursor:
+          type: string
+          description: The cursor for the current page of responses.
+        nextCursor:
+          type: string
+          description: The cursor for the next page of responses.
+        nextPageUrl:
+          type: string
+          description: The URL of the request for the next page of responses.
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        prevPageUrl:
+          type: string
+          description: The URL of the request for the previous page of responses.
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
     AddCustomerChildMustHaveParentWithCorpBilling:
       allOf:
       - properties:
@@ -26953,13 +28086,12 @@ components:
             $ref: '#/components/schemas/Comment_Customer'
       - oneOf:
         - allOf:
-          - title: With Currency Pair
+          - title: With Quote Id
             type: object
             properties:
               quoteId:
                 $ref: '#/components/schemas/QuoteId'
           - $ref: '#/components/schemas/EitherSourceOrDestinationAmount'
-            title: With Currency Pair
         - allOf:
           - title: With Currency Pair
             type: object
@@ -26969,7 +28101,6 @@ components:
               destinationCurrencyCode:
                 $ref: '#/components/schemas/DCC'
           - $ref: '#/components/schemas/EitherSourceOrDestinationAmount'
-            title: With Currency Pair
     ConversionCreationResponse:
       title: ConversionCreationResponse
       type: object
@@ -27278,9 +28409,9 @@ components:
         for the cancellation fee.
     EitherSourceOrDestinationAmountOrNoAmount:
       oneOf:
-      - title: With Destination Amount
+      - title: With No Amount
         type: object
-      - title: With Destination Amount
+      - title: With Source Amount
         type: object
         properties:
           sourceAmount:
@@ -27292,7 +28423,7 @@ components:
             $ref: '#/components/schemas/DestinationAmount_Quote'
     EitherSourceOrDestinationAmount:
       oneOf:
-      - title: With Destination Amount
+      - title: With Source Amount
         type: object
         properties:
           sourceAmount:
@@ -27377,7 +28508,7 @@ components:
 
         '
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/FXError'
       - type: object
         properties:
           code:
@@ -27403,7 +28534,7 @@ components:
 
         '
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/FXError'
       - type: object
         properties:
           code:
@@ -27422,7 +28553,7 @@ components:
 
         '
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/FXError'
       - type: object
         properties:
           code:
@@ -27454,7 +28585,7 @@ components:
 
         '
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/FXError'
       - type: object
         properties:
           code:
@@ -27473,7 +28604,7 @@ components:
 
         '
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/FXError'
       - type: object
         properties:
           code:
@@ -27496,7 +28627,7 @@ components:
 
         '
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/FXError'
       - type: object
         properties:
           code:
@@ -27609,7 +28740,7 @@ components:
           default: An internal error occurred
           enum:
           - An internal error occurred
-    Error:
+    FXError:
       required:
       - code
       - description
@@ -28986,6 +30117,14 @@ components:
       - type
       title: Static pay now code
       type: object
+    AccountVerificationInfoDTO:
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+      title: AccountVerificationInfoDTO
+      type: object
     AddBeneficiaryRequest:
       properties:
         authenticationCode:
@@ -29315,6 +30454,9 @@ components:
       type: object
     BeneficiaryResponseDTO:
       properties:
+        accountVerification:
+          $ref: '#/components/schemas/AccountVerificationInfoDTO'
+          description: This object contains the account verification details
         autosweepPayoutAccount:
           description: This field contains the boolean value for the autosweepPayoutAccount.
           type: boolean
@@ -31349,6 +32491,7 @@ components:
           enum:
           - DBS_HK
           - DBS_SG
+          - DBS_ID
           - JPM_SG
           - JPM_AU
           - JPM_UK
@@ -31405,6 +32548,7 @@ components:
           - THB
           - TRY
           - PHP
+          - IDR
           example: SGD
           type: string
         iccExpiry:
@@ -31464,6 +32608,15 @@ components:
           type: string
       title: InwardPaymentManualRequestDTO
       type: object
+    MicroDepositDetails:
+      type: object
+      properties:
+        amounts:
+          type: array
+          description: The micro-deposit amounts sent.
+          items:
+            type: number
+            format: float
     WalletWalletApiError:
       properties:
         errors:
@@ -31510,16 +32663,16 @@ components:
       properties:
         countryIP:
           description: Accepts the country IP address of the device the customer is
-            using to initiate the request.
+            using to initate the request.
           example: 66.249.74.64
           type: string
         deviceInfo:
           description: This field accepts the details of the device the customer used
-            to initiate the request.
+            to initate the request.
           example: macOS
           type: string
         ipAddress:
-          description: The IP address of the device the customer is using to initiate
+          description: The IP address of the device the customer is using to initate
             the request.
           example: 45.48.241.198
           type: string
@@ -31557,7 +32710,7 @@ components:
           example: SGD
           type: string
         destinationWalletHashId:
-          description: "The walletHashId of Nium\u2019s customer who is the recipient\
+          description: "The walletHashId of Nium\u2019s customer who is the recepient\
             \ of the funds."
           example: c69f684f-a306-4c4a-8daa-1e91ce7c85f8
           type: string
