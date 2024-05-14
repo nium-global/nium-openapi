@@ -1,0 +1,108 @@
+openapi: 3.1.0
+paths: {}
+info:
+  title: Pagination Components
+  version: 1.0.0
+
+components:
+  parameters:
+    Start:
+      name: start
+      in: query
+      description: |
+        The start date and time (inclusive) used to filter the results. Must be in the format of 'yyyy-MM-ddTHH:mm:ssZ' for UTC or 'yyyy-MM-ddTHH:mm:ss+/-HH:mm' to include a timezone offset.
+        
+        If no time information is included, e.g. the startTime is in the format of 'yyyy-MM-dd' then the time is assumed to be 00:00:00 in the UTC timezone.
+        
+        If no timezone offset is passed, e.g. the startTime is in the format of 'yyyy-MM-ddTHH:mm:ss', then the timezone is assumed to be UTC.
+      schema:
+        type: string
+        format: date-time
+    End:
+      name: end
+      in: query
+      description: |
+        The end date and time (exclusive) used to filter the results. Must be in the format of 'yyyy-MM-ddTHH:mm:ssZ' for UTC or 'yyyy-MM-ddTHH:mm:ss+/-HH:mm' to include a timezone offset.
+
+        If no time information is included, e.g. the endTime is in the format of 'yyyy-MM-dd' then the time is assumed to be 00:00:00 in the UTC timezone.
+
+        If no timezone offset is passed, e.g. the endTime is in the format of 'yyyy-MM-ddTHH:mm:ss', then the timezone is assumed to be UTC.
+      schema:
+        type: string
+        format: date-time
+    StartingAfter:
+      name: startingAfter
+      in: query
+      description: Used to return the `limit` number of records after (including) the given starting position.
+      schema:
+        type: string
+    EndingBefore:
+      name: endingBefore
+      in: query
+      description: Used to return the `limit` number of records up to (excluding) the given ending position. Effectively returns the previous page for a given cursor.
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      description: The number of items to be returned on each page.
+      schema:
+        type: integer
+    SortKey:
+      name: sortKey
+      in: query
+      description: |
+        The field in the response to sort by. If an element is nested within another, it can be referenced with a period-delimited string.
+      
+        If a sort key is provided and sort order is not provided, default behavior is to sort in ascending (asc) order.
+
+        Ex: `parent.child`
+      schema:
+        type: string
+    SortOrder:
+      name: sortOrder
+      in: query
+      description: |
+        The sort order to use when sorting responses with the sort key.
+        
+        If no sort key is provided, default behavior is to sort by the creation time of the resource.
+
+        This field is case-insensitive.
+      schema:
+        type: string
+        default: asc
+        enum:
+          - asc
+          - desc
+
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        totalRecords:
+          description: The total number of records available to be returned.
+          type: integer
+          example: 95
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        totalPages:
+          description: The total number of pages available for querying.
+          type: integer
+          example: 5
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        currentCursor:
+          description: The cursor for the current page of responses.
+          type: string
+        nextCursor:
+          description: The cursor for the next page of responses.
+          type: string
+        nextPageUrl:
+          description: The URL of the request for the next page of responses.
+          type: string
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        prevPageUrl:
+          description: The URL of the request for the previous page of responses.
+          type: string
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+      required:
+        - currentCursor
+        - nextCursor
