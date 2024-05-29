@@ -1,0 +1,48 @@
+openapi: 3.1.0
+paths: {}
+info:
+  title: Core Components
+  version: 1.0.0
+
+components:
+  parameters:
+    XRequestId:
+      name: x-request-id
+      in: header
+      description: Unique request identifier used for idempotency
+      schema:
+        type: string
+    ClientHashId:
+      name: clientHashId
+      in: path
+      description: Unique identifier of the client.
+      required: true
+      schema:
+        type: string
+        format: UUID
+    CustomerHashId:
+      name: customerHashId
+      in: path
+      description: Unique identifier of the customer.
+      required: true
+      schema:
+        type: string
+        format: UUID
+    WalletHashId:
+      name: walletHashId
+      in: path
+      description: Unique identifier of the wallet.
+      required: true
+      schema:
+        type: string
+        format: UUID
+  schemas:
+    UETR:
+      type: string
+      format: UUID
+      description: Unique end-to-end transaction reference number.
+      example: abc1234-5d6e-0a8b-c8d7-3a7706a0c312
+    SystemReferenceNumber:
+      type: string
+      description: Nium One's reference number.
+      example: RT0123456789
