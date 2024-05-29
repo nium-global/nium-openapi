@@ -1,3 +1,48 @@
+### May 28, 2024
+
+#### New Features
+
+* **Direct Debit** is now available for Singaporean (SG) customers. Direct Debit enables SG-based businesses to fund their Nium wallets using their Singaporean (SG) bank account in real time.
+  * The transaction type for Direct Debit transactions is `WALLET_CREDIT_MODE_DIRECT_DEBIT`.
+  * Reach out to your Nium account manager for details on how to activate Direct Debit.
+  * For more information, see [Direct Debit SG](https://docs.nium.com/apis/docs/direct-debit-sg).
+
+#### Enhancements
+
+* Maximum limit for INR Proxy (UPI) transactions has been increased to INR 200,000 from INR 100,000. For more information, see the [Nium - India Playbook](https://playbook.nium.com/country/india?pm_relation=payout_methods).
+
+* **Fetch Card Details V2**: Fetching details using the Card Details V2 endpoint now returns the `demographics` object. The `demographics` object only gets returned if the card is assigned to an employee but issued within a corporate customer's wallet.
+  * Details that get returned in the `demographics` object include:
+    * `firstName`
+    * `middleName`
+    * `lastName`
+    * `nameOnCard`
+    * `email`
+    * `mobile`
+  * For more information, see [Card Details V2](https://docs.nium.com/apis/reference/carddetailsv2).
+
+---
+
+### April 30, 2024
+
+#### Enhancements
+
+* We’ve introduced three new reasons you can include when permanently blocking a customer:
+  * **UNRESPONSIVE_CUSTOMER**
+  * **DORMANCY**
+  * **OTHER**
+* Moving forward, when **PERMANENT_BLOCK** is used, the customer's account will be considered closed, and they can no longer process any further activity.
+* Applications rejected due to high risk or non-compliance will now be blocked from being resubmitted. Previously, such applications could be resubmitted but were rejected by our compliance team after review. With this change, applications that have been previously rejected will automatically be rejected without any wait.
+  * Resubmission is still allowed for reasons unrelated to compliance, such as incomplete applications, typos, or incorrect addresses.
+  * For individual customers, see [Individual Customer Onboarding - Overview](https://developersandbox.nium.com/apis/docs/overview-individual-customer).
+  * For corporate customers, see [Corporate Customer Onboarding - Overview](https://docs.nium.com/apis/docs/overview-corporate-customer).
+
+* We’ve released two new webhook events to help you manage cards:
+  * `Card Details Updated`: This event is triggered to notify the client or cardholder when any card details are updated. For more details, see [Card Details Updated](https://docs.nium.com/apis/reference/card-details-updated).
+  * `Card Expiry Alert`: This event is triggered when a card is approaching its expiration date. For more details, see [Card Expiry Alert](https://docs.nium.com/apis/reference/card-expiry-alert).
+
+---
+
 ### April 16, 2024
 
 #### Enhancements
@@ -62,7 +107,9 @@
 #### Deprecation Notices
 
 *   We'll be deprecating [Fetch Supported Corridors V2](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv2) within the next six months. As we prepare to do so, we'll surface more details. If you have any questions, reach out to the [Nium Support team](mailto:support@nium.com) at anytime.
+
 ---
+
 ### Feb 20, 2024
 
 #### Enhancements
@@ -81,6 +128,7 @@
 *   We've removed the **BEN** enum from the `payout#swiftFeeType` field in the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney#:~:text=This%20object%20accepts%20the%20payout%20details.) request.
 
 ---
+
 ### Feb 6, 2024
 
 #### New features
