@@ -4625,7 +4625,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadRfiDetailsResponseDto'
+                $ref: '#/components/schemas/UploadRfiDetailsResponseDTO'
               example:
                 complianceId: c36061eb-7b83-48c2-9977-bb144b10aad9
                 status: RFI_RESPONDED
@@ -23232,28 +23232,6 @@ components:
           example: Customer Updated Successfull
           type: string
       title: Update customer response
-      type: object
-    UploadRfiDetailsResponseDto:
-      properties:
-        complianceId:
-          description: This field contains the unique compliance ID for the customer.
-          format: uuid
-          type: string
-        rfiId:
-          description: 'This field contains the unique RFI ID. This is for future
-            use.
-
-            Currently, the value shall be null.'
-          format: uuid
-          type: string
-        status:
-          description: "This field contains the status and following are the valid\
-            \ values for compliance status:\n\u2022 IN_PROGRESS\n\u2022 ACTION_REQUIRED\n\
-            \u2022 RFI_REQUESTED\n\u2022 RFI_RESPONDED\n\u2022 COMPLETED\n\u2022 REJECT\n\
-            \u2022 ERROR\nIn case of successful response to RFI, expected status is\
-            \ RFI_RESPONDED."
-          type: string
-      title: Upload Rfi details response
       type: object
     AddCategoryResponseDTO:
       properties:
