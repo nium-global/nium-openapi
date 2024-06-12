@@ -2358,7 +2358,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OobCallbackRequestDTO'
+              $ref: '#/components/schemas/OOBCallbackRequestDTO'
         required: true
         description: oobCallbackRequestDTO
       responses:
@@ -4672,7 +4672,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRfiDocumentRequestDto'
+              $ref: '#/components/schemas/UploadRfiDocumentRequestDTO'
             example:
               rfiResponseRequest:
               - rfiHashId: e908b61e-f057-44c6-a352-3a8a2cb73bac
@@ -15994,32 +15994,6 @@ components:
             request.
           example: Card Activated successfully
       title: ActivateCardResponseV2DTO
-    OobCallbackRequestDTO:
-      required:
-      - authTransactionId
-      - referenceNumber
-      - statusCode
-      type: object
-      properties:
-        authTransactionId:
-          type: string
-          description: This field represents the unique authorization ID of the transaction
-            received during the OOB authentication.
-        referenceNumber:
-          type: string
-          description: A reference number is a unique ID associated with the OOB request
-            from your system.
-        statusCode:
-          type: string
-          description: "The OOB authentication status code indicated if the transaction\
-            \ is approved or declined. The allowed values are: 001 \u2014 OOB authentication\
-            \ approved, 002 \u2014 OOB authentication declined."
-          enum:
-          - 001, 002
-        message:
-          type: string
-          description: An optional field to attach a message associated with the authentication.
-      title: OobCallbackRequestDTO
     BlockAndReplaceStatus:
       type: object
       properties:
@@ -23280,18 +23254,6 @@ components:
             \ RFI_RESPONDED."
           type: string
       title: Upload Rfi details response
-      type: object
-    UploadRfiDocumentRequestDto:
-      properties:
-        rfiResponseRequest:
-          description: This field accepts the additional requests for information,
-            depending upon documents required to raise RFI
-          items:
-            $ref: '#/components/schemas/RfiResponseRequest'
-          type: array
-      required:
-      - rfiResponseRequest
-      title: Upload Rfi document request
       type: object
     AddCategoryResponseDTO:
       properties:
