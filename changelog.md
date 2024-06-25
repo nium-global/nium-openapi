@@ -1,3 +1,35 @@
+### June 25, 2024
+
+#### New Feature
+
+Reports are now available in Nium Portal. Reports enhance your financial management experience by providing detailed insights into your transactions. You can now track, analyze, and manage your financial activities with ease. For more information, see [Reports](https://docs.nium.com/apis/docs/portal-reports).
+
+#### API Breaking Changes
+
+Starting October 1st, 2024, changes in Nium’s compliance policy will require additional documents and parameters to onboard corporate customers using the Onboard Corporate API. Please update your integration accordingly to avoid disruptions. If you have any questions, please contact your Nium account manager or Nium Support.
+
+- **Current State:** These documents and parameters are optional.
+- **Future Requirement:** From October 1st, 2024, these fields and parameters will be mandatory.
+- **Changes to Nium:** If the required documents and parameters are not included, the API will return an error indicating the missing documents and/or parameters.
+
+#### Changes to the Onboard Corporate API include:
+
+- **Device Information:** IP address and device name is now required for all regions when onboarding corporate customers. See the `deviceDetails` object in our API Reference for more information about the changes in each country:
+  - [Australia (AU)](https://docs.nium.com/apis/docs/cc-au-required-parameters#devicedetails-object)
+  - [Canada (CA)](https://docs.nium.com/apis/docs/cc-ca-required-parameters#devicedetails-object)
+  - [Europe (EU)](https://docs.nium.com/apis/docs/cc-eu-required-parameters#devicedetails-object)
+  - [Hong Kong (HK)](https://docs.nium.com/apis/docs/cc-hk-required-parameters#devicedetails-object)
+  - [Singapore (SG)](https://docs.nium.com/apis/docs/cc-sg-required-parameters#devicedetails-object)
+  - [United Kingdom (UK)](https://docs.nium.com/apis/docs/cc-uk-required-parameters#devicedetails-object)
+  - [United States (US)](https://docs.nium.com/apis/docs/cc-us-required-parameters#devicedetails-object)
+- **Europe (EU):** Additional information and documents are now required for both eKYB and manual KYB when onboarding corporate customers in Europe (EU). For more details, see:
+  - [EU Required Documents](https://docs.nium.com/apis/docs/cc-eu-required-documents)
+  - [Stakeholder KYC](https://docs.nium.com/apis/docs/cc-eu-onboarding#stakeholder-kyc)
+  - [Expected Account Usage](https://developersandbox.nium.com/apis/docs/cc-eu-required-parameters#expectedaccountusage-object)
+- **Singapore (SG):** Proof of Identity and Proof of address documents are now required for stakeholders for both eKYB and Manual KYB when onboarding corporate customers in Singapore (SG). For more information, see [SG Onboarding](https://docs.nium.com/apis/docs/cc-sg-onboarding#stakeholder-kyc).
+
+---
+
 ### May 28, 2024
 
 #### New Features
