@@ -4,7 +4,7 @@
 
 Reports are now available in Nium Portal. Reports enhance your financial management experience by providing detailed insights into your transactions. You can now track, analyze, and manage your financial activities with ease. For more information, see [Reports](https://docs.nium.com/apis/docs/portal-reports).
 
-#### API Breaking Changes
+#### Breaking API Changes
 
 Starting October 1st, 2024, changes in Nium’s compliance policy will require additional documents and parameters to onboard corporate customers using the Onboard Corporate API. Please update your integration accordingly to avoid disruptions. If you have any questions, please contact your Nium account manager or Nium Support.
 
