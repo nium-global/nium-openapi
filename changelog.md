@@ -1,3 +1,60 @@
+<<<<<<< Updated upstream
+=======
+### July 9, 2024
+
+#### New Feature
+
+**Multiple Wallets**: Individual and corporate customers can now have multiple wallets on the Nium platform. Multiple Wallets offer more choice and convenience to Clients and help manage ledgers with single or multiple currencies.
+    - Currently, whenever a customer is onboarded on to Nium, a default wallet is created and linked with the customer. All transactions are credited and debited from that single wallet.
+    - With this change, customers can hold balances and move funds from any wallet based on their business’s needs.
+    - 3 new APIs &lt;link to the APIs> have been introduced for integration into the Client’s application.
+    - We're actively working on bringing card issuance and card-based transactions for additional wallets.
+    - Currently, card issuance and card-based transactions only support the default wallet that was created and linked with the customer after completing onboarding.
+    - Multiple wallets are currently only available in select regions. We’re actively working on bringing this feature to Europe (EU). The region Multiple Wallets are available include:
+        - Austalia (AU)
+        - Canada (CA)
+        - Hong Kong (HK)
+        - Singapore (SG)
+        - United Kingdom (UK)
+        - United States (US)
+
+For more information, see [Wallet - Overview](https://docs.nium.com/apis/docs/wallet-overview).
+
+---
+
+### June 25, 2024
+
+#### New Feature
+
+Reports are now available in Nium Portal. Reports enhance your financial management experience by providing detailed insights into your transactions. You can now track, analyze, and manage your financial activities with ease. For more information, see [Reports](https://docs.nium.com/apis/docs/portal-reports).
+
+#### Breaking API Changes
+
+Starting October 1st, 2024, changes in Nium’s compliance policy will require additional documents and parameters to onboard corporate customers using the Onboard Corporate API. Please update your integration accordingly to avoid disruptions. If you have any questions, please contact your Nium account manager or Nium Support.
+
+- **Current State:** These documents and parameters are optional.
+- **Future Requirement:** From October 1st, 2024, these fields and parameters will be mandatory.
+- **Changes to Nium:** If the required documents and parameters are not included, the API will return an error indicating the missing documents and/or parameters.
+
+#### Changes to the Onboard Corporate API include:
+
+- **Device Information:** IP address and device name is now required for all regions when onboarding corporate customers. See the `deviceDetails` object in our API Reference for more information about the changes in each country:
+  - [Australia (AU)](https://docs.nium.com/apis/docs/cc-au-required-parameters#devicedetails-object)
+  - [Canada (CA)](https://docs.nium.com/apis/docs/cc-ca-required-parameters#devicedetails-object)
+  - [Europe (EU)](https://docs.nium.com/apis/docs/cc-eu-required-parameters#devicedetails-object)
+  - [Hong Kong (HK)](https://docs.nium.com/apis/docs/cc-hk-required-parameters#devicedetails-object)
+  - [Singapore (SG)](https://docs.nium.com/apis/docs/cc-sg-required-parameters#devicedetails-object)
+  - [United Kingdom (UK)](https://docs.nium.com/apis/docs/cc-uk-required-parameters#devicedetails-object)
+  - [United States (US)](https://docs.nium.com/apis/docs/cc-us-required-parameters#devicedetails-object)
+- **Europe (EU):** Additional information and documents are now required for both eKYB and manual KYB when onboarding corporate customers in Europe (EU). For more details, see:
+  - [EU Required Documents](https://docs.nium.com/apis/docs/cc-eu-required-documents)
+  - [Stakeholder KYC](https://docs.nium.com/apis/docs/cc-eu-onboarding#stakeholder-kyc)
+  - [Expected Account Usage](https://developersandbox.nium.com/apis/docs/cc-eu-required-parameters#expectedaccountusage-object)
+- **Singapore (SG):** Proof of Identity and Proof of address documents are now required for stakeholders for both eKYB and Manual KYB when onboarding corporate customers in Singapore (SG). For more information, see [SG Onboarding](https://docs.nium.com/apis/docs/cc-sg-onboarding#stakeholder-kyc).
+
+---
+
+>>>>>>> Stashed changes
 ### May 28, 2024
 
 #### New Features
