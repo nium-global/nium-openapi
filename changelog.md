@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 ### July 9, 2024
 
 #### New Feature
@@ -54,7 +52,6 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
 ---
 
->>>>>>> Stashed changes
 ### May 28, 2024
 
 #### New Features
