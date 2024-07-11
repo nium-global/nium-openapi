@@ -1,6 +1,8 @@
 # nium-OpenAPI
 
-Nium uses the `OpenAPI 3.0.*` specification to power our [API Reference.](https://docs.nium.com/apis/reference) 
+Nium uses the `OpenAPI 3.0.*` specification to power our [API Reference.](https://docs.nium.com/apis/reference)
+
+You can find all of Nium's N1 APIs in the `nium.yaml`
 
 ## Using the OpenAPI generator
 
@@ -8,7 +10,9 @@ You can find examples on the official [OpenApiGenerator docs](https://github.com
 
 ### Generating Nium supported client libraries
 #### nium-python
-OpenAPI Generator version: 6.1
+To generate libraries for Nium, use the `nium.yaml`
+
+(OpenAPI Generator version: 6.1)
 
 ```bash
 openapi-generator-cli generate -g python \
