@@ -1,3 +1,4 @@
+
 ### July 9, 2024
 
 #### New Feature
@@ -5,7 +6,10 @@
 **Multiple Wallets**: Individual and corporate customers can now have multiple wallets on the Nium platform. Multiple Wallets offer more choice and convenience to Clients and help manage ledgers with single or multiple currencies.
     - Currently, whenever a customer is onboarded on to Nium, a default wallet is created and linked with the customer. All transactions are credited and debited from that single wallet.
     - With this change, customers can hold balances and move funds from any wallet based on their business’s needs.
-    - 3 new APIs &lt;link to the APIs> have been introduced for integration into the Client’s application.
+    - 3 new APIs have been introduced for integration into the Client’s application.
+      - [Add Multi Wallet](https://docs.nium.com/apis/reference/addwallet)
+      - [Update Multi Wallet](https://docs.nium.com/apis/reference/updatewallet) 
+      - [Fetch Wallets](https://docs.nium.com/apis/reference/getwallet)
     - We're actively working on bringing card issuance and card-based transactions for additional wallets.
     - Currently, card issuance and card-based transactions only support the default wallet that was created and linked with the customer after completing onboarding.
     - Multiple wallets are currently only available in select regions. We’re actively working on bringing this feature to Europe (EU). The region Multiple Wallets are available include:
@@ -16,7 +20,7 @@
         - United Kingdom (UK)
         - United States (US)
 
-For more information, see [Wallet - Overview](https://docs.nium.com/apis/docs/wallet-overview).
+For more information, see: [Wallet - Overview](https://docs.nium.com/apis/docs/wallet-overview).
 
 ---
 
