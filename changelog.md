@@ -22,6 +22,10 @@
 
 For more information, see: [Wallet - Overview](https://docs.nium.com/apis/docs/wallet-overview).
 
+#### Enhancement
+
+A new query parameter status has been released for the [Virtual Account Details V2](https://docs.nium.com/apis/reference/virtualaccountdetailsv2) request. With this new parameter, the active/inactive virtual accounts can be filtered by Clients.
+
 ---
 
 ### June 25, 2024
