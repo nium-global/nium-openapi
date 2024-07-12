@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.5.7
+  version: 2024.6.18
 servers:
 - url: https://gatewaysandbox.nium.com/
 security:
@@ -66,6 +66,8 @@ tags:
   description: REST API's for Payout
 - name: Payin
   description: REST API's for Payin
+- name: Customer Wallet Balance
+  description: REST API's for Customer's Wallet Balance
 - name: Wallet to Wallet Transfers
   description: REST API's for Wallet to Wallet Transfers
 - name: Customer Wallet Transactions
@@ -204,19 +206,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                Select one of the following card type:
-                  oneOf:
-                  - $ref: '#/components/schemas/AddCardRequestPHY'
-                  - $ref: '#/components/schemas/AddCardRequestVIR'
-                  - $ref: '#/components/schemas/AddCardRequestVIRUP2PHY'
-                  discriminator:
-                    propertyName: cardType
-                    mapping:
-                      PHY: '#/components/schemas/AddCardRequestPHY'
-                      VIR: '#/components/schemas/AddCardRequestVIR'
-                      VIRUP2PHY: '#/components/schemas/AddCardRequestVIRUP2PHY'
+              oneOf:
+              - $ref: '#/components/schemas/AddCardRequestPHY'
+              - $ref: '#/components/schemas/AddCardRequestVIR'
+              - $ref: '#/components/schemas/AddCardRequestVIRUP2PHY'
+              discriminator:
+                propertyName: cardType
+                mapping:
+                  PHY: '#/components/schemas/AddCardRequestPHY'
+                  VIR: '#/components/schemas/AddCardRequestVIR'
+                  VIRUP2PHY: '#/components/schemas/AddCardRequestVIRUP2PHY'
+                description: Select one of the following card type
             examples:
               Physical card:
                 value:
@@ -2009,7 +2009,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2027,7 +2027,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2090,7 +2090,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2108,7 +2108,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2165,7 +2165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2183,7 +2183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2311,7 +2311,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2329,7 +2329,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2358,7 +2358,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OOBCallbackRequestDTO'
+              $ref: '#/components/schemas/OobCallbackRequestDTO'
         required: true
         description: oobCallbackRequestDTO
       responses:
@@ -3743,6 +3743,75 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v2/client/{clientHashId}/fees:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientFeeDetailsResponseDTO'
+                type: array
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Client Settings
+      deprecated: false
+      description: 'This API provides all the fees that have been set at the client
+        level by NIUM.
+
+        Refer to the following [Fees User Guide](doc:fees) for the Glossary of Fees
+        for pre-defined fees supported on the system'
+      operationId: FeeDetails
+      summary: Fee Details
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/payin/limits:
     get:
       parameters:
@@ -4042,7 +4111,7 @@ paths:
         schema:
           type: string
       - description: This field contains the transaction can be one of the complete
-          list of transactions mentioned in [Glossary of Transaction Types](https://docs.nium.com/baas/get-transactions#glossary-of-transaction-types).
+          list of transactions mentioned in [Transaction Types](https://docs.nium.com/apis/docs/transaction-types).
         in: query
         name: transactionType
         required: false
@@ -4625,7 +4694,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadRfiDetailsResponseDTO'
+                $ref: '#/components/schemas/UploadRfiDetailsResponseDto'
               example:
                 complianceId: c36061eb-7b83-48c2-9977-bb144b10aad9
                 status: RFI_RESPONDED
@@ -4672,7 +4741,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRfiDocumentRequestDTO'
+              $ref: '#/components/schemas/UploadRfiDocumentRequestDto'
             example:
               rfiResponseRequest:
               - rfiHashId: e908b61e-f057-44c6-a352-3a8a2cb73bac
@@ -6076,6 +6145,9 @@ paths:
           - rfiTemplates
           - estimatedMonthlyFunding
           - occupation
+          - averageTransactionValue
+          - averageTransactionCount
+          - monthlyVolume
           type: string
       - description: Unique client identifier generated and shared before API handshake.
         in: path
@@ -14900,6 +14972,85 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/remittance/{systemReferenceNumber}/cancel:
+    post:
+      parameters:
+      - description: clientHashId
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+      - description: customerHashId
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: systemReferenceNumber
+        in: path
+        name: systemReferenceNumber
+        required: true
+        schema:
+          type: string
+      - description: walletHashId
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelledRemittanceResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletApiError'
+          description: Internal Server Error
+      tags:
+      - Payout
+      deprecated: false
+      operationId: CancelsRemittanceinAWAITING_FUNDSandSCHEDULEDstatus
+      summary: Cancels Remittance in AWAITING_FUNDS and SCHEDULED status
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v3/client/{clientHashId}/supportedCorridors:
     get:
       parameters:
@@ -15021,91 +15172,12 @@ paths:
                 $ref: '#/components/schemas/PayoutCustomerApiError'
           description: Internal Server Error
       tags:
-      - Payout
+      - Reference Data
       deprecated: false
       description: This API will allow you to fetch the supported corridors for remittance
         with details.
       operationId: FetchSupportedCorridorsV3
       summary: Fetch Supported Corridors V3
-      x-info:
-        apiType: external
-      security:
-      - default: []
-  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/remittance/{systemReferenceNumber}/cancel:
-    post:
-      parameters:
-      - description: clientHashId
-        in: path
-        name: clientHashId
-        required: true
-        schema:
-          type: string
-      - description: customerHashId
-        in: path
-        name: customerHashId
-        required: true
-        schema:
-          type: string
-      - description: systemReferenceNumber
-        in: path
-        name: systemReferenceNumber
-        required: true
-        schema:
-          type: string
-      - description: walletHashId
-        in: path
-        name: walletHashId
-        required: true
-        schema:
-          type: string
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          type: string
-          example: '{{$guid}}'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CancelledRemittanceResponseDTO'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: BadRequest
-        '401':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Unauthorized
-        '403':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Forbidden
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: Not Found
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: Internal Server Error
-      tags:
-      - Payout
-      deprecated: false
-      operationId: CancelsRemittanceinAWAITING_FUNDSandSCHEDULEDstatus
-      summary: Cancels Remittance in AWAITING_FUNDS and SCHEDULED status
       x-info:
         apiType: external
       security:
@@ -15333,6 +15405,327 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WalletBalanceResponseDTO'
+                type: array
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Balance
+      deprecated: false
+      description: This API allows you to fetch balance for a specific wallet.
+      operationId: WalletBalance
+      summary: Wallet Balance
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    put:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponseDTO2'
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard404Error'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletStandard500Error'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Balance
+      deprecated: false
+      description: This API allows you to update a specific wallet.
+      operationId: UpdateWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWalletRequestDTO'
+        description: updateWalletRequestDTO
+        required: true
+      summary: Update Multi Wallet
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: tagKey defined against wallet.
+        example: department
+        in: query
+        name: tagKey
+        required: false
+        schema:
+          type: string
+      - description: tagValue defined against wallet.
+        example: sales
+        in: query
+        name: tagValue
+        required: false
+        schema:
+          type: string
+      - description: Unique wallet identifier generated on wallet creation.
+        example: c69f684f-a306-4c4a-8daa-1e91ce7c85f8
+        in: query
+        name: walletHashId
+        required: false
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponseDTO2'
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard404Error'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletStandard500Error'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Balance
+      deprecated: false
+      operationId: GetWallet
+      summary: Fetch wallets by clientHashId and customerHashId
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponseDTO2'
+          description: Ok
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard404Error'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletStandard500Error'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Balance
+      deprecated: false
+      description: This API allows you to add a wallet for a customer.
+      operationId: AddWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddWalletRequestDTO'
+        description: addWalletRequestDTO
+        required: true
+      summary: Add Multi Wallet
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/transfers:
     post:
       parameters:
@@ -15412,6 +15805,842 @@ paths:
         description: fundTransferRequestDTO
         required: true
       summary: Wallet to Wallet Transfer
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/p2pTransfer:
+    post:
+      parameters:
+      - description: Unique client identifier generated and shared before the API
+          handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/P2PTransferResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Wallet to Wallet Transfers
+      deprecated: false
+      description: "This API enables you to transfer money from one wallet to another\
+        \ wallet within the same client family. \n >\u26A0\uFE0F WARNING \n >This\
+        \ API version has been deprecated. Eventually, deprecated API versions become\
+        \ unsupported. Use the [Wallet To Wallet Transfer](ref:wallettransfer) API\
+        \ to achieve the same functionality."
+      operationId: P2PTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/P2PTransferDTO'
+        description: p2pTransferDTO
+        required: true
+      summary: P2P Transfer
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/transactions:
+    get:
+      parameters:
+      - description: Filter transactions based on the authorization code. In case
+          of fund wallet transactions you can provide the `systemReferenceNumber`
+          as the value.
+        in: query
+        name: authCode
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the authentication currency. Accepts
+          any 3-letter [ISO-4217 transaction currency code](https://docs.nium.com/apis/docs/currency-and-country-codes).
+        in: query
+        name: authCurrency
+        required: false
+        schema:
+          type: string
+      - description: Filter for transactions where `businessTransaction` is **TRUE**
+          or **FALSE**.
+        in: query
+        name: businessTransaction
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the unique card identifier generated
+          during new/add-on card issuance.
+        in: query
+        name: cardHashId
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the `childCustomerHashId` used in
+          the transactions.
+        in: query
+        name: childCustomerHashId
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the client's unique `clientHashId`
+          that was used in the transaction.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Filter transactions based on the `complianceStatus`.
+        in: query
+        name: complianceStatus
+        required: false
+        schema:
+          enum:
+          - CLEAR
+          - PENDING
+          - RFI_REQUESTED
+          - REJECT
+          type: string
+      - description: Filter transactions based on the customer's unique `customerHashId`
+          that was used in the transaction.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: End date for fetching the transaction details. The format for
+          endDate is YYYY-MM-DD.
+        in: query
+        name: endDate
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the 4-digit Merchant Category Code
+          used during the transaction.
+        in: query
+        name: mcc
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the description of the merchant's
+          type of business product or service, also known as the Merchant Category
+          Code (MCC) such as Airlines, Restaurants etc.
+        in: query
+        name: merchantCategories
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the merchant's city.
+        in: query
+        name: merchantCity
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on a comma-separated list of 2-letter
+          ISO merchant countries.
+        in: query
+        name: merchantCountries
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the merchant's country field.
+        in: query
+        name: merchantCountry
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the merchant's name field.
+        in: query
+        name: merchantName
+        required: false
+        schema:
+          type: string
+      - description: Sort the order of the returned results.
+        example: DESC
+        in: query
+        name: order
+        required: false
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - description: 'In some cases, the response can return multiple pages of data.
+          Use this parameter to page through the returned results.
+
+          The default page is 0.'
+        example: 0
+        in: query
+        name: page
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: Filter transactions based on a list of comma-separated `paymentInstrumentHashIds`.
+        in: query
+        name: paymentInstrumentHashId
+        required: false
+        schema:
+          type: string
+      - description: Details the response parameter used to sort the transaction list.
+          Sorted by 'createdAt' by default.
+        in: query
+        name: property
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the settlement date of the transaction
+          in the format yyyyMMdd.
+        in: query
+        name: settlementDate
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on settlement the status. A list of
+          possible values is available in the response.
+        in: query
+        name: settlementStatus
+        required: false
+        schema:
+          type: string
+      - description: Define how many elements get retunred per response page. Accepted
+          values can be 1-20.
+        example: 20
+        in: query
+        name: size
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: The beginning date to start fetching transaction details. The
+          format for `startDate` is YYYY-MM-DD.
+        in: query
+        name: startDate
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the `status`. A list of possible
+          values is available in the response.
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - IN_PROGRESS
+          - ACTION_REQUIRED
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - COMPLETED
+          - ERROR
+          - REJECT
+          - EXPIRED
+          type: string
+      - description: Filter transactions based on the `systemReferenceNumber`.
+        in: query
+        name: systemReferenceNumber
+        required: false
+        schema:
+          type: string
+      - description: Flter transactions based on `systemTraceAuditNumber`.
+        in: query
+        name: systemTraceAuditNumber
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on the exact value of tagKey defined
+          against transactions. This can be used as an independent search parameter.
+        in: query
+        name: tagKey
+        required: false
+        schema:
+          type: string
+      - description: Filter the responses based on the exact value of `tagKey`. The
+          `tagkey` can be used also be used as an independent search parameter.
+        in: query
+        name: tagValue
+        required: false
+        schema:
+          type: string
+      - description: Filter trasnactions based on the 3-letter [ISO-4217 transaction
+          currency code](https://www.iso.org/iso-4217-currency-codes.html).
+        in: query
+        name: transactionCurrency
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based the status. A detailed list of the
+          transactions types available can be found at [Transaction Types](https://docs.nium.com/apis/docs/transaction-types).
+        in: query
+        name: transactionType
+        required: false
+        schema:
+          type: string
+      - description: Flter transactions based on the `transactionsLabelsKey`.
+        in: query
+        name: transactionsLabelsKey
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on `transactionsLabelsValue`.
+        in: query
+        name: transactionsLabelsValue
+        required: false
+        schema:
+          type: string
+      - description: Filter transactions based on tnique wallet identifier generated
+          during customer creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Filter transactions based on the unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletTransactionsResponseDTO'
+              example:
+                content:
+                - tags:
+                    department: ACCOUNTS
+                    internalReferenceNumber: '123456789'
+                    sourcingChannel: DIGITAL
+                    testKey1: testkeyvalue1
+                  acquirerCountryCode: 'null'
+                  acquiringInstitutionCode: 'null'
+                  authAmount: 62
+                  authCode: FW4526424507
+                  authCurrencyCode: SGD
+                  billingAmount: 62
+                  billingConversionRate: 'null'
+                  billingCurrencyCode: SGD
+                  billingReplacementAmount: 0
+                  businessTransaction: false
+                  cardHashID: 'null'
+                  cardTransactionAmount: 62
+                  comments: Bank transfer wallet credit
+                  complianceStatus: RFI_REQUESTED
+                  createdAt: '2021-03-26 14:22:48'
+                  currentWithHoldingBalance: 0
+                  dateOfTransaction: '2021-03-26'
+                  debit: false
+                  effectiveAuthAmount: 62
+                  labels:
+                    bankReferenceNumber: DUMMYBANKREF
+                    destinationCountry: SG
+                    iccPayMode: FAST
+                    iccReceivedAt: '2019-04-15T12:26:01.31Z'
+                    iccSource: DBSSG
+                    remitterAccountNumber: '9876'
+                    remitterBankName: Bank of Singapore
+                    remitterName: Paul Walker
+                    uniquePayerId: DBS cards
+                    uniquePaymentId: '8850932067971'
+                  localDate: 'null'
+                  localTime: 'null'
+                  maskedCardNumber: 'null'
+                  mcc: 'null'
+                  merchantCategory: ''
+                  merchantCity: 'null'
+                  merchantCountry: 'null'
+                  merchantID: 'null'
+                  merchantLatitude: 'null'
+                  merchantLongitude: 'null'
+                  merchantName: 'null'
+                  merchantNameLocation: 'null'
+                  merchantTaggedName: 'null'
+                  merchantZoomIndex: 'null'
+                  originalAuthorizationCode: 'null'
+                  partnerReferenceNumber: 'null'
+                  paymentInstrumentHashId: 'null'
+                  posConditionCode: 'null'
+                  posEntryCapabilityCode: 'null'
+                  posEntryMode: '1020'
+                  previousBalance: 1191
+                  processingCode: 'null'
+                  receiptFileName: 'null'
+                  receiptType: 'null'
+                  retrievalReferenceNumber: FW4526424507
+                  rfiDetails:
+                  - description: agreementOfSale
+                    documentType: POA
+                    mandatory: true
+                    remarks: Provide an agreement for sale
+                    requiredData:
+                    - fieldLabel: Agreement Of Sale
+                      fieldValue: identificationDocument
+                      type: document
+                    rfiHashId: 9c28bbfb-4c83-44cb-9a07-8e9f0596558a
+                    rfiId: 8261ad61-bac1-4987-9ef4-a4dab9a516f1
+                    rfiStatus: RFI_RESPONDED
+                    transactionEntityType: DEBTOR
+                    type: document
+                  rhaTransactionId: 'null'
+                  settlementAmount: 62
+                  settlementAuthAmount: 62
+                  settlementDate: 'null'
+                  settlementStatus: UNSETTLED
+                  settlementTransactionAmount: 62
+                  status: PENDING
+                  systemTraceAuditNumber: FW4526424507
+                  terminalID: 'null'
+                  transactionCurrencyCode: SGD
+                  transactionReplacementAmount: 0
+                  transactionType: Wallet_Credit_Mode_Offline
+                  updatedAt: '2021-03-26 14:22:54'
+                totalElements: 1
+                totalPages: 1
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Transactions
+      deprecated: false
+      description: Use this endpoint to fetch transaction details for a customer.
+      operationId: Transactions
+      summary: Transactions
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/transactions/{transactionId}/business:
+    put:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique 36 character transaction identifier generated for each
+          transaction.
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Transactions
+      deprecated: false
+      description: This endpoint enables you to flag transactions as business transactions.
+      operationId: UpdateBusinessTransactionFlag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionsBusinessDTO'
+        description: transactionsBusinessDTO
+        required: true
+      summary: Update Business Transaction Flag
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/transactions/{transactionId}/location:
+    put:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique 36 character transaction identifier generated for each
+          transaction.
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Transactions
+      deprecated: false
+      description: This endpoint enables you to update transactions with the merchant's
+        location.
+      operationId: TransactionGeo-Tagging
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionsLocationDTO'
+        description: transactionsLocationDTO
+        required: true
+      summary: Transaction Geo-Tagging
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/transactions/{transactionId}/receipt:
+    get:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique 36 character transaction identifier generated for each
+          transaction.
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransactionsReceiptDTO'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Transactions
+      deprecated: false
+      description: This endppint enables you to download a receipt for any transaction.
+      operationId: DownloadTransactionReceipt
+      summary: Download Transaction Receipt
+      x-info:
+        apiType: external
+      security:
+      - default: []
+    post:
+      parameters:
+      - description: Unique client identifier generated and shared before API handshake.
+        in: path
+        name: clientHashId
+        required: true
+        schema:
+          type: string
+          example: '{{clientHashId}}'
+      - description: Unique customer identifier generated on customer creation.
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Unique 36 character transaction identifier generated for each
+          transaction.
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated simultaneously with customer
+          creation.
+        in: path
+        name: walletHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: BadRequest
+        '401':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Unauthorized
+        '403':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Not Found
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WalletWalletApiError'
+          description: Internal Server Error
+      tags:
+      - Customer Wallet Transactions
+      deprecated: false
+      description: This endpoint enables you to upload a receipt for any transaction.
+      operationId: UploadTransactionReceipt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionsReceiptDTO'
+        description: transactionReceipt
+        required: true
+      summary: Upload Transaction Receipt
       x-info:
         apiType: external
       security:
@@ -15508,6 +16737,64 @@ paths:
       - default: []
 components:
   schemas:
+    NewErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedErrorErrorCodes'
+    TypedErrorErrorCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INVALID_CLIENT_HASH_ID
+          - INVALID_CUSTOMER_HASH_ID
+          - INVALID_WALLET_HASH_ID
+          - INVALID_CARD_HASH_ID
+          - CARD_IS_PERMANENTLY_BLOCKED
+          - CARD_EXPIRED
+          - VALIDATION_ERROR
+        description:
+          type: string
+        field:
+          type: string
+    Standard403Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - access_forbidden
+        description:
+          type: string
+          enum:
+          - Access to resource not allowed
+    Standard500Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+        description:
+          type: string
+          enum:
+          - An internal error occurred
+    Standard401Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - unauthorized
+        description:
+          type: string
+          enum:
+          - Access Denied
     ApiError:
       type: object
       properties:
@@ -15599,64 +16886,6 @@ components:
             description: List of errors occurred
             example: '["field1 is not valid","field2 is not valid"]'
       title: Api error
-    NewErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/TypedErrorErrorCodes'
-    TypedErrorErrorCodes:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - INVALID_CLIENT_HASH_ID
-          - INVALID_CUSTOMER_HASH_ID
-          - INVALID_WALLET_HASH_ID
-          - INVALID_CARD_HASH_ID
-          - CARD_IS_PERMANENTLY_BLOCKED
-          - CARD_EXPIRED
-          - VALIDATION_ERROR
-        description:
-          type: string
-        field:
-          type: string
-    Standard403Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - access_forbidden
-        description:
-          type: string
-          enum:
-          - Access to resource not allowed
-    Standard500Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-        description:
-          type: string
-          enum:
-          - An internal error occurred
-    Standard401Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - unauthorized
-        description:
-          type: string
-          enum:
-          - Access Denied
     LockStatusUpdateRequestDTO:
       required:
       - action
@@ -15702,31 +16931,55 @@ components:
       type: object
       properties:
         addressLine1:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[A-Za-z0-9.,'#%@:&/ -]+$
           type: string
           description: Address line1 field captures the first line of the address,
             typically including house number, street name, and any unit/apartment
             number
           example: 20 W 34th St.
         addressLine2:
+          maxLength: 40
+          minLength: 0
+          pattern: ^(|[A-Za-z0-9.,'#%@:&/ -]+)$
           type: string
           description: Address line2 is an optional field for adding extra details
             to the address.
           example: Suite 200
         city:
+          maxLength: 20
+          minLength: 0
           type: string
           description: City field is where the city or town name of the address
           example: New York
+        landmark:
+          maxLength: 40
+          minLength: 0
+          type: string
+          description: Landmark is an optional field used to specify a nearby recognizable
+            location or point of reference to assist
+          example: Empire State Building
         country:
           type: string
           description: Country is two-letter ISO2 country code of the address
           example: SG
         state:
+          maxLength: 30
+          minLength: 0
           type: string
           description: State field is where the name of the state, province, or region
             should be entered for the address
           example: New York
-        zip:
+        postCode:
+          maxLength: 10
+          minLength: 0
           type: string
+          description: Post code field is where the postal code or ZIP code of the
+            address
+          example: '10001'
+      description: 'Delivery address details, mandatory fields : addressLine1, postCode,
+        city, country'
       title: Address
     ActivateCardResponseDTO:
       type: object
@@ -15994,6 +17247,32 @@ components:
             request.
           example: Card Activated successfully
       title: ActivateCardResponseV2DTO
+    OobCallbackRequestDTO:
+      required:
+      - authTransactionId
+      - referenceNumber
+      - statusCode
+      type: object
+      properties:
+        authTransactionId:
+          type: string
+          description: This field represents the unique authorization ID of the transaction
+            received during the OOB authentication.
+        referenceNumber:
+          type: string
+          description: A reference number is a unique ID associated with the OOB request
+            from your system.
+        statusCode:
+          type: string
+          description: "The OOB authentication status code indicated if the transaction\
+            \ is approved or declined. The allowed values are: 001 \u2014 OOB authentication\
+            \ approved, 002 \u2014 OOB authentication declined."
+          enum:
+          - 001, 002
+        message:
+          type: string
+          description: An optional field to attach a message associated with the authentication.
+      title: OobCallbackRequestDTO
     BlockAndReplaceStatus:
       type: object
       properties:
@@ -18529,6 +19808,49 @@ components:
           type: string
       title: Account
       type: object
+    ClientFeeDetailsResponseDTO:
+      properties:
+        default:
+          type: boolean
+        fees:
+          description: This is an array which contains the fees details.
+          items:
+            $ref: '#/components/schemas/FeeResponseDTO'
+          type: array
+        segment:
+          description: This field contains the fee segment associated with a client.
+          example: Silver
+          type: string
+        status:
+          description: 'This field contains the status and the possible values are:
+
+            Active
+
+            Inactive'
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - SUSPENDED
+          - UPLOADED
+          - APPROVED
+          - REJECTED
+          - FAILED
+          - SUCCESS
+          - FAILURE
+          - PARTIALLY SUCCESS
+          - SYNC
+          - NOT SYNC
+          - PENDING
+          - REQUIRES_ACTION
+          - CLEAR
+          - DECLINED
+          - ACCOUNT_BLOCKED
+          - AMOUNT_BLOCKED
+          example: ACTIVE
+          type: string
+      title: Client fee details response
+      type: object
     ClientTransactionsResponseDTO:
       properties:
         content:
@@ -18546,6 +19868,139 @@ components:
           format: int32
           type: integer
       title: Client transactions response
+      type: object
+    FeeResponseDTO:
+      properties:
+        authCurrency:
+          description: This field contains the 3-letter [ISO-4217 authorization currency
+            code](doc:currency-and-country-codes).
+          example: SGD
+          type: string
+        feeCurrency:
+          description: This field contains the 3-letter [ISO-4217 fee currency code](doc:currency-and-country-codes).
+          example: ANY
+          type: string
+        feeName:
+          description: This field contains the name of the fee or markup.
+          enum:
+          - ATM_FEE
+          - ECOM_FEE
+          - VIR_CARD_FEE
+          - PLASTIC_FEE
+          - ADDON_CARD_FEE
+          - REPLACEMENT_FEE
+          - WALLET_REFUND_FEE
+          - REMIT_BANK_FEE
+          - REMIT_BANK_FEE_SWIFT_BEN
+          - REMIT_BANK_FEE_SWIFT_OUR
+          - REMIT_BANK_FEE_SWIFT
+          - REMIT_CASH_FEE
+          - REMIT_WALLET_FEE
+          - REMIT_CARD_FEE
+          - REMIT_PROXY_FEE
+          - REMIT_BANK_FEE_FEDWIRE
+          - REMIT_RETURN_FEE
+          - TRANSACTION_MARKUP
+          - FX_MARKUP
+          - FX_MARKUP_AUTO_SWEEP
+          - FX_MARKUP_AUTO_SWEEP_EOD
+          - FX_MARKUP_AUTO_SWEEP_RECEIVE
+          - FX_MARKUP_LOCKANDHOLD_1
+          - INTERNATIONAL_ATM_FEE
+          - ATM_DECLINE_FEE
+          - NON_ATM_DECLINE_FEE
+          - ACCOUNT_OPENING_FEE
+          - ACCOUNT_MAINTENANCE_FEE
+          - ACCOUNT_INACTIVE_FEE
+          - P2P_FEE
+          - WALLET_CREDIT_THIRD_PARTY_FEE
+          - WALLET_CREDIT_OFFLINE_FEE
+          - WALLET_CREDIT_CARD_FEE
+          - WALLET_CREDIT_DIRECT_DEBIT_FEE
+          - AUTO_SWEEP_FEE_EOD
+          - AUTO_SWEEP_FEE_RECEIVE
+          - FX_MARKUP_SETTLE_2DAYS
+          - FX_MARKUP_SETTLE_NEXTDAY
+          - FX_MARKUP_SETTLE_ENDOFDAY
+          - FX_MARKUP_SETTLE_IMMEDIATE
+          - FX_MARKUP_LOCK_5MINS
+          - FX_MARKUP_LOCK_15MINS
+          - FX_MARKUP_LOCK_1HOUR
+          - FX_MARKUP_LOCK_4HOURS
+          - FX_MARKUP_LOCK_8HOURS
+          - FX_MARKUP_LOCK_24HOURS
+          - FX_MARKUP_CANCELLATION
+          - FX_MARKUP_REVERSAL
+          - FX_MARKUP_OFFMARKET
+          - DOMESTIC_LINKED_CARD_FEE
+          example: ATM_FEE
+          type: string
+        feeValue:
+          description: This field contains the actual value of the fee. It can be
+            an amount or percentage.
+          example: 1.5
+          format: double
+          type: number
+        fixed:
+          description: This field determines if the fee is a fixed amount or a percentage.
+            It is true for a fixed amount and false for a percentage.
+          example: true
+          type: boolean
+        slabFrom:
+          description: This field contains the starting point of the slab of transaction
+            amount on which the fee is applicable.
+          example: 0
+          format: double
+          type: number
+        slabTo:
+          description: This field contains the ending point of the slab of transaction
+            amount on which the fee is applicable.
+          example: 999999999
+          format: double
+          type: number
+        status:
+          description: 'This field contains the fee status and the possible values
+            are:
+
+            Active
+
+            Inactive
+
+            '
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - SUSPENDED
+          - UPLOADED
+          - APPROVED
+          - REJECTED
+          - FAILED
+          - SUCCESS
+          - FAILURE
+          - PARTIALLY SUCCESS
+          - SYNC
+          - NOT SYNC
+          - PENDING
+          - REQUIRES_ACTION
+          - CLEAR
+          - DECLINED
+          - ACCOUNT_BLOCKED
+          - AMOUNT_BLOCKED
+          example: ACTIVE
+          type: string
+        thresholdFeeValue:
+          description: This field contains the value of the threshold fee. It can
+            be fixed or percentage.
+          example: 9999
+          format: double
+          type: number
+        transactionCurrency:
+          description: This field contains the 3-letter [ISO-4217 transaction currency
+            code](doc:currency-and-country-codes).
+          example: ANY
+          type: string
+      title: Fee response
       type: object
     WalletRfiAttributeResponse:
       properties:
@@ -18973,7 +20428,7 @@ components:
           type: number
         transactionType:
           description: This field contains the transaction can be one of the complete
-            list of transactions mentioned in [Transaction Types](doc:transactions#transaction-types).
+            list of transactions mentioned in [Transaction Types](https://docs.nium.com/apis/docs/transaction-types).
           enum:
           - Debit
           - Reversal
@@ -23233,6 +24688,40 @@ components:
           type: string
       title: Update customer response
       type: object
+    UploadRfiDetailsResponseDto:
+      properties:
+        complianceId:
+          description: This field contains the unique compliance ID for the customer.
+          format: uuid
+          type: string
+        rfiId:
+          description: 'This field contains the unique RFI ID. This is for future
+            use.
+
+            Currently, the value shall be null.'
+          format: uuid
+          type: string
+        status:
+          description: "This field contains the status and following are the valid\
+            \ values for compliance status:\n\u2022 IN_PROGRESS\n\u2022 ACTION_REQUIRED\n\
+            \u2022 RFI_REQUESTED\n\u2022 RFI_RESPONDED\n\u2022 COMPLETED\n\u2022 REJECT\n\
+            \u2022 ERROR\nIn case of successful response to RFI, expected status is\
+            \ RFI_RESPONDED."
+          type: string
+      title: Upload Rfi details response
+      type: object
+    UploadRfiDocumentRequestDto:
+      properties:
+        rfiResponseRequest:
+          description: This field accepts the additional requests for information,
+            depending upon documents required to raise RFI
+          items:
+            $ref: '#/components/schemas/RfiResponseRequest'
+          type: array
+      required:
+      - rfiResponseRequest
+      title: Upload Rfi document request
+      type: object
     AddCategoryResponseDTO:
       properties:
         data:
@@ -25158,9 +26647,9 @@ components:
     CorporateRiskAssessmentInfo:
       properties:
         annualTurnover:
-          description: 'This field accepts the annual turnover for the corporate entity
-            to be onboarded. Refer to the [Glossary of Annual Turnover](https://docs.nium.com/baas/onboard-corporate-customer#glossary-of-annual-turnover):
-            for the applicable values.'
+          description: This field accepts the annual turnover for the corporate entity
+            to be onboarded. See [Corporate Customer Onboarding](https://docs.nium.com/apis/docs/overview-corporate-customer)
+            for the applicable values.
           type: string
         totalEmployees:
           description: This field accepts the total number of employees for the corporate
@@ -26979,6 +28468,7 @@ components:
           - FX_MARKUP_LOCK_24HOURS
           - FX_MARKUP_CANCELLATION
           - FX_MARKUP_REVERSAL
+          - FX_MARKUP_OFFMARKET
           - DOMESTIC_LINKED_CARD_FEE
           type: string
         feeReferenceId:
@@ -29678,6 +31168,22 @@ components:
           type: string
       title: Wallet funding instruments response
       type: object
+    AddressDTO:
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        postcode:
+          type: string
+        state:
+          type: string
+      title: AddressDTO
+      type: object
     PayinWalletApiError:
       properties:
         errors:
@@ -29721,6 +31227,82 @@ components:
           example: Error message descriptor.
           type: string
       title: ApiError2
+      type: object
+    BeneficialOwnerDetailsDTO:
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressDTO'
+        dateOfBirth:
+          type: string
+        firstName:
+          type: string
+        identificationNumber:
+          type: string
+        lastName:
+          type: string
+      title: BeneficialOwnerDetailsDTO
+      type: object
+    CorporateDTO:
+      properties:
+        beneficialOwnerDetails:
+          $ref: '#/components/schemas/BeneficialOwnerDetailsDTO'
+        businessAddress:
+          $ref: '#/components/schemas/AddressDTO'
+        businessName:
+          type: string
+        identificationDocIssuanceCountry:
+          type: string
+        identificationNumber:
+          type: string
+        identificationType:
+          enum:
+          - BUSINESS_REGISTRATION_CERTIFICATE
+          type: string
+        registeredAddress:
+          $ref: '#/components/schemas/AddressDTO'
+        registrationDate:
+          type: string
+      title: CorporateDTO
+      type: object
+    CustomerDetailDTO:
+      properties:
+        corporate:
+          $ref: '#/components/schemas/CorporateDTO'
+        entityType:
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
+          type: string
+        individual:
+          $ref: '#/components/schemas/IndividualDTO'
+      title: CustomerDetailDTO
+      type: object
+    IndividualDTO:
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressDTO'
+        dateOfBirth:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        gender:
+          type: string
+        identificationDocIssuanceCountry:
+          type: string
+        identificationNumber:
+          type: string
+        identificationType:
+          enum:
+          - PASSPORT_NO
+          - NATIONAL_ID
+          type: string
+        lastName:
+          type: string
+        nationality:
+          type: string
+      title: IndividualDTO
       type: object
     PaymentIdCientTagsResponseDTO:
       properties:
@@ -29766,6 +31348,11 @@ components:
             of the payment.
           type: string
           example: USD
+        customerDetails:
+          $ref: '#/components/schemas/CustomerDetailDTO'
+          description: This object accepts customer details while assigning payment
+            ID. This fields is conditional based on the Clients, who intends to leverage
+            this API to request for VAN allocation without onboarding
       required:
       - bankName
       - currencyCode
@@ -30197,6 +31784,11 @@ components:
           description: "This field accepts the state of the beneficiary. \n Note:\
             \ For this conditional field, see the callout at the top of this page."
           type: string
+        convertDestinationCurrency:
+          description: This field denotes if the beneficiary bank converts the amount
+            in the destination account currency and credits to the account in case
+            the beneficiary account is not in the same currency as destination currency.
+          type: boolean
         defaultAutoSweepPayoutAccount:
           type: boolean
         destinationCountry:
@@ -30358,6 +31950,11 @@ components:
           description: This field accepts the mobile number of the beneficiary--digits
             only--without the country code.
           type: string
+        convert_destination_currency:
+          description: This field denotes if the beneficiary bank converts the amount
+            in the destination account currency and credits to the account in case
+            the beneficiary account is not in the same currency as destination currency.
+          type: boolean
         country_code:
           description: This field accepts the [ISO-2 country code](doc:currency-and-country-codes)
             for the mobile number of beneficiary.
@@ -31542,6 +33139,7 @@ components:
           - LOCAL
           - PROXY
           - FEDWIRE
+          - CHECK
           type: string
         proxyType:
           description: "This field indicates the proxy type sent in the payment request.\n\
@@ -31605,33 +33203,33 @@ components:
       title: Additional fees
       type: object
       description: This object accepts the Client's additional fees
-    AddressDTO:
+    PayoutAddressDTO:
       properties:
         addressLine1:
+          type: string
           description: "This field accepts the line 1 of the customer\u2019s address.\n\
             Maximum character limit: 100."
-          type: string
         addressLine2:
+          type: string
           description: "This field accepts the line 2 of the customer\u2019s address.\n\
             Maximum character limit: 100."
-          type: string
         city:
+          type: string
           description: "This field accepts the city of the customer\u2019s address.\n\
             Maximum character limit: 50."
-          type: string
         country:
+          type: string
           description: "This field accepts the 2-letter [ISO Alpha-2 country code](doc:currency-and-country-codes)\
             \ denoting the customer\u2019s country."
-          type: string
         postcode:
+          type: string
           description: "This field accepts the postal code of the customer\u2019s\
             \ address. The acceptable special characters are:\nHypen(-)\nHash(#)\n\
             Space( )\nMinimum character limit: 3\nMaximum character limit: 10\nExample:\
             \ CM-4165 65"
-          type: string
         state:
-          description: "This field accepts the state of the customer\u2019s address"
           type: string
+          description: "This field accepts the state of the customer\u2019s address"
       title: Address
       type: object
     PayoutApiError2:
@@ -31778,6 +33376,20 @@ components:
           example: RT6431795378
           type: string
       title: CancelledRemittanceResponseDTO
+      type: object
+    PayoutClientCustomTagDTO:
+      properties:
+        key:
+          description: 'This field accepts the Client''s custom key of the tag.
+
+            The maximum key length limit is 128 characters.'
+          type: string
+        value:
+          description: 'This field accepts the Client''s custom value of the tag.
+
+            The maximum value length limit is 256 characters.'
+          type: string
+      title: ClientCustomTagDTO
       type: object
     DeviceDetailsDTO:
       properties:
@@ -32028,6 +33640,13 @@ components:
       type: object
     RemittanceTransactionsRequestDTO:
       properties:
+        tags:
+          description: 'This is an array which accepts custom tags & values.
+
+            Maximum 15 key-value pairs can be sent in tags.'
+          items:
+            $ref: '#/components/schemas/PayoutClientCustomTagDTO'
+          type: array
         additionalFees:
           $ref: '#/components/schemas/AdditionalFeesDTO'
           description: This object accepts the Client's additional fees
@@ -32236,7 +33855,7 @@ components:
           description: This object accepts RFI raised for additional information fields.
           type: object
         address:
-          $ref: '#/components/schemas/AddressDTO'
+          $ref: '#/components/schemas/PayoutAddressDTO'
           description: This object accepts the address detail for the customer.
         bankAccountNumber:
           description: This field accepts the bank account number.
@@ -32440,7 +34059,8 @@ components:
           - BOL_LT
           - CB_GB
           - CFSB_US
-          - BARCLAYS
+          - BARCLAYS_UK
+          - BARCLAYS_EU
           - CITI_SG
           - CITI_MX
           - CFSB_USINTL
@@ -32449,6 +34069,7 @@ components:
           - GOCARDLESS
           - DIRECTFAST_SG
           - BANKINGCIRCLE_PL
+          - COLUMN
           example: DBS_SG
           type: string
         branchCode:
@@ -32557,6 +34178,31 @@ components:
           items:
             type: number
             format: float
+    AddWalletRequestDTO:
+      properties:
+        tags:
+          description: This object contains the user defined key-value pairs provided
+            by the client. The maximum number of tags allowed is 15.
+          items:
+            $ref: '#/components/schemas/WalletTag'
+          type: array
+        currencies:
+          description: This field accepts the list of currencies to be associated
+            with the wallet. Currency should be accepted as the [3-letter ISO-4217
+            currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
+          items:
+            type: string
+          type: array
+        intendedUseOfAccount:
+          description: This field accepts the customer's intended use of the account.
+          example: For Sales department
+          type: string
+        name:
+          description: A description to identify the balance held in the wallet.
+          example: Regional balance
+          type: string
+      title: AddWalletRequestDTO
+      type: object
     WalletWalletApiError:
       properties:
         errors:
@@ -32585,6 +34231,54 @@ components:
           type: string
       title: ApiError
       type: object
+    ApiErrorResponse:
+      properties:
+        code:
+          enum:
+          - invalid_client_hash_id
+          - invalid_customer_hash_id
+          - invalid_wallet_hash_id
+          - invalid_card_hash_id
+          - customer_status_not_clear
+          - invalid_currency
+          - currency_not_configured
+          - wallet_creation_limit_exceeds
+          - tags_maximum_limit_exceeded
+          - tag_key_contains_special_chars
+          - unique_tag_key_required
+          - duplicate_client_transaction_config
+          - invalid_client_transaction_config
+          - invalid_transaction_category
+          - invalid_transaction_type
+          - wallet_currency_already_exists
+          - invalid_permission_to_override_customer_fee
+          - invalid_customer_fee_for_individual
+          - invalid_fee_type_for_customer_level
+          - invalid_FX_markup_flat_fee
+          - invalid_customer_fee_currency
+          - invalid_customer_fee_status
+          - fee_already_defined_for_auth_currency
+          - invalid_transaction_currency
+          - invalid_fee_currency
+          - customer_fee_above_threshold
+          - fee_currency_should_not_be_any
+          - customer_fee_does_not_exists
+          - customer_fee_update_not_allowed_for_region
+          - customer_fee_already_exists
+          - wallet_currency_removal_not_allowed
+          - invalid_system_reference_number
+          - invalid_status_for_remittance_cancel
+          - wallet_creation_not_allowed
+          - invalid_input
+          - resource_not_found
+          - invalid_date_range
+          type: string
+        description:
+          type: string
+        field:
+          type: string
+      title: ApiErrorResponse
+      type: object
     WalletClientCustomTagDTO:
       properties:
         key:
@@ -32598,6 +34292,30 @@ components:
             The maximum character length for tag values is 256 characters.'
           type: string
       title: Client custom tag
+      type: object
+    CurrencyDetail:
+      properties:
+        balance:
+          description: Current balance in the currency.
+          example: 10
+          format: double
+          type: number
+        code:
+          description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the currency.
+          example: SGD
+          type: string
+        default:
+          description: This field describes if the currency is a base currency or
+            not.
+          example: true
+          type: boolean
+        withHoldingBalance:
+          description: The amount withheld for debiting the wallet.
+          example: 10
+          format: double
+          type: number
+      title: CurrencyDetail
       type: object
     WalletDeviceDetailsDTO:
       properties:
@@ -32735,6 +34453,158 @@ components:
           type: string
       title: FundTransferResponse
       type: object
+    MerchantCategoryResponseDTO2:
+      properties:
+        description:
+          description: Description of the MCC.
+          example: Ice cream shops, Fast Food Restaurants
+          type: string
+        mccCode:
+          description: The four-digit Visa Merchant Category Code.
+          example: '5814'
+          type: string
+        merchantCategory:
+          description: Nium's categorization of the  MCC.
+          example: Food n Beverage
+          type: string
+      title: Merchant category response
+      type: object
+    P2PTransferDTO:
+      properties:
+        amount:
+          description: The amount in the destination currency to transfer.
+          example: 50
+          format: double
+          type: number
+        authenticationCode:
+          description: 'Accepts the authentication code generated as part of SCA (Strong
+            Customer Authentication).
+
+            Note: Authentication code is expected if regulatory region is UK or EU.'
+          example: authCode
+          type: string
+        countryIP:
+          type: string
+        currencyCode:
+          description: Accepts the 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the amount.
+          example: SGD
+          type: string
+        customerComments:
+          description: 'Accepts customer comments for the P2P transfer.
+
+            Maximum character limit is 512'
+          example: Paid for lunch
+          type: string
+        destinationWalletHashId:
+          description: The wallet hash Id under the same client which will receive
+            the funds.
+          example: c69f684f-a306-4c4a-8daa-1e91ce7c85f8
+          type: string
+        deviceInfo:
+          type: string
+        exemptionCode:
+          description: 'Accepts the reason code for the exemption provided as part
+            of SCA (Strong Customer Authentication), which can be one of the following
+            values:
+
+            01 - Trusted Beneficiary
+
+            02 - Low Value Transaction
+
+            03 - Recurring Transactions
+
+            04 - Payment to Self
+
+
+            Note: Exemption code is expected if regulatory region is UK or EU'
+          example: '01'
+          type: string
+        ipAddress:
+          type: string
+        sessionId:
+          type: string
+      required:
+      - amount
+      - currencyCode
+      - destinationWalletHashId
+      title: P2P transfer
+      type: object
+    P2PTransferResponse:
+      properties:
+        message:
+          description: Provides more details about the returned error. Returns null
+            is there are no errors.
+          example: 'null'
+          type: string
+        retrievalReferenceNumber:
+          description: Unique auth code generated for the transaction by the card
+            issuance platform. This field will be deprecated in future. Clients should
+            use `systemReferenceNumber` instead.
+          example: FT6449832977
+          type: string
+        status:
+          description: The status of the transfer.
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - SUSPENDED
+          - UPLOADED
+          - APPROVED
+          - REJECTED
+          - FAILED
+          - SUCCESS
+          - FAILURE
+          - PARTIALLY SUCCESS
+          - SYNC
+          - NOT SYNC
+          - PENDING
+          - REQUIRES_ACTION
+          - CLEAR
+          - DECLINED
+          - ACCOUNT_BLOCKED
+          - AMOUNT_BLOCKED
+          example: APPROVED
+          type: string
+        success:
+          description: Details if the transfer was successful. or not.
+          example: true
+          type: boolean
+        systemReferenceNumber:
+          description: The transaction reference number generated by the card issuance
+            platform.
+          example: FT6449832977
+          type: string
+      title: P2P transfer response
+      type: object
+    WalletWalletRfiAttributeResponse:
+      properties:
+        label:
+          description: The field label for the RFI.
+          type: string
+        type:
+          description: Details the field type. Avialable values include data or document.
+          type: string
+        value:
+          description: The field value for the RFI. This will be used while responding
+            to transaction RFI.
+          type: string
+      title: RfiAttributeResponse
+      type: object
+    WalletStandard500Error:
+      properties:
+        code:
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+          type: string
+        description:
+          enum:
+          - An internal error occurred
+          type: string
+      title: Standard500Error
+      type: object
     TransactionClientTagRequestDTO:
       properties:
         action:
@@ -32791,6 +34661,740 @@ components:
             $ref: '#/components/schemas/TransactionClientTagResponseDTO'
           type: array
       title: Transaction client tags response
+      type: object
+    WalletTransactionResponseDTO:
+      properties:
+        tags:
+          additionalProperties:
+            type: string
+          description: Contains the user defined key-value pairs provided by the client.
+          type: object
+        acquirerCountryCode:
+          description: The country code of the acquirer.
+          type: string
+        acquiringInstitutionCode:
+          description: The acquiring institution code that identifies the financial
+            institution acting as the acquirer of the transaction.
+          type: string
+        authAmount:
+          description: The authorization amount of the transaction.
+          format: double
+          type: number
+        authCode:
+          description: The authorization code of teh transaction.
+          type: string
+        authCurrencyCode:
+          description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            of the auth currency, the currency in which amount is deducted from wallet.
+          type: string
+        billingAmount:
+          description: The equivalent transaction amount in base currency.
+          format: double
+          type: number
+        billingConversionRate:
+          description: The conversion rate of transaction currency to billing currency;
+            included with all card transactions.
+          type: string
+        billingCurrencyCode:
+          description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the billing currency or base currency.
+          type: string
+        billingReplacementAmount:
+          description: The corrected amount of a transaction in a partial reversal.
+            This is defined by ISO-8583 as a fixed length field with four subfields,
+            but only the first subfield is used. A 12 position field for the corrected,
+            billing amount of a customer's transaction, in the billing currency. The
+            field is right justified, with lead zero fill.
+          format: double
+          type: number
+        businessTransaction:
+          description: Mark or unmark a transaction as a business transaction.
+          type: boolean
+        cardHashID:
+          description: The unique card identifier generated while new/add-on card
+            issuance.
+          type: string
+        cardTransactionAmount:
+          description: The amount of a card transaction.
+          format: double
+          type: number
+        childCustomerHashId:
+          description: This field refers to a unique identifier, known as customerHashId,
+            assigned to an individual customer who is associated with a corporate
+            customer at the parent level. This ID helps distinguish and track the
+            child-level customer within a given client's program. Using this ID, you
+            can link the child customer and their parent corporate customer, ensuring
+            accurate management of customer data.
+          type: string
+        clientHashId:
+          description: Unique client identifier generated and shared before API handshake.
+          type: string
+        comments:
+          description: Auto-generated comments with details on the transactions such
+            as the reason for a decline.
+          type: string
+        complianceStatus:
+          description: 'This field contains the compliance status of the transaction.
+            Avialable values include: NULL
+
+            IN_PROGRESS
+
+            ACTION_REQUIRED
+
+            RFI_REQUESTED
+
+            RFI_RESPONDED
+
+            COMPLETED
+
+            ERROR
+
+            REJECT
+
+            EXPIRED'
+          enum:
+          - NONE
+          - IN_PROGRESS
+          - COMPLETED
+          - ACTION_REQUIRED
+          - ERROR
+          - REJECT
+          - EXPIRED
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - UNKNOWN
+          - INITIATED
+          - PENDING
+          - CLEAR
+          - CLOSED
+          type: string
+        createdAt:
+          description: The date and time of when the transaction was created in UTC.
+          format: date-time
+          type: string
+        currentWithHoldingBalance:
+          description: This field will be deprecated in the future.
+          format: double
+          type: number
+        customerHashId:
+          description: Unique customer identifier generated on customer creation.
+          type: string
+        dateOfTransaction:
+          description: The date when the transaction occurred in yyyy-MM-dd format.
+          format: date-time
+          type: string
+        debit:
+          description: Details if the transaction is a debit transaction.
+          type: boolean
+        effectiveAuthAmount:
+          description: The effective authorization amount which includes fees, markup,
+            etc.
+          format: double
+          type: number
+        labels:
+          additionalProperties:
+            type: string
+          description: This object will contain different key-value pairs depending
+            on the type of transaction. This object contains different labels based
+            on the type of transaction. The list will change over time depending on
+            different use-cases. For more information, see [Glossary of Labels](/apis/docs/transaction-response-labels).
+          type: object
+        localDate:
+          description: The local date of the transaction.
+          type: string
+        localTime:
+          description: The local time of the transaction.
+          type: string
+        maskedCardNumber:
+          description: The 16-digit masked card number in format 1234-56xx-xxxx-3456.
+          type: string
+        mcc:
+          description: The four-digit Merchant Category Code.
+          type: string
+        merchantCategory:
+          description: The merchant category such as Airlines, Hotels, Shopping, etc.
+          type: string
+        merchantCity:
+          description: The name of the merchant's city.
+          type: string
+        merchantCountry:
+          description: The country of the merchant.
+          type: string
+        merchantID:
+          description: The unique merchant identifier.
+          type: string
+        merchantLatitude:
+          description: The latitude of the merchant captured during geo-tagging.
+          type: string
+        merchantLongitude:
+          description: The longitude of the merchant captured during geo-tagging.
+          type: string
+        merchantName:
+          description: The name of the merchant.
+          type: string
+        merchantNameLocation:
+          description: The full name of the merchant and location data as received
+            from network.
+          type: string
+        merchantTaggedName:
+          description: The tagged name of the merchant.
+          type: string
+        merchantZoomIndex:
+          description: The merchant map zoom index.
+          type: string
+        originalAuthorizationCode:
+          description: The authorization code of the original transaction in case
+            of reversal.
+          type: string
+        partnerReferenceNumber:
+          description: This field contains the identifier provided by an RHA client
+            in response to an authorization.
+          type: string
+        paymentInstrumentHashId:
+          description: The unique payment instrument identifier generated for the
+            linked card.
+          type: string
+        posConditionCode:
+          description: 'The pos condition code that describes how the transaction
+            took place at the point of service.
+
+            00 - Normal transaction
+
+            01 - Cardholder not present
+
+            03 - Merchant suspicious
+
+            08 - Mail/telephone order
+
+            51 - Account Verification Message(AVM)
+
+            55 - ICC Capable Branch ATM
+
+            59 - Electronic Commerce
+
+            90 - Recurring Payment'
+          type: string
+        posEntryCapabilityCode:
+          description: 'Provides details about the terminal used at the point of service.
+            Types of terminal field values include: 0 - Unspecified
+
+            2 - Unattended terminal(customer-operated)
+
+            4 - Electronic cash register
+
+            7 - Telephone device
+
+            8 - MCAS device
+
+            9 - Mobile acceptance solution(mPOS)
+
+            Capability of terminal field values include:
+
+            0 - Unspecified
+
+            1 - Terminal not used
+
+            2 - Magnetic stripe read capability
+
+            3 - Bar code read capability
+
+            4 - OCR read capability
+
+            5 - Integrated circuit card read capability
+
+            9 - Terminal does not read card data
+
+            '
+          type: string
+        posEntryMode:
+          description: "This field contains the pos entry code that identifies the\
+            \ actual method used to capture the account number and expiration date,\
+            \ and the PIN capture capability of the terminal. This is a fixed\u2011\
+            length field with three subfields:\n1. Positions 1\u20112 - PAN and Date\
+            \ Entry Mode: This is a two\u2011digit code that identifies the actual\
+            \ method used at the point of service to enter the cardholder account\
+            \ number and card expiry date.\n00 - Unknown\n01 - Keyed transaction\n\
+            02 - Magnetic stripe read\n05 - Chip was read at the terminal\n07 - Contactless\n\
+            90 - Magnetic stripe read and transmitted unaltered\n91 - Contactless\
+            \ - Magnetic stripe data (MSD) transmitted\n2. Position 3 - PIN Entry\
+            \ Capability: This is a one\u2011digit code that identifies the capability\
+            \ of the authorization terminal, if one was used, to capture PINs. This\
+            \ coding does not necessarily mean that a PIN was entered or is included\
+            \ in this message:\n0 - Unknown\n1 - Terminal can accept PINs\n2 - Terminal\
+            \ cannot accept PINs\n3 - mPOS terminal can accept software-based PINs\
+            \ (Mastercard only)\n3. Position 4 - Unused(filler): This is one digit\
+            \ of filler, which must be zero.\n"
+          type: string
+        previousBalance:
+          description: The previous balance in the wallet.
+          format: double
+          type: number
+        processingCode:
+          description: The processing code is a 6 character Visa field. Refer to the
+            [link](https://en.wikipedia.org/wiki/ISO_8583#Processing_code) for more
+            details on the processing code.
+          type: string
+        receiptFileName:
+          description: The name of the receipt file.
+          type: string
+        receiptType:
+          description: "The receipt type.Expected values are as follows: \nimage/png\n\
+            image/jpg\nimage/jpeg\napplication/pdf"
+          type: string
+        retrievalReferenceNumber:
+          description: The 12 digit number that is used with other data elements as
+            a key to identify and track all messages related to a given customer transaction.
+          type: string
+        rfiDetails:
+          description: An array that holds RFI details.
+          items:
+            $ref: '#/components/schemas/WalletTransactionRfiDetailsResponse'
+          type: array
+        rhaTransactionId:
+          description: The transaction Id for an RHA client.
+          type: string
+        settlementAmount:
+          description: The settlement amount of the transaction. This amount is valid
+            only for a settled transaction.
+          format: double
+          type: number
+        settlementAuthAmount:
+          description: The settlement authorization amount of a transaction. This
+            amount is valid only for a settled transaction.
+          format: double
+          type: number
+        settlementBillingAmount:
+          format: double
+          type: number
+        settlementCurrency:
+          type: string
+        settlementDate:
+          description: The settlement date in case of a Settled transaction. Otherwise,
+            returns null.
+          type: string
+        settlementStatus:
+          description: "The settlement status. Available vlues include:\nUnsettled\n\
+            Settled\n Released\nDisputed\nDisputeClosed\nWaived"
+          enum:
+          - APPROVED
+          - DECLINED
+          - BLOCKED
+          - SETTLED
+          - UNSETTLED
+          - REVERSAL
+          - RELEASED
+          - PENDING
+          - WAIVED
+          - DISPUTED
+          - DISPUTE_CLOSED
+          - IN_PROGRESS
+          - REJECTED
+          - RETURNED
+          - AWAITING_FUNDS
+          - EXPIRED
+          - CANCELLED
+          - SCHEDULED
+          - NA
+          type: string
+        settlementTransactionAmount:
+          format: double
+          type: number
+        status:
+          description: 'The status of the transaction. Avialable values include:
+
+            Pending: Transaction authorization is awaiting success or failure.
+
+            Approved: Transaction is successfully authorized.
+
+            Rejected: Transaction is rejected due to NIUM risk and compliance policies.
+
+            Declined: Transaction is declined.
+
+            Reversal: Transaction is reversed.
+
+            Blocked: Transaction is blocked'
+          enum:
+          - APPROVED
+          - DECLINED
+          - BLOCKED
+          - SETTLED
+          - UNSETTLED
+          - REVERSAL
+          - RELEASED
+          - PENDING
+          - WAIVED
+          - DISPUTED
+          - DISPUTE_CLOSED
+          - IN_PROGRESS
+          - REJECTED
+          - RETURNED
+          - AWAITING_FUNDS
+          - EXPIRED
+          - CANCELLED
+          - SCHEDULED
+          - NA
+          type: string
+        systemTraceAuditNumber:
+          description: The system trace audit number assigned to uniquely identify
+            transactions.
+          type: string
+        terminalID:
+          description: The unique terminal ID.
+          type: string
+        transactionCurrencyCode:
+          description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the transaction currency.
+          type: string
+        transactionReplacementAmount:
+          description: The corrected amount of a transaction in a partial reversal.
+            This is defined by ISO-8583 as a fixed length field with four subfields,
+            but only the first subfield is used. A 12 position field for the corrected,
+            actual amount of a customer's transaction, in the transaction currency.
+            The field is right justified, with lead zero fill.
+          format: double
+          type: number
+        transactionType:
+          description: The type of transaction. Can be any one of the list of transaction
+            types mentioned in [Transaction Types](https://docs.nium.com/apis/docs/transaction-types).
+          enum:
+          - Debit
+          - Reversal
+          - Original_Credit
+          - Original_Credit_Reversal
+          - Balance_Inquiry
+          - Partial_Reversal
+          - Reversal_Advice
+          - Decline_Advice
+          - Incremental_Auth_Reversal
+          - Auto_Sweep
+          - Auto_Sweep_Payout
+          - Auto_Sweep_Payout_Reversal
+          - Settlement_Debit
+          - Settlement_Credit
+          - Settlement_Reversal
+          - Settlement_Direct_Reversal
+          - Settlement_Direct_Debit
+          - Fee_Debit
+          - Fee_Reversal
+          - Fee_Waiver
+          - Client_Prefund
+          - Client_Refund
+          - Wallet_Refund
+          - Wallet_Credit_Mode_Card
+          - Wallet_Credit_Mode_Prefund
+          - Wallet_Credit_Mode_Prefund_Cross_Currency
+          - Wallet_Credit_Mode_Offline
+          - Wallet_Credit_Mode_Offline_Cross_Currency
+          - Wallet_Credit_Mode_Offline_ThirdParty
+          - Wallet_Credit_Mode_Direct_Debit
+          - Wallet_Credit_Mode_Direct_Debit_Reversal
+          - Customer_Wallet_Credit_Fund_Transfer
+          - Customer_Wallet_Debit_Fund_Transfer
+          - Wallet_Fund_Transfer
+          - Client_Fund_Transfer
+          - Wallet_Hold
+          - Wallet_Unhold
+          - Remittance_Debit
+          - Remittance_Debit_External
+          - Remittance_Reversal
+          - Remittance_Client_Auto_Sweep
+          - Remittance_Client_Auto_Sweep_Reversal
+          - Remittance_Debit_Prescreening
+          - Remittance_Debit_External_Prescreening
+          - Remittance_Bene_Microdeposit
+          - Remittance_Bene_Microdeposit_Reversal
+          - Regulatory_Auto_Sweep
+          - Regulatory_Block
+          - Regulatory_Block_Release
+          - Regulatory_Debit
+          - Regulatory_Debit_Reversal
+          - Transfer_Local
+          - Transfer_Local_Reversal
+          - Cashback_Credit
+          - Cashback_Credit_Client
+          - Chargeback_Credit
+          - Customer_Wallet_Debit_Intra_Region
+          - Customer_Wallet_Credit_Intra_Region
+          - Customer_Wallet_Debit_Cross_Region
+          - Customer_Wallet_Credit_Cross_Region
+          - Direct_Debit_Payout
+          - Direct_Debit_Payout_Reversal
+          - Invoicing_Debit
+          - NA
+          type: string
+        updatedAt:
+          description: TThe date and time when the transaction was last updated in
+            UTC.
+          format: date-time
+          type: string
+        walletHashId:
+          description: The unique wallet identifier generated when a new wallet is
+            created.
+          type: string
+      title: Transaction response
+      type: object
+    WalletTransactionRfiDetailsResponse:
+      properties:
+        description:
+          description: The description of the RFI.
+          type: string
+        documentType:
+          description: The type of the document if applicable, for example, POI, POA,
+            etc.
+          type: string
+        mandatory:
+          description: Details if the RFI is required or not.
+          type: boolean
+        remarks:
+          description: The remarks that were provided while raising the RFI.
+          type: string
+        requiredData:
+          description: An array that contains the required data for the RFI.
+          items:
+            $ref: '#/components/schemas/WalletWalletRfiAttributeResponse'
+          type: array
+        rfiHashId:
+          description: The unique RFI hash ID.
+          type: string
+        rfiId:
+          description: The unique identifier for the group of RFI raised for the customer
+            transaction.
+          type: string
+        rfiStatus:
+          description: The transaction RFI status.
+          enum:
+          - NONE
+          - IN_PROGRESS
+          - COMPLETED
+          - ACTION_REQUIRED
+          - ERROR
+          - REJECT
+          - EXPIRED
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - UNKNOWN
+          - INITIATED
+          - PENDING
+          - CLEAR
+          - CLOSED
+          type: string
+        transactionEntityType:
+          description: 'The type of transaction entity. Available values include:
+
+            DEBTOR
+
+            CREDITOR'
+          enum:
+          - DEBTOR
+          - CREDITOR
+          type: string
+        type:
+          description: The type of RFI. Avilable values include document or data.
+          type: string
+      title: TransactionRfiDetailsResponse
+      type: object
+    TransactionsBusinessDTO:
+      properties:
+        businessTransaction:
+          description: Mark or unmark a transactions as a business transactions.
+          example: true
+          type: boolean
+      required:
+      - businessTransaction
+      title: Transactions business
+      type: object
+    TransactionsLocationDTO:
+      properties:
+        merchantLatitude:
+          description: Accepts the latitude of the merchant's location.
+          example: '28.532094'
+          type: string
+        merchantLongitude:
+          description: Accepts the longitude of the merchant's location.
+          example: '77.01632'
+          type: string
+        merchantTaggedName:
+          description: Accepts the merchant's tagged name.
+          example: STARBUCKS
+          type: string
+        merchantZoomIndex:
+          description: Accepts the merchant's map zoom index.
+          example: '4'
+          type: string
+      required:
+      - merchantLatitude
+      - merchantLongitude
+      - merchantTaggedName
+      - merchantZoomIndex
+      title: Transactions location
+      type: object
+    TransactionsReceiptDTO:
+      properties:
+        document:
+          description: Contains the receipt as uploaded in Base64 encoded format.
+          example: iVBORw0KGgoAAAANSUhEU...<Base64 Encoded Image or Document>
+          type: string
+        receiptFileName:
+          description: The name of the file as uploaded.
+          example: receipt_1.png
+          type: string
+        receiptType:
+          description: The file type of the uploaded receipt.
+          enum:
+          - image/png
+          - image/jpg
+          - image/jpeg
+          - application/pdf
+          example: image/png
+          type: string
+      required:
+      - document
+      - receiptFileName
+      - receiptType
+      title: Transactions receipt
+      type: object
+    UpdateWalletRequestDTO:
+      properties:
+        tags:
+          items:
+            $ref: '#/components/schemas/WalletTag'
+          type: array
+        currencies:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+      title: UpdateWalletRequestDTO
+      type: object
+    WalletBalanceResponseDTO:
+      properties:
+        balance:
+          description: The available amount in the pocket.
+          example: 10
+          format: double
+          type: number
+        curSymbol:
+          description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
+            for the pocket currency.
+          example: SGD
+          type: string
+        default:
+          type: boolean
+        isoCode:
+          description: The [3-digit ISO numeric code](https://www.currency-iso.org/en/home/tables/table-a1.html)
+            for the currency.
+          example: '702'
+          type: string
+        mccData:
+          description: An array that contains multiple objects; each object is a mccCode
+            for which the pocket has restrictions.
+          items:
+            $ref: '#/components/schemas/MerchantCategoryResponseDTO2'
+          type: array
+        pocketName:
+          description: The name of the pocket as defined under base currency.
+          example: Food
+          type: string
+        withHoldingBalance:
+          description: The amount blocked by NIUM.
+          example: 10
+          format: double
+          type: number
+      title: Wallet balance response
+      type: object
+    WalletResponseDTO2:
+      properties:
+        tags:
+          additionalProperties:
+            type: string
+          description: The tags is an map that contains multiple objects. This object
+            contains the below data elements. Please refer the example for exact structure.
+          type: object
+        createdAt:
+          description: This field contains the timestamp of wallet creation in the
+            format yyyy-MM-ddTHH:mm:ssZ.
+          example: 2024-01-14T08:06:49+0000
+          type: string
+        currencies:
+          description: The currencies is an array that contains multiple objects.
+            This object contains the below data elements. Please refer the example
+            for exact structure.
+          items:
+            $ref: '#/components/schemas/CurrencyDetail'
+          type: array
+        intendedUseOfAccount:
+          description: This field contains customer's intention to use the account.
+          example: For Sales department
+          type: string
+        name:
+          description: A description to identify the balance held in the wallet.
+          example: Regional wallet
+          type: string
+        status:
+          description: Current status of the wallet.
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - SUSPENDED
+          - UPLOADED
+          - APPROVED
+          - REJECTED
+          - FAILED
+          - SUCCESS
+          - FAILURE
+          - PARTIALLY SUCCESS
+          - SYNC
+          - NOT SYNC
+          - PENDING
+          - REQUIRES_ACTION
+          - CLEAR
+          - DECLINED
+          - ACCOUNT_BLOCKED
+          - AMOUNT_BLOCKED
+          example: Active
+          type: string
+        updatedAt:
+          description: This field contains the timestamp of wallet updation in the
+            format yyyy-MM-ddTHH:mm:ssZ.
+          example: 2024-01-14T08:06:49+0000
+          type: string
+        walletHashId:
+          description: Unique identifier of the wallet.
+          example: c69f684f-a306-4c4a-8daa-1e91ce7c85f8
+          type: string
+      title: WalletResponseDTO2
+      type: object
+    WalletTag:
+      properties:
+        key:
+          description: 'This field accepts the name of the tag.
+
+            The maximum key length limit is 128 characters.'
+          type: string
+        value:
+          description: 'This field accepts the value of the tag.
+
+            The maximum value length limit is 256 characters.'
+          type: string
+      required:
+      - key
+      title: WalletTag
+      type: object
+    WalletTransactionsResponseDTO:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/WalletTransactionResponseDTO'
+          type: array
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+      title: Wallet transactions response
       type: object
   securitySchemes:
     default:
