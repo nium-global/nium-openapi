@@ -1,18 +1,54 @@
-### July 9, 2024
+## July 23, 2024
 
-#### Enhancement
+### New Feature
+
+**Account Verification**
+
+We’ve released a new [Account Verification](https://docs.nium.com/apis/docs/account-verification) request that helps you verify payee details while [creating beneficiaries](https://docs.nium.com/apis/reference/addbeneficiaryv2). This change helps you simplify your integration, removing the need for a separate integration dedicated to verifying account details.
+
+For more information, see [Account Verification](https://docs.nium.com/apis/docs/account-verification).
+
+### Enhancements
+
+**Updates to the Fetch Supported Corridors V3 Request**
+
+We’ve made the following changes to the [Fetch Supported Corridors V3](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv3) request:
+
+- `payoutMethodCategory` query parameter: Helps you separate supported payout methods by corridor - for more information and a detailed breakdown, see the [Nium playbook](https://playbook.nium.com/).
+- The query parameters `beneficiaryAccountType`, `customerType`, and `payoutMethod` have been made enums.
+
+For more information, see the [Fetch Supported Corridors V3](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv3) request.
+
+**New `isOffMarket` Parameter**
+
+We’ve introduced a new `isOffMarket` field to help you understand when off-market fees get applied to `Conversion` and `Quote` requests.
+
+- The `isOffMarket` field is returned in the response to the following requests:
+  - [Create Quote](https://docs.nium.com/apis/reference/createquote)
+  - [Fetch Quote by ID](https://docs.nium.com/apis/reference/fetchquote)
+  - [Create Conversion](https://docs.nium.com/apis/reference/createconversion)
+  - [Fetch Conversion By Id](https://docs.nium.com/apis/reference/fetchconversion)
+- Please note that this field isn't returned unless off-market requests have been enabled by Nium.
+
+For more information, see [FX - Overview](https://docs.nium.com/apis/docs/fx-overview#off-market-rates).
+
+---
+
+## July 9, 2024
+
+### Enhancement
 
 A new query parameter status has been released for the [Virtual Account Details V2](https://docs.nium.com/apis/reference/virtualaccountdetailsv2) request. With this new parameter, the active/inactive virtual accounts can be filtered by Clients.
 
 ---
 
-### June 25, 2024
+## June 25, 2024
 
-#### New Feature
+### New Feature
 
 Reports are now available in Nium Portal. Reports enhance your financial management experience by providing detailed insights into your transactions. You can now track, analyze, and manage your financial activities with ease. For more information, see [Reports](https://docs.nium.com/apis/docs/portal-reports).
 
-#### Breaking API Changes
+### Breaking API Changes
 
 Starting October 1st, 2024, changes in Nium’s compliance policy will require additional documents and parameters to onboard corporate customers using the Onboard Corporate API. Please update your integration accordingly to avoid disruptions. If you have any questions, please contact your Nium account manager or Nium Support.
 
@@ -20,7 +56,7 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 - **Future Requirement:** From October 1st, 2024, these fields and parameters will be mandatory.
 - **Changes to Nium:** If the required documents and parameters are not included, the API will return an error indicating the missing documents and/or parameters.
 
-#### Changes to the Onboard Corporate API include:
+### Changes to the Onboard Corporate API include:
 
 - **Device Information:** IP address and device name is now required for all regions when onboarding corporate customers. See the `deviceDetails` object in our API Reference for more information about the changes in each country:
   - [Australia (AU)](https://docs.nium.com/apis/docs/cc-au-required-parameters#devicedetails-object)
@@ -38,16 +74,16 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
 ---
 
-### May 28, 2024
+## May 28, 2024
 
-#### New Features
+### New Features
 
 * **Direct Debit** is now available for Singaporean (SG) customers. Direct Debit enables SG-based businesses to fund their Nium wallets using their Singaporean (SG) bank account in real time.
   * The transaction type for Direct Debit transactions is `WALLET_CREDIT_MODE_DIRECT_DEBIT`.
   * Reach out to your Nium account manager for details on how to activate Direct Debit.
   * For more information, see [Direct Debit SG](https://docs.nium.com/apis/docs/direct-debit-sg).
 
-#### Enhancements
+### Enhancements
 
 * Maximum limit for INR Proxy (UPI) transactions has been increased to INR 200,000 from INR 100,000. For more information, see the [Nium - India Playbook](https://playbook.nium.com/country/india?pm_relation=payout_methods).
 
@@ -63,9 +99,9 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
 ---
 
-### April 30, 2024
+## April 30, 2024
 
-#### Enhancements
+### Enhancements
 
 * We’ve introduced three new reasons you can include when permanently blocking a customer:
   * **UNRESPONSIVE_CUSTOMER**
@@ -83,9 +119,9 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
 ---
 
-### April 16, 2024
+## April 16, 2024
 
-#### Enhancements
+### Enhancements
 
 *   Our eKYC Onboarding APIs are now available for individual customers in Canada. For more details, see [CA onboarding](https://developersandbox.nium.com/apis/docs/ca-onboarding-individual).
         
@@ -102,9 +138,9 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
     
     For more details, see [Transfer Money](https://docs.nium.com/apis/reference/transfermoney).
 ---
-### Mar 5, 2024
+## Mar 5, 2024
 
-#### New Features
+### New Features
 
 *   Clients can now manually execute FX conversions. With this change, you're given greater control and flexibility over how funds get converted in customer wallets and the associated settlement timeframes.
     
@@ -120,7 +156,7 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
         *   [Create Conversion](https://docs.nium.com/apis/reference/createconversion)
         *   [Fetch Conversion By ID](https://docs.nium.com/apis/reference/fetchconversion)
 
-#### Enhancements
+### Enhancements
 
 *   We've added a new `compliancestatus` query parameter to the `Transactions` endpoint. For more information, see:
     
@@ -144,7 +180,7 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
     *   `payoutMethod`
     
 
-#### Deprecation Notices
+### Deprecation Notices
 
 *   We'll be deprecating [Fetch Supported Corridors V2](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv2) within the next six months. As we prepare to do so, we'll surface more details. If you have any questions, reach out to the [Nium Support team](mailto:support@nium.com) at anytime.
 
@@ -152,7 +188,7 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
 ### Feb 20, 2024
 
-#### Enhancements
+### Enhancements
     
 *   We've added a new `complianceStatus` query parameter to the following endpoints.
     
@@ -163,15 +199,15 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
     
     For more details, see [PGP Prerequisites.](https://docs.nium.com/apis/docs/pgp-prerequisites)
     
-#### API breaking changes
+### API Breaking Changes
     
 *   We've removed the **BEN** enum from the `payout#swiftFeeType` field in the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney#:~:text=This%20object%20accepts%20the%20payout%20details.) request.
 
 ---
 
-### Feb 6, 2024
+## Feb 6, 2024
 
-#### New features
+### New Features
 
 *   We have introduced a new feature to Nium Portal called **Batch Payouts**. With batch payouts, you can now effortlessly process multiple transactions in one go while ensuring all your payouts are handled seamlessly. Learn more about batch payouts from our [blog](https://www.nium.com/resources/batch-payouts-in-the-nium-portal).
     
@@ -181,7 +217,7 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
     
     For more information, see [Postman collection](https://docs.nium.com/apis/docs/postman-collection)
     
-#### New feature
+### New Feature
 
 *   We've released several new APIs related to Card Security and 3DS authentication. These new APIs enable you to send and receive data in more secure manner (e.g RSA encrypted). For more information, see the following from our API reference:
 
@@ -190,14 +226,14 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
     *   [Fetch ATM PIN V2](https://docs.nium.com/apis/reference/fetchatmpinv2)
     *   [Add Or Update Passcode](https://docs.nium.com/apis/reference/setpasscode)
 
-#### Enhancements
+### Enhancements
 
 *   We've made some improvments and fixes to our Google Pay Push Provisioning SDK to support EU and UK address verification. For details on our Google Pay Push Provisioning SDK, see [Google Pay Push Provisioning.](https://docs.nium.com/apis/docs/google-pay-push-provisioning-1)
 
 ---
-### Jan 23, 2024
+## Jan 23, 2024
 
-#### New feature
+### New Feature
 
 *   We have introduced a new Webhook event type called `CUSTOMER_COMPLIANCE_STATUS` applicable for individual customers. This event is triggered when there is a change to the individual customer's compliance status. For more information, see the [Customer compliance status](//docs.nium.com/apis/reference/customer-compliance-status) event in our API reference.
 
@@ -205,7 +241,7 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
     You can also subscribe to the event type `CARD_CLIENT_KYB_STATUS_WEBHOOK` to receive the compliance status of corporate customers. The [Callback to receive customer compliance status](https://docs.nium.com/apis/reference/callback-to-receive-customer-compliance-status) will continue to be supported.
 
-#### Enhancement
+### Enhancement
 
 *   We have introduced two new fields - `ClientMarkupRate` and `MarkupRate` - to help you apply FX markup rates to your customers.
 
@@ -222,53 +258,47 @@ Starting October 1st, 2024, changes in Nium’s compliance policy will require a
 
     Having these fields readily available offers a convenient way to charge FX markup fees to your customers and helps you further monetize your FX services for revenue generation.
 
-#### Other Changes
+### Other Changes
 
 Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P) and business-to-person (B2P) use cases.
 
 ---
-### Dec 19, 2023
+## Dec 19, 2023
 
-#### New feature
+### New Feature
 
 *   Introduced a new payment option `FASTER_DIRECT_DEBIT`is now available as a `fundingChannel` in the [Fund Wallet](https://docs.nium.com/apis/reference/fundwallet) API. This option is available for eligible clients to choose between Faster Direct Debit and Standard Direct Debit in US.
 
-#### Enhancements
+### Enhancements
 
 *   For AUD currency transactions additional details will now be visible to the beneficiary. The enhancement will provide remitter name and other narrative information to the beneficiary leading to better transparency of each transaction benefitting both the sender and the beneficiary.
 
-#### Other
+### Other
 
 *   The minimum supported value for VND local transactions is updated to 2000 VND due to the restrictions put in place by Nium's bank partner.
 
 ---
-### Dec 5, 2023
+## Dec 5, 2023
 
-#### New feature
+### New Feature
 
 *   Introduced Card Widget which provides embeddable html that shows Payment Card Industry Data Security Standard (PCI DSS) data in end user applications. The Nium hosted url for the embeddable html can be retrieved using the new [Get card details widget](https://docs.nium.com/apis/reference/getcardwidget) API. This API is secured by JWT token authentication which is encrypted by AES RSA encryption algorithm.
 
-#### New feature
-
-*   Introduced a new [Account Verification](https://docs.nium.com/apis/reference/accountverification) API on Nium's payments network. This feature is also commonly referred as Confirmation Of Payee. Using this feature, customers can ensure the money reaches the intended payee or beneficiary by verifying if the payee details including account number are valid.
-
-    Contact your Nium representative to activate this feature. Refer to the [Account Verification (Confirmation Of Payee)](https://docs.nium.com/apis/docs/account-verification) user guide for more details.
-
-#### Enhancements
+### Enhancements
 
 *   Updated the [Remittance lifecycle](https://docs.nium.com/apis/docs/remittance-lifecycle#testing-remittance-transaction-statuses-in-sandbox) user guide under the Transfer Money category with simulation account details that will allow you to create transactions in sandbox environment. With these instructions, you will now be able to replicate `PAID`, `SENT TO BANK`, and `RETURN` statuses and their state transitions.
     
 *   Introduced [a new user guide on GPI tracking](https://docs.nium.com/apis/docs/gpi-tracking-for-wires) that offers insights into improved tracking for SWIFT wire transactions.
     
 
-#### Other
+### Other
 
 *   Local ZAR currency payouts for P2P use cases have been temporarily deactivated due to a technical issue with our payment partner. Nium continues to support payouts for other use cases such as B2P and B2B. We are working closely with our partner to resolve this issue at the earliest.
 
 ---
-### Nov 21, 2023
+## Nov 21, 2023
 
-#### New features
+### New Features
 
 *   Introduced a new [Proof of Payment (POP)](https://docs.nium.com/apis/reference/pop) API to generate proof for the transactions that are in PAID status. You can use this API to download the proof of payment.
     
@@ -286,13 +316,13 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 ---
 ### Nov 7, 2023
 
-#### Enhancement
+### Enhancement
 
 *   Introduced a new field called `referenceCode` in the [Cards 3DS OTP](https://docs.nium.com/apis/reference/3ds-otp) Webhook.
 
     `referenceCode` is a unique value generated with each new OTP value. In the instance where the consumer can receive multiple OTPs for the same transaction, this can be leveraged to show the consumer which OTP is expected to be entered. This value should be sent in the SMS or Email along with the OTP and then displayed on the consumer screen.
 
-#### Enhancement
+### Enhancement
 
 *   We have added two new parameters in the `gpi` object to enhance the gpi details shared with you in [Fetch Remittance Life Cycle Status](https://docs.nium.com/apis/reference/fetchremittancelifecyclestatus) API and [Remit Transaction Sent to Bank](https://docs.nium.com/apis/reference/remit-transaction-sent-to-bank) webhook.
 
@@ -300,9 +330,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   `remarks`: Detailed description of the `reasonCode`. This interpretation is provided by Nium.
 
 ---
-### Oct 24, 2023
+## Oct 24, 2023
 
-#### New features
+### New Features
 
 *   We have added several new features to the Nium portal in sandbox environment including, global wallets view, reports for payout transactions, configure webhook events, invite new users to your sandbox, and transparency with chronometer in the transaction details. Read the [announcement blog](https://www.nium.com/resources/nium-portal-faster-time-to-market) for more details.
 
@@ -314,7 +344,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   AOC document can be used by your underlying customers for providing account details for collections across different payment platforms.
     *   Additionally, AOC are required for loan applications or when dealing with government agencies.
 
-#### API breaking changes
+### API Breaking Changes
 
 *   **Document details are required when onboarding in EU**
     
@@ -324,7 +354,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
     See [EU required Parameters](https://docs.nium.com/apis/docs/cc-eu-required-parameters) and [EU required documents](https://docs.nium.com/apis/docs/cc-eu-required-documents) for more details.
 
-#### Enhancements
+### Enhancements
 
 *   Ability to update name on card for corporate cards. We have enhanced [Update Card Details V2](https://docs.nium.com/apis/reference/updatecarddetailsv2) API which will allow customers or cardholders to update card data at individual card level including the name on card.
 *   We have included new delivery options for EU & UK. In [Add Card V2](https://docs.nium.com/apis/reference/addcardv2) API the `issuanceMode` field has two new options `international_delivery_track`, and `international_delivery_track_sign`.
@@ -332,9 +362,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 
 ---
-### Oct 10, 2023
+## Oct 10, 2023
 
-#### Enhancements
+### Enhancements
     
 *   Corporate customer onboarding enhancements
     *   Added a new `status` field in [Client KYB Status](https://docs.nium.com/apis/reference/client-kyb-status) webhook to enhance corporate customer onboarding.  
@@ -382,9 +412,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   We will send a new event notification whenever there is a change in `reasonCode` or `forwardBankName`.
 
 ---
-### Sep 26, 2023
+## Sep 26, 2023
 
-#### New feature
+### New Feature
 
 *   Introduced the new [Fetch Aggregated Exchange Rates](https://docs.nium.com/apis/reference/aggregatedexchangerates) endpoint that allows you to track and monitor historic market trends for any currency pair.
 
@@ -405,7 +435,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     For additional information, refer to the [FX overview guide](https://docs.nium.com/apis/docs/fx-overview#rate).
 
 ---
-### Sep 12, 2023
+## Sep 12, 2023
 
 *   Added a new RFI template called `otherData` for corporate onboarding.
     
@@ -421,9 +451,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   [Request body for the Respond to RFI API](https://docs.nium.com/apis/docs/cc-rfi-examples#otherdata-request-body-for-the-respond-to-rfi-api)
 
 ---
-### Aug 29, 2023
+## Aug 29, 2023
 
-#### Enhancements
+### Enhancements
 
 *   For security and to inform customers of any account takeover, notifications are sent in two ways.
 
@@ -450,7 +480,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
             `"previousMobile": "123456789",`  
             `"previousEmail": "jack@xyzmail.com"},`**
 
-#### New feature
+### New Feature
 
 *   The new [OOB Callback v2](https://docs.nium.com/apis/reference/processoobcallbackv2) API simplifies the request payload for providing Nium with the result of 3DS out-of-band authentication.
 
@@ -458,9 +488,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   [OOB Callback v1](https://docs.nium.com/apis/reference/processoobcallback) API will be deprecated and becomes unsupported on **March 31, 2024**.
 
 ---
-### Aug 15, 2023
+## Aug 15, 2023
 
-#### Enhancements
+### Enhancements
 
 *   EU Corporate Customer Onboarding allows an application to be submitted without the collection of the `REGISTER_OF_DIRECTORS` and `REGISTER_OF_SHAREHOLDERS` documents for Public and Private companies when not required.
     
@@ -502,9 +532,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   By **August 22**, Manual KYB clients can use the remarks field for `CERTIFICATE_OF_GOOD_STANDING` documents.
 
 ---
-### Aug 1, 2023
+## Aug 1, 2023
 
-#### New Features
+### New Features
 
 *   You can now use a new method to link a bank account for [Debit ACH US through a micro-deposit](https://docs.nium.com/apis/docs/direct-debit-us#option-2-link-bank-account-via-micro-deposit-verification). This option is especially beneficial in cases where instant verification _is not_ supported. Your customer now has the flexibility to choose between two verification options: [instant](https://docs.nium.com/apis/docs/direct-debit-us#option-1-link-bank-account-via-instant-verification) or [micro-deposit](https://docs.nium.com/apis/docs/direct-debit-us#option-2-link-bank-account-via-micro-deposit-verification). To support the micro-deposit option, you need to implement the [Confirm Funding Instrument API](https://docs.nium.com/apis/reference/confirmfundinginstrumentid). Once the micro-deposit is successfully delivered, a new webhook, [DIRECT\_DEBIT\_MICRODEPOSIT\_SUCCESSFUL](https://docs.nium.com/apis/reference/direct-debit-micro-deposit-successful) is sent by Nium to notify you of the successful transaction. These enhancements aim to provide you and your customers with broader coverage and improved options for bank account verification.
         
@@ -515,20 +545,20 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   This enhancement benefits global clients with multiple client setups on the platform. It allows customers across these client setups to conduct wallet-to-wallet transfers seamlessly, enhancing the overall user experience and facilitating smoother financial transactions.
     *   Transferring funds between customers of the same client setup does not require any configuration changes within the client setup. However, for funds transfer between customers of different client setups, you need to contact your Nium representative. They can help you enable this feature, allowing your customers to utilize it seamlessly.
 
-#### Enhancement
+### Enhancement
 
  *   Added a new enum value called **"Travel related spending"** in the parameter `intendedUseOfAccount` within the [Unified Add Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer) API. The new value will support individual customers' travel-related use cases. This addition better supports and accommodates various financial transactions related to travel expenses for our customers.
 
-#### Deprecation notices
+### Deprecation Notices
 
 *   In the Client Details API, the `multiCurrencySupported` field is being removed from the API's response object as it is an unused field and is set to false by default. This field was giving misleading information that the client does not have support for multiple currencies. Clients will see the currencies enabled for their setup in the `currencies` field of the response.
 *   In the [Unified Add Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer), [Customer Details V2](https://docs.nium.com/apis/reference/customerdetailsv2), and [Customer List V3 APIs](https://docs.nium.com/apis/reference/customerlistv3), the `preferredName` field has been changed from required to optional, meaning it is no longer required for customer onboarding purposes. You now have the flexibility to provide this information if needed, but it is not required when using the API for customer registration.
 *   The [P2P Transfer](https://docs.nium.com/apis/reference/p2ptransfer) API is deprecated and becomes unsupported on January 31, 2023.
 
 ---
-### July 19, 2023
+## July 19, 2023
 
-#### New features
+### New Features
 
 *   Introduced a new Transaction Prescreening capability for scheduled transactions. This functionality enables payroll clients to send transactions to Nium for compliance or risk-related checks before the scheduled date of the transactions. It’s recommended to initiate a scheduled payout five to seven days in advance if the client wants to prescreen the transaction. A new `preScreening` boolean field, with a value as true/false, is introduced in the payout object of the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) API. New transaction types are introduced for prescreening transactions `Remittance_Debit_External_Prescreening` and `Remittance_Debit_Prescreening` (self-payment).
         
@@ -550,7 +580,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
 *   We have introduced a new [Unblock PIN](https://docs.nium.com/apis/reference/unblockcardpin) API that allows you to unblock a card’s personal identification number (PIN) when an invalid PIN number is entered more than four times. You can query the PIN status using the [Fetch PIN Status](https://docs.nium.com/apis/reference/fetchpinstatus) API. This API is applicable for Physical cards only and available for clients in the APAC region.
 
-#### Enhancements
+### Enhancements
 
 *   **Direct Debit**
     
@@ -565,17 +595,17 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 *   Enhanced the ability for a client to embed the card widget within the client’s domain. A new `clientDomain` field is introduced in the request body of the [Get Card Widget](https://docs.nium.com/apis/reference/customergetcardwidget) API. This field contains the domain name where the widget needs to be embedded.
 
 ---
-### July 5, 2023
+## July 5, 2023
 
-#### API breaking changes
+### API Breaking Changes
 
 *   We've identified that the [previously announced](https://docs.nium.com/apis/changelog/jun-20-2023) FX conversions APIs require a few critical improvements. As a result, we're reverting the feature effective immediately and plan to relaunch the revised APIs shortly. Stay tuned for an updated announcement.
 
-#### New features
+### New Features
 
 *   *   We've introduced a beta version of AI-powered docs. OpenAI now backs our docs to provide human-like interaction with the **Ask a question** search field. You can find this feature in the header section of all documentation pages.
 
-#### Enhancements
+### Enhancements
 
 *   We've made enhancements to the daily downloadable [Client Account Fees Report](https://docs.nium.com/apis/docs/daily-client-account-fees-report) by adding the following new fields:
 
@@ -586,14 +616,14 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   Additional Fee Type: This field applies only to fees where clients have opted for additional fees as part of the payout request. It shows the fee type chosen by the client, either fixed or percentage.
     *   Additional Fee Value: This field applies only to fees where clients have opted for additional fees as part of the payout request. It contains the amount value that was added to the fee.
 
-#### Deprecation notice
+### Deprecation notice
 
 *   The `designation` parameter in [Unified Add Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer), [Customer List V3](https://docs.nium.com/apis/reference/customerlistv3), and [Customer Details V2](https://docs.nium.com/apis/reference/customerdetailsv2) APIs, is deprecated and becomes unsupported on December 16, 2023.
 
 ---
-### Jun 20, 2023
+## Jun 20, 2023
 
-#### New features
+### New Features
 
 *   We have identified that a few critical improvements are required to the below announced FX conversions APIs. As a result, we have reverted the feature effective immediately and will be re-launching the revised APIs shortly. Stay tuned for an updated announcement.
 
@@ -612,7 +642,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   Fetch Transfer by id API: Fetch the details of an FX Transfer using the transferId.
     *   Cancel Transfer API: Cancel an FX Transfer that is yet to be settled.
     
-*   ### Enhancements
+### Enhancements
     
 *   `cardProductId` parameter, that is required request body parameter in the Add Card V2 API, has been changed from a 3-digit number to UUID format. This change is only applicable to new clients. Clients that are setup previously with a 3-digit `cardProductId` can continue to use it.
 *   `addressLine1` and `addressLine2` parameters in the Address object of all card lifecycle APIs, Add Card V1 & V2, Update Card Details V2, Block and Replace Card, and Renew Card, have additional validation. As per the new validation rules, only chars in the below regex pattern are allowed: `Regex: [a-zA-Z0-9.'-#@%&,:/ ]+`
@@ -646,17 +676,17 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
         Example: The cardholder has left a tip in a restaurant due to which the transaction amount during clearing is higher than the transaction amount at the time of authorization.
 
 ---
-### Jun 6, 2023
+## Jun 6, 2023
 
-#### Enhancement
+### Enhancement
     
 *   The responses for the [Confirm Funding Instrument](https://docs.nium.com/apis/reference/confirmfundinginstrumentid) API, the [Get Funding Instrument List](https://docs.nium.com/apis/reference/getfundinginstrumentlist) API, and the [Get Funding Instrument Details](https://docs.nium.com/apis/reference/getfundinginstrumentdetails) API responses are enhanced to include the new `bankName` field in the funding instrument linked for direct debit.
     
-#### API breaking change
+### API Breaking Change
     
 *   This is a reminder notice about the breaking changes to beneficiary APIs that are enhanced with two new fields, `beneficiaryContactName` and `beneficiaryEntityType`. The fields are required to make a local payout to a business in South Africa with the South African rand (ZAR) currency. Details on the changes are available in an earlier communication in the [May 9, 2023 changelog](https://docs.nium.com/apis/changelog/may-9-2023). The changes will become effective on **June 15, 2023**.
     
-#### New feature
+### New Feature
 
 *   [Activate Card V2](https://docs.nium.com/apis/reference/activatecard) API is a new operation that features the concept of an activation code to help cardholders activate their cards using it. The activation code is provided in the card kit cardholders receive with the physical copy of the card.
 
@@ -665,17 +695,17 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     *   The API structure mirrors the structure of all other Card V2 APIs with logical tags. The API includes the activation code as a required field to activate the physical card. This prevents cards from being activated immediately upon creation.
         
     
-#### Deprecation notice
+### Deprecation notice
     
 *   [Activate Card V1](https://docs.nium.com/apis/reference/activatecard_1) API is deprecated and becomes unsupported on December 31, 2023. [Activate Card V2](https://docs.nium.com/apis/reference/activatecard) is the latest version of this API.
     
-#### Enhancement
+### Enhancement
     
-*   [Search and filter transactions in the Transaction Report of the [client portal](https://spend.nium.com/cards-ui/authenticate/login), with additional filter options using a card hash ID, transaction status, or settlement status. The transaction status and settlement status now support searching with multiple values.
+*   Search and filter transactions in the Transaction Report of the [client portal](https://spend.nium.com/cards-ui/authenticate/login), with additional filter options using a card hash ID, transaction status, or settlement status. The transaction status and settlement status now support searching with multiple values.
 ---
-### May 23, 2023
+## May 23, 2023
 
-#### New features
+### New Features
 
 *   [**Link a corporate customer to an individual customer**](https://docs.nium.com/apis/docs/parent-child-hierarchy) is a new feature for Spend Management and Payroll Management use cases. You can now link an individual customer, or employee, to their corporate customer and create that hierarchy in the system.
     
@@ -736,7 +766,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
 *   **Customer account statement** generates a statement that gives a list of all transactions your customer makes on the platform, including deposits, withdrawals, spending, fees, payments, and refunds. You can give your customers an account statement periodically or based on their specific requests to help them keep the information for their records or to reconcile their transactions. You can now generate an account statement for your customers via the [**Account Statement**](https://docs.nium.com/apis/reference/accountstatement) API as a PDF or a CSV document. Contact your Nium representative to use this feature.
 
-#### Enhancements
+### Enhancements
 
 *   **Search and filter cards** in the [**client portal**](https://spend.nium.com/cards-ui/authenticate/login) using a new **Search** and **Filter** feature entering a card number, a card hash ID, and a card proxy number, on the customer details screen. The functions help find a card among multiple ones attached to a wallet.
 *   **Card Details** [V1](https://docs.nium.com/apis/reference/carddetails) and [V2](https://docs.nium.com/apis/reference/carddetailsv2), and **Card List** [V1](https://docs.nium.com/apis/reference/cardlist) and [V2](https://docs.nium.com/apis/reference/cardlistv2) APIs provide device details for Mastercard. Before, device details were only available for Visa cards.
@@ -755,9 +785,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 
 ---
-### May 9, 2023
+## May 9, 2023
 
-#### New features
+### New Features
     
 *   Introduced the **Direct Debit** capability on Nium's payments network for UK and EU customers. The capability provides convenience to UK-based and EU-based businesses to fund from their UK and EU bank account respectively into their Nium-issued wallets using Direct Debit. To support this feature, new APIs have been added and the existing APIs have been modified as mentioned below. The transaction type for this payment method in Nium's system is `WALLET_CREDIT_MODE_DIRECT_DEBIT`. Contact your Nium representative to activate this feature.
     
@@ -799,13 +829,13 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     
     This API can be used for all regions if `applicantDetails.kycMode='E_DOC_VERIFY'` and in Singapore for both `E_DOC_VERIFY` and `E_KYC`.
 
-#### Enhancements
+### Enhancements
     
 *   Introduced the new field `statementNarrative` in the Fund Wallet API to allow you to pass information that you would like to display in the payer's account statement for every debit transaction done via Direct Debit. The information that you can pass has a maximum length of 10 characters for the US and UK and a maximum length of 140 characters for EU.
 
 *   In the previous release notes, we announced that `ADD_ON` type additional cards will no longer be supported from Sep 30th, 2023. With this release, ADD\_ON cards will not be renewable via the Card Renewal API.
 
-#### API breaking changes
+### API Breaking Changes
     
 *   Introduced two new fields in both V1 and V2 of beneficiary APIs. These fields are required for making a local payout to a business in South Africa with South African rand (ZAR) currency.
     
@@ -822,7 +852,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 *   Introducing a new validation on `businessRegistrationNumber`. The change is applicable to Nium clients in all geographies that are onboarding corporate customers in the US. Going forward, you are expected to send only 9 digit numerals in this field. Any other format will result in a validation error. The change is effective **July 1, 2023**.
 
-#### Deprecation notices
+### Deprecation Notices
     
 *   Add-on Cards are no longer issued after **September 30, 2023**.
     
@@ -847,9 +877,9 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
     Refer to the [Deprecated APIs](https://docs.nium.com/apis/docs/deprecated-apis) page for the complete list.
 
 ---
-### Apr 25, 2023
+## Apr 25, 2023
 
-#### New features
+### New Features
     
 *   Updated [Fetch Remittance Life Cycle Status](https://docs.nium.com/apis/reference/fetchremittancelifecyclestatus) API with additional remittance statuses in its response. The new statuses provide granular information about each state of the transaction. The new statuses are:
     
@@ -867,7 +897,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
 
 *   Electronic Know Your Business (eKYB) identification processs for onboarding US corporate customers. The eKYB check is now available for onboarding US corporate customers for clients in all countries where Nium operates. Using eKYB, corporate customers can get approved soon after submitting their application. Applicants aren't required to upload documents, making this an automated process. See the [US](https://docs.nium.com/apis/docs/us-onboarding#ekyb-flow) Corporate Customer Onboarding guide for more information about the implementation instructions of the eKYB process. Contact Nium customer support to get your template configured for eKYB to use this feature.
         
-#### Enhancements
+### Enhancements
     
 *   The response body of the [Card Transaction Reversal](https://docs.nium.com/apis/docs/transaction-reversal) webhook event type is updated to include the notification of additional transaction reversal scenarios. We now support _transaction aging_ scenarios in addition to the _merchant reversals_.
     
@@ -889,7 +919,7 @@ Enabled local Nigerian Naira (NGN) payouts to Nigeria for person-to-person (P2P)
         *   KYC Status
         *   Preferred Name
     
-#### API breaking changes
+### API Breaking Changes
     
 *   We've introduced two additional required fields for onboarding corporate customers in the US.
     
