@@ -2,7 +2,7 @@
 
 Nium uses the `OpenAPI 3.0.*` specification to power our [API Reference.](https://docs.nium.com/apis/reference)
 
-You can find all of Nium's N1 APIs in the `nium.yaml`
+You can find all of Nium's platform APIs in the `nium.yaml`
 
 ## Using the OpenAPI generator
 
