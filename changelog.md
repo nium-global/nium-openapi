@@ -1,3 +1,35 @@
+## August 20, 2024
+
+#### Enhancements
+
+**Apple SDK**
+
+Our Apple Pay SDK has been enhanced to display the client's name when adding a card to an Apple Wallet. This helps you better manage cards in your Apple Wallet.
+
+- SDK Version: 2.0.2
+- Run `pod update` or `pod repo update` to get the latest version.
+
+If you have any questions about our Apple SDK, please contact [Nium Support](https://nium.com/).
+
+**Card Webhook Update**
+
+The `walletProvider` field in the **VTS Token** webhook is now restricted to `applePay` and `googlePay`.
+
+This corrects an issue where some response returned `APPLE` or `GOOGLE`. For more information, see [VTS Token](https://docs.nium.com/apis/reference/vts-token).
+
+## August 6, 2024
+
+### Enhancements
+
+**Nium Portal - Redesigned Customer Balances Page**
+
+We've redesigned the Customer Balances page to enhance usability:
+
+- Review, at a glance, what features are enabled for each currency. This change helps you better understand what capabilities are available when managing those funds.
+- Create Virtual Accounts for Payin-enabled currencies. Non-developers can now create Virtual Accounts in Nium Portal without directly using Nium’s API.
+
+For more details, see the [Nium Portal - Customer Balances](https://docs.nium.com/apis/docs/portal#customer-balances).
+
 ## July 23, 2024
 
 ### New Feature
