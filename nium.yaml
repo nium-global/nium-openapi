@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.6.18
+  version: 2024.8.20
 servers:
 - url: https://gatewaysandbox.nium.com/
 security:
@@ -330,7 +330,7 @@ paths:
       tags:
       - Lifecycle
       summary: Card Details V2
-      description: This API allows you to get details about a card.
+      description: Fetch the details about a specific card.
       operationId: cardDetailsV2
       parameters:
       - name: clientHashId
@@ -1151,9 +1151,9 @@ paths:
       tags:
       - Lifecycle
       summary: Card Details
-      description: "This API allows you to fetch the card details of a particular\
-        \ card.\n >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually,\
-        \ a deprecated API version becomes unsupported. [Card Details V2](ref:carddetailsv2)\
+      description: "Enables you to fetch the card details of a particular card.\n\
+        \ >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually, a\
+        \ deprecated API version becomes unsupported. [Card Details V2](ref:carddetailsv2)\
         \ is the latest version of this API."
       operationId: CardDetails
       parameters:
@@ -4229,7 +4229,7 @@ paths:
                   settlementAmount: 62
                   settlementAuthAmount: 62
                   settlementDate: 'null'
-                  settlementStatus: UNSETTLED
+                  settlementStatus: Unsettled
                   settlementTransactionAmount: 62
                   status: PENDING
                   systemTraceAuditNumber: FW4526424507
@@ -6145,9 +6145,9 @@ paths:
           - rfiTemplates
           - estimatedMonthlyFunding
           - occupation
+          - monthlyTransactionVolume
           - averageTransactionValue
-          - averageTransactionCount
-          - monthlyVolume
+          - monthlyTransactions
           type: string
       - description: Unique client identifier generated and shared before API handshake.
         in: path
@@ -8468,86 +8468,61 @@ paths:
         apiType: external
       security:
       - default: []
-  /api/v1/client/{clientHashId}/customer/{customerHashId}/fees:
+  /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/statement:
     get:
       parameters:
-      - description: clientHashId
+      - description: Unique client identifier generated and shared before API handshake.
         in: path
         name: clientHashId
         required: true
         schema:
           type: string
-      - description: customerHashId
+      - allowEmptyValue: false
+        description: This field accepts the list of currencies in 3-letter [ISO-4217
+          transaction currency code](https://docs.nium.com/apis/docs/currency-and-country-codes)
+          for which the account statement to be generated. If no currencies are being
+          sent in query param then statement will be generated for all the currencies
+          enabled to the customer.
+        in: query
+        name: currencies
+        required: false
+        schema:
+          type: string
+      - description: Unique customer identifier generated on customer creation.
         in: path
         name: customerHashId
         required: true
         schema:
           type: string
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          type: string
-          example: '{{$guid}}'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/ViewCustomerFeesResponseDTO'
-                type: array
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: BadRequest
-        '401':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Unauthorized
-        '403':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Forbidden
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: Not Found
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: Internal Server Error
-      tags:
-      - Customer Management
-      deprecated: false
-      operationId: getCustomerFeesUsingGET
-      summary: View Customer Fee
-      x-info:
-        apiType: external
-      security:
-      - default: []
-    post:
-      parameters:
-      - description: clientHashId
-        in: path
-        name: clientHashId
+      - allowEmptyValue: false
+        description: End date for fetching the transaction details. The format for
+          endDate is YYYY-MM-DD.
+        in: query
+        name: endDate
         required: true
         schema:
           type: string
-      - description: customerHashId
+      - allowEmptyValue: false
+        description: This field accepts the file type of the account statement to
+          be generated. Accepted values are pdf or CSV. If there is no value passed,
+          then pdf is taken as the default value.
+        in: query
+        name: fileType
+        required: false
+        schema:
+          default: pdf
+          type: string
+      - allowEmptyValue: false
+        description: From date for fetching the transaction details. The format for
+          startDate is YYYY-MM-DD.
+        in: query
+        name: startDate
+        required: true
+        schema:
+          type: string
+      - description: Unique wallet identifier generated on wallet creation.
         in: path
-        name: customerHashId
+        name: walletHashId
         required: true
         schema:
           type: string
@@ -8597,96 +8572,9 @@ paths:
       tags:
       - Customer Management
       deprecated: false
-      description: This API allows you to Add Customer Fees.
-      operationId: AddCustomerFees
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddCustomerFeesRequestDTO'
-        description: addCustomerFeesRequestDTO
-        required: true
-      summary: Add Customer Fees
-      x-info:
-        apiType: external
-      security:
-      - default: []
-  /api/v1/client/{clientHashId}/customer/{customerHashId}/fees/{feeReferenceId}:
-    put:
-      parameters:
-      - description: clientHashId
-        in: path
-        name: clientHashId
-        required: true
-        schema:
-          type: string
-      - description: customerHashId
-        in: path
-        name: customerHashId
-        required: true
-        schema:
-          type: string
-      - description: feeReferenceId
-        in: path
-        name: feeReferenceId
-        required: true
-        schema:
-          type: string
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          type: string
-          example: '{{$guid}}'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ViewCustomerFeesResponseDTO'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: BadRequest
-        '401':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Unauthorized
-        '403':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Forbidden
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: Not Found
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiError'
-          description: Internal Server Error
-      tags:
-      - Customer Management
-      deprecated: false
-      operationId: updateCustomerFeeUsingPUT
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ModifyCustomerFeesRequestDTO'
-        description: updateCustomerFeeRequestDTO
-        required: true
-      summary: update Customer Fee
+      description: This API allows you to download an account statement.
+      operationId: AccountStatement_1
+      summary: Account Statement for the Specified Wallet
       x-info:
         apiType: external
       security:
@@ -9734,12 +9622,11 @@ paths:
       - Customer Fees
       deprecated: false
       description: "This API allows you to levy custom fee. \n >\u26A0\uFE0F WARNING\
-        \ \n >Consult with the Nium legal & compliance team and receive approval prior\
-        \ to charging any customer fees. Do not use this API to charge fees without\
-        \ explicit approval from Nium. Reach out to your Customer Success, Sales and\
-        \ Solution Engineering teams at Nium for further guidance. Any fees charged\
-        \ must be disclosed in the required customer terms and conditions as determined\
-        \ by Nium legal & compliance."
+        \ \n >Due to regulatory requirements, using the Fee endpoint requires explicit\
+        \ approval from Nium. Any fees charged to customers must be disclosed in the\
+        \ client\u2019s terms and conditions and approved by Nium legal and compliance.\
+        \ If you have any questions, please reach out to your Nium account manager\
+        \ or [Nium Support](mailto:support@nium.com)."
       operationId: ChargeFee
       requestBody:
         content:
@@ -11946,6 +11833,11 @@ paths:
         schema:
           type: string
       - in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - in: query
         name: tagKey
         required: false
         schema:
@@ -12103,6 +11995,11 @@ paths:
           example: '2024-01-01'
         description: The beginning date to start fetching transaction details. The
           format for `startDate` is YYYY-MM-DD.
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: string
       - in: query
         name: tagKey
         required: false
@@ -12326,10 +12223,10 @@ paths:
       tags:
       - Beneficiary
       deprecated: false
-      description: "This API allows you to verify a beneficiary account details.\n\
-        > > \u2139\uFE0F INFO \n >This API only supports account verification for\
-        \ certain destination corridors.\n>Refer to the   [Account verification user\
-        \ guide](/apis/docs/account-verification#supported-corridors-for-account-verification)\
+      description: "This API enables you to verify the details of a beneficiary's\
+        \ bank account.\n> > \u2139\uFE0F INFO \n >This API only supports account\
+        \ verification for specific destinations and corridors.\n>For more information,\
+        \ see  [Account verification] (/apis/docs/account-verification#supported-corridors-for-account-verification).\
         \ for details."
       operationId: AccountVerification
       requestBody:
@@ -15016,7 +14913,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletApiError'
+                $ref: '#/components/schemas/ApiErrorResponse'
           description: BadRequest
         '401':
           content:
@@ -15034,19 +14931,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletApiError'
+                $ref: '#/components/schemas/Standard404Error'
           description: Not Found
         '500':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletApiError'
+                $ref: '#/components/schemas/WalletStandard500Error'
           description: Internal Server Error
       tags:
       - Payout
       deprecated: false
-      operationId: CancelsRemittanceinAWAITING_FUNDSandSCHEDULEDstatus
-      summary: Cancels Remittance in AWAITING_FUNDS and SCHEDULED status
+      operationId: CancelRemittance
+      summary: Cancel Remittance
       x-info:
         apiType: external
       security:
@@ -15059,6 +14956,9 @@ paths:
         name: beneficiaryAccountType
         required: false
         schema:
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
           type: string
       - description: Unique client identifier generated and shared before API handshake.
         in: path
@@ -15071,6 +14971,9 @@ paths:
         name: customerType
         required: false
         schema:
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
           type: string
       - description: This field accepts the [2-letter ISO-2 destination country code](https://docs.nium.com/apis/docs/currency-and-country-codes).
         in: query
@@ -15112,15 +15015,57 @@ paths:
         name: payoutMethod
         required: false
         schema:
+          enum:
+          - LOCAL
+          - SWIFT
+          - WALLET
+          - CASH
+          - CARD
+          - PROXY
           type: string
-      - description: This field determines the routing code type for the currency.
+      - description: 'Breakdowns the supported payout methods into different categories
+          including: <code>ach</code>, <code>cash</code>, <code>proxy_api</code>,
+          <code>wire_local</code> and others.
+
+          '
+        in: query
+        name: payoutMethodCategory
+        required: false
+        schema:
+          enum:
+          - visaDirect
+          - sepa
+          - ach
+          - proxy
+          - proxyFps
+          - wallet
+          - wireForeign
+          - proxyDuitnow
+          - wireLocal
+          - proxyBank
+          - cash
+          - unionPay
+          - proxyUpi
+          type: string
+      - description: Determines the routing code type for the currency.
         in: query
         name: routingCodeType
         required: false
         schema:
+          enum:
+          - SWIFT
+          - IFSC
+          - ACH CODE
+          - BSB CODE
+          - SORT CODE
+          - LOCATION ID
+          - BANK CODE
+          - TRANSIT NUMBER
+          - BRANCH CODE
+          - BRANCH NAME
           type: string
-      - description: This will decide the number of elements per page. Typical values
-          can be 1-500.
+      - description: Determines the number of elements per page. Typical values can
+          be 1-500.
         example: 500
         in: query
         name: size
@@ -15559,7 +15504,7 @@ paths:
               $ref: '#/components/schemas/UpdateWalletRequestDTO'
         description: updateWalletRequestDTO
         required: true
-      summary: Update Multi Wallet
+      summary: Update Wallet
       x-info:
         apiType: external
       security:
@@ -15579,14 +15524,18 @@ paths:
         required: true
         schema:
           type: string
-      - description: tagKey defined against wallet.
+      - description: 'The name of the tag.
+
+          The maximum character length for `keys` is 128 characters.'
         example: department
         in: query
         name: tagKey
         required: false
         schema:
           type: string
-      - description: tagValue defined against wallet.
+      - description: 'The value of the tag.
+
+          The maximum character length for values is 256 characters.'
         example: sales
         in: query
         name: tagValue
@@ -15647,7 +15596,7 @@ paths:
       - Customer Wallet Balance
       deprecated: false
       operationId: GetWallet
-      summary: Fetch wallets by clientHashId and customerHashId
+      summary: Fetch Wallet
       x-info:
         apiType: external
       security:
@@ -15721,7 +15670,7 @@ paths:
               $ref: '#/components/schemas/AddWalletRequestDTO'
         description: addWalletRequestDTO
         required: true
-      summary: Add Multi Wallet
+      summary: Add Wallet
       x-info:
         apiType: external
       security:
@@ -16141,7 +16090,7 @@ paths:
         required: false
         schema:
           type: string
-      - description: Filter transactions based on tnique wallet identifier generated
+      - description: Filter transactions based on the unique wallet identifier generated
           during customer creation.
         in: path
         name: walletHashId
@@ -16240,7 +16189,7 @@ paths:
                   settlementAmount: 62
                   settlementAuthAmount: 62
                   settlementDate: 'null'
-                  settlementStatus: UNSETTLED
+                  settlementStatus: Unsettled
                   settlementTransactionAmount: 62
                   status: PENDING
                   systemTraceAuditNumber: FW4526424507
@@ -17319,6 +17268,8 @@ components:
           description: This array contains the token details.
           items:
             $ref: '#/components/schemas/CardTokensDTO'
+        walletHashId:
+          type: string
       title: Card details
     CardInfo:
       type: object
@@ -17962,7 +17913,7 @@ components:
       properties:
         accountNumber:
           maxLength: 19
-          minLength: 16
+          minLength: 9
           type: string
           description: 'This field accepts the 19-digit account number (also known
             as card proxy number) printed on the non-personalized physical card. Alternately,
@@ -19509,9 +19460,12 @@ components:
           example: admin@acme.com
           type: string
         fundingInstrumentType:
-          description: This field is used to define whether the customer is allowed
-            to fund their wallet or not. If yes that is not RESTRICTED, then either
-            using DEBIT CARD or both DEBIT and CREDIT cards.
+          description: "<p>Details if a customer can fund their own wallet.</p> <ul>\n\
+            \  <li><strong>RESTRICTED</strong>: The customer can't fund their own\
+            \ wallet.</li>\n  <li><strong>ONLY_DEBIT</strong>: The customer can only\
+            \ fund their wallet using a debit card.</li>\n  <li><strong>CREDIT_AND_DEBIT</strong>:\
+            \ The customer can fund their wallet with a debit or credit card.</li>\n\
+            </ul>\n"
           enum:
           - RESTRICTED
           - ONLY_DEBIT
@@ -19899,6 +19853,7 @@ components:
           - REMIT_CARD_FEE
           - REMIT_PROXY_FEE
           - REMIT_BANK_FEE_FEDWIRE
+          - REMIT_CHECK_FEE
           - REMIT_RETURN_FEE
           - TRANSACTION_MARKUP
           - FX_MARKUP
@@ -20348,25 +20303,12 @@ components:
             \ the following values:\nUnsettled\nSettled\n Released\nDisputed\nDisputeClosed\n\
             Waived"
           enum:
-          - APPROVED
-          - DECLINED
-          - BLOCKED
-          - SETTLED
-          - UNSETTLED
-          - REVERSAL
-          - RELEASED
-          - PENDING
-          - WAIVED
-          - DISPUTED
-          - DISPUTE_CLOSED
-          - IN_PROGRESS
-          - REJECTED
-          - RETURNED
-          - AWAITING_FUNDS
-          - EXPIRED
-          - CANCELLED
-          - SCHEDULED
-          - NA
+          - Unsettled
+          - Settled
+          - Released
+          - Disputed
+          - DisputeClosed
+          - Waived
           type: string
         settlementTransactionAmount:
           format: double
@@ -24722,6 +24664,20 @@ components:
       - rfiResponseRequest
       title: Upload Rfi document request
       type: object
+    AccountWhiteList:
+      properties:
+        bankAccountName:
+          type: string
+        bankAccountNumber:
+          type: string
+        bankBranch:
+          type: string
+        bankName:
+          type: string
+        currency:
+          type: string
+      title: AccountWhiteList
+      type: object
     AddCategoryResponseDTO:
       properties:
         data:
@@ -26441,6 +26397,22 @@ components:
             UK: Required
 
             SG: Required'
+        expectedAccountUsage:
+          $ref: '#/components/schemas/ExpectedAccountUsage'
+          description: Accepts details about how the account will be used by the customer.
+        productDetails:
+          $ref: '#/components/schemas/ProductDetails'
+          description: 'This object accepts the product details for onboarding the
+            new corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
         region:
           description: 'This field accepts the region code for which onboarding has
             been triggered. The acceptable value are:
@@ -26988,6 +26960,75 @@ components:
           type: string
       title: DocumentDetail
       type: object
+    ExpectedAccountCredit:
+      properties:
+        averageTransactionValue:
+          description: This field accepts the expected average transaction value for
+            Pay In of the corporate entity to be onboarded.
+          type: string
+        monthlyTransactionVolume:
+          description: This field accepts the expected monthly Volume for Pay In of
+            the corporate entity to be onboarded.
+          type: string
+        monthlyTransactions:
+          description: This field accepts the expected average transaction count for
+            Pay In transactions of the corporate entity to be onboarded.
+          type: string
+        topRemitters:
+          description: This field accepts the Primary Remitters of the corporate entity
+            to be onboarded.
+          items:
+            type: string
+          type: array
+        topTransactionCountries:
+          description: This field accepts the expected top Pay In countries of the
+            corporate entity to be onboarded.
+          items:
+            type: string
+          type: array
+      title: ExpectedAccountCredit
+      type: object
+    ExpectedAccountDebit:
+      properties:
+        averageTransactionValue:
+          description: This field accepts the expected average transaction value for
+            Pay Out of the corporate entity to be onboarded.
+          type: string
+        monthlyTransactionVolume:
+          description: This field accepts the expected monthly Volume for Pay Out
+            of the corporate entity to be onboarded.
+          type: string
+        monthlyTransactions:
+          description: This field accepts the expected average transaction count for
+            Pay Out transactions of the corporate entity to be onboarded.
+          type: string
+        topBeneficiaries:
+          description: This field accepts the Primary Beneficiaries of the corporate
+            entity to be onboarded.
+          items:
+            type: string
+          type: array
+        topTransactionCountries:
+          description: This field accepts the expected top Pay Out countries of the
+            corporate entity to be onboarded.
+          items:
+            type: string
+          type: array
+      title: ExpectedAccountDebit
+      type: object
+    ExpectedAccountUsage:
+      properties:
+        credit:
+          $ref: '#/components/schemas/ExpectedAccountCredit'
+        debit:
+          $ref: '#/components/schemas/ExpectedAccountDebit'
+        intendedUses:
+          description: How the customer inteds to use the account.
+          items:
+            type: string
+          type: array
+      title: ExpectedAccountUsage
+      type: object
     LegalDetails:
       properties:
         legislationName:
@@ -27070,6 +27111,34 @@ components:
             SG: Optional'
           type: string
       title: PartnershipDetails
+      type: object
+    ProductDetails:
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/AccountWhiteList'
+        parentClientHashId:
+          type: string
+        preFundName:
+          type: string
+        products:
+          items:
+            type: object
+          type: array
+        segment:
+          description: 'This field accepts the fee segment associated with a client.
+
+            Maximum character limit: 64.
+
+
+            AU: Optional
+
+            EU: Optional
+
+            UK: Optional
+
+            SG: Optional'
+          type: string
+      title: ProductDetails
       type: object
     ProductProfessionalDetails:
       properties:
@@ -27276,6 +27345,9 @@ components:
           $ref: '#/components/schemas/BusinessDetails2'
           description: This object accepts the business information of the corporate
             entity.
+        expectedAccountUsage:
+          $ref: '#/components/schemas/ExpectedAccountUsage'
+          description: Accepts details about how the account will be used by the customer.
         rfiTemplateId:
           description: This field accepts the RFI template ID as received in [Fetch
             Corporate Customer RFI Details](ref:fetchcorporatecustomerrfidetails)
@@ -27848,6 +27920,22 @@ components:
             SG: Optional'
           format: uuid
           type: string
+        expectedAccountUsage:
+          $ref: '#/components/schemas/ExpectedAccountUsage'
+          description: Accepts details about how the account will be used by the customer.
+        productDetails:
+          $ref: '#/components/schemas/ProductDetails'
+          description: 'This object accepts the product details for onboarding the
+            new corporate entity to be onboarded.
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
         region:
           description: 'This field accepts the region code for which onboarding has
             been triggered. The acceptable value are:
@@ -27979,123 +28067,6 @@ components:
           type: string
       title: Account reference
       type: object
-    AddCustomerFeesRequestDTO:
-      properties:
-        authCurrency:
-          description: This field contains the 3-letter [ISO-4217 authorization currency
-            code](https://www.iso.org/iso-4217-currency-codes.html).
-          example: SGD
-          type: string
-        endRange:
-          description: This field contains the ending point of the slab of transaction
-            amount on which the fee is applicable.
-          example: 999999999
-          format: double
-          type: number
-        feeCurrency:
-          description: This field contains the 3-letter [ISO-4217 authorization currency
-            code](https://www.iso.org/iso-4217-currency-codes.html).
-          example: SGD
-          type: string
-        feeName:
-          description: This field contains the name of the fee or markup.
-          enum:
-          - FX_MARKUP
-          - FX_MARKUP_AUTO_SWEEP
-          - FX_MARKUP_AUTO_SWEEP_EOD
-          - FX_MARKUP_AUTO_SWEEP_RECEIVE
-          - FX_MARKUP_LOCKANDHOLD_1
-          - FX_MARKUP_LOCK_5MINS
-          - FX_MARKUP_LOCK_15MINS
-          - FX_MARKUP_LOCK_1HOUR
-          - FX_MARKUP_LOCK_4HOURS
-          - FX_MARKUP_LOCK_8HOURS
-          - FX_MARKUP_LOCK_24HOURS
-          - FX_MARKUP_SETTLE_IMMEDIATE
-          - FX_MARKUP_SETTLE_2DAYS
-          - FX_MARKUP_SETTLE_NEXTDAY
-          - FX_MARKUP_SETTLE_ENDOFDAY
-          - FX_MARKUP_CANCELLATION
-          - FX_MARKUP_REVERSAL
-          - P2P_FEE
-          - REMIT_BANK_FEE
-          - REMIT_BANK_FEE_SWIFT
-          - REMIT_BANK_FEE_SWIFT_OUR
-          - REMIT_CARD_FEE
-          - REMIT_PROXY_FEE
-          - REMIT_WALLET_FEE
-          - TRANSACTION_MARKUP
-          - WALLET_CREDIT_CARD_FEE
-          - WALLET_CREDIT_OFFLINE_FEE
-          - WALLET_CREDIT_THIRD_PARTY_FEE
-          - WALLET_REFUND_FEE
-          - WALLET_CREDIT_DIRECT_DEBIT_FEE
-          example: FX_MARKUP
-          type: string
-        feeValue:
-          description: This field contains the actual value of the fee. It can be
-            an amount or percentage.
-          example: 1.5
-          format: double
-          type: number
-        fixed:
-          description: This field determines if the fee is a fixed amount or a percentage.
-            It is true for a fixed amount and false for a percentage.
-          example: true
-          type: boolean
-        startRange:
-          description: This field contains the starting point of the slab of transaction
-            amount on which the fee is applicable.
-          example: 0
-          format: double
-          type: number
-        status:
-          description: 'This field contains the fee status and the possible values
-            are:
-
-            Active
-
-            Inactive
-
-            '
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - SUSPENDED
-          - UPLOADED
-          - APPROVED
-          - REJECTED
-          - FAILED
-          - SUCCESS
-          - FAILURE
-          - PARTIALLY SUCCESS
-          - SYNC
-          - NOT SYNC
-          - PENDING
-          - REQUIRES_ACTION
-          - CLEAR
-          - DECLINED
-          - ACCOUNT_BLOCKED
-          - AMOUNT_BLOCKED
-          example: Active
-          type: string
-        transactionCurrency:
-          description: This field contains the 3-letter [ISO-4217 authorization currency
-            code](https://www.iso.org/iso-4217-currency-codes.html).
-          example: SGD
-          type: string
-      required:
-      - authCurrency
-      - endRange
-      - feeName
-      - feeValue
-      - fixed
-      - startRange
-      - status
-      - transactionCurrency
-      title: AddCustomerFeesRequestDTO
-      type: object
     Amount:
       properties:
         amount:
@@ -28206,78 +28177,6 @@ components:
         payment:
           $ref: '#/components/schemas/Payment'
       title: Consent details response
-      type: object
-    ModifyCustomerFeesRequestDTO:
-      properties:
-        authCurrency:
-          description: This field contains the 3-letter [ISO-4217 authorization currency
-            code](https://www.iso.org/iso-4217-currency-codes.html).
-          example: SGD
-          type: string
-        endRange:
-          description: This field contains the ending point of the slab of transaction
-            amount on which the fee is applicable.
-          example: 999999999
-          format: double
-          type: number
-        feeCurrency:
-          description: This field contains the 3-letter [ISO-4217 authorization currency
-            code](https://www.iso.org/iso-4217-currency-codes.html).
-          example: SGD
-          type: string
-        feeValue:
-          description: This field contains the actual value of the fee. It can be
-            an amount or percentage.
-          example: 1.5
-          format: double
-          type: number
-        fixed:
-          description: This field determines if the fee is a fixed amount or a percentage.
-            It is true for a fixed amount and false for a percentage.
-          type: boolean
-        startRange:
-          description: This field contains the starting point of the slab of transaction
-            amount on which the fee is applicable.
-          example: 0
-          format: double
-          type: number
-        status:
-          description: 'This field contains the fee status and the possible values
-            are:
-
-            Active
-
-            Inactive
-
-            '
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - SUSPENDED
-          - UPLOADED
-          - APPROVED
-          - REJECTED
-          - FAILED
-          - SUCCESS
-          - FAILURE
-          - PARTIALLY SUCCESS
-          - SYNC
-          - NOT SYNC
-          - PENDING
-          - REQUIRES_ACTION
-          - CLEAR
-          - DECLINED
-          - ACCOUNT_BLOCKED
-          - AMOUNT_BLOCKED
-          example: Active
-          type: string
-        transactionCurrency:
-          description: This field contains the 3-letter [ISO-4217 authorization currency
-            code](https://www.iso.org/iso-4217-currency-codes.html).
-          example: SGD
-          type: string
-      title: ModifyCustomerFeesRequestDTO
       type: object
     OpenBankingPaymentResponseDTO:
       properties:
@@ -28409,104 +28308,6 @@ components:
           type: string
       title: Transaction amount
       type: object
-    ViewCustomerFeesResponseDTO:
-      properties:
-        authCurrency:
-          type: string
-        endRange:
-          format: double
-          type: number
-        feeCurrency:
-          type: string
-        feeName:
-          enum:
-          - ATM_FEE
-          - ECOM_FEE
-          - VIR_CARD_FEE
-          - PLASTIC_FEE
-          - ADDON_CARD_FEE
-          - REPLACEMENT_FEE
-          - WALLET_REFUND_FEE
-          - REMIT_BANK_FEE
-          - REMIT_BANK_FEE_SWIFT_BEN
-          - REMIT_BANK_FEE_SWIFT_OUR
-          - REMIT_BANK_FEE_SWIFT
-          - REMIT_CASH_FEE
-          - REMIT_WALLET_FEE
-          - REMIT_CARD_FEE
-          - REMIT_PROXY_FEE
-          - REMIT_BANK_FEE_FEDWIRE
-          - REMIT_RETURN_FEE
-          - TRANSACTION_MARKUP
-          - FX_MARKUP
-          - FX_MARKUP_AUTO_SWEEP
-          - FX_MARKUP_AUTO_SWEEP_EOD
-          - FX_MARKUP_AUTO_SWEEP_RECEIVE
-          - FX_MARKUP_LOCKANDHOLD_1
-          - INTERNATIONAL_ATM_FEE
-          - ATM_DECLINE_FEE
-          - NON_ATM_DECLINE_FEE
-          - ACCOUNT_OPENING_FEE
-          - ACCOUNT_MAINTENANCE_FEE
-          - ACCOUNT_INACTIVE_FEE
-          - P2P_FEE
-          - WALLET_CREDIT_THIRD_PARTY_FEE
-          - WALLET_CREDIT_OFFLINE_FEE
-          - WALLET_CREDIT_CARD_FEE
-          - WALLET_CREDIT_DIRECT_DEBIT_FEE
-          - AUTO_SWEEP_FEE_EOD
-          - AUTO_SWEEP_FEE_RECEIVE
-          - FX_MARKUP_SETTLE_2DAYS
-          - FX_MARKUP_SETTLE_NEXTDAY
-          - FX_MARKUP_SETTLE_ENDOFDAY
-          - FX_MARKUP_SETTLE_IMMEDIATE
-          - FX_MARKUP_LOCK_5MINS
-          - FX_MARKUP_LOCK_15MINS
-          - FX_MARKUP_LOCK_1HOUR
-          - FX_MARKUP_LOCK_4HOURS
-          - FX_MARKUP_LOCK_8HOURS
-          - FX_MARKUP_LOCK_24HOURS
-          - FX_MARKUP_CANCELLATION
-          - FX_MARKUP_REVERSAL
-          - FX_MARKUP_OFFMARKET
-          - DOMESTIC_LINKED_CARD_FEE
-          type: string
-        feeReferenceId:
-          type: string
-        feeValue:
-          format: double
-          type: number
-        fixed:
-          type: boolean
-        startRange:
-          format: double
-          type: number
-        status:
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - SUSPENDED
-          - UPLOADED
-          - APPROVED
-          - REJECTED
-          - FAILED
-          - SUCCESS
-          - FAILURE
-          - PARTIALLY SUCCESS
-          - SYNC
-          - NOT SYNC
-          - PENDING
-          - REQUIRES_ACTION
-          - CLEAR
-          - DECLINED
-          - ACCOUNT_BLOCKED
-          - AMOUNT_BLOCKED
-          type: string
-        transactionCurrency:
-          type: string
-      title: ViewCustomerFeesResponseDTO
-      type: object
     Error:
       type: object
       properties:
@@ -28516,12 +28317,11 @@ components:
           type: string
         field:
           type: string
-    ApplicationCommonResponse:
+    CommonResponse:
       type: object
       properties:
-        applicationStatus:
+        status:
           type: string
-          description: application status of application
         message:
           type: string
         errorDetails:
@@ -28539,11 +28339,12 @@ components:
           type: string
         description:
           type: string
-    CommonResponse:
+    ApplicationCommonResponse:
       type: object
       properties:
-        status:
+        applicationStatus:
           type: string
+          description: application status of application
         message:
           type: string
         errorDetails:
@@ -29503,10 +29304,10 @@ components:
           $ref: '#/components/schemas/DestinationAmount_Quote_ExcludeNull'
         destinationMarkupAmount:
           $ref: '#/components/schemas/DestinationMarkupAmount_ExcludeNull'
+        isOffMarket:
+          $ref: '#/components/schemas/IsOffMarketExcludeNull'
         createdTime:
           $ref: '#/components/schemas/CreatedTime'
-        isRateStale:
-          $ref: '#/components/schemas/IsRateStaleExcludeNull'
     ConversionCreationRequest:
       title: ConversionCreationRequest
       allOf:
@@ -29569,6 +29370,8 @@ components:
           $ref: '#/components/schemas/SRN_Conversion'
         customerComment:
           $ref: '#/components/schemas/Comment_Customer'
+        isOffMarket:
+          $ref: '#/components/schemas/IsOffMarketExcludeNull'
         cancellationFee:
           $ref: '#/components/schemas/CancellationFee_ExcludeNull'
         cancellationFeeCurrencyCode:
@@ -29785,12 +29588,14 @@ components:
       format: date-time
       example: '2021-03-09T06:46:03.000Z'
       x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
-    IsRateStaleExcludeNull:
+    IsOffMarketExcludeNull:
       type: boolean
-      description: Indicates whether the exchange rate provided is stale. A value
-        of "true" suggests that the exchange rate information is no longer current.
-        Clients can use this flag to make informed decisions based on the freshness
-        of the exchange rate.
+      description: 'Returns <code>true</code> if an FX_MARKUP_OFFMARKET fee has been
+        applied. This field is only returned if off-market requests have been enabled
+        by Nium. For more information, see <a href="https://docs.nium.com/apis/docs/fx-overview#off-market-rates">FX
+        - Overview</a>.
+
+        '
       x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
     ConversionTime:
       type: string
@@ -30417,8 +30222,9 @@ components:
           type: string
           example: '011401533'
         saved:
-          description: <ul><li>Returns `true` when the funding instrument is saved.</li><li>This
-            can return false when funding instrument status is not yet approved.</li></ul>
+          description: <ul><li>Returns <code>true</code> when the funding instrument
+            is saved.</li><li>This can return false when funding instrument status
+            is not yet approved.</li></ul>
           type: boolean
         status:
           description: The current status of the funding instrument.
@@ -30773,8 +30579,8 @@ components:
           description: The URL to redirect the customer when they're done.
           type: string
         status:
-          description: This field contains the status of the request. Avialable values
-            include:<ul><li>PENDING</li><li>FAILED</li></ul>
+          description: This field contains the status of the request. Available values
+            include:<ul><li><strong>PENDING</strong></li><li><strong>FAILED</strong></li></ul>
           type: string
       title: Link account response
       type: object
@@ -30912,10 +30718,11 @@ components:
           example: 1234567890
           type: string
         fundingChannel:
-          description: <ul><li>Funding wallets using **PREFUND** is avilable via cross-currency.</li><li>Funding
-            wallets using **BANK_TRANSFER** mode is only avilable for SGD to SGD.
-            **BANK_TRANSFER** is not avilable for cross-currency funding.</li><li>Funding
-            wallets using **DIRECT_DEBIT** is only avilable for the USA.</li></ul>
+          description: <ul><li>Funding wallets using <strong>PREFUND</strong> is available
+            via cross-currency.</li><li>Funding wallets using <strong>BANK_TRANSFER</strong>
+            mode is only available for SGD to SGD. <strong>BANK_TRANSFER</strong>
+            is not available for cross-currency funding.</li><li>Funding wallets using
+            <strong>DIRECT_DEBIT</strong> is only available for the USA.</li></ul>
           enum:
           - PREFUND
           - BANK_TRANSFER
@@ -31342,7 +31149,7 @@ components:
           description: The name of the bank which has issued the account linked to
             this account.
           type: string
-          example: COMMUNITY FEDERAL SAVINGS BANK
+          example: CFSB_US
         currencyCode:
           description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
             of the payment.
@@ -31364,7 +31171,7 @@ components:
           type: string
           description: The name of the bank which has issued the customer's account
             linked.
-          example: COMMUNITY FEDERAL SAVINGS BANK
+          example: CFSB_US
         currencyCode:
           type: string
           description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
@@ -31479,7 +31286,7 @@ components:
         fullBankName:
           type: string
           description: The name of the issuing bank in its entirety.
-          example: COMMUNITY FEDERAL SAVINGS BANK
+          example: CFSB_US
         routingCodeType1:
           type: string
           description: The routing code type 1.
@@ -31598,7 +31405,7 @@ components:
           description: UEN number associated with NIUM PayNow account.
           type: string
         type:
-          description: 'The type of payment method. Avialable values include: <ul><li>staticPayNow</li><li>dynamicPayNow</li><li>bankTransfer</li></ul>'
+          description: 'The type of payment method. Available values include: <ul><li>staticPayNow</li><li>dynamicPayNow</li><li>bankTransfer</li></ul>'
           enum:
           - bankTransfer
           type: string
@@ -31632,7 +31439,7 @@ components:
       properties:
         qrCode:
           description: Returns the codec-base64 encoded QRCode image data. Once decoded,
-            a QRCode image becomes avilable. The QRCode image can be read by devices
+            a QRCode image becomes available. The QRCode image can be read by devices
             such as smartphone or camera.
           type: string
         type:
@@ -31705,10 +31512,10 @@ components:
             \ this conditional field, see the callout at the top of this page."
           type: string
         beneficiaryBankAccountType:
-          description: "This field accepts the type of account. This field is conditional\
-            \ in case of WALLET payout and the possible values are:\nCurrent\nSaving\n\
-            Maestra\nChecking \n Note: For this conditional field, see the callout\
-            \ at the top of this page."
+          description: "The type of account. This field is conditional in case of\
+            \ WALLET payout and the possible values are:\nCurrent\nSaving\nMaestra\n\
+            Checking \n Note: For this conditional field, see the callout at the top\
+            \ of this page."
           type: string
         beneficiaryBankCode:
           description: "This field accepts the beneficiary bank code. \n Note: For\
@@ -32176,32 +31983,32 @@ components:
     BeneficiaryValidationRequestDTO:
       properties:
         beneficiaryAccountNumber:
-          description: This field accepts the beneficiary account number.
+          description: The beneficiary account number.
           type: string
         beneficiaryAccountType:
           type: string
-          description: This field accepts the bank account type of the beneficiary.
-            The account type can be either Individual or Corporate.
+          description: The bank account type of the beneficiary. The account type
+            can be either Individual or Corporate.
         beneficiaryBankCode:
-          description: 'This field accepts the bank code of a beneficiary, for example,
-            bank code for Pakistan will be BHK.
+          description: 'The bank code of the beneficiary. E.g: The bank code for England
+            is GB.
 
             Note: This field is mandatory when the destination country is Pakistan
             (PK).'
           type: string
         beneficiaryContactNumber:
           type: string
-          description: This field accepts the mobile number of the beneficiary--digits
-            only--without the country code.
+          description: The mobile number of the beneficiary--digits only--without
+            the country code.
         beneficiaryCountryCode:
           type: string
-          description: This field accepts the 2-letter [ISO-2 country code](doc:currency-and-country-codes)
+          description: The 2-letter [ISO-2 country code](doc:currency-and-country-codes)
             of the beneficiary/bank.
         beneficiaryName:
           description: This field accepts the name of a beneficiary.
           type: string
         destinationCountry:
-          description: This field accepts the 2-letter [ISO-2 country code](doc:currency-and-country-codes)
+          description: The 2-letter [ISO-2 country code](doc:currency-and-country-codes)
             of the destination country.
           type: string
         destinationCurrency:
@@ -32593,8 +32400,8 @@ components:
           description: This field accepts an account number as a payout detail.
           type: string
         account_type:
-          description: This field accepts the type of account. This field is conditional
-            in case of WALLET payout.
+          description: The type of account. This field is conditional in case of WALLET
+            payout.
           enum:
           - Current
           - Saving
@@ -32834,6 +32641,11 @@ components:
           description: 'This field accepts the different modes of payout. '
           example: LOCAL
           type: string
+        payoutMethodCategory:
+          description: Separates the payout methods into different categories including
+            <strong>ach</strong>, <strong>cash</strong>, <strong>proxy_upi</strong>,
+            and <strong>wire_local</strong>.
+          type: string
         proofOfPayment:
           description: This field provides information on proof of payment.
           type: string
@@ -32960,9 +32772,9 @@ components:
           description: This field accepts the beneficiary alias
           type: string
         beneficiaryBankAccountType:
-          description: "This field accepts the type of account. This field is conditional\
-            \ in case of WALLET payout and the possible values are:\n\u2022 Current\n\
-            \u2022 Saving\n\u2022 Maestra\n\u2022 Checking"
+          description: "The type of account. This field is conditional in case of\
+            \ WALLET payout and the possible values are:\n\u2022 Current\n\u2022 Saving\n\
+            \u2022 Maestra\n\u2022 Checking"
           type: string
         beneficiaryBankCode:
           description: This field accepts the bank code of the beneficiary.
@@ -33102,10 +32914,10 @@ components:
     AccountValidationRequestDTO:
       properties:
         accountNumber:
-          description: This field accepts an account number which is to be verified.
+          description: The bank account number which needs to be verified.
           type: string
         bankAccountType:
-          description: This field accepts the type of account.
+          description: The type of account.
           enum:
           - CHECKING
           - SAVING
@@ -33113,8 +32925,8 @@ components:
           - CURRENT
           type: string
         bankCode:
-          description: 'This field accepts the bank code of a beneficiary, for example,
-            bank code for Pakistan will be BHK.
+          description: 'The bank code of the beneficiary. E.g: The bank code for England
+            is GB.
 
             Note: This field is mandatory when the destination country is Pakistan
             (PK).'
@@ -33126,11 +32938,10 @@ components:
             of the destination country.
           type: string
         destinationCurrency:
-          description: This field accepts the 3-letter ISO-3 currency code of the
-            bank account.
+          description: The 3-letter ISO-3 currency code of the bank account.
           type: string
         payoutMethod:
-          description: This field can accept the different modes of payout.
+          description: The different payout modes that'll be used by the beneficiary.
           enum:
           - CARD
           - WALLET
@@ -33142,19 +32953,24 @@ components:
           - CHECK
           type: string
         proxyType:
-          description: "This field indicates the proxy type sent in the payment request.\n\
-            \ For SGD-PayNow: The proxy type can be MOBILE, UEN , or NRIC\nFor INR-UPI:\
-            \ The proxy type should be VPA\n For MYR-DuitNow: The proxy type can be\
-            \ NRIC, PASSPORT, CORPORATE_REGISTRATION_NUMBER, MOBILE, or ARMY_ID\n\
-            Note : This field is mandatory when the payoutMethod type is PROXY."
+          description: "<p>Specifies the proxy type sent in the payment request:</p>\n\
+            <ul>\n  <li><strong>SGD-PayNow:</strong> The proxy type can be <code>MOBILE</code>,\
+            \ <code>UEN</code>, or <code>NRIC</code></li>\n  <li><strong>INR-UPI:</strong>\
+            \ The proxy type is <code>VPA</code></li>\n  <li><strong>MYR-DuitNow:</strong>\
+            \ The proxy type can be <code>NRIC</code>, <code>PASSPORT</code>, <code>CORPORATE_REGISTRATION_NUMBER</code>,\
+            \ <code>MOBILE</code>, or <code>ARMY_ID</code></li>\n</ul>\n<p><strong>Note:</strong>\
+            \ This field is mandatory when the payout method type is <code>PROXY</code>.</p>\n"
           type: string
         proxyValue:
-          description: 'This field indicates the proxy value such as VPA, UEN, or
-            mobile number etc.
+          description: '<p>The available proxy values. This can include VPA, UEN,
+            or a mobile number.</p>
 
-            Note: This field is mandatory when the payoutMethod type is PROXY
+            <p><strong>Note:</strong> This field is mandatory when the payout method
+            type is <code>PROXY</code>.</p>
 
-            The mobile number should include country code.'
+            <p>Mobile number must include country code.</p>
+
+            '
           type: string
         routingInfo:
           items:
@@ -33169,13 +32985,17 @@ components:
     AccountValidationResponseDTO:
       properties:
         accountValidationId:
-          description: This field contains the unique identifier.
+          description: The unique ID generated to represent the validation attempt.
           type: string
         beneficiary:
           $ref: '#/components/schemas/BeneficiaryDetailsDTO'
         status:
-          description: This will provide the status of the CoP call. This can be one
-            of confirmation_in_progress, verified, not_verified or not_supported.
+          description: "Provides the status of the verification request. Available\
+            \ values include:\n<ul>\n  <li><code>confirmation_in_progress</code></li>\n\
+            \  <li><code>verified</code></li>\n  <li><code>not_verified</code></li>\n\
+            \  <li><code>not_supported</code></li>\n</ul>\n<p>For more information,\
+            \ see <a href=\"https://docs.nium.com/apis/docs/account-verification\"\
+            >Account Verification</a>.</p>\n"
           type: string
       title: AccountValidationResponseDTO
       type: object
@@ -33248,6 +33068,54 @@ components:
           type: string
       title: ApiError2
       type: object
+    ApiErrorResponse:
+      properties:
+        code:
+          enum:
+          - invalid_client_hash_id
+          - invalid_customer_hash_id
+          - invalid_wallet_hash_id
+          - invalid_card_hash_id
+          - customer_status_not_clear
+          - invalid_currency
+          - currency_not_configured
+          - wallet_creation_limit_exceeds
+          - tags_maximum_limit_exceeded
+          - tag_key_contains_special_chars
+          - unique_tag_key_required
+          - duplicate_client_transaction_config
+          - invalid_client_transaction_config
+          - invalid_transaction_category
+          - invalid_transaction_type
+          - wallet_currency_already_exists
+          - invalid_permission_to_override_customer_fee
+          - invalid_customer_fee_for_individual
+          - invalid_fee_type_for_customer_level
+          - invalid_FX_markup_flat_fee
+          - invalid_customer_fee_currency
+          - invalid_customer_fee_status
+          - fee_already_defined_for_auth_currency
+          - invalid_transaction_currency
+          - invalid_fee_currency
+          - customer_fee_above_threshold
+          - fee_currency_should_not_be_any
+          - customer_fee_does_not_exists
+          - customer_fee_update_not_allowed_for_region
+          - customer_fee_already_exists
+          - wallet_currency_removal_not_allowed
+          - invalid_system_reference_number
+          - invalid_status_for_remittance_cancel
+          - wallet_creation_not_allowed
+          - invalid_input
+          - resource_not_found
+          - invalid_date_range
+          type: string
+        description:
+          type: string
+        field:
+          type: string
+      title: ApiErrorResponse
+      type: object
     ApiResponseOfWalletRefundResponseDTO:
       properties:
         body:
@@ -33280,7 +33148,7 @@ components:
     BankRoutingInfo:
       properties:
         type:
-          description: This field accepts the routing code type.
+          description: The routing code type.
           enum:
           - IFSC
           - SWIFT
@@ -33296,24 +33164,15 @@ components:
           - WALLET
           type: string
         value:
-          description: "This field accepts the routing code value 1.\n for example\n\
-            \ ADCBINBB or ADCBINBB123 for SWIFT,\n SBIN0000058 for IFSC,\n 100000\
-            \ for SORT CODE,\n 111000025 for ACH CODE,\n 012515 for BSB CODE,\n 151\
-            \ for BANK CODE."
+          description: "<p>Accepts the routing code value 1. Examples include:</p>\n\
+            <ul>\n  <li><code>ADCBINBB</code> or <code>ADCBINBB123</code> for SWIFT</li>\n\
+            \  <li><code>SBIN0000058</code> for IFSC</li>\n  <li><code>100000</code>\
+            \ for SORT CODE</li>\n  <li><code>111000025</code> for ACH CODE</li>\n\
+            \  <li><code>012515</code> for BSB CODE</li>\n  <li><code>151</code> for\
+            \ BANK CODE</li>\n</ul>\n<p>If you have any questions, please reach out\
+            \ to your Nium account manager or <a href=\"mailto:support@nium.\n"
           type: string
       title: BankRoutingInfo
-      type: object
-    Beneficiary:
-      properties:
-        id:
-          description: This is an unique beneficiary ID which depends upon the destination
-            currency and payout method. The beneficiary Id and payout ID can be obtained
-            using [Beneficiary List  API](ref:beneficiarylistv2).
-          example: 5f7ddd6a56b63400178319c5
-          type: string
-      required:
-      - id
-      title: Beneficiary
       type: object
     BeneficiaryAccountDetailsDTO:
       properties:
@@ -33359,8 +33218,11 @@ components:
     BeneficiaryDetailsDTO:
       properties:
         bankAccountName:
-          description: In some corridors, we will provide the beneficiary name registered
-            with the bank.
+          description: 'The name registered with the bank account. (Only supported
+            in some corridors. For more information, see <a href="https://docs.nium.com/apis/docs/account-verification">Account
+            Verification</a>.)
+
+            '
           type: string
       title: BeneficiaryDetailsDTO
       type: object
@@ -33491,18 +33353,22 @@ components:
       type: object
     Payout:
       properties:
-        audit_id:
-          description: The audit Id must be taken from [Exchange Rate Lock and Hold](ref:exchangeratelockandhold)
+        auditId:
+          description: 'The audit Id must be taken from [Exchange Rate Lock and Hold](https://docs.nium.com/baas/exchange-rate-lock-and-hold)
             API.
+
+            Note: This field name can also be passed as audit_id.'
           example: 112
           format: int64
           type: integer
-        destination_amount:
+        destinationAmount:
           description: 'This field accepts the destination amount for remittance.
             Either the source or the destination amount is mandatory.
 
 
-            Allowed decimal limit is 2.'
+            Allowed decimal limit is 2.
+
+            Note: This field name can also be passed as destination_amount.'
           example: 0
           format: double
           type: number
@@ -33521,17 +33387,21 @@ components:
             in yyyy-MM-dd format
           example: '2022-11-29'
           type: string
-        source_amount:
+        sourceAmount:
           description: 'This field accepts the source amount for remittance. Either
             the source or the destination amount is mandatory.
 
 
-            Allowed decimal limit is 2.'
+            Allowed decimal limit is 2.
+
+            Note: This field name can also be passed as source_amount.'
           example: 100
           format: double
           type: number
-        source_currency:
-          description: This field accepts the source currency for remittance.
+        sourceCurrency:
+          description: 'This field accepts the source currency for remittance.
+
+            Note: This field name can also be passed as source_currency.'
           example: INR
           type: string
         swiftFeeType:
@@ -33632,6 +33502,10 @@ components:
           description: This field contains the unique payment ID.
           example: 'null'
           type: string
+        systemReferenceNumber:
+          description: This is a unique system reference number assigned to the transaction.
+          example: RT6431795378
+          type: string
         system_reference_number:
           description: This is a unique system reference number assigned to the transaction.
           example: RT6431795378
@@ -33660,8 +33534,8 @@ components:
             any other region.'
           type: string
         beneficiary:
-          $ref: '#/components/schemas/Beneficiary'
           description: This object will accept the beneficiary details.
+          type: object
         customerComments:
           description: 'This field is used to add any customer comments.
 
@@ -33909,6 +33783,19 @@ components:
       - rfiHashId
       - rfiResponseInfo
       title: Wallet Rfi response request
+      type: object
+    WalletStandard500Error:
+      properties:
+        code:
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+          type: string
+        description:
+          enum:
+          - An internal error occurred
+          type: string
+      title: Standard500Error
       type: object
     UpdateMandateRequestDTO:
       properties:
@@ -34187,14 +34074,13 @@ components:
             $ref: '#/components/schemas/WalletTag'
           type: array
         currencies:
-          description: This field accepts the list of currencies to be associated
-            with the wallet. Currency should be accepted as the [3-letter ISO-4217
-            currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
+          description: The list of currencies that the wallet will use. Currencies
+            should be submitted as the [3-letter ISO-4217 currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
           items:
             type: string
           type: array
         intendedUseOfAccount:
-          description: This field accepts the customer's intended use of the account.
+          description: The customer's intended use of the wallet.
           example: For Sales department
           type: string
         name:
@@ -34231,65 +34117,17 @@ components:
           type: string
       title: ApiError
       type: object
-    ApiErrorResponse:
-      properties:
-        code:
-          enum:
-          - invalid_client_hash_id
-          - invalid_customer_hash_id
-          - invalid_wallet_hash_id
-          - invalid_card_hash_id
-          - customer_status_not_clear
-          - invalid_currency
-          - currency_not_configured
-          - wallet_creation_limit_exceeds
-          - tags_maximum_limit_exceeded
-          - tag_key_contains_special_chars
-          - unique_tag_key_required
-          - duplicate_client_transaction_config
-          - invalid_client_transaction_config
-          - invalid_transaction_category
-          - invalid_transaction_type
-          - wallet_currency_already_exists
-          - invalid_permission_to_override_customer_fee
-          - invalid_customer_fee_for_individual
-          - invalid_fee_type_for_customer_level
-          - invalid_FX_markup_flat_fee
-          - invalid_customer_fee_currency
-          - invalid_customer_fee_status
-          - fee_already_defined_for_auth_currency
-          - invalid_transaction_currency
-          - invalid_fee_currency
-          - customer_fee_above_threshold
-          - fee_currency_should_not_be_any
-          - customer_fee_does_not_exists
-          - customer_fee_update_not_allowed_for_region
-          - customer_fee_already_exists
-          - wallet_currency_removal_not_allowed
-          - invalid_system_reference_number
-          - invalid_status_for_remittance_cancel
-          - wallet_creation_not_allowed
-          - invalid_input
-          - resource_not_found
-          - invalid_date_range
-          type: string
-        description:
-          type: string
-        field:
-          type: string
-      title: ApiErrorResponse
-      type: object
     WalletClientCustomTagDTO:
       properties:
         key:
-          description: 'Accepts the name of a tag.
+          description: 'The name of the tag.
 
-            The maximum character length for tag keys is 128 characters.'
+            The maximum character length for `keys` is 128 characters.'
           type: string
         value:
-          description: 'Accepts the value of a tag.
+          description: 'The value of the tag.
 
-            The maximum character length for tag values is 256 characters.'
+            The maximum character length for values is 256 characters.'
           type: string
       title: Client custom tag
       type: object
@@ -34584,26 +34422,13 @@ components:
           description: The field label for the RFI.
           type: string
         type:
-          description: Details the field type. Avialable values include data or document.
+          description: Details the field type. Available values include data or document.
           type: string
         value:
           description: The field value for the RFI. This will be used while responding
             to transaction RFI.
           type: string
       title: RfiAttributeResponse
-      type: object
-    WalletStandard500Error:
-      properties:
-        code:
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-          type: string
-        description:
-          enum:
-          - An internal error occurred
-          type: string
-      title: Standard500Error
       type: object
     TransactionClientTagRequestDTO:
       properties:
@@ -34619,14 +34444,14 @@ components:
           - DELETE
           type: string
         key:
-          description: 'Accepts the name of a tag.
+          description: 'The name of the tag.
 
-            The maximum character length for tag keys is 128 characters.'
+            The maximum character length for `keys` is 128 characters.'
           type: string
         value:
-          description: 'Accepts the value of a tag.
+          description: 'The value of the tag.
 
-            The maximum character length for tag values is 256 characters.'
+            The maximum character length for values is 256 characters.'
           type: string
       required:
       - action
@@ -34681,7 +34506,7 @@ components:
           format: double
           type: number
         authCode:
-          description: The authorization code of teh transaction.
+          description: The authorization code of the transaction.
           type: string
         authCurrencyCode:
           description: The 3-letter [ISO-4217 currency code](doc:currency-and-country-codes)
@@ -34735,7 +34560,7 @@ components:
           type: string
         complianceStatus:
           description: 'This field contains the compliance status of the transaction.
-            Avialable values include: NULL
+            Available values include: NULL
 
             IN_PROGRESS
 
@@ -34976,31 +34801,18 @@ components:
           description: "The settlement status. Available vlues include:\nUnsettled\n\
             Settled\n Released\nDisputed\nDisputeClosed\nWaived"
           enum:
-          - APPROVED
-          - DECLINED
-          - BLOCKED
-          - SETTLED
-          - UNSETTLED
-          - REVERSAL
-          - RELEASED
-          - PENDING
-          - WAIVED
-          - DISPUTED
-          - DISPUTE_CLOSED
-          - IN_PROGRESS
-          - REJECTED
-          - RETURNED
-          - AWAITING_FUNDS
-          - EXPIRED
-          - CANCELLED
-          - SCHEDULED
-          - NA
+          - Unsettled
+          - Settled
+          - Released
+          - Disputed
+          - DisputeClosed
+          - Waived
           type: string
         settlementTransactionAmount:
           format: double
           type: number
         status:
-          description: 'The status of the transaction. Avialable values include:
+          description: 'The status of the transaction. Available values include:
 
             Pending: Transaction authorization is awaiting success or failure.
 
@@ -35189,7 +35001,7 @@ components:
           - CREDITOR
           type: string
         type:
-          description: The type of RFI. Avilable values include document or data.
+          description: The type of RFI. Available values include document or data.
           type: string
       title: TransactionRfiDetailsResponse
       type: object
@@ -35263,8 +35075,12 @@ components:
           items:
             type: string
           type: array
+          description: The list of currencies that the wallet will use. Currencies
+            should be submitted as the [3-letter ISO-4217 currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
         name:
           type: string
+          description: A description to identify the balance held in the wallet.
+          example: Regional wallet
       title: UpdateWalletRequestDTO
       type: object
     WalletBalanceResponseDTO:
@@ -35369,14 +35185,14 @@ components:
     WalletTag:
       properties:
         key:
-          description: 'This field accepts the name of the tag.
+          description: 'The name of the tag.
 
-            The maximum key length limit is 128 characters.'
+            The maximum character length for `keys` is 128 characters.'
           type: string
         value:
-          description: 'This field accepts the value of the tag.
+          description: 'The value of the tag.
 
-            The maximum value length limit is 256 characters.'
+            The maximum character length for values is 256 characters.'
           type: string
       required:
       - key
