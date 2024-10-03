@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.8.20
+  version: 2024.10.3
 servers:
 - url: https://gatewaysandbox.nium.com/
 security:
@@ -1069,10 +1069,10 @@ paths:
       tags:
       - Lifecycle
       summary: Add Card
-      description: "This API allows you to issue a card for a customer. \n >\u26A0\
-        \uFE0F WARNING \n >This API version is deprecated. Eventually, a deprecated\
-        \ API version becomes unsupported. [Add Card V2](ref:addcardv2) is the latest\
-        \ version of this API."
+      description: "This API allows you to issue a card for a customer.\n\n\u26A0\uFE0F\
+        \ **WARNING**  \nThis API version is deprecated. Eventually, a deprecated\
+        \ API version becomes unsupported. [Add Card V2](https://docs.nium.com/apis/reference/addcardv2)\
+        \ is the latest version of this API.\n"
       operationId: AddCard
       parameters:
       - name: clientHashId
@@ -1151,10 +1151,10 @@ paths:
       tags:
       - Lifecycle
       summary: Card Details
-      description: "Enables you to fetch the card details of a particular card.\n\
-        \ >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually, a\
-        \ deprecated API version becomes unsupported. [Card Details V2](ref:carddetailsv2)\
-        \ is the latest version of this API."
+      description: "Enables you to fetch the card details of a particular card.\n\n\
+        \u26A0\uFE0F **WARNING**  \nThis API version is deprecated. Eventually, a\
+        \ deprecated API version becomes unsupported. [Card Details V2](https://docs.nium.com/apis/reference/carddetailsv2)\
+        \ is the latest version of this API.\n"
       operationId: CardDetails
       parameters:
       - name: clientHashId
@@ -1282,13 +1282,13 @@ paths:
       tags:
       - Lifecycle
       summary: Block/Unblock Cards
-      description: "This API helps you perform the following operations:\nPermanent\
-        \ block card\nTemporary block card\nUnblock card.\n >\u26A0\uFE0F WARNING\
-        \ \n >This API version is deprecated. Eventually, a deprecated API version\
-        \ becomes unsupported. For a temporary lock and unlock, [Lock/Unlock Card\
+      description: "This API helps you perform the following operations:\n- Permanent\
+        \ block card\n- Temporary block card\n- Unblock card.\n\n\u26A0\uFE0F **WARNING**\
+        \  \nThis API version is deprecated. Eventually, a deprecated API version\
+        \ becomes unsupported. \n\nFor a temporary lock and unlock, [Lock/Unlock Card\
         \ API](ref:lockunlockcardv2) is the latest version of this API. For a permanent\
         \ block and replacing the card, [Block and Replace API](ref:blockandreplacecardv2)\
-        \ is the latest version of this API."
+        \ is the latest version of this API.\n"
       operationId: BlockUnblockCards
       parameters:
       - name: clientHashId
@@ -1359,11 +1359,10 @@ paths:
       tags:
       - Lifecycle
       summary: Issue Replacement Card
-      description: "Use this API for issuing a card replacement.\n >\u26A0\uFE0F WARNING\
-        \ \n >This API version is deprecated. Eventually, a deprecated API version\
-        \ becomes unsupported. For a permanent block and replacing the card, [Block\
-        \ and Replace API](ref:blockandreplacecardv2) is the latest version of this\
-        \ API."
+      description: "Use this API for issuing a card replacement.\n\n\u26A0\uFE0F **WARNING**\
+        \  \nThis API version is deprecated. Eventually, a deprecated API version\
+        \ becomes unsupported. \n\nFor a permanent block and replacing the card, use\
+        \ the [Block and Replace](https://docs.nium.com/apis/reference/blockandreplacecardv2).\n"
       operationId: IssueReplacementCard
       parameters:
       - name: clientHashId
@@ -1828,9 +1827,10 @@ paths:
       - Security
       summary: Fetch CVV2
       description: "This API allows you to fetch the base-64 encoded CVV2 and expiry\
-        \ for a card. \n >\u26A0\uFE0F WARNING \n >This API version is deprecated.\
-        \ Eventually, a deprecated API version becomes unsupported. [Fetch Card Data\
-        \ Encrypted](ref:fetchcarddataencryptedv2) is the latest version of this API."
+        \ for a card.\n\n\u26A0\uFE0F **WARNING**  \nThis API version is deprecated.\
+        \ Eventually, a deprecated API version becomes unsupported.\n\n[Fetch Card\
+        \ Data Encrypted](https://docs.nium.com/apis/reference/fetchcarddataencryptedv2)\
+        \ is the latest version of this API.\n"
       operationId: FetchCVV2
       parameters:
       - name: clientHashId
@@ -1894,10 +1894,10 @@ paths:
       - Security
       summary: Unmask Card
       description: "This API allows you to unmask a card number before using it for\
-        \ an e-commerce transaction. \n >\u26A0\uFE0F WARNING \n >This API version\
-        \ is deprecated. Eventually, a deprecated API version becomes unsupported.\
-        \ [Fetch Card Data Encrypted](ref:fetchcarddataencryptedv2) is the latest\
-        \ version of this API."
+        \ an e-commerce transaction.\n\n\u26A0\uFE0F **WARNING**  \nThis API version\
+        \ is deprecated. Eventually, a deprecated API version becomes unsupported.\n\
+        \n[Fetch Card Data Encrypted](https://docs.nium.com/apis/reference/fetchcarddataencryptedv2)\
+        \ is the latest version of this API.\n"
       operationId: UnmaskCard
       parameters:
       - name: clientHashId
@@ -4229,7 +4229,7 @@ paths:
                   settlementAmount: 62
                   settlementAuthAmount: 62
                   settlementDate: 'null'
-                  settlementStatus: Unsettled
+                  settlementStatus: UNSETTLED
                   settlementTransactionAmount: 62
                   status: PENDING
                   systemTraceAuditNumber: FW4526424507
@@ -4932,12 +4932,12 @@ paths:
       tags:
       - Customer Account - Individual
       deprecated: false
-      description: "This API will create customers using minimal data, the rest of\
-        \ the partial data will be pulled via MyInfo etc. which is locked and cannot\
-        \ be edited and further rest fields can be updated using Customer Update API.\n\
-        \ >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually, a\
-        \ deprecated API version becomes unsupported. [Unified Add Customer](ref:unifiedaddcustomer)\
-        \ is the latest version of this API."
+      description: "This API will create customers using minimal data. The rest of\
+        \ the partial data will be pulled via MyInfo, which is locked and cannot be\
+        \ edited. Further fields can be updated using the Customer Update API.\n\n\
+        \u26A0\uFE0F **WARNING**  \nThis API version is deprecated. Eventually, a\
+        \ deprecated API version becomes unsupported.\n\n[Unified Add Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer)\
+        \ is the latest version of this API.\n"
       operationId: AddCustomerUsingMyInfoSG
       requestBody:
         content:
@@ -5020,9 +5020,10 @@ paths:
         apiType: external
       security:
       - default: []
-      description: "\n >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually,\
-        \ a deprecated API version becomes unsupported. [Unified Add Customer](ref:unifiedaddcustomer)\
-        \ is the latest version of this API."
+      description: "\n\u26A0\uFE0F **WARNING**  \nThis API version is deprecated.\
+        \ Eventually, a deprecated API version becomes unsupported.\n\n[Unified Add\
+        \ Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer) is the\
+        \ latest version of this API.\n"
   /api/v1/client/{clientHashId}/customer:
     post:
       parameters:
@@ -5080,9 +5081,10 @@ paths:
       - Customer Account - Individual
       deprecated: false
       description: "This API allows you to register a customer with a wallet in NIUM's\
-        \ cards platform.\n >\u26A0\uFE0F WARNING \n >This API version is deprecated.\
-        \ Eventually, a deprecated API version becomes unsupported. [Unified Add Customer](ref:unifiedaddcustomer)\
-        \ is the latest version of this API."
+        \ cards platform.\n\n\u26A0\uFE0F **WARNING**  \nThis API version is deprecated.\
+        \ Eventually, a deprecated API version becomes unsupported.\n\n[Unified Add\
+        \ Customer](https://docs.nium.com/apis/reference/unifiedaddcustomer) is the\
+        \ latest version of this API.\n"
       operationId: AddCustomer
       requestBody:
         content:
@@ -8385,11 +8387,11 @@ paths:
       - Customer Management
       deprecated: false
       description: "This API allows you to fetch the customers for the client. It\
-        \ also supports query parameters based filtering to fetch details of a customer\
-        \ with email or mobile. \n >\u26A0\uFE0F WARNING \n To access updated functionality\
-        \ and features we recommed using the latest version of this API [Customer\
-        \ List V2](/apis/reference/customerlistv2). In December 2023, this API version\
-        \ will be deprecated and becomes unsupported."
+        \ also supports query parameter-based filtering to fetch details of a customer\
+        \ using email or mobile.\n\n\u26A0\uFE0F **WARNING**  \nTo access updated\
+        \ functionality and features, we recommend using the latest version of this\
+        \ API: [Customer List V2](https://docs.nium.com/apis/reference/customerlistv2).\
+        \ This API version was deprecated in December 2023.\n"
       operationId: CustomerList
       summary: Customer List
       x-info:
@@ -8458,10 +8460,10 @@ paths:
       tags:
       - Customer Management
       deprecated: false
-      description: "This API allows you to fetch details for a specific customer.\
-        \ \n >\u26A0\uFE0F WARNING \n To access updated functionality and features\
-        \ we recommed using the latest version of this API [Customer Details V2](/apis/reference/customerdetailsv2).\
-        \ In December 2023, this API version will be deprecated and becomes unsupported."
+      description: "This API allows you to fetch details for a specific customer.\n\
+        \n\u26A0\uFE0F **WARNING**  \nTo access updated functionality and features,\
+        \ we recommend using the latest version of this API: [Customer Details V2](https://docs.nium.com/apis/reference/customerdetailsv2).\
+        \ In December 2023, this API version will be deprecated and become unsupported.\n"
       operationId: CustomerDetails
       summary: Customer Details
       x-info:
@@ -8534,10 +8536,6 @@ paths:
           example: '{{$guid}}'
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ViewCustomerFeesResponseDTO'
           description: OK
         '400':
           content:
@@ -9552,6 +9550,179 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/client/{clientHashId}/applications:
+    post:
+      tags:
+      - Onboarding Forms - Corporate
+      summary: Create Application for Onboarding Form
+      description: This API will create the application resource and generate link
+        for the customer to the access onboarding form
+      operationId: onboardingFormLink
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake
+        required: true
+        schema:
+          type: string
+        example: 82546347-347d-4606-967c-b92e1ffdf5a5
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateLinkRequest'
+            example:
+              region: SG
+              corporate:
+                businessName: Nium India
+                businessRegistrationNumber: '123456789'
+                applicantEmail: applicant@abc.com
+                registeredCountry: SG
+              applicationType: corporate
+        required: true
+      responses:
+        '200':
+          description: Successfully retrieved link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateLinkResponse'
+              example:
+                applicationId: APP1713860447006QUG
+                url: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
+                expiry: '1713359070614'
+        '400':
+          description: 'The detailed error code associated with HTTP status 400.*
+            `invalid_request`: Input fields contain invalid data * `invalid_client_hash_id`:
+            Provided client hash id is invalid or doesn''t exist * `customer_already_exist`:
+            Customer already onboarded with the given businessName and businessRegistrationNumber
+            * `application_already_exists`: Application already exists with the given
+            businessName and businessRegistrationNumber'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+              example:
+              - code: invalid_request
+                description: businessName is mandatory
+              - code: invalid_client_hash_id
+                description: Invalid clientHashId
+              - code: customer_already_exist
+                description: customer already exists with the businessName Nium
+              - code: application_already_exists
+                description: application already exists with the businessName Nium
+                  and businessRegistrationNumber 1234
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '403':
+          description: Forbidden access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/applications/{applicationId}/regenerateURL:
+    get:
+      tags:
+      - Onboarding Forms - Corporate
+      summary: Regenerate Onboarding Form URL
+      description: This API will generate a link for the customer to the onboarding
+        form if the previous link expires.
+      operationId: regenerateURL
+      parameters:
+      - name: applicationId
+        in: path
+        description: Application Id returned in response while creating application
+          resource.
+        required: true
+        schema:
+          type: string
+        example: APP1709284786391276
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake
+        required: true
+        schema:
+          type: string
+        example: 82546347-347d-4606-967c-b92e1ffdf5a5
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: Successful regeneration of url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateLinkResponse'
+              example:
+                applicationId: APP1713860447006QUG
+                url: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
+                expiry: '1713359070614'
+        '400':
+          description: 'The detailed error code associated with HTTP status 400.                  *
+            `invalid_client_hash_id`: Provided client hash id is invalid or doesn''t
+            exist                  * `invalid_application_id`: Provided application
+            id is invalid or doesn''t exist'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+              example:
+              - code: invalid_client_hash_id
+                description: Invalid clientHashId
+              - code: invalid_application_id
+                description: Application Id not found
+        '401':
+          description: Bad request, invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard401Error'
+        '403':
+          description: Forbidden access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceStandard404Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard500Error'
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/fees:
     post:
       parameters:
@@ -9621,12 +9792,12 @@ paths:
       tags:
       - Customer Fees
       deprecated: false
-      description: "This API allows you to levy custom fee. \n >\u26A0\uFE0F WARNING\
-        \ \n >Due to regulatory requirements, using the Fee endpoint requires explicit\
+      description: "This API allows you to levy a custom fee.\n\n\u26A0\uFE0F **WARNING**\
+        \  \nDue to regulatory requirements, using the Fee endpoint requires explicit\
         \ approval from Nium. Any fees charged to customers must be disclosed in the\
         \ client\u2019s terms and conditions and approved by Nium legal and compliance.\
         \ If you have any questions, please reach out to your Nium account manager\
-        \ or [Nium Support](mailto:support@nium.com)."
+        \ or [Nium Support](mailto:support@nium.com).\n"
       operationId: ChargeFee
       requestBody:
         content:
@@ -11902,10 +12073,10 @@ paths:
       - Customer Virtual Accounts
       deprecated: false
       description: "This API allows you to fetch virtual accounts assigned to a customer's\
-        \ wallet. \n \u26A0\uFE0F WARNING \n > To access updated functionality and\
-        \ features we recommed using the latest version of this API [Virtual Account\
-        \ Details V2](/apis/reference/virtualaccountdetailsv2). Eventually, this API\
-        \ version will be deprecated and becomes unsupported."
+        \ wallet.\n\n\u26A0\uFE0F **WARNING**  \nTo access updated functionality and\
+        \ features, we recommend using the latest version of this API: [Virtual Account\
+        \ Details V2](https://docs.nium.com/apis/reference/virtualaccountdetailsv2).\
+        \ Eventually, this API version will be deprecated and become unsupported.\n"
       operationId: VirtualAccountDetails
       summary: Virtual Account Details
       x-info:
@@ -12223,11 +12394,10 @@ paths:
       tags:
       - Beneficiary
       deprecated: false
-      description: "This API enables you to verify the details of a beneficiary's\
-        \ bank account.\n> > \u2139\uFE0F INFO \n >This API only supports account\
-        \ verification for specific destinations and corridors.\n>For more information,\
-        \ see  [Account verification] (/apis/docs/account-verification#supported-corridors-for-account-verification).\
-        \ for details."
+      description: This API enables you to verify the details of a beneficiary's bank
+        account. This API only supports account verification for specific destinations
+        and corridors. For more information, see [Account verification](https://docs.nium.com/apis/docs/account-verification)
+        for details.
       operationId: AccountVerification
       requestBody:
         content:
@@ -12405,11 +12575,11 @@ paths:
       tags:
       - Beneficiary
       deprecated: false
-      description: "This API allows you to add a beneficiary to transfer funds. \n\
-        \ > \u26A0\uFE0F IMPORTANT \n  Some fields are conditional based on corridors.\
-        \ Use the [Beneficiary Validation Schema V2](/apis/reference/beneficiaryvalidationschemav2)\
+      description: "This API allows you to add a beneficiary to transfer funds.\n\n\
+        \u26A0\uFE0F **IMPORTANT**  \nSome fields are conditional based on corridors.\
+        \ Use the [Beneficiary Validation Schema V2](https://docs.nium.com/apis/reference/beneficiaryvalidationschemav2)\
         \ with the currency code and payout method to determine if a field is required\
-        \ or not."
+        \ or not.\n"
       operationId: AddBeneficiaryV2
       requestBody:
         content:
@@ -13062,10 +13232,10 @@ paths:
       tags:
       - Beneficiary
       deprecated: false
-      description: "This API allows you to fetch beneficiary details.\n >\u26A0\uFE0F\
-        \ WARNING \n >This API version is deprecated. Eventually, a deprecated API\
-        \ version becomes unsupported. [Beneficiary List V2](/apis/reference/beneficiarylistv2)\
-        \ is the latest version of this API."
+      description: "This API allows you to fetch beneficiary details.\n\n\u26A0\uFE0F\
+        \ **WARNING**  \nThis API version is deprecated. Eventually, a deprecated\
+        \ API version becomes unsupported. \n\n[Beneficiary List V2](https://docs.nium.com/apis/reference/beneficiarylistv2)\
+        \ is the latest version of this API.\n"
       operationId: BeneficiaryList
       summary: Beneficiary List
       x-info:
@@ -13133,10 +13303,10 @@ paths:
       tags:
       - Beneficiary
       deprecated: false
-      description: "This API allows you to add a beneficiary to transfer funds.\n\
-        \ >\u26A0\uFE0F WARNING \n >This API version is deprecated. Eventually, a\
-        \ deprecated API version becomes unsupported. [Add Beneficiary V2](/apis/reference/addbeneficiaryv2)\
-        \ is the latest version of this API."
+      description: "This API allows you to add a beneficiary to transfer funds.\n\n\
+        \u26A0\uFE0F **WARNING**  \nThis API version is deprecated. Eventually, a\
+        \ deprecated API version becomes unsupported.\n\n[Add Beneficiary V2](https://docs.nium.com/apis/reference/addbeneficiaryv2)\
+        \ is the latest version of this API.\n"
       operationId: AddBeneficiary
       requestBody:
         content:
@@ -13312,10 +13482,10 @@ paths:
       - Beneficiary
       deprecated: false
       description: "This API allows you to fetch beneficiary details of an individual\
-        \ beneficiary.\n >\u26A0\uFE0F WARNING \n >This API version is deprecated.\
-        \ Eventually, a deprecated API version becomes unsupported. [Beneficiary Details\
-        \ V2](/apis/reference/beneficiarydetailsv2) is the latest version of this\
-        \ API."
+        \ beneficiary.\n\n\u26A0\uFE0F **WARNING**  \nThis API version is deprecated.\
+        \ Eventually, a deprecated API version becomes unsupported.\n\n[Beneficiary\
+        \ Details V2](https://docs.nium.com/apis/reference/beneficiarydetailsv2) is\
+        \ the latest version of this API.\n"
       operationId: BeneficiaryDetails
       summary: Beneficiary Details
       x-info:
@@ -13528,11 +13698,11 @@ paths:
       tags:
       - Beneficiary
       deprecated: false
-      description: "This API will allow you to fetch the validation schema for beneficiary\
-        \ validation details.\n >\u26A0\uFE0F WARNING \n >This API version is deprecated.\
-        \ Eventually, a deprecated API version becomes unsupported. [Beneficiary Validation\
-        \ Schema V2](/apis/reference/beneficiaryvalidationschemav2) is the latest\
-        \ version of this API."
+      description: "This API allows you to fetch the validation schema for beneficiary\
+        \ validation details.\n\n\u26A0\uFE0F **WARNING**  \nThis API version is deprecated.\
+        \ Eventually, a deprecated API version becomes unsupported.\n\n[Beneficiary\
+        \ Validation Schema V2](https://docs.nium.com/apis/reference/beneficiaryvalidationschemav2)\
+        \ is the latest version of this API.\n"
       operationId: BeneficiaryValidationSchema
       summary: Beneficiary Validation Schema
       x-info:
@@ -15828,11 +15998,10 @@ paths:
       tags:
       - Wallet to Wallet Transfers
       deprecated: false
-      description: "This API enables you to transfer money from one wallet to another\
-        \ wallet within the same client family. \n >\u26A0\uFE0F WARNING \n >This\
-        \ API version has been deprecated. Eventually, deprecated API versions become\
-        \ unsupported. Use the [Wallet To Wallet Transfer](ref:wallettransfer) API\
-        \ to achieve the same functionality."
+      description: This API enables you to transfer money from one wallet to another
+        within the same client family. This API version has been deprecated. Eventually,
+        deprecated API versions become unsupported. As an alternative, use the [Wallet
+        To Wallet Transfer request.](https://docs.nium.com/apis/reference/wallettransfer)
       operationId: P2PTransfer
       requestBody:
         content:
@@ -15899,10 +16068,16 @@ paths:
         required: false
         schema:
           enum:
-          - CLEAR
-          - PENDING
+          - INITIATED
+          - IN_PROGRESS
+          - ACTION_REQUIRED
           - RFI_REQUESTED
+          - RFI_RESPONDED
+          - COMPLETED
+          - ERROR
+          - EXPIRED
           - REJECT
+          - CLOSED
           type: string
       - description: Filter transactions based on the customer's unique `customerHashId`
           that was used in the transaction.
@@ -16022,21 +16197,54 @@ paths:
         required: false
         schema:
           type: string
-      - description: Filter transactions based on the `status`. A list of possible
-          values is available in the response.
+      - description: 'Filter transactions based on the `status` of the transaction.
+          This parameter indicates the current state of the transaction. <ul> <li><strong>Approved</strong>:
+          The transaction has been successfully authorized and accepted.</li> <li><strong>Declined</strong>:
+          The transaction was rejected, usually due to insufficient funds, incorrect
+          details, or compliance issues.</li> <li><strong>Blocked</strong>: The transaction
+          is blocked, typically due to risk or security concerns.</li> <li><strong>Settled</strong>:
+          The transaction has been finalized and funds have been transferred.</li>
+          <li><strong>Unsettled</strong>: The transaction has not yet been finalized
+          or fully processed.</li> <li><strong>Reversal</strong>: The transaction
+          has been reversed, returning funds to the original source.</li> <li><strong>Released</strong>:
+          The hold on the transaction has been lifted, allowing funds to be accessed
+          or further processed.</li> <li><strong>Pending</strong>: The transaction
+          is awaiting further processing or authorization.</li> <li><strong>Waived</strong>:
+          Transaction fees or penalties have been waived, usually as a courtesy or
+          due to specific conditions.</li> <li><strong>Disputed</strong>: The transaction
+          is under dispute, often initiated by the customer or merchant.</li> <li><strong>DisputeClosed</strong>:
+          The dispute process has been completed and resolved.</li> <li><strong>InProgress</strong>:
+          The transaction is currently being processed.</li> <li><strong>Rejected</strong>:
+          The transaction failed due to internal or external compliance or policy
+          violations.</li> <li><strong>Returned</strong>: Funds have been returned
+          to the original sender, typically due to an error or rejection.</li> <li><strong>AwaitingFunds</strong>:
+          The transaction is on hold, waiting for incoming funds to complete.</li>
+          <li><strong>Expired</strong>: The transaction has expired, often due to
+          inactivity or unmet conditions within the required timeframe.</li> <li><strong>Cancelled</strong>:
+          The transaction was cancelled before completion, either by the user or Nium.</li>
+          <li><strong>Scheduled</strong>: The transaction is scheduled for a future
+          date or time.</li> <li><strong>NA</strong>: Not applicable; the transaction
+          status does not fall under any predefined category. Contact Nium support
+          or your Nium Account Manager for more information.</li> </ul>'
         in: query
         name: status
         required: false
         schema:
           enum:
-          - IN_PROGRESS
-          - ACTION_REQUIRED
-          - RFI_REQUESTED
-          - RFI_RESPONDED
-          - COMPLETED
-          - ERROR
-          - REJECT
-          - EXPIRED
+          - Approved
+          - Declined
+          - Blocked
+          - Reversal
+          - Released
+          - Pending
+          - InProgress
+          - Rejected
+          - Returned
+          - AwaitingFunds
+          - Expired
+          - Cancelled
+          - Scheduled
+          - NA
           type: string
       - description: Filter transactions based on the `systemReferenceNumber`.
         in: query
@@ -16189,7 +16397,7 @@ paths:
                   settlementAmount: 62
                   settlementAuthAmount: 62
                   settlementDate: 'null'
-                  settlementStatus: Unsettled
+                  settlementStatus: UNSETTLED
                   settlementTransactionAmount: 62
                   status: PENDING
                   systemTraceAuditNumber: FW4526424507
@@ -17268,8 +17476,6 @@ components:
           description: This array contains the token details.
           items:
             $ref: '#/components/schemas/CardTokensDTO'
-        walletHashId:
-          type: string
       title: Card details
     CardInfo:
       type: object
@@ -21715,6 +21921,8 @@ components:
 
             SG: Required'
           type: string
+        expectedAccountUsage:
+          $ref: '#/components/schemas/ExpectedAccountUsageDTO'
         riskAssessmentInfo:
           $ref: '#/components/schemas/RiskAssessmentInfoV2'
       title: Corporate customer response
@@ -23357,6 +23565,54 @@ components:
       - nationality
       - verificationConsent
       title: EVerify customer registration request
+      type: object
+    ExpectedAccountCreditDTO:
+      properties:
+        averageTransactionValue:
+          type: string
+        monthlyTransactionVolume:
+          type: string
+        monthlyTransactions:
+          type: string
+        topRemitters:
+          items:
+            type: string
+          type: array
+        topTransactionCountries:
+          items:
+            type: string
+          type: array
+      title: ExpectedAccountCreditDTO
+      type: object
+    ExpectedAccountDebitDTO:
+      properties:
+        averageTransactionValue:
+          type: string
+        monthlyTransactionVolume:
+          type: string
+        monthlyTransactions:
+          type: string
+        topBeneficiaries:
+          items:
+            type: string
+          type: array
+        topTransactionCountries:
+          items:
+            type: string
+          type: array
+      title: ExpectedAccountDebitDTO
+      type: object
+    ExpectedAccountUsageDTO:
+      properties:
+        credit:
+          $ref: '#/components/schemas/ExpectedAccountCreditDTO'
+        debit:
+          $ref: '#/components/schemas/ExpectedAccountDebitDTO'
+        intendedUses:
+          items:
+            type: string
+          type: array
+      title: ExpectedAccountUsageDTO
       type: object
     IdentificationDocumentDTO:
       properties:
@@ -28317,11 +28573,12 @@ components:
           type: string
         field:
           type: string
-    CommonResponse:
+    ApplicationCommonResponse:
       type: object
       properties:
-        status:
+        applicationStatus:
           type: string
+          description: application status of application
         message:
           type: string
         errorDetails:
@@ -28339,12 +28596,11 @@ components:
           type: string
         description:
           type: string
-    ApplicationCommonResponse:
+    CommonResponse:
       type: object
       properties:
-        applicationStatus:
+        status:
           type: string
-          description: application status of application
         message:
           type: string
         errorDetails:
@@ -28737,6 +28993,121 @@ components:
           type: string
           description: The URL of the request for the previous page of responses.
           x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+    onboardingFormServiceApiErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/onboardingFormServiceTypedErrorErrorCodes'
+    onboardingFormServiceTypedErrorErrorCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - invalid_client_hash_id
+          - customer_already_exist
+          - application_already_exists
+          - invalid_request
+          - invalid_application_id
+          - unauthorized
+          - not_found
+          - forbidden
+          - internal_server_error
+          - validation_invalid_value
+          - validation_missing_value
+          - invalid_session_id
+          - session_already_exist
+          - file_download_failed
+          - url_expired
+          - invalid_linkId
+          - invalid_business_details
+          - invalid_stakeholder_details
+          - invalid_applicant_details
+          - invalid_risk_details
+          - invalid_otp
+        description:
+          type: string
+        field:
+          type: string
+    Corporate:
+      required:
+      - applicantEmail
+      - businessName
+      - businessRegistrationNumber
+      type: object
+      properties:
+        businessName:
+          maxLength: 80
+          minLength: 0
+          type: string
+          example: Nium India
+        businessRegistrationNumber:
+          maxLength: 30
+          minLength: 0
+          pattern: ^[a-zA-Z0-9 ]*$
+          type: string
+          example: '123456789'
+        applicantEmail:
+          maxLength: 60
+          minLength: 0
+          pattern: ^$|^(([a-zA-Z0-9._%+-]+)?@([a-zA-Z0-9.-]+)?\.([a-zA-Z]{2,})?)$
+          type: string
+          description: Email Id of the applicant of the corporate customer. Applicant
+            will receive authentication for the form on this email id.
+          example: applicant@gmail.com
+        registeredCountry:
+          maxLength: 2
+          minLength: 0
+          type: string
+          description: Country of registration of the corporate customer
+          example: SG
+    GenerateLinkRequest:
+      required:
+      - applicationType
+      - region
+      type: object
+      properties:
+        applicationType:
+          pattern: ^(?i)(CORPORATE)?$
+          type: string
+          example: corporate
+          enum:
+          - corporate
+        region:
+          type: string
+          description: Regulatory region under which you want to onboard the corporate
+            customer
+          example: SG
+          enum:
+          - SG
+        corporate:
+          $ref: '#/components/schemas/Corporate'
+    GenerateLinkResponse:
+      type: object
+      properties:
+        applicationId:
+          type: string
+          description: Application Id generated for the customer
+          example: APP1713860447006QUG
+        url:
+          type: string
+          description: Onboarding form link
+          example: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
+        expiry:
+          type: string
+          description: Expiry time of the link(in millis)
+          example: '1713359070614'
+    onboardingFormServiceStandard404Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - resource_not_found
+        description:
+          type: string
     AddCustomerChildMustHaveParentWithCorpBilling:
       allOf:
       - properties:
@@ -33109,6 +33480,7 @@ components:
           - invalid_input
           - resource_not_found
           - invalid_date_range
+          - payout_cancellation_failed
           type: string
         description:
           type: string
@@ -33238,6 +33610,29 @@ components:
           example: RT6431795378
           type: string
       title: CancelledRemittanceResponseDTO
+      type: object
+    CheckDTO:
+      properties:
+        lastUpdatedAt:
+          description: This field contains CHECK lastUpdatedAt
+          type: string
+        reasonCode:
+          description: This field contains CHECK reason code.
+          enum:
+          - created
+          - delivered
+          - failed
+          - in_local_area
+          - in_transit
+          - mailed
+          - processed
+          - re_routed
+          - returned_to_sender
+          type: string
+        statusDescription:
+          description: This field contains CHECK Status Description for GPI.
+          type: string
+      title: CheckDTO
       type: object
     PayoutClientCustomTagDTO:
       properties:
@@ -33447,6 +33842,8 @@ components:
       type: object
     RemittanceEventsResponseDTO2:
       properties:
+        checkDTO:
+          $ref: '#/components/schemas/CheckDTO'
         errorCode:
           description: This field contains ISO error code.
           type: string
@@ -34070,12 +34467,20 @@ components:
         tags:
           description: This object contains the user defined key-value pairs provided
             by the client. The maximum number of tags allowed is 15.
+          example:
+          - key: Department
+            value: Sales
+          - key: Corporate Entity business
+            value: Payroll
           items:
             $ref: '#/components/schemas/WalletTag'
           type: array
         currencies:
           description: The list of currencies that the wallet will use. Currencies
             should be submitted as the [3-letter ISO-4217 currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
+          example:
+          - SGD
+          - GBP
           items:
             type: string
           type: array
@@ -35068,19 +35473,29 @@ components:
     UpdateWalletRequestDTO:
       properties:
         tags:
+          description: This object contains the user defined key-value pairs provided
+            by the client. The maximum number of tags allowed is 15.
+          example:
+          - key: Department
+            value: Sales
+          - key: Corporate Entity business
+            value: Payroll
           items:
             $ref: '#/components/schemas/WalletTag'
           type: array
         currencies:
+          description: The list of currencies that the wallet will use. Currencies
+            should be submitted as the [3-letter ISO-4217 currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
+          example:
+          - SGD
+          - GBP
           items:
             type: string
           type: array
-          description: The list of currencies that the wallet will use. Currencies
-            should be submitted as the [3-letter ISO-4217 currency code](https://www.currency-iso.org/en/home/tables/table-a1.html).
         name:
-          type: string
           description: A description to identify the balance held in the wallet.
           example: Regional wallet
+          type: string
       title: UpdateWalletRequestDTO
       type: object
     WalletBalanceResponseDTO:
@@ -35150,25 +35565,7 @@ components:
         status:
           description: Current status of the wallet.
           enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - SUSPENDED
-          - UPLOADED
-          - APPROVED
-          - REJECTED
-          - FAILED
-          - SUCCESS
-          - FAILURE
-          - PARTIALLY SUCCESS
-          - SYNC
-          - NOT SYNC
-          - PENDING
-          - REQUIRES_ACTION
-          - CLEAR
-          - DECLINED
-          - ACCOUNT_BLOCKED
-          - AMOUNT_BLOCKED
+          - Active
           example: Active
           type: string
         updatedAt:
