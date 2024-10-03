@@ -1,6 +1,79 @@
+## October 1, 2024
+
+### New Features
+
+**Multiple Wallets**
+
+Corporate customers can now have multiple wallets on the Nium platform. Multiple Wallets offers more choice and convenience to clients and helps ledger management with single or multiple currencies.
+
+- Currently, whenever a customer is onboarded on to Nium, a default wallet is created and linked with the customer. All transactions are credited and debited from that single wallet.
+- With this change, customers can now hold balances and transfer funds between multiple wallets based on their business needs.
+- The assignment of virtual accounts to any wallet is supported by the [Assign Payment ID](https://docs.nium.com/apis/reference/assignpaymentid) request.
+- We’ve introduced three new APIs to support this feature:
+  - [Add Wallet](https://docs.nium.com/apis/reference/addwallet)
+  - [Update Wallet](https://docs.nium.com/apis/reference/updatewallet)
+  - [Fetch Wallet](https://docs.nium.com/apis/reference/getwallet)
+- We're actively working on bringing card issuance and card-based transactions for additional wallets.
+- Currently, card issuance and card-based transactions only support the default wallet that was created and linked with the customer after completing onboarding.
+- Multiple wallets are currently only available in select regions. The regions Multiple Wallets are available include:
+  - Australia (AU)
+  - Canada (CA)
+  - Hong Kong (HK)
+  - Singapore (SU)
+  - United Kingdom (UK)
+  - United States (US)
+
+Please contact your Nium account manager or Nium support to evaluate your business use case and configure wallets for you.
+
+### Enhancements
+
+**Stay Informed with Our New Status Page**
+
+Monitor the real-time status of Nium services with our new Status Page. Stay updated on service performance and incidents, and subscribe to notifications for timely alerts on any service changes or issues. See our [guide for more information](https://docs.nium.com/apis/docs/status-page).
+
+**Virtual Account related information**
+
+The account type returned in the API response of [Virtual Account Details V2](https://docs.nium.com/apis/reference/virtualaccountdetailsv2) and the [Client Details](https://docs.nium.com/apis/reference/clientdetails) request for `GMO_JP` bank has been changed from **SAVINGS** to **LOCAL** to make it standardized across all banking partners.
+
+## September 17, 2024
+
+### Enhancements
+
+**Intermediary Bank Code for Virtual Accounts from JPMC SG**
+
+The virtual account detail returned by the **Virtual Account Details V2 API** will now include the intermediary bank SWIFT BIC for virtual accounts issued for non-SGD currencies. This will be available in the `routingCodeValue2` field and should be used for fund transfers through virtual accounts issued by JPMC SG.
+
+**Virtual Account Numbers**
+
+You can now create virtual account numbers directly in the Nium Portal on the Customer Balances page. This caters to users who prefer the portal over our API. For more information, see [Virtual Account Numbers](https://docs.nium.com/apis/docs/portal#virtual-accounts).
+
+**GPI Details for SWIFT Transactions**
+
+Global Payments Innovation (GPI) details for SWIFT transactions are now included in transaction reports, providing end-to-end visibility into transaction statuses. For more information, see [GPI details](https://docs.nium.com/apis/docs/portal-reports#gpi-details).
+
+**Payout Return Reasons**
+
+Transaction reports now display reasons for returned payout transactions, helping you identify and prevent issues. For more information, see [Transaction reports](https://docs.nium.com/apis/docs/portal-reports#transactions-reports).
+
+**New Financial Institutions Use-Case Guide**
+
+We’ve released a new use-case guide tailored for Financial Institutions (FIs). It provides detailed integration steps, fund flow examples, and an overview of key Nium features. For more information, see [Financial Institutions](https://docs.nium.com/apis/docs/financial-institutions).
+
+**Customer-Named Virtual Accounts Now Available for Hong Kong Payins**
+
+We’re enhancing payin capabilities in Hong Kong! You can now collect funds into customer-named virtual accounts in HKD via local methods, and in USD, EUR, GBP, AUD, CAD, and CNY via wires. For more information, see [Virtual Account Number](https://docs.nium.com/apis/docs/virtual-account-number#customer-named-virtual-accounts).
+
+**Enhanced Reference Info for Nepal Payments**
+
+Beneficiaries in Nepal can now see the sender's name in Rupee payouts, improving transaction tracking. This adds transparency and security to every transaction.
+
+**Enhancements to the Proof of Payments API**
+
+The ultimate remitter’s name will now appear on the Proof of Payment PDF for on-behalf payouts, helping Financial Institutions manage third-party payout use cases more effectively. For more information, see the [Get Proof of Payment](https://docs.nium.com/apis/reference/pop) request.
+
 ## August 20, 2024
 
-#### Enhancements
+### Enhancements
 
 **Apple SDK**
 
