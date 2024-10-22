@@ -1,3 +1,19 @@
+## October 15, 2024
+
+### New Features
+
+**Bulk Card Issuance**
+
+Nium now supports issuing cards in bulk. Bulk card issuance refers to the process where many prepaid or debit cards are produced at the same time.
+
+Bulk issuance is an efficient way to generate and distribute large quantities of cards and helps in saving card delivery costs.
+
+Nium supports both personalized and generic card issuance. Cards can be personalized (Name on Card) or generic (no Name on Card), and can be shipped in one single shipment.
+
+Bulk card issuance is often used for corporate programs, gift cards, payroll, or disbursement programs. Please contact your Nium account manager or Nium support if you’re interested in issuing cards in bulk.
+
+For more information, see [Card Overview](https://docs.nium.com/apis/docs/card-overview).
+
 ## October 1, 2024
 
 ### New Features
