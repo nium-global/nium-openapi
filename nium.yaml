@@ -8,9 +8,9 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.10.3
+  version: 2024.10.29
 servers:
-- url: https://gatewaysandbox.nium.com/
+- url: https://gateway.nium.com/
 security:
 - default: []
 tags:
@@ -64,8 +64,12 @@ tags:
   description: REST API's for Reference Data
 - name: Payout
   description: REST API's for Payout
+- name: Payouts
+  description: Payout Simulation
 - name: Payin
   description: REST API's for Payin
+- name: Customer
+  description: Payout Simulation
 - name: Customer Wallet Balance
   description: REST API's for Customer's Wallet Balance
 - name: Wallet to Wallet Transfers
@@ -2009,7 +2013,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2027,7 +2031,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -2090,7 +2094,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2108,7 +2112,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -2165,7 +2169,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2183,7 +2187,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -2311,7 +2315,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -2329,7 +2333,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
       security:
@@ -6150,6 +6154,9 @@ paths:
           - monthlyTransactionVolume
           - averageTransactionValue
           - monthlyTransactions
+          - trusteeClass
+          - capitalContribution
+          - votingRights
           type: string
       - description: Unique client identifier generated and shared before API handshake.
         in: path
@@ -8539,31 +8546,31 @@ paths:
           description: OK
         '400':
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/WalletApiError'
           description: BadRequest
         '401':
           content:
-            application/json:
+            '*/*':
               schema:
                 type: string
           description: Unauthorized
         '403':
           content:
-            application/json:
+            '*/*':
               schema:
                 type: string
           description: Forbidden
         '404':
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/WalletApiError'
           description: Not Found
         '500':
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/WalletApiError'
           description: Internal Server Error
@@ -8571,7 +8578,7 @@ paths:
       - Customer Management
       deprecated: false
       description: This API allows you to download an account statement.
-      operationId: AccountStatement_1
+      operationId: WalletStatement
       summary: Account Statement for the Specified Wallet
       x-info:
         apiType: external
@@ -8882,6 +8889,179 @@ paths:
         on customer's consent.
       operationId: PaymentDetailsbySystemReferenceNumber
       summary: Payment Details by System Reference Number
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/applications:
+    post:
+      tags:
+      - Onboarding Forms - Corporate
+      summary: Create Application for Onboarding Form
+      description: This API will create the application resource and generate link
+        for the customer to the access onboarding form
+      operationId: onboardingFormLink
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake
+        required: true
+        schema:
+          type: string
+        example: 82546347-347d-4606-967c-b92e1ffdf5a5
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateLinkRequest'
+            example:
+              region: SG
+              corporate:
+                businessName: Nium India
+                businessRegistrationNumber: '123456789'
+                applicantEmail: applicant@abc.com
+                registeredCountry: SG
+              applicationType: corporate
+        required: true
+      responses:
+        '200':
+          description: Successfully retrieved link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateLinkResponse'
+              example:
+                applicationId: APP1713860447006QUG
+                url: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
+                expiry: '1713359070614'
+        '400':
+          description: 'The detailed error code associated with HTTP status 400.*
+            `invalid_request`: Input fields contain invalid data * `invalid_client_hash_id`:
+            Provided client hash id is invalid or doesn''t exist * `customer_already_exist`:
+            Customer already onboarded with the given businessName and businessRegistrationNumber
+            * `application_already_exists`: Application already exists with the given
+            businessName and businessRegistrationNumber'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+              example:
+              - code: invalid_request
+                description: businessName is mandatory
+              - code: invalid_client_hash_id
+                description: Invalid clientHashId
+              - code: customer_already_exist
+                description: customer already exists with the businessName Nium
+              - code: application_already_exists
+                description: application already exists with the businessName Nium
+                  and businessRegistrationNumber 1234
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '403':
+          description: Forbidden access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+      x-info:
+        apiType: external
+      security:
+      - default: []
+  /api/v1/client/{clientHashId}/applications/{applicationId}/regenerateURL:
+    get:
+      tags:
+      - Onboarding Forms - Corporate
+      summary: Regenerate Onboarding Form URL
+      description: This API will generate a link for the customer to the onboarding
+        form if the previous link expires.
+      operationId: regenerateURL
+      parameters:
+      - name: applicationId
+        in: path
+        description: Application Id returned in response while creating application
+          resource.
+        required: true
+        schema:
+          type: string
+        example: APP1709284786391276
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake
+        required: true
+        schema:
+          type: string
+        example: 82546347-347d-4606-967c-b92e1ffdf5a5
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: Successful regeneration of url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateLinkResponse'
+              example:
+                applicationId: APP1713860447006QUG
+                url: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
+                expiry: '1713359070614'
+        '400':
+          description: 'The detailed error code associated with HTTP status 400.                  *
+            `invalid_client_hash_id`: Provided client hash id is invalid or doesn''t
+            exist                  * `invalid_application_id`: Provided application
+            id is invalid or doesn''t exist'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+              example:
+              - code: invalid_client_hash_id
+                description: Invalid clientHashId
+              - code: invalid_application_id
+                description: Application Id not found
+        '401':
+          description: Bad request, invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard401Error'
+        '403':
+          description: Forbidden access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceStandard404Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -9550,109 +9730,18 @@ paths:
         apiType: external
       security:
       - default: []
-  /api/v1/client/{clientHashId}/applications:
-    post:
-      tags:
-      - Onboarding Forms - Corporate
-      summary: Create Application for Onboarding Form
-      description: This API will create the application resource and generate link
-        for the customer to the access onboarding form
-      operationId: onboardingFormLink
-      parameters:
-      - name: clientHashId
-        in: path
-        description: Unique client identifier generated and shared before API handshake
-        required: true
-        schema:
-          type: string
-        example: 82546347-347d-4606-967c-b92e1ffdf5a5
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          type: string
-          example: '{{$guid}}'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GenerateLinkRequest'
-            example:
-              region: SG
-              corporate:
-                businessName: Nium India
-                businessRegistrationNumber: '123456789'
-                applicantEmail: applicant@abc.com
-                registeredCountry: SG
-              applicationType: corporate
-        required: true
-      responses:
-        '200':
-          description: Successfully retrieved link
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenerateLinkResponse'
-              example:
-                applicationId: APP1713860447006QUG
-                url: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
-                expiry: '1713359070614'
-        '400':
-          description: 'The detailed error code associated with HTTP status 400.*
-            `invalid_request`: Input fields contain invalid data * `invalid_client_hash_id`:
-            Provided client hash id is invalid or doesn''t exist * `customer_already_exist`:
-            Customer already onboarded with the given businessName and businessRegistrationNumber
-            * `application_already_exists`: Application already exists with the given
-            businessName and businessRegistrationNumber'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-              example:
-              - code: invalid_request
-                description: businessName is mandatory
-              - code: invalid_client_hash_id
-                description: Invalid clientHashId
-              - code: customer_already_exist
-                description: customer already exists with the businessName Nium
-              - code: application_already_exists
-                description: application already exists with the businessName Nium
-                  and businessRegistrationNumber 1234
-        '401':
-          description: Unauthorised request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-        '403':
-          description: Forbidden access
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-      x-info:
-        apiType: external
-      security:
-      - default: []
-  /api/v1/client/{clientHashId}/applications/{applicationId}/regenerateURL:
+  /api/v1/client/{clientHashId}/application/{applicationId}:
     get:
       tags:
       - Onboarding Forms - Corporate
-      summary: Regenerate Onboarding Form URL
-      description: This API will generate a link for the customer to the onboarding
-        form if the previous link expires.
-      operationId: regenerateURL
+      summary: Get Application Details
+      description: This API will get the details of a given application onboarded
+        via onboarding form
+      operationId: getApplicationDetails
       parameters:
       - name: applicationId
         in: path
-        description: Application Id returned in response while creating application
-          resource.
+        description: Application Id generated for the customer
         required: true
         schema:
           type: string
@@ -9672,15 +9761,25 @@ paths:
           example: '{{$guid}}'
       responses:
         '200':
-          description: Successful regeneration of url
+          description: Application Progress fetched successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateLinkResponse'
+                $ref: '#/components/schemas/OnboardingApplicationProgressResponse'
               example:
-                applicationId: APP1713860447006QUG
-                url: http://nium.com/onboard/corporate/APP1713860447006QUG?linkId=7653cf6e-957a-4491-b41b-c44f7e96f414
-                expiry: '1713359070614'
+                applicationStatus: initiated
+                completedSections:
+                - business
+                - applicant
+                - stakeholder
+                - additionalDetails
+                submissionErrors:
+                - code: invalid_request
+                  description: Invalid Country
+                - code: invalid_request
+                  description: customer is already available with businessName 234
+                customerHashId: 733b974b-f9c4-4be8-8c01-b31b2a396da0
+                walletId: afdfd43f-78bd-4051-b1ed-0b2728cbf626
         '400':
           description: 'The detailed error code associated with HTTP status 400.                  *
             `invalid_client_hash_id`: Provided client hash id is invalid or doesn''t
@@ -9696,11 +9795,11 @@ paths:
               - code: invalid_application_id
                 description: Application Id not found
         '401':
-          description: Bad request, invalid input
+          description: Unauthorised request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard401Error'
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
         '403':
           description: Forbidden access
           content:
@@ -12003,10 +12102,15 @@ paths:
         required: false
         schema:
           type: string
-      - in: query
+      - description: The status of the funding instrument.
+        example: Active
+        in: query
         name: status
         required: false
         schema:
+          enum:
+          - Active
+          - Inactive
           type: string
       - in: query
         name: tagKey
@@ -12166,10 +12270,15 @@ paths:
           example: '2024-01-01'
         description: The beginning date to start fetching transaction details. The
           format for `startDate` is YYYY-MM-DD.
-      - in: query
+      - description: The status of the funding instrument.
+        example: Active
+        in: query
         name: status
         required: false
         schema:
+          enum:
+          - Active
+          - Inactive
           type: string
       - in: query
         name: tagKey
@@ -12456,8 +12565,10 @@ paths:
           - LOCAL
           - SWIFT
           - WALLET
+          - CASH
           - CARD
           - PROXY
+          - CHECK
           type: string
       - description: Enter a unique UUID value
         in: header
@@ -12860,6 +12971,14 @@ paths:
         name: payoutMethod
         required: false
         schema:
+          enum:
+          - LOCAL
+          - SWIFT
+          - WALLET
+          - CASH
+          - CARD
+          - PROXY
+          - CHECK
           type: string
       - description: Enter a unique UUID value
         in: header
@@ -14906,31 +15025,31 @@ paths:
           description: Returns a transaction receipt file TransactionReceipt_<systemReferenceNumber>.pdf
         '400':
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PayoutApiError2'
           description: Bad Request
         '401':
           content:
-            application/json:
+            '*/*':
               schema:
                 type: string
           description: Unauthorized
         '403':
           content:
-            application/json:
+            '*/*':
               schema:
                 type: string
           description: Forbidden
         '404':
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PayoutApiError2'
           description: Not Found
         '500':
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PayoutApiError2'
           description: Internal Server Error
@@ -15078,7 +15197,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CancelledRemittanceResponseDTO'
-          description: OK
+          description: Ok
         '400':
           content:
             application/json:
@@ -15192,6 +15311,7 @@ paths:
           - CASH
           - CARD
           - PROXY
+          - CHECK
           type: string
       - description: 'Breakdowns the supported payout methods into different categories
           including: <code>ach</code>, <code>cash</code>, <code>proxy_api</code>,
@@ -15216,6 +15336,7 @@ paths:
           - cash
           - unionPay
           - proxyUpi
+          - check
           type: string
       - description: Determines the routing code type for the currency.
         in: query
@@ -15297,6 +15418,95 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/simulations/transactions/{systemReferenceNumber}/transition:
+    post:
+      parameters:
+      - description: System Reference Number
+        in: path
+        name: systemReferenceNumber
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulateStatusResponseDTO'
+          description: OK
+        '400':
+          $ref: '#/components/responses/InvalidInput'
+        '401':
+          $ref: '#/components/responses/n1-simulationUnauthorized'
+        '403':
+          $ref: '#/components/responses/n1-simulationForbidden'
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulateUnprocessableEntityErrorDTO'
+              example:
+                errors:
+                - code: sim_invalid_system_reference_number
+                  description: System Reference Number is Invalid
+                - code: sim_invalid_next_status
+                  description: Next Status allowed from current ACTION_REQUIRED is
+                    RFI_REQUESTED
+          description: Unprocessable Entity
+        '500':
+          $ref: '#/components/responses/n1-simulationInternalError'
+      security:
+      - default: []
+      tags:
+      - Payouts
+      deprecated: false
+      description: This API transitions transaction status based on the nextStatus
+        supplied in the request
+      operationId: simulateTransactionStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateTransactionStatusRequestDTO'
+            examples:
+              EXPIRED:
+                summary: EXPIRED
+                description: Transition transaction status from SCHEDULED or AWAITING_FUNDS
+                  to EXPIRED
+                value:
+                  nextStatus: EXPIRED
+              RFI_REQUESTED:
+                summary: RFI_REQUESTED
+                description: Transition transaction status from ACTION_REQUIRED to
+                  RFI_REQUESTED
+                value:
+                  nextStatus: RFI_REQUESTED
+                  requestInfoFor: creditor_firstName
+              COMPLIANCE_COMPLETED:
+                summary: COMPLIANCE_COMPLETED
+                description: Transition transaction status from RFI_RESPONDED to COMPLIANCE_COMPLETED
+                value:
+                  nextStatus: COMPLIANCE_COMPLETED
+              REJECTED:
+                summary: REJECTED
+                description: Transition transaction status from RFI_RESPONDED to REJECTED
+                value:
+                  nextStatus: REJECTED
+              PAID:
+                summary: PAID
+                description: Transition transaction status from SENT_TO_BANK or ERROR
+                  or PAID to PAID, RETURN, ERROR
+                value:
+                  nextStatus: PAID
+      x-info:
+        apiType: external
   /api/v1/inward/payment/manual:
     post:
       parameters:
@@ -15520,6 +15730,85 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/simulations/onboard/{customerHashId}/transition:
+    post:
+      parameters:
+      - description: Customer Hash Id
+        in: path
+        name: customerHashId
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulateStatusResponseDTO'
+          description: OK
+        '400':
+          $ref: '#/components/responses/InvalidInput'
+        '401':
+          $ref: '#/components/responses/n1-simulationUnauthorized'
+        '403':
+          $ref: '#/components/responses/n1-simulationForbidden'
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulateUnprocessableEntityErrorDTO'
+              example:
+                errors:
+                - code: sim_invalid_customer_hashId
+                  description: Customer Hash Id is Invalid
+                - code: sim_invalid_next_status
+                  description: Next Status allowed from current status ACTION_REQUIRED
+                    is RFI_REQUESTED
+          description: Unprocessable Entity
+        '500':
+          $ref: '#/components/responses/n1-simulationInternalError'
+      security:
+      - default: []
+      tags:
+      - Customer
+      deprecated: false
+      description: This API transitions customer account's compliance status based
+        on the nextStatus supplied in the request
+      operationId: simulateAccountComplianceStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateAccountStatusRequestDTO'
+            examples:
+              RFI_REQUESTED:
+                summary: RFI_REQUESTED
+                description: Transition account compliance status from ACTION_REQUIRED
+                  to RFI_REQUESTED
+                value:
+                  nextStatus: RFI_REQUESTED
+                  requestInfoFor: firstName
+              COMPLETED:
+                summary: COMPLETED
+                description: Transition account compliance status from RFI_RESPONDED
+                  to COMPLETED
+                value:
+                  nextStatus: COMPLETED
+              REJECT:
+                summary: REJECT
+                description: Transition account compliance status from RFI_RESPONDED
+                  to REJECT
+                value:
+                  nextStatus: REJECT
+      x-info:
+        apiType: external
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}:
     get:
       parameters:
@@ -16894,64 +17183,6 @@ paths:
       - default: []
 components:
   schemas:
-    NewErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/TypedErrorErrorCodes'
-    TypedErrorErrorCodes:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - INVALID_CLIENT_HASH_ID
-          - INVALID_CUSTOMER_HASH_ID
-          - INVALID_WALLET_HASH_ID
-          - INVALID_CARD_HASH_ID
-          - CARD_IS_PERMANENTLY_BLOCKED
-          - CARD_EXPIRED
-          - VALIDATION_ERROR
-        description:
-          type: string
-        field:
-          type: string
-    Standard403Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - access_forbidden
-        description:
-          type: string
-          enum:
-          - Access to resource not allowed
-    Standard500Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-        description:
-          type: string
-          enum:
-          - An internal error occurred
-    Standard401Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - unauthorized
-        description:
-          type: string
-          enum:
-          - Access Denied
     ApiError:
       type: object
       properties:
@@ -17043,6 +17274,64 @@ components:
             description: List of errors occurred
             example: '["field1 is not valid","field2 is not valid"]'
       title: Api error
+    NewErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedErrorErrorCodes'
+    TypedErrorErrorCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INVALID_CLIENT_HASH_ID
+          - INVALID_CUSTOMER_HASH_ID
+          - INVALID_WALLET_HASH_ID
+          - INVALID_CARD_HASH_ID
+          - CARD_IS_PERMANENTLY_BLOCKED
+          - CARD_EXPIRED
+          - VALIDATION_ERROR
+        description:
+          type: string
+        field:
+          type: string
+    Standard403Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - access_forbidden
+        description:
+          type: string
+          enum:
+          - Access to resource not allowed
+    Standard500Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+        description:
+          type: string
+          enum:
+          - An internal error occurred
+    Standard401Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - unauthorized
+        description:
+          type: string
+          enum:
+          - Access Denied
     LockStatusUpdateRequestDTO:
       required:
       - action
@@ -17476,6 +17765,8 @@ components:
           description: This array contains the token details.
           items:
             $ref: '#/components/schemas/CardTokensDTO'
+        walletHashId:
+          type: string
       title: Card details
     CardInfo:
       type: object
@@ -19512,6 +19803,9 @@ components:
         accountNumber:
           type: string
           description: The bank account number.
+        bankAccountType:
+          description: Type of Bank account.
+          type: string
         bankName:
           type: string
           description: Name of the bank.
@@ -19521,9 +19815,15 @@ components:
         routingType:
           type: string
           description: The routing type of the bank account.
+        routingType2:
+          description: The routing type of the bank account.
+          type: string
         routingValue:
           type: string
           description: The routing value of the bank account.
+        routingValue2:
+          description: The routing value of the bank account.
+          type: string
       title: Bank account details
       type: object
     ClientCurrencyResponseDTO:
@@ -20600,6 +20900,7 @@ components:
           - Fee_Waiver
           - Client_Prefund
           - Client_Refund
+          - Client_Customer_Refund
           - Wallet_Refund
           - Wallet_Credit_Mode_Card
           - Wallet_Credit_Mode_Prefund
@@ -20617,6 +20918,7 @@ components:
           - Wallet_Unhold
           - Remittance_Debit
           - Remittance_Debit_External
+          - Remittance_Debit_Refunds
           - Remittance_Reversal
           - Remittance_Client_Auto_Sweep
           - Remittance_Client_Auto_Sweep_Reversal
@@ -21131,6 +21433,8 @@ components:
           type: array
         firstName:
           type: string
+        firstName_local:
+          type: string
         gender:
           type: string
         isPep:
@@ -21138,6 +21442,8 @@ components:
         isResident:
           type: string
         lastName:
+          type: string
+        lastName_local:
           type: string
         middleName:
           type: string
@@ -21401,6 +21707,11 @@ components:
           description: This field contains the business name of the entity.
           example: ABCD XYZ LTD
           type: string
+        businessName_local:
+          description: This field contains the business name of the entity in local
+            language.
+          example: ABCD XYZ LTD
+          type: string
         businessRegistrationNumber:
           description: This field contains the business registration number of the
             entity.
@@ -21514,6 +21825,9 @@ components:
           description: This field contains the business name of the entity.
           example: ABCD XYZ LTD
           type: string
+        businessName_local:
+          description: This field contains the name of a business in local language
+          type: string
         businessRegistrationNumber:
           description: This field contains the business registration number of the
             entity.
@@ -21534,6 +21848,12 @@ components:
         formerName:
           description: This field contains the former name.
           type: string
+        hasNominee:
+          description: This field contains if the entity has a nominee stakeholder
+          type: boolean
+        isCashIntensiveBusiness:
+          description: This field contains if the business is a cash intensive business
+          type: boolean
         legalDetails:
           $ref: '#/components/schemas/LegalDetailsV2'
         partnershipDetails:
@@ -23972,6 +24292,8 @@ components:
       type: object
     LegalDetailsV2:
       properties:
+        isRegistered:
+          type: boolean
         legislationName:
           type: string
         legislationType:
@@ -24076,9 +24398,15 @@ components:
       type: object
     ProfessionalDetails:
       properties:
+        capitalContribution:
+          type: string
         employmentIndustry:
           type: string
         employmentStatus:
+          type: string
+        hasDistributionRights:
+          type: boolean
+        interestPercentage:
           type: string
         position:
           type: string
@@ -24088,16 +24416,34 @@ components:
           type: string
         sharePercentage:
           type: string
+        trusteeClass:
+          type: string
+        votingRights:
+          items:
+            type: string
+          type: array
       title: ProfessionalDetails
       type: object
     ProfessionalDetailsResponseDTO:
       properties:
+        capitalContribution:
+          type: string
+        hasDistributionRight:
+          type: boolean
+        interestPercentage:
+          type: string
         position:
           type: string
         positionStartDate:
           type: string
         sharePercentage:
           type: string
+        trusteeClass:
+          type: string
+        votingRights:
+          items:
+            type: string
+          type: array
       title: Professional details response
       type: object
     RegulatoryDetails:
@@ -24427,15 +24773,21 @@ components:
           type: array
         firstName:
           type: string
+        firstName_local:
+          type: string
         gender:
           type: string
         isPep:
           type: boolean
         lastName:
           type: string
+        lastName_local:
+          type: string
         middleName:
           type: string
         nationality:
+          type: string
+        occupation:
           type: string
         professionalDetails:
           items:
@@ -25105,6 +25457,22 @@ components:
 
             SG: Optional'
           type: string
+        firstName_local:
+          description: 'This field accepts the first name of the applicant in local
+            language
+
+
+            Maximum character limit: 40
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Optional'
+          type: string
         gender:
           description: 'This field accepts the gender of the applicant. The acceptable
             values are:
@@ -25137,6 +25505,22 @@ components:
           type: string
         lastName:
           description: 'This field accepts the last name of the applicant.
+
+            Maximum character limit: 40
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Optional'
+          type: string
+        lastName_local:
+          description: 'This field accepts the last name of the applicant in local
+            language
+
 
             Maximum character limit: 40
 
@@ -25413,6 +25797,10 @@ components:
         firstName:
           description: This field accepts the first name of the applicant.
           type: string
+        firstName_local:
+          description: This field accepts the first name of the applicant in local
+            language.
+          type: string
         gender:
           description: This field accepts the gender of the applicant.
           type: string
@@ -25424,6 +25812,10 @@ components:
           type: string
         lastName:
           description: This field accepts the last name of the applicant.
+          type: string
+        lastName_local:
+          description: This field accepts the last name of the applicant in local
+            language.
           type: string
         middleName:
           description: This field accepts the middle name of the applicant.
@@ -25752,6 +26144,18 @@ components:
 
             SG: Required'
           type: string
+        businessName_local:
+          description: 'This field contains the name of a business in local language
+
+
+            AU: Required
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
         businessRegistrationNumber:
           description: 'This field accepts the business registration number of the
             new corporate entity to be onboarded.
@@ -25803,6 +26207,29 @@ components:
 
             SG: Optional'
           type: string
+        hasNominee:
+          description: 'This field accepts if the entity has a nominee stakeholder
+
+
+            AU: NA
+
+            EU: NA
+
+            UK: NA
+
+            SG: Optional'
+          type: boolean
+        isCashIntensiveBusiness:
+          description: 'This field accepts if the business is a cash intensive business
+
+            AU: NA
+
+            EU: NA
+
+            UK: NA
+
+            SG: Optional'
+          type: boolean
         legalDetails:
           $ref: '#/components/schemas/LegalDetails'
           description: 'This object accepts the legal details of the corporate entity
@@ -25982,6 +26409,11 @@ components:
             entity.
           example: updated business name
           type: string
+        businessName_local:
+          description: This field accepts the registered business name of the corporate
+            entity in local language.
+          example: updated business name
+          type: string
         businessRegistrationNumber:
           description: This field accepts the business registration number of the
             corporate entity.
@@ -25997,6 +26429,12 @@ components:
           description: 'This is an object which accepts the document details for KYB.
 
             This field is required only if the documents are being uploaded'
+        hasNominee:
+          description: This field accepts if the entity has a nominee stakeholder
+          type: boolean
+        isCashIntensiveBusiness:
+          description: This field accepts if the business is a cash intensive business
+          type: boolean
         legalDetails:
           $ref: '#/components/schemas/LegalDetails'
           description: This is an object which accepts the legal details of the corporate
@@ -27287,6 +27725,10 @@ components:
       type: object
     LegalDetails:
       properties:
+        isRegistered:
+          description: This field captured if an entity such as co-operative or trust
+            is registered or not.
+          type: boolean
         legislationName:
           description: The name under which the entity is formed.
           type: string
@@ -27398,6 +27840,18 @@ components:
       type: object
     ProductProfessionalDetails:
       properties:
+        capitalContribution:
+          description: This field accepts the capital Contribution of the Stakeholder.
+            Use the [Fetch Corporate Constants API](https://docs.nium.com/apis/reference/fetchcorporateconstantsusingget)
+            to get the list of valid enum values.
+          type: string
+        hasDistributionRight:
+          description: This field accepts if the stakeholder has distribution rights.
+          type: boolean
+        interestPercentage:
+          description: This field accepts the percentage of interest held by a trustee
+            or partner. Enter a number between 0 to 100.
+          type: string
         position:
           description: This field accepts the position. Use the [Fetch Corporate Constants
             API](ref:fetchcorporateconstantsusingget) to get the list of valid enum
@@ -27413,6 +27867,16 @@ components:
           description: This field accepts the percentage of shares held. Enter a number
             between 0 to 100.
           type: string
+        trusteeClass:
+          description: This field accepts the class of trustee.
+          type: string
+        votingRights:
+          description: This field accepts the voting rights. Use the [Fetch Corporate
+            Constants API](https://docs.nium.com/apis/reference/fetchcorporateconstantsusingget)
+            to get the list of valid enum values.
+          items:
+            type: string
+          type: array
       title: Professional details
       type: object
     PublicCorporateBusinessDetails:
@@ -27807,6 +28271,19 @@ components:
 
             SG: Required'
           type: string
+        firstName_local:
+          description: 'This field contains the first name of the stakeholder in local
+            language.
+
+
+            AU: Optional
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
         gender:
           description: 'This field accepts the gender of the stakeholder. The acceptable
             values are:
@@ -27849,6 +28326,19 @@ components:
 
             SG: Required'
           type: string
+        lastName_local:
+          description: 'This field contains the last name of the stakeholder in local
+            language.
+
+
+            AU: Optional
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
         middleName:
           description: 'This field contains the middle name of the stakeholder.
 
@@ -27864,6 +28354,20 @@ components:
         nationality:
           description: 'This field accepts the 2-letter [ISO Alpha-2 country code](https://nium-documents.s3-eu-west-1.amazonaws.com/spend-documents/Country+Code.pdf)
             for the nationality of the stakeholder.
+
+
+            AU: Optional
+
+            EU: Required
+
+            UK: Required
+
+            SG: Required'
+          type: string
+        occupation:
+          description: 'This field contains the occupation of the stakeholder.Use
+            the [Fetch Corporate Constants API](https://docs.nium.com/apis/reference/fetchcorporateconstantsusingget)
+            to get the list of valid values.
 
 
             AU: Optional
@@ -27932,6 +28436,10 @@ components:
         firstName:
           description: This field accepts the first name of the stakeholder.
           type: string
+        firstName_local:
+          description: This field accepts the first name of the stakeholder in local
+            language.
+          type: string
         gender:
           description: 'This field accepts the gender of the stakeholder. The acceptable
             values are:
@@ -27945,12 +28453,21 @@ components:
         lastName:
           description: This field accepts the last name of the stakeholder.
           type: string
+        lastName_local:
+          description: This field accepts the last name of the stakeholder in local
+            language.
+          type: string
         middleName:
           description: This field accepts the middle name of the stakeholder.
           type: string
         nationality:
           description: This field accepts the [2-letter ISO Alpha-2 country code](doc:currency-and-country-codes)
             for the nationality of the stakeholder.
+          type: string
+        occupation:
+          description: This field contains the occupation of the stakeholder.Use the
+            [Fetch Corporate Constants API](ref:fetchcorporateconstants) to get the
+            list of valid values.
           type: string
         professionalDetails:
           description: This array accepts the professional details of the stakeholder.
@@ -29108,6 +29625,91 @@ components:
           - resource_not_found
         description:
           type: string
+    ApiErrorDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          description: error code for the error received by the customer on the submit
+            of onboarding form application.
+          enum:
+          - invalid_request
+          - invalid_business_details
+        description:
+          type: string
+          description: error description for the error received by the customer on
+            the submit of onboarding form application.
+      example:
+        code: invalid_request
+        description: customer is already available with businessName 234
+    CompletedSections:
+      type: object
+      properties:
+        businessDetails:
+          type: string
+          enum:
+          - completed
+          - pending
+        applicant:
+          type: string
+          enum:
+          - completed
+          - pending
+        stakeholders:
+          type: string
+          enum:
+          - completed
+          - pending
+        additionalDetails:
+          type: string
+          enum:
+          - completed
+          - pending
+        review:
+          type: string
+          enum:
+          - completed
+          - pending
+      description: Indicates which sections are pending, completed by the customer
+    OnboardingApplicationProgressResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the application filled using Onboarding Forms
+          enum:
+          - initiated
+          - in_progress
+          - in_review
+          - approved
+          - rejected
+          - submission_errors
+        completedSections:
+          $ref: '#/components/schemas/CompletedSections'
+        redirectUrl:
+          type: string
+          description: Applicant KYC URL, if the applicant is required to complete
+            KYC in a third party vendor
+          example: https://integrationspreprod.partners.instarem.com/preprod/compliance/callback/load?referenceNumber=85e48412-ec51-4b66-9ea6-5f2bd047cb73&token=your_token_here
+        expiry:
+          type: string
+          description: expiry in epoch for the applicant KYC URL
+          example: '1713359070614'
+        submissionErrors:
+          type: array
+          example:
+            code: invalid_request
+            description: customer is already available with businessName 234
+          items:
+            $ref: '#/components/schemas/ApiErrorDTO'
+        customerHashId:
+          type: string
+          description: customerHashId generated when customer is created in Nium
+          example: 1d33c952-c857-47a1-8b4b-33d2054ece75
+        walletId:
+          type: string
+          description: walletHashId,  generated when customer is created in Nium
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
     AddCustomerChildMustHaveParentWithCorpBilling:
       allOf:
       - properties:
@@ -31676,29 +32278,12 @@ components:
           description: The routing code value 2. See [Examples of Routing Codes](/apis/docs/routing-codes#examples-of-routing-codes)
             for more details.
         status:
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - SUSPENDED
-          - UPLOADED
-          - APPROVED
-          - REJECTED
-          - FAILED
-          - SUCCESS
-          - FAILURE
-          - PARTIALLY SUCCESS
-          - SYNC
-          - NOT SYNC
-          - PENDING
-          - REQUIRES_ACTION
-          - CLEAR
-          - DECLINED
-          - ACCOUNT_BLOCKED
-          - AMOUNT_BLOCKED
-          type: string
-          example: Active
           description: The current status of the funding instrument.
+          enum:
+          - Active
+          - Inactive
+          example: Active
+          type: string
         uniquePayerId:
           type: string
           description: This field contains the unique payer ID.
@@ -31953,6 +32538,10 @@ components:
         beneficiaryName:
           description: This field accepts the name of the beneficiary.
           type: string
+        beneficiaryNameLocalLanguage:
+          description: This field accepts the business name of the entity in local
+            language.
+          type: string
         beneficiaryPostcode:
           description: "This field accepts the postal code of the beneficiary. \n\
             \ Note: For this conditional field, see the callout at the top of this\
@@ -31997,6 +32586,14 @@ components:
             CARD
 
             PROXY'
+          enum:
+          - LOCAL
+          - SWIFT
+          - WALLET
+          - CASH
+          - CARD
+          - PROXY
+          - CHECK
           type: string
         proxyType:
           description: "This field indicates the proxy type sent in the payment request.\n\
@@ -32305,6 +32902,10 @@ components:
           - LOCAL
           - SWIFT
           - WALLET
+          - CASH
+          - CARD
+          - PROXY
+          - CHECK
           type: string
         payoutUpdatedAt:
           type: string
@@ -32393,6 +32994,14 @@ components:
             PROXY
 
             '
+          enum:
+          - LOCAL
+          - SWIFT
+          - WALLET
+          - CASH
+          - CARD
+          - PROXY
+          - CHECK
           type: string
         proxyType:
           description: "This field indicates the proxy type sent in the payment request.\n\
@@ -33229,6 +33838,7 @@ components:
           - CASH
           - CARD
           - PROXY
+          - CHECK
           type: string
         proxyType:
           description: "This field indicates the proxy type sent in the payment request.\n\
@@ -33842,7 +34452,7 @@ components:
       type: object
     RemittanceEventsResponseDTO2:
       properties:
-        checkDTO:
+        check:
           $ref: '#/components/schemas/CheckDTO'
         errorCode:
           description: This field contains ISO error code.
@@ -33933,6 +34543,13 @@ components:
         beneficiary:
           description: This object will accept the beneficiary details.
           type: object
+        beneficiaryIntermediaryBankCode:
+          description: 'This field accepts a correspondent (intermediary) bank to
+            send out any payment. In the case client is unable to find a correspondent
+            bank they reject the payment and ask Nium to re-send it.
+
+            This has lead to multiple returns at our end.'
+          type: string
         customerComments:
           description: 'This field is used to add any customer comments.
 
@@ -33961,6 +34578,7 @@ components:
             and regulatory region is UK or EU.'
           enum:
           - '01'
+          - '02'
           - '03'
           - '04'
           example: 01 - Trusted Beneficiary
@@ -34462,6 +35080,102 @@ components:
           items:
             type: number
             format: float
+    SimulateStatusResponseDTO:
+      properties:
+        message:
+          description: This field will return a message if a request is successfully
+            executed
+          type: string
+      example:
+        message: Status has been updated to RFI_REQUESTED successfully
+    SimulateTransactionStatusRequestDTO:
+      type: object
+      required:
+      - nextStatus
+      properties:
+        nextStatus:
+          description: This field will accept next applicable status  for the transaction
+            as logically applicable as per Remittance Lifecyle
+          type: string
+          enum:
+          - EXPIRED
+          - RFI_REQUESTED
+          - COMPLIANCE_COMPLETED
+          - REJECTED
+          - PAID
+          - RETURN
+          - ERROR
+        requestInfoFor:
+          description: Will accept enum value based on which Request for information
+            will be raised. For example, supplying creditor_firstName would initiate
+            RFI request information on the beneficiary's first name
+          type: string
+          enum:
+          - creditor_salaryStatement
+          - creditor_driverLicence
+          - creditor_lastName
+          - debtor_address
+          - debtor_thirdPartyFunding
+          - debtor_bankName
+    SimulateAccountStatusRequestDTO:
+      type: object
+      required:
+      - nextStatus
+      properties:
+        nextStatus:
+          description: This field will accept next applicable compliance status for
+            the account as logically applicable as per Account Compliance Lifecyle
+          type: string
+          enum:
+          - RFI_REQUESTED
+          - COMPLETED
+          - REJECT
+        requestInfoFor:
+          description: Will accept enum value based on which Request for information
+            will be raised. For example, supplying firstName would initiate RFI request
+            information on the customer's first name
+          type: string
+          oneOf:
+          - $ref: '#/components/schemas/IndividualCustomerRequest'
+          - $ref: '#/components/schemas/CorporateCustomerRequest'
+    IndividualCustomerRequest:
+      type: object
+      description: Enum inputs supported for individual customer
+      properties:
+        requestInfoFor:
+          type: string
+          enum:
+          - passport
+          - bankStatement
+          - firstName
+          - lastName
+          - dateOfBirth
+          - driversLicence
+    CorporateCustomerRequest:
+      type: object
+      description: Enum inputs supported for corporate customer
+      properties:
+        requestInfoFor:
+          type: string
+          enum:
+          - applicant_Address
+          - applicant_Identity
+          - stakeholder_Address
+          - stakeholder_Identity
+          - businessRegistrationDocument
+          - corporateAddressProof
+    SimulateUnprocessableEntityErrorDTO:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     AddWalletRequestDTO:
       properties:
         tags:
@@ -34486,12 +35200,23 @@ components:
           type: array
         intendedUseOfAccount:
           description: The customer's intended use of the wallet.
+          enum:
+          - payroll
+          - operational_expenses
+          - budget_control
+          - segmentation_of_business_units
+          - receivable_management
+          - payable_management
+          - petty_cash_management
+          - custom_ledgering_and_reporting
           example: For Sales department
           type: string
         name:
           description: A description to identify the balance held in the wallet.
           example: Regional balance
           type: string
+      required:
+      - intendedUseOfAccount
       title: AddWalletRequestDTO
       type: object
     WalletWalletApiError:
@@ -34553,11 +35278,6 @@ components:
             not.
           example: true
           type: boolean
-        withHoldingBalance:
-          description: The amount withheld for debiting the wallet.
-          example: 10
-          format: double
-          type: number
       title: CurrencyDetail
       type: object
     WalletDeviceDetailsDTO:
@@ -35296,6 +36016,7 @@ components:
           - Fee_Waiver
           - Client_Prefund
           - Client_Refund
+          - Client_Customer_Refund
           - Wallet_Refund
           - Wallet_Credit_Mode_Card
           - Wallet_Credit_Mode_Prefund
@@ -35313,6 +36034,7 @@ components:
           - Wallet_Unhold
           - Remittance_Debit
           - Remittance_Debit_External
+          - Remittance_Debit_Refunds
           - Remittance_Reversal
           - Remittance_Client_Auto_Sweep
           - Remittance_Client_Auto_Sweep_Reversal
@@ -35639,6 +36361,79 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse500'
+    InvalidInput:
+      description: Error response when the provided request is invalid.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                    description:
+                      type: string
+                    field:
+                      type: string
+                  required:
+                  - code
+                  - description
+    n1-simulationUnauthorized:
+      description: Error response when the request is unauthorized.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                default: unauthorized
+                enum:
+                - unauthorized
+              description:
+                type: string
+                default: Access Denied
+                enum:
+                - Access Denied
+    n1-simulationForbidden:
+      description: Error response when the requested resource is forbidden.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                default: access_forbidden
+                enum:
+                - access_forbidden
+              description:
+                type: string
+                default: Access to resource not allowed
+                enum:
+                - Access to resource not allowed
+    n1-simulationInternalError:
+      description: Error response when an internal error occurs.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                default: internal_error
+                enum:
+                - internal_error
+                - external_dependent_system_failed
+              description:
+                type: string
+                default: An internal error occurred
+                enum:
+                - An internal error occurred
   parameters:
     Authorization:
       name: Authorization
