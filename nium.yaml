@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.10.29
+  version: 2024.11.8
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -9066,6 +9066,98 @@ paths:
         apiType: external
       security:
       - default: []
+  /api/v1/client/{clientHashId}/application/{applicationId}:
+    get:
+      tags:
+      - Onboarding Forms - Corporate
+      summary: Get Application Details
+      description: This API will get the details of a given application onboarded
+        via onboarding form
+      operationId: getApplicationDetails
+      parameters:
+      - name: applicationId
+        in: path
+        description: Application Id generated for the customer
+        required: true
+        schema:
+          type: string
+        example: APP1709284786391276
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake
+        required: true
+        schema:
+          type: string
+        example: 82546347-347d-4606-967c-b92e1ffdf5a5
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: Application Progress fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingApplicationProgressResponse'
+              example:
+                applicationStatus: initiated
+                completedSections:
+                - business
+                - applicant
+                - stakeholder
+                - additionalDetails
+                submissionErrors:
+                - code: invalid_request
+                  description: Invalid Country
+                - code: invalid_request
+                  description: customer is already available with businessName 234
+                customerHashId: 733b974b-f9c4-4be8-8c01-b31b2a396da0
+                walletId: afdfd43f-78bd-4051-b1ed-0b2728cbf626
+        '400':
+          description: 'The detailed error code associated with HTTP status 400.                  *
+            `invalid_client_hash_id`: Provided client hash id is invalid or doesn''t
+            exist                  * `invalid_application_id`: Provided application
+            id is invalid or doesn''t exist'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+              example:
+              - code: invalid_client_hash_id
+                description: Invalid clientHashId
+              - code: invalid_application_id
+                description: Application Id not found
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '403':
+          description: Forbidden access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onboardingFormServiceStandard404Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard500Error'
+      x-info:
+        apiType: external
+      security:
+      - default: []
   /api/v1/client/{clientHashId}/customer/{customerHashId}/bankAccounts:
     get:
       tags:
@@ -9726,98 +9818,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/externalAccountServiceStandard500Error'
       deprecated: false
-      x-info:
-        apiType: external
-      security:
-      - default: []
-  /api/v1/client/{clientHashId}/application/{applicationId}:
-    get:
-      tags:
-      - Onboarding Forms - Corporate
-      summary: Get Application Details
-      description: This API will get the details of a given application onboarded
-        via onboarding form
-      operationId: getApplicationDetails
-      parameters:
-      - name: applicationId
-        in: path
-        description: Application Id generated for the customer
-        required: true
-        schema:
-          type: string
-        example: APP1709284786391276
-      - name: clientHashId
-        in: path
-        description: Unique client identifier generated and shared before API handshake
-        required: true
-        schema:
-          type: string
-        example: 82546347-347d-4606-967c-b92e1ffdf5a5
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          type: string
-          example: '{{$guid}}'
-      responses:
-        '200':
-          description: Application Progress fetched successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingApplicationProgressResponse'
-              example:
-                applicationStatus: initiated
-                completedSections:
-                - business
-                - applicant
-                - stakeholder
-                - additionalDetails
-                submissionErrors:
-                - code: invalid_request
-                  description: Invalid Country
-                - code: invalid_request
-                  description: customer is already available with businessName 234
-                customerHashId: 733b974b-f9c4-4be8-8c01-b31b2a396da0
-                walletId: afdfd43f-78bd-4051-b1ed-0b2728cbf626
-        '400':
-          description: 'The detailed error code associated with HTTP status 400.                  *
-            `invalid_client_hash_id`: Provided client hash id is invalid or doesn''t
-            exist                  * `invalid_application_id`: Provided application
-            id is invalid or doesn''t exist'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-              example:
-              - code: invalid_client_hash_id
-                description: Invalid clientHashId
-              - code: invalid_application_id
-                description: Application Id not found
-        '401':
-          description: Unauthorised request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-        '403':
-          description: Forbidden access
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceApiErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/onboardingFormServiceStandard404Error'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -12055,6 +12055,8 @@ paths:
         required: false
         schema:
           type: string
+        description: This field accepts the [3-letter ISO-4217 currency code](doc:currency-and-country-codes)
+          for which routing code search is to be initiated.
       - description: Unique customer identifier generated and shared before API handshake.
         in: path
         name: customerHashId
@@ -12066,6 +12068,8 @@ paths:
         required: false
         schema:
           type: string
+        description: End date for fetching the transaction details in the **YYYY-MM-DD**
+          format.
       - example: DESC
         in: query
         name: order
@@ -12075,6 +12079,10 @@ paths:
           - DESC
           - ASC
           type: string
+        description: 'The sort order for the results. Acceptable values are ASC or
+          DESC.
+
+          The default order is DESC.'
       - example: 0
         in: query
         name: page
@@ -12082,6 +12090,10 @@ paths:
         schema:
           format: int32
           type: integer
+        description: 'In some cases, the response can return multiple pages of data.
+          Use this parameter to page through the returned results.
+
+          The default page is 0.'
       - example: createdAt
         in: query
         name: property
@@ -12090,6 +12102,8 @@ paths:
           enum:
           - createdAt
           type: string
+        description: Defines how the paginated data is returned in the response. The
+          default sorting order is 'createdAt'.
       - example: 20
         in: query
         name: size
@@ -12097,12 +12111,16 @@ paths:
         schema:
           format: int32
           type: integer
+        description: Define how many elements get returned per response page. Accepted
+          values can be 1-20.
       - in: query
         name: startDate
         required: false
         schema:
           type: string
-      - description: The status of the funding instrument.
+        description: The beginning date to start fetching transaction details in the
+          **YYYY-MM-DD** format.
+      - description: Filter transactions based on the status.
         example: Active
         in: query
         name: status
@@ -12117,11 +12135,17 @@ paths:
         required: false
         schema:
           type: string
+        description: Use this parameter to filter responses, based on the exact value
+          of `tagKey`. The `tagkey` can be used also be used as an independent search
+          parameter.
       - in: query
         name: tagValue
         required: false
         schema:
           type: string
+        description: Use this parameter to filter responses, based on the exact value
+          of `tagValue` (that may be mapped for a `tagKey` defined against transactions).
+          The `tagValue` can also be used as an independent search parameter.
       - description: Unique wallet identifier generated and shared before API handshake.
         in: path
         name: walletHashId
@@ -12217,8 +12241,8 @@ paths:
         schema:
           type: string
           example: '2024-12-31'
-        description: End date for fetching the transaction details. The format for
-          endDate is YYYY-MM-DD.
+        description: End date for fetching the transaction details in the **YYYY-MM-DD**
+          format.
       - example: DESC
         in: query
         name: order
@@ -12251,8 +12275,8 @@ paths:
           enum:
           - createdAt
           type: string
-        description: Define how to sort paginated data. The default sorting order
-          is 'createdAt'.
+        description: Defines how the paginated data is returned in the response. The
+          default sorting order is 'createdAt'.
       - example: 20
         in: query
         name: size
@@ -12260,7 +12284,7 @@ paths:
         schema:
           format: int32
           type: integer
-        description: Define how many elements get retunred per response page. Accepted
+        description: Define how many elements get returned per response page. Accepted
           values can be 1-20.
       - in: query
         name: startDate
@@ -12270,7 +12294,7 @@ paths:
           example: '2024-01-01'
         description: The beginning date to start fetching transaction details. The
           format for `startDate` is YYYY-MM-DD.
-      - description: The status of the funding instrument.
+      - description: Filter transactions based on the status.
         example: Active
         in: query
         name: status
@@ -12515,7 +12539,7 @@ paths:
               $ref: '#/components/schemas/AccountValidationRequestDTO'
         description: accountValidationRequestDTO
         required: true
-      summary: Account verification (Confirmation of Payee)
+      summary: Account verification
       x-info:
         apiType: external
       security:
@@ -15220,7 +15244,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard404Error'
+                $ref: '#/components/schemas/PayoutStandard404Error'
           description: Not Found
         '500':
           content:
@@ -15314,8 +15338,8 @@ paths:
           - CHECK
           type: string
       - description: 'Breakdowns the supported payout methods into different categories
-          including: <code>ach</code>, <code>cash</code>, <code>proxy_api</code>,
-          <code>wire_local</code> and others.
+          including: <code>ach</code>, <code>cash</code>, <code>proxyApi</code>, <code>wireLocal</code>
+          and others.
 
           '
         in: query
@@ -15507,6 +15531,7 @@ paths:
                   nextStatus: PAID
       x-info:
         apiType: external
+      summary: Simulate Transaction Status
   /api/v1/inward/payment/manual:
     post:
       parameters:
@@ -15809,6 +15834,7 @@ paths:
                   nextStatus: REJECT
       x-info:
         apiType: external
+      summary: Simulate Customer Compliance Status
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}:
     get:
       parameters:
@@ -15943,7 +15969,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard404Error'
+                $ref: '#/components/schemas/WalletStandard404Error'
           description: Not Found
         '500':
           content:
@@ -16043,7 +16069,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard404Error'
+                $ref: '#/components/schemas/WalletStandard404Error'
           description: Not Found
         '500':
           content:
@@ -16109,7 +16135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard404Error'
+                $ref: '#/components/schemas/WalletStandard404Error'
           description: Not Found
         '500':
           content:
@@ -16470,7 +16496,7 @@ paths:
         required: false
         schema:
           type: string
-      - description: Define how many elements get retunred per response page. Accepted
+      - description: Define how many elements get returned per response page. Accepted
           values can be 1-20.
         example: 20
         in: query
@@ -16568,8 +16594,8 @@ paths:
         required: false
         schema:
           type: string
-      - description: Filter transactions based the status. A detailed list of the
-          transactions types available can be found at [Transaction Types](https://docs.nium.com/apis/docs/transaction-types).
+      - description: Filter transactions based on the `transactiontype`. A detailed
+          list of the transactions types available can be found at [Transaction Types](https://docs.nium.com/apis/docs/transaction-types).
         in: query
         name: transactionType
         required: false
@@ -20236,6 +20262,7 @@ components:
           - HOLD_POOL
           - REMIT_POOL
           - NETWORK_POOL
+          - REFUND_POOL
           example: CLIENT_POOL
           type: string
         balance:
@@ -29683,7 +29710,7 @@ components:
           - in_review
           - approved
           - rejected
-          - submission_errors
+          - submission_error
         completedSections:
           $ref: '#/components/schemas/CompletedSections'
         redirectUrl:
@@ -31244,7 +31271,7 @@ components:
           items:
             $ref: '#/components/schemas/TypedErrorOfstring'
           type: array
-      title: AddFundingInstrumentV2ErrorResponse
+      title: Add Funding Instrument error responses
       type: object
     PayinPayinApiError:
       properties:
@@ -31333,7 +31360,7 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
           example: BAD_REQUEST
           type: string
-      title: ApiError
+      title: API error
       type: object
     ApiResponseOfstring:
       properties:
@@ -31428,7 +31455,7 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
           example: OK
           type: string
-      title: ApiResponseOfstring
+      title: API response
       type: object
     ConfirmFundingInstrumentRequestDTO:
       properties:
@@ -31437,7 +31464,7 @@ components:
             the Add Funding Instrument API. This is a required field for EU and UK
             direct deposits.
           type: string
-      title: ConfirmFundingInstrumentRequestDTO
+      title: Confirm Funding Instrument request
       type: object
     CustomerLinkAccountRequest:
       properties:
@@ -31478,7 +31505,7 @@ components:
         bankAccountId:
           format: uuid
           type: string
-      title: CustomerLinkAccountRequestV2
+      title: Customer link Account request V2
       type: object
     InvoiceDetails:
       properties:
@@ -31505,7 +31532,7 @@ components:
             your reference at a later time.
           example: 45667090
           type: string
-      title: InvoiceDetails
+      title: Invoice details
       type: object
     ItemDetails:
       properties:
@@ -31519,7 +31546,7 @@ components:
             and partial integers are not allowed. whole number
           example: 1
           type: string
-      title: ItemDetails
+      title: Item details
       type: object
     LinkAccountResponse:
       properties:
@@ -31555,7 +31582,7 @@ components:
           description: This field contains the status of the request. Available values
             include:<ul><li><strong>PENDING</strong></li><li><strong>FAILED</strong></li></ul>
           type: string
-      title: Link account response
+      title: Link Account response
       type: object
     LinkAccountResponseV2:
       properties:
@@ -31580,7 +31607,7 @@ components:
           type: array
         status:
           type: string
-      title: LinkAccountResponseV2
+      title: Link Account response V2
       type: object
     RoutingInfo:
       properties:
@@ -31599,7 +31626,7 @@ components:
           description: This field accepts the routing code value.
           example: 200000
           type: string
-      title: RoutingInfo
+      title: Routing info
       type: object
     PayinStandard401Error:
       properties:
@@ -31611,7 +31638,7 @@ components:
           enum:
           - Access Denied
           type: string
-      title: Standard401Error
+      title: Standard 401 error
       type: object
     PayinStandard403Error:
       properties:
@@ -31623,7 +31650,7 @@ components:
           enum:
           - Access to resource not allowed
           type: string
-      title: Standard403Error
+      title: Standard 403 error
       type: object
     Standard404Error:
       properties:
@@ -31633,7 +31660,7 @@ components:
           type: string
         description:
           type: string
-      title: Standard404Error
+      title: Standard 404 error
       type: object
     PayinStandard500Error:
       properties:
@@ -31646,7 +31673,7 @@ components:
           enum:
           - An internal error occurred
           type: string
-      title: Standard500Error
+      title: Standard 500 error
       type: object
     TypedErrorOfstring:
       properties:
@@ -31661,7 +31688,7 @@ components:
           type: string
         field:
           type: string
-      title: TypedErrorOfstring
+      title: Typo error
       type: object
     WalletFundDTO:
       properties:
@@ -31859,7 +31886,7 @@ components:
           type: string
         createdAt:
           description: A timestamp detailing when the funding instrument got added.
-            Retunred in a YYYY-MM-DD hh:mm:ss format.
+            returned in a YYYY-MM-DD hh:mm:ss format.
           example: '2021-01-13 11:13:53'
           format: date-time
           type: string
@@ -31937,7 +31964,7 @@ components:
           type: boolean
         updatedAt:
           description: A timestamp detailing when the funding instrument was last
-            updated. Retunred in a YYYY-MM-DD hh:mm:ss format.
+            updated. returned in a YYYY-MM-DD hh:mm:ss format.
           example: '2021-01-13 11:13:53'
           format: date-time
           type: string
@@ -31946,23 +31973,31 @@ components:
             generated and shared before API handshake.
           example: f898c437-21b6-4050-8457-c70cc035644c
           type: string
-      title: Wallet funding instruments response
+      title: Wallet Funding Instruments response
       type: object
     AddressDTO:
       properties:
         addressLine1:
           type: string
+          description: Captures the first line of the beneficiary's address, Typically
+            includes house number, street name, and any unit or apartment number.
         addressLine2:
           type: string
+          description: An optional field to add extra details about the address.
         city:
           type: string
+          description: The city or locality where the beneficiary resides.
         country:
           type: string
+          description: The two-letter [ISO Alpha-2 country code](doc:currency-and-country-codes)
+            representing the country where the beneficiary resides.
         postcode:
           type: string
+          description: The postal code or ZIP code of the beneficiary's address.
         state:
           type: string
-      title: AddressDTO
+          description: The state, province, or region where the beneficiary resides.
+      title: Address details
       type: object
     PayinWalletApiError:
       properties:
@@ -31990,7 +32025,7 @@ components:
           - 503 SERVICE_UNAVAILABLE
           example: BAD_REQUEST
           type: string
-      title: ApiError
+      title: API error
       type: object
     ApiError2:
       properties:
@@ -32006,7 +32041,7 @@ components:
           description: Provides more details about the returned error, if any.
           example: Error message descriptor.
           type: string
-      title: ApiError2
+      title: API error V2
       type: object
     BeneficialOwnerDetailsDTO:
       properties:
@@ -32014,36 +32049,57 @@ components:
           $ref: '#/components/schemas/AddressDTO'
         dateOfBirth:
           type: string
+          description: The date of birth of the beneficiary in `YYYY-MM-DD` format.
         firstName:
           type: string
+          description: The first name of the beneficiary.
         identificationNumber:
           type: string
+          description: The unique number from the customer's identification document,
+            such as a passport or national ID.
         lastName:
           type: string
-      title: BeneficialOwnerDetailsDTO
+          description: The last name or surname of the beneficiary.
+      title: Beneficiary details
       type: object
+      description: Detailed information about the beneficial owner of a corporate
+        entity. Beneficial owners are individuals who directly or indirectly own or
+        control a significant portion of a company's shares or voting rights.
     CorporateDTO:
       properties:
         beneficialOwnerDetails:
           $ref: '#/components/schemas/BeneficialOwnerDetailsDTO'
         businessAddress:
           $ref: '#/components/schemas/AddressDTO'
+          description: The business address for the corporate entity to be onboarded.
         businessName:
           type: string
+          description: the registered business name of the corporate entity.
         identificationDocIssuanceCountry:
           type: string
+          description: The [ISO Alpha-2 country code](doc:currency-and-country-codes)
+            where the identification document was issued.
         identificationNumber:
           type: string
+          description: The unique number from the corporate entity's identification
+            document, such as a employer identification number (EIN) or Tax ID.
         identificationType:
           enum:
           - BUSINESS_REGISTRATION_CERTIFICATE
           type: string
+          description: Specifies the type of identification document provided. For
+            corporate customers, use **BUSINESS_REGISTRATION_CERTIFICATE**.
         registeredAddress:
           $ref: '#/components/schemas/AddressDTO'
+          description: The address where the corporate entity is registered in their
+            country of operations.
         registrationDate:
           type: string
-      title: CorporateDTO
+          description: The official registration date of the corporate entity, provided
+            in the YYYY-MM-DD format.
+      title: Corporate customer
       type: object
+      description: Details related to the corporate customer.
     CustomerDetailDTO:
       properties:
         corporate:
@@ -32053,9 +32109,13 @@ components:
           - INDIVIDUAL
           - CORPORATE
           type: string
+          description: Specifies the type of entity the customer represents. Available
+            values include `INDIVIDUAL` for personal customers and `CORPORATE` for
+            business customers. This field is helps you determine the structure of
+            the customer's details.
         individual:
           $ref: '#/components/schemas/IndividualDTO'
-      title: CustomerDetailDTO
+      title: Customer details
       type: object
     IndividualDTO:
       properties:
@@ -32063,26 +32123,42 @@ components:
           $ref: '#/components/schemas/AddressDTO'
         dateOfBirth:
           type: string
+          description: The customer's date of birth, formatted as YYYY-MM-DD.
         email:
           type: string
+          description: The customer's email address used for communication and account
+            identification.
         firstName:
           type: string
+          description: The customer's first name.
         gender:
           type: string
+          description: The customer's gender. Often required for identification and
+            demographic purposes.
         identificationDocIssuanceCountry:
           type: string
+          description: The [ISO Alpha-2 country code](doc:currency-and-country-codes)
+            where the identification document was issued.
         identificationNumber:
           type: string
+          description: The unique number from the customer's identification document,
+            such as a passport or national ID.
         identificationType:
           enum:
           - PASSPORT_NO
           - NATIONAL_ID
           type: string
+          description: Specifies the type of identification document provided. Available
+            values include `PASSPORT_NO` for passports and `NATIONAL_ID` for national
+            identification cards.
         lastName:
           type: string
+          description: The customer's last name or surname.
         nationality:
           type: string
-      title: IndividualDTO
+          description: The [ISO Alpha-2 country code](doc:currency-and-country-codes)
+            representing the customer's nationality.
+      title: Individual customer
       type: object
     PaymentIdCientTagsResponseDTO:
       properties:
@@ -32090,15 +32166,23 @@ components:
           items:
             $ref: '#/components/schemas/PaymentIdClientTagResponseDTO'
           type: array
-      title: PaymentId cient tags response
+          description: Details the tags that were created during this request. These
+            tags are key-value pairs defined by the client for future reference.
+      title: Tags
       type: object
     PaymentIdClientTagResponseDTO:
       properties:
         key:
           type: string
+          description: 'Accepts the name of a tag.
+
+            The maximum character length for tag keys is 128 characters.'
         message:
           type: string
-      title: PaymentId client tag response
+          description: 'The custom value of the tag.
+
+            The maximum value length limit is 256 characters.'
+      title: Tags
       type: object
     PaymentIdRequestDTO2:
       properties:
@@ -32136,7 +32220,7 @@ components:
       required:
       - bankName
       - currencyCode
-      title: PaymentId request
+      title: Payment ID request
       type: object
     PaymentIdResponseDTO2:
       properties:
@@ -32158,8 +32242,12 @@ components:
           example: null
         uniquePaymentId:
           type: string
+          description: This field contains the virtual account number per currency
+            provided to customers for supported regions and configuration, for example,
+            IBAN in EU, virtual account number from Moonova in AU. If not supported,
+            this field returns null.
           example: '85175412368'
-      title: PaymentId response
+      title: Payment ID response
       type: object
     PaymentIdTagRequestDTO:
       properties:
@@ -32181,7 +32269,7 @@ components:
       - currencyCode
       - tags
       - uniquePaymentId
-      title: PaymentId tag request
+      title: Payment ID tag request
       type: object
     VirtualAccountResponseDTO:
       properties:
@@ -32192,12 +32280,12 @@ components:
         totalElements:
           format: int64
           type: integer
-          description: Details the total number of items retunred in the response.
+          description: Details the total number of items returned in the response.
         totalPages:
           format: int32
           type: integer
           description: Details the number of pages in the response body.
-      title: Virtual account response
+      title: Virtual Account response
       type: object
     WalletPaymentIdsResponseDTO:
       properties:
@@ -32205,8 +32293,8 @@ components:
           additionalProperties:
             type: string
           type: object
-          description: 'Use this field to create and include tags for your futre reference.
-            Accepts client defined key-value pairs.
+          description: 'The tags created for your reference, including the key-value
+            pairs defined.
 
             The maximum number of tags allowed is 15.'
         accountCategory:
@@ -32231,7 +32319,7 @@ components:
         bankName:
           type: string
           example: CFSB_USINTL
-          description: 'This field represents the bank name of the virtual account
+          description: 'The name of the bank associated with the virtual account.
             Available values include:
 
             * BOL_LT
@@ -32286,12 +32374,12 @@ components:
           type: string
         uniquePayerId:
           type: string
-          description: This field contains the unique payer ID.
+          description: The unique payer ID.
           example: '85986555375'
         uniquePaymentId:
           type: string
           description: The unique payment ID.
-      title: Wallet paymentIds response
+      title: Wallet details response
       type: object
     WalletPaymentIdsTagRequestDTO:
       properties:
@@ -32307,14 +32395,14 @@ components:
           type: string
       required:
       - key
-      title: Wallet paymentIds tag request
+      title: Wallet tag request
       type: object
     WalletPaymentIdsTagRequestDTO2:
       properties:
         action:
           description: 'Set the tag operation of your request. Available values include:
-            <ul> <li><strong>DELETE:</strong> When you want to remove tags.</li> <li><strong>MAINTAIN:</strong>
-            When you want to update, add, or change tags.</li> </ul>'
+            <ul> <li><strong>DELETE:</strong> To remove tags.</li> <li><strong>MAINTAIN:</strong>
+            To update, add, or change tags.</li> </ul>'
           enum:
           - MAINTAIN
           - DELETE
@@ -32334,7 +32422,7 @@ components:
       required:
       - action
       - key
-      title: Wallet paymentIds tag request
+      title: Wallet tag request
       type: object
     BankTransfer:
       description: A "bank transfer" refers to a method of electronic payment that
@@ -32353,9 +32441,8 @@ components:
           description: The name of the bank money is being transferred to.
           type: string
         iban:
-          description: The International Bank Account Number. Also called an IBAN,
-            is a combination of country code, check digits, bank code, sort code and
-            account number.
+          description: The International Bank Account Number (IBAN) is a combination
+            of country code, check digits, bank code, sort code and account number.
           type: string
         sortCode:
           description: UEN number associated with NIUM PayNow account.
@@ -32379,8 +32466,7 @@ components:
           description: The UEN number associated with NIUM's PayNow account.
           type: string
         type:
-          description: This field contains the type of payment method such as staticPayNow,
-            dynamicPayNow, or bankTransfer.
+          description: 'The type of payment method. Available values include: <ul><li>staticPayNow</li><li>dynamicPayNow</li><li>bankTransfer</li></ul>.'
           enum:
           - dynamicPayNow
           type: string
@@ -32390,16 +32476,17 @@ components:
       type: object
     StaticPayNow:
       description: The amount to be paid is fixed and cannot be changed once the payment
-        is initiated. StaticPayNow payments are most often used for one-time transactions,
+        is initiated. StaticPayNow payments are often used for one-time transactions,
         such as paying for a product or service.
       properties:
         qrCode:
           description: Returns the codec-base64 encoded QRCode image data. Once decoded,
-            a QRCode image becomes available. The QRCode image can be read by devices
-            such as smartphone or camera.
+            a QRCode image becomes available. The QRCode image can be read by smartphones
+            or a camera.
           type: string
         type:
-          description: Details the type of payment method used; in this case **staticPayNow**.
+          description: Details the type of payment method used; in this example **staticPayNow**
+            is being used.
           enum:
           - staticPayNow
           type: string
@@ -33892,6 +33979,16 @@ components:
       - payoutMethod
       title: Update beneficiary request
       type: object
+    PayoutStandard404Error:
+      properties:
+        code:
+          enum:
+          - resource_not_found
+          type: string
+        description:
+          type: string
+      title: Standard404Error
+      type: object
     AccountValidationRequestDTO:
       properties:
         accountNumber:
@@ -34436,6 +34533,14 @@ components:
           type: string
       title: Payout
       type: object
+    Preferences:
+      properties:
+        payoutRail:
+          items:
+            type: string
+          type: array
+      title: Preferences
+      type: object
     PurposeCodeResponseDTO:
       properties:
         description:
@@ -34544,11 +34649,8 @@ components:
           description: This object will accept the beneficiary details.
           type: object
         beneficiaryIntermediaryBankCode:
-          description: 'This field accepts a correspondent (intermediary) bank to
-            send out any payment. In the case client is unable to find a correspondent
-            bank they reject the payment and ask Nium to re-send it.
-
-            This has lead to multiple returns at our end.'
+          description: The bank code of the correspondent (also known as an intermediary);
+            used to send out payments.
           type: string
         customerComments:
           description: 'This field is used to add any customer comments.
@@ -34595,6 +34697,8 @@ components:
         payout:
           $ref: '#/components/schemas/Payout'
           description: This object accepts the payout details.
+        preferences:
+          $ref: '#/components/schemas/Preferences'
         purposeCode:
           description: "This field accepts the purpose code for the payment. Refer\
             \ to the [Glossary of Purpose Codes](doc:purpose-of-transfer-codes) to\
@@ -35176,6 +35280,16 @@ components:
                 type: string
               description:
                 type: string
+    WalletStandard404Error:
+      properties:
+        code:
+          enum:
+          - resource_not_found
+          type: string
+        description:
+          type: string
+      title: Standard404Error
+      type: object
     AddWalletRequestDTO:
       properties:
         tags:
