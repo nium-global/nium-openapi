@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.11.8
+  version: 2024.11.14
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -34533,14 +34533,6 @@ components:
           type: string
       title: Payout
       type: object
-    Preferences:
-      properties:
-        payoutRail:
-          items:
-            type: string
-          type: array
-      title: Preferences
-      type: object
     PurposeCodeResponseDTO:
       properties:
         description:
@@ -34697,8 +34689,6 @@ components:
         payout:
           $ref: '#/components/schemas/Payout'
           description: This object accepts the payout details.
-        preferences:
-          $ref: '#/components/schemas/Preferences'
         purposeCode:
           description: "This field accepts the purpose code for the payment. Refer\
             \ to the [Glossary of Purpose Codes](doc:purpose-of-transfer-codes) to\
