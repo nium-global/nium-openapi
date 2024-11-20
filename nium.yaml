@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.11.14
+  version: 2024.11.19
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -16408,6 +16408,13 @@ paths:
         required: false
         schema:
           type: string
+      - description: This parameter can filter the transactions, based on the External
+          Reference Number
+        in: query
+        name: externalId
+        required: false
+        schema:
+          type: string
       - description: Filter transactions based on the 4-digit Merchant Category Code
           used during the transaction.
         in: query
@@ -20644,6 +20651,9 @@ components:
             includes fees, markup, etc.
           format: double
           type: number
+        externalId:
+          description: This field contains External Reference Number.
+          type: string
         labels:
           additionalProperties:
             type: string
@@ -22270,6 +22280,8 @@ components:
           type: string
         expectedAccountUsage:
           $ref: '#/components/schemas/ExpectedAccountUsageDTO'
+        natureOfBusiness:
+          $ref: '#/components/schemas/NatureOfBusinessDTO'
         riskAssessmentInfo:
           $ref: '#/components/schemas/RiskAssessmentInfoV2'
       title: Corporate customer response
@@ -23959,6 +23971,8 @@ components:
           items:
             type: string
           type: array
+        intendedUsesDescription:
+          type: string
       title: ExpectedAccountUsageDTO
       type: object
     IdentificationDocumentDTO:
@@ -24339,6 +24353,16 @@ components:
       additionalProperties:
         type: string
       title: Map_string_string_
+      type: object
+    NatureOfBusinessDTO:
+      properties:
+        industryCodes:
+          items:
+            type: string
+          type: array
+        industryDescription:
+          type: string
+      title: NatureOfBusinessDTO
       type: object
     PaginatedCustomerDetailsResponseV2DTO:
       properties:
@@ -27121,6 +27145,10 @@ components:
         expectedAccountUsage:
           $ref: '#/components/schemas/ExpectedAccountUsage'
           description: Accepts details about how the account will be used by the customer.
+        natureOfBusiness:
+          $ref: '#/components/schemas/NatureOfBusiness'
+          description: Nature of Business of the corporate customer. Object required
+            in the EU region.
         productDetails:
           $ref: '#/components/schemas/ProductDetails'
           description: 'This object accepts the product details for onboarding the
@@ -27748,6 +27776,10 @@ components:
           items:
             type: string
           type: array
+        intendedUsesDescription:
+          description: This field accepts description of the purpose of account in
+            2-3 lines of text. Maximum 300 characters.
+          type: string
       title: ExpectedAccountUsage
       type: object
     LegalDetails:
@@ -27788,6 +27820,21 @@ components:
             SG: NA'
           type: string
       title: Legal details
+      type: object
+    NatureOfBusiness:
+      properties:
+        industryCodes:
+          description: List of industry sector codes relevant to the business of the
+            customer. Use [Fetch Corporate Constants API](ref:fetchcorporateconstants)
+            for valid values.
+          items:
+            type: string
+          type: array
+        industryDescription:
+          description: A 2-3 line summary explaining the nature and operations of
+            the business of the customer. Maximum 300 characters.
+          type: string
+      title: NatureOfBusiness
       type: object
     OnboardingDetails:
       properties:
@@ -28095,6 +28142,10 @@ components:
         expectedAccountUsage:
           $ref: '#/components/schemas/ExpectedAccountUsage'
           description: Accepts details about how the account will be used by the customer.
+        natureOfBusiness:
+          $ref: '#/components/schemas/NatureOfBusiness'
+          description: Nature of Business of the corporate customer. Object required
+            in the EU region.
         rfiTemplateId:
           description: This field accepts the RFI template ID as received in [Fetch
             Corporate Customer RFI Details](ref:fetchcorporatecustomerrfidetails)
@@ -28723,6 +28774,10 @@ components:
         expectedAccountUsage:
           $ref: '#/components/schemas/ExpectedAccountUsage'
           description: Accepts details about how the account will be used by the customer.
+        natureOfBusiness:
+          $ref: '#/components/schemas/NatureOfBusiness'
+          description: Nature of Business of the corporate customer. Object required
+            in the EU region.
         productDetails:
           $ref: '#/components/schemas/ProductDetails'
           description: 'This object accepts the product details for onboarding the
@@ -32625,9 +32680,8 @@ components:
         beneficiaryName:
           description: This field accepts the name of the beneficiary.
           type: string
-        beneficiaryNameLocalLanguage:
-          description: This field accepts the business name of the entity in local
-            language.
+        beneficiaryName_local:
+          description: This field accepts the name of beneficiary in local language
           type: string
         beneficiaryPostcode:
           description: "This field accepts the postal code of the beneficiary. \n\
@@ -32954,6 +33008,9 @@ components:
           type: string
         beneficiaryName:
           description: This field contains the name of the beneficiary.
+          type: string
+        beneficiaryName_local:
+          description: This field accepts the name of beneficiary in local language
           type: string
         beneficiaryPostcode:
           description: This field contains the postal code of the beneficiary.
@@ -33895,6 +33952,9 @@ components:
         beneficiaryName:
           description: This field accepts the name of the beneficiary.
           type: string
+        beneficiaryName_local:
+          description: This field accepts the name of beneficiary in local language
+          type: string
         beneficiaryPostcode:
           description: This field accepts the postal code of the beneficiary.
           type: string
@@ -34677,6 +34737,9 @@ components:
           - '04'
           example: 01 - Trusted Beneficiary
           type: string
+        externalId:
+          description: This field collect External Reference Number
+          type: string
         ownPayment:
           description: 'This field applies only to licensed financial institutions.
             Boolean value ''false'' indicates an on-behalf payout request or ''true''
@@ -35225,18 +35288,28 @@ components:
           - COMPLETED
           - REJECT
         requestInfoFor:
-          description: Will accept enum value based on which Request for information
-            will be raised. For example, supplying firstName would initiate RFI request
-            information on the customer's first name
-          type: string
+          description: Will accept object based on which Request for information will
+            be raised.
+          type: object
           oneOf:
           - $ref: '#/components/schemas/IndividualCustomerRequest'
           - $ref: '#/components/schemas/CorporateCustomerRequest'
+          discriminator:
+            propertyName: customerType
+            mapping:
+              individual: '#/components/schemas/IndividualCustomerRequest'
+              corporate: '#/components/schemas/CorporateCustomerRequest'
     IndividualCustomerRequest:
+      title: Individual customer
       type: object
-      description: Enum inputs supported for individual customer
+      description: Inputs supported for individual customer
+      required:
+      - customerType
+      - request
       properties:
-        requestInfoFor:
+        customerType:
+          type: string
+        request:
           type: string
           enum:
           - passport
@@ -35246,10 +35319,16 @@ components:
           - dateOfBirth
           - driversLicence
     CorporateCustomerRequest:
+      title: Corporate customer
       type: object
-      description: Enum inputs supported for corporate customer
+      description: Inputs supported for corporate customer
+      required:
+      - customerType
+      - request
       properties:
-        requestInfoFor:
+        customerType:
+          type: string
+        request:
           type: string
           enum:
           - applicant_Address
@@ -35845,6 +35924,9 @@ components:
             etc.
           format: double
           type: number
+        externalId:
+          description: This field contains External Reference Number.
+          type: string
         labels:
           additionalProperties:
             type: string
