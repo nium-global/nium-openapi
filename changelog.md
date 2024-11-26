@@ -1,3 +1,149 @@
+## November 26, 2024
+
+### Issuance and Cards
+
+#### New Features
+
+##### Multiple Wallets for Card Issuance Clients
+Multiple Wallets now supports card issuance, enabling users to issue cards from additional wallets. This helps manage funds across multiple wallets within card spend accounts, enabling flexible expense allocation and greater control over spending.
+
+**Card UI Updates:**
+
+- **Add Card UI:** Added a `walletHashId` dropdown to enable wallet selection during card setup for customer-level association.
+- **Card List UI:** `walletHashId` is now displayed, showing wallet associations for each card.
+- **Assign Physical Card UI:** Added `walletHashId` and `customerHashId` fields for assigning physical cards to specific wallets and customers.
+
+Multiple Wallets and Card Issuance is currently available in:
+
+- Australia
+- Canada
+- Hong Kong
+- Singapore
+- United Kingdom
+
+For more information on Multiple Wallets, see [Wallets - Overview](https://docs.nium.com/apis/docs/wallet-overview#multiple-wallets).
+
+If you’re interested in Multiple Wallets, please reach out to your Nium account manager or contact [Nium Support](mailto:support@nium.com).
+
+### Payouts and Payins
+
+#### New Features
+
+##### Payins Playbook
+We’ve launched an [online playbook](https://playbook.nium.com/payins) for pay-in network capabilities. Use it as a guide to receive money on the Nium network.
+
+For more information, see the [Payins User Guide](https://playbook.nium.com/payins/user-guide).
+
+#### Enhancements
+
+##### Nium Verify now available in the United States
+Nium Verify is now live in the United States! You can verify bank accounts in the U.S.
+
+For a full list of regions Nium Verify is available in, see [Nium Verify](https://docs.nium.com/apis/docs/account-verification).
+
+##### Paper check payouts now available in the United States
+We’ve enhanced our U.S. payout capabilities to support paper checks for beneficiaries.
+
+For more information, see [Paper Checks](https://docs.nium.com/apis/docs/paper-checks).
+
+## November 12, 2024
+
+### Core Platform
+
+#### New Features
+
+##### Test Nium with our new Simulation requests
+Nium has introduced enhanced Simulation APIs to help developers test various services and refine their integrations confidently. This suite allows you to simulate different scenarios across onboarding, payouts, and compliance transitions. By leveraging these simulations, clients can ensure their implementation meets real-world demands without impacting actual operations. Available tests include:
+
+- **Onboarding Simulations**: Test the compliance statuses for individual and corporate accounts, ensuring readiness before live operation.
+- **Payout Simulations**: Validate transaction flows, including error handling and response to different compliance requirements.
+- **Flexible Status Transitions**: Move transactions through various lifecycle statuses, such as `RFI_REQUESTED`, `PAID`, or `ERROR`, to verify end-to-end processes.
+
+For step-by-step guides and API details, see [Testing Nium](https://docs.nium.com/apis/docs/testing).
+
+##### Nium Verify
+Ensure accurate bank details and reduce payment failures with real-time account verification. For more information, see [Nium Verify](https://docs.nium.com/apis/docs/account-verification).
+
+#### Enhancements
+
+##### Multiple Wallets - Account Statement
+Clients can now generate account statements for a specific wallet using the [Fetch Wallet Statement](https://docs.nium.com/apis/reference/walletstatement) request. This change helps you better reconcile and manage the different wallets you create.
+
+For more information, see [Customer Account Statement](https://docs.nium.com/apis/docs/customer-account-statement).
+
+#### API Breaking Changes
+
+##### Biometric Authentication Requirement
+Nium will begin updating authentication requirements for online card transactions in line with the latest requirements from card issuers. These changes aim to enhance transaction security and improve the cardholder’s experience by implementing more robust authentication measures.
+
+By **April 1st, 2025**, all NIUM clients must enable biometric authentication for online transactions made on devices that support biometric verification (e.g., fingerprint or facial recognition). Clients will need to integrate with Nium’s Out-of-Band (OOB) authentication flow to support this functionality. For more information about implementing, see [OOB Authentication Flow](https://docs.nium.com/apis/docs/oob-authentication-flow).
+
+By integrating biometric authentication for online payments, Nium clients can provide their customers with a more convenient and secure method for verifying transactions. Biometric authentication helps increase the success rate of authentication while reducing fraud in high-risk scenarios.
+
+- Higher authentication success rates
+- Increased transaction approval rates
+- Reduced fraud on high-risk transactions
+- Improved security for step-up authentication when biometrics are used
+
+##### `complianceStatus` changes
+The [`complianceStatus`](https://docs.nium.com/apis/reference/transactions) returned in the API response will only return **RFI_REQUESTED** and **RFI_RESPONDED** beginning January 15th, 2025. For compliance purposes, the remaining values won’t be supported. If you have any questions, please contact your Nium account manager or Nium Support.
+
+### Payouts and Payins
+
+#### New Features
+
+##### New `beneficiaryIntermediaryBankCode` field
+We’ve added a new `beneficiaryIntermediaryBankCode` to the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) request to help capture the correspondent’s (also called the intermediary’s) bank code. This new field helps reduce transaction rejections where SWIFT payouts to specific corridors require additional information about the intermediary bank.
+
+## October 29, 2024
+
+### Core Platform
+
+#### New Features
+
+##### Test Nium with our new Simulation requests
+Nium has introduced enhanced Simulation APIs to help developers test various services and refine their integrations confidently. This suite allows you to simulate different scenarios across onboarding, payouts, and compliance transitions. By leveraging these simulations, clients can ensure their implementation meets real-world demands without impacting actual operations. Available tests include:
+
+- **Onboarding Simulations**: Test the compliance statuses for individual and corporate accounts, ensuring readiness before live operation.
+- **Payout Simulations**: Validate transaction flows, including error handling and response to different compliance requirements.
+- **Flexible Status Transitions**: Move transactions through various lifecycle statuses, such as `RFI_REQUESTED`, `PAID`, or `ERROR`, to verify end-to-end processes.
+
+For step-by-step guides and API details, see [Testing Nium](https://docs.nium.com/apis/docs/testing).
+
+##### Nium Verify
+Ensure accurate bank details and reduce payment failures with real-time account verification. For more information, see [Nium Verify](https://docs.nium.com/apis/docs/account-verification).
+
+#### Enhancements
+
+##### Multiple Wallets - Account Statement
+Clients can now generate account statements for a specific wallet using the [Fetch Wallet Statement](https://docs.nium.com/apis/reference/walletstatement) request. This change helps you better reconcile and manage the different wallets you create.
+
+For more information, see [Customer Account Statement](https://docs.nium.com/apis/docs/customer-account-statement).
+
+#### API Breaking Changes
+
+##### Biometric Authentication Requirement
+Nium will begin updating authentication requirements for online card transactions in line with the latest requirements from card issuers. These changes aim to enhance transaction security and improve the cardholder’s experience by implementing more robust authentication measures.
+
+By **April 1st, 2025**, all NIUM clients must enable biometric authentication for online transactions made on devices that support biometric verification (e.g., fingerprint or facial recognition). Clients will need to integrate with Nium’s Out-of-Band (OOB) authentication flow to support this functionality. For more information about implementing, see [OOB Authentication Flow](https://docs.nium.com/apis/docs/oob-authentication-flow).
+
+By integrating biometric authentication for online payments, Nium clients can provide their customers with a more convenient and secure method for verifying transactions. Biometric authentication helps increase the success rate of authentication while reducing fraud in high-risk scenarios.
+
+- Higher authentication success rates
+- Increased transaction approval rates
+- Reduced fraud on high-risk transactions
+- Improved security for step-up authentication when biometrics are used
+
+##### `complianceStatus` changes
+The [`complianceStatus`](https://docs.nium.com/apis/reference/transactions) returned in the API response will only return **RFI_REQUESTED** and **RFI_RESPONDED** beginning January 15th, 2025. For compliance purposes, the remaining values won’t be supported. If you have any questions, please contact your Nium account manager or Nium Support.
+
+### Payouts and Payins
+
+#### New Features
+
+##### New `beneficiaryIntermediaryBankCode` field
+We’ve added a new `beneficiaryIntermediaryBankCode` to the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) request to help capture the correspondent’s (also called the intermediary’s) bank code. This new field helps reduce transaction rejections where SWIFT payouts to specific corridors require additional information about the intermediary bank.
+
 ## October 15, 2024
 
 ### New Features
