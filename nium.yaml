@@ -8,7 +8,7 @@ info:
   license:
     name: Copyright (c) 2024 NIUM
   title: NIUM Platform
-  version: 2024.11.19
+  version: 2024.12.3
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -2013,7 +2013,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2031,7 +2031,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2094,7 +2094,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2112,7 +2112,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2169,7 +2169,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2187,7 +2187,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -2315,7 +2315,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -2333,7 +2333,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
       security:
@@ -6154,7 +6154,7 @@ paths:
           - monthlyTransactionVolume
           - averageTransactionValue
           - monthlyTransactions
-          - trusteeClass
+          - trustBeneficiaryClass
           - capitalContribution
           - votingRights
           type: string
@@ -12539,7 +12539,7 @@ paths:
               $ref: '#/components/schemas/AccountValidationRequestDTO'
         description: accountValidationRequestDTO
         required: true
-      summary: Account verification
+      summary: Account verification (Confirmation of Payee)
       x-info:
         apiType: external
       security:
@@ -15338,8 +15338,8 @@ paths:
           - CHECK
           type: string
       - description: 'Breakdowns the supported payout methods into different categories
-          including: <code>ach</code>, <code>cash</code>, <code>proxyApi</code>, <code>wireLocal</code>
-          and others.
+          including: <code>ach</code>, <code>cash</code>, <code>proxy_api</code>,
+          <code>wire_local</code> and others.
 
           '
         in: query
@@ -16408,8 +16408,7 @@ paths:
         required: false
         schema:
           type: string
-      - description: This parameter can filter the transactions, based on the External
-          Reference Number
+      - description: Filter transactions using your unique identifier.
         in: query
         name: externalId
         required: false
@@ -17216,6 +17215,64 @@ paths:
       - default: []
 components:
   schemas:
+    NewErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedErrorErrorCodes'
+    TypedErrorErrorCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INVALID_CLIENT_HASH_ID
+          - INVALID_CUSTOMER_HASH_ID
+          - INVALID_WALLET_HASH_ID
+          - INVALID_CARD_HASH_ID
+          - CARD_IS_PERMANENTLY_BLOCKED
+          - CARD_EXPIRED
+          - VALIDATION_ERROR
+        description:
+          type: string
+        field:
+          type: string
+    Standard403Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - access_forbidden
+        description:
+          type: string
+          enum:
+          - Access to resource not allowed
+    Standard500Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - internal_error
+          - external_dependent_system_failed
+        description:
+          type: string
+          enum:
+          - An internal error occurred
+    Standard401Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - unauthorized
+        description:
+          type: string
+          enum:
+          - Access Denied
     ApiError:
       type: object
       properties:
@@ -17307,64 +17364,6 @@ components:
             description: List of errors occurred
             example: '["field1 is not valid","field2 is not valid"]'
       title: Api error
-    NewErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/TypedErrorErrorCodes'
-    TypedErrorErrorCodes:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - INVALID_CLIENT_HASH_ID
-          - INVALID_CUSTOMER_HASH_ID
-          - INVALID_WALLET_HASH_ID
-          - INVALID_CARD_HASH_ID
-          - CARD_IS_PERMANENTLY_BLOCKED
-          - CARD_EXPIRED
-          - VALIDATION_ERROR
-        description:
-          type: string
-        field:
-          type: string
-    Standard403Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - access_forbidden
-        description:
-          type: string
-          enum:
-          - Access to resource not allowed
-    Standard500Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-        description:
-          type: string
-          enum:
-          - An internal error occurred
-    Standard401Error:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - unauthorized
-        description:
-          type: string
-          enum:
-          - Access Denied
     LockStatusUpdateRequestDTO:
       required:
       - action
@@ -20652,7 +20651,7 @@ components:
           format: double
           type: number
         externalId:
-          description: This field contains External Reference Number.
+          description: Include your own unique identifier to track requests or transactions.
           type: string
         labels:
           additionalProperties:
@@ -20980,6 +20979,7 @@ components:
           - Direct_Debit_Payout
           - Direct_Debit_Payout_Reversal
           - Invoicing_Debit
+          - Overdraft
           - NA
           type: string
         updatedAt:
@@ -21971,6 +21971,11 @@ components:
         businessType:
           description: This field contains the legal entity type of the business.
           type: string
+        capitalContribution:
+          description: This field contains the capital contribution of the stakeholder.
+            Use the [Fetch Corporate Constants API](ref:fetchcorporateconstants) to
+            get the list of valid enum values.
+          type: string
         city:
           description: This field contains the city name of the registered address.
           type: string
@@ -22021,6 +22026,8 @@ components:
         businessType:
           type: string
           description: This field contains the legal entity type of the business.
+        capitalContribution:
+          type: string
         legalDetails:
           $ref: '#/components/schemas/BusinessPartnerLegalDetails'
         registeredAddress:
@@ -24467,7 +24474,7 @@ components:
           type: string
         sharePercentage:
           type: string
-        trusteeClass:
+        trustBeneficiaryClass:
           type: string
         votingRights:
           items:
@@ -24489,7 +24496,7 @@ components:
           type: string
         sharePercentage:
           type: string
-        trusteeClass:
+        trustBeneficiaryClass:
           type: string
         votingRights:
           items:
@@ -26643,6 +26650,11 @@ components:
 
             SG: Optional'
           type: string
+        capitalContribution:
+          description: This field accepts the capital contribution of the stakeholder.
+            Use the [Fetch Corporate Constants API](ref:fetchcorporateconstants) to
+            get the list of valid enum values.
+          type: string
         description:
           type: string
         legalDetails:
@@ -26698,6 +26710,11 @@ components:
         businessType:
           type: string
           description: This field contains the legal entity type of the business.
+        capitalContribution:
+          description: This field accepts the capital contribution of the stakeholder.
+            Use the [Fetch Corporate Constants API](ref:fetchcorporateconstants) to
+            get the list of valid enum values.
+          type: string
         description:
           type: string
         documentDetails:
@@ -27941,7 +27958,7 @@ components:
           description: This field accepts the percentage of shares held. Enter a number
             between 0 to 100.
           type: string
-        trusteeClass:
+        trustBeneficiaryClass:
           description: This field accepts the class of trustee.
           type: string
         votingRights:
@@ -29788,7 +29805,7 @@ components:
           type: string
           description: customerHashId generated when customer is created in Nium
           example: 1d33c952-c857-47a1-8b4b-33d2054ece75
-        walletId:
+        walletHashId:
           type: string
           description: walletHashId,  generated when customer is created in Nium
           example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -34247,7 +34264,16 @@ components:
           - invalid_input
           - resource_not_found
           - invalid_date_range
+          - customer_exists_with_external_id
           - payout_cancellation_failed
+          - wallet_creation_failed
+          - invalid_customer_age
+          - unique_reference_id_duplicated
+          - client_customer_not_found
+          - client_customer_compliance_not_completed
+          - invalid_customer_creation_combination
+          - invalid_input_provided
+          - customer_exists
           type: string
         description:
           type: string
@@ -34701,8 +34727,11 @@ components:
           description: This object will accept the beneficiary details.
           type: object
         beneficiaryIntermediaryBankCode:
-          description: The bank code of the correspondent (also known as an intermediary);
-            used to send out payments.
+          description: 'This field accepts a correspondent (intermediary) bank to
+            send out any payment. In the case client is unable to find a correspondent
+            bank they reject the payment and ask Nium to re-send it.
+
+            This has lead to multiple returns at our end.'
           type: string
         customerComments:
           description: 'This field is used to add any customer comments.
@@ -34738,7 +34767,7 @@ components:
           example: 01 - Trusted Beneficiary
           type: string
         externalId:
-          description: This field collect External Reference Number
+          description: Include your own unique identifier to track requests or transactions.
           type: string
         ownPayment:
           description: 'This field applies only to licensed financial institutions.
@@ -35925,7 +35954,7 @@ components:
           format: double
           type: number
         externalId:
-          description: This field contains External Reference Number.
+          description: Include your own unique identifier to track requests or transactions.
           type: string
         labels:
           additionalProperties:
@@ -36245,6 +36274,7 @@ components:
           - Direct_Debit_Payout
           - Direct_Debit_Payout_Reversal
           - Invoicing_Debit
+          - Overdraft
           - NA
           type: string
         updatedAt:
