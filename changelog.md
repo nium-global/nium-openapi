@@ -1,3 +1,54 @@
+## December 10, 2024
+
+### Core Platform
+
+#### New Features
+
+##### Nium Portal In-line Payouts
+
+In-line Payouts enables any user to create payouts directly in Nium Portal—no coding or integrations needed. Select a beneficiary, set payout details, and you're done! For more information, see [Payouts](https://docs.nium.com/apis/docs/batch-payouts).
+
+#### API Breaking Changes
+
+##### Transactions `complianceStatus` Changes
+
+The `complianceStatus` returned in the [Transactions](https://docs.nium.com/apis/reference/transactions) API response will only return **RFI_REQUESTED** and **RFI_RESPONDED** beginning January 15th, 2025. For compliance purposes, the remaining values won’t be supported. If you have any questions, please contact your Nium account manager or [Nium Support](mailto:support@nium.com).
+
+---
+
+### Issuance and Cards
+
+There are no updates for this time period.
+
+---
+
+### Payouts and Payins
+
+#### Enhancements
+
+##### Nium Verify now available in India and the European Union
+
+Nium Verify is live in the European Union and India! You can now verify corporate bank accounts in Belgium, France, Italy, Netherlands, and Poland and retrieve the account holder name. For a consolidated list of all Nium Verify’s coverage, see [Nium Verify](https://docs.nium.com/apis/docs/account-verification).
+
+##### New `externalID` Field
+
+We have introduced a new field, **externalID**, in the Transfer Money request to allow customers to include their custom reference ID for transactions. This enhancement simplifies reconciliation for clients.
+
+- The **externalID** field is a string that accepts user-defined reference numbers.
+- It supports idempotency by rejecting transactions with duplicate reference numbers, thereby preventing duplicates.
+- Customers can filter transactions using **externalID** via the Transactions API and Fetch Remittance Lifecycle API.
+- Additionally, this field is included in all payout webhooks to facilitate seamless reconciliation.
+
+For more info, see [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) in our API Reference.
+
+#### API Breaking Changes
+
+##### Fetch Supported Corridor V2 Deprecation
+
+The [Fetch Supported Corridor V2](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv2) request will be deprecated and unavailable as of **April 1, 2025**. We’ve launched an updated version, [Fetch Supported Corridors V3](https://docs.nium.com/apis/reference/fetchsupportedcorridorsv3), which offers enhanced details on supported remittance corridors.
+
+Please integrate with Fetch Supported Corridor V3 by **April 1, 2025** to avoid any disruptions. For more information, contact your Nium account manager or [reach out to Nium Support](mailto:support@nium.com).
+
 ## November 26, 2024
 
 ### Issuance and Cards
