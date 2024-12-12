@@ -16,12 +16,6 @@ The `complianceStatus` returned in the [Transactions](https://docs.nium.com/apis
 
 ---
 
-### Issuance and Cards
-
-There are no updates for this time period.
-
----
-
 ### Payouts and Payins
 
 #### Enhancements
