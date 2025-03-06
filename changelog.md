@@ -1,3 +1,93 @@
+## March 4, 2025
+
+### Core Platform
+
+#### Enhancements
+
+##### Updates to Virtual Account Assignment
+Virtual accounts can now only be assigned when a customer’s compliance `status` is **CLEAR**. If the status is **PENDING**, the request will return an error.
+
+This change helps ensure virtual accounts are only assigned to valid customers. For more information, see [Virtual Account Number](https://docs.nium.com/apis/docs/virtual-account-number).
+
+Use the [Assign Payment ID](https://docs.nium.com/apis/reference/assignpaymentid) request to assign virtual accounts. This change ensures virtual accounts are only assigned to eligible customers.
+
+---
+
+## February 18, 2025
+
+### Core Platform
+
+#### Enhancements
+
+##### Wallet-to-Wallet Transfers Now Support External ID
+You can now include a `senderExternalId` in wallet-to-wallet transfer requests. Additionally, you can fetch wallet-to-wallet transfers using the `externalId` assigned when creating the customer.
+
+This enhancement simplifies transaction tracking and reconciliation. For more information, see [Wallet to Wallet Transfer](https://docs.nium.com/apis/reference/wallet-to-wallet-transfers).
+
+### Payouts and Payins
+
+#### New Features
+
+##### Fetch Transaction Lifecycles with External ID
+You can now fetch the lifecycle of a transaction and status changes it goes through using the `externalID` from our [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) request. This change helps make transaction tracking and reconciliation even simpler.
+
+- **Search using your External IDs**: Retrieve the lifecycle of a transaction using `externalID` as a parameter.
+- **Easier Reconciliation**: Track transactions using your own reference IDs.
+- **No Breaking Changes**: You can still fetch the lifecycle of transactions using the `systemReferenceNumber`.
+
+For more information, see [Transaction Lifecycle](https://docs.nium.com/apis/reference/transactionlifecycle).
+
+---
+
+## February 4, 2025
+
+### Core Platform
+
+#### Deprecation Notices
+
+##### P2P Transfer Between Wallets Webhook Deprecation
+The [P2P Transfer Between Wallets](https://docs.nium.com/apis/reference/p2p-transfer-between-wallets) webhook event will be deprecated in March 2025.
+
+- This event was sent for `transfers` that have **Customer_Wallet_Credit_Fund_Transfer** as the `transactionType`.
+- The [Fund Transfer Between Wallets](https://docs.nium.com/apis/reference/fund-transfer-between-wallets) event will be sent instead for `transfers` that have `Customer_Wallet_Credit_Fund_Transfer` as the `transactionType`.
+
+### Issuance and Cards
+
+#### Enhancements
+
+##### New `childCustomerHashId` Field in Assign Card Request
+The [Assign Card](https://docs.nium.com/apis/reference/assigncard) request now includes a `childCustomerHashId` field. This change helps you keep track of customers under a corporate client account and their activity for accurate record-keeping and oversight.
+
+### Payouts and Payins
+
+#### New Features
+
+##### Send Payments and Add Beneficiaries in One Step
+We’ve made it easier to send payments through Nium! Previously, creating a beneficiary using our [Beneficiary endpoint](https://docs.nium.com/apis/reference/beneficiary) was required before initiating a `transfer`. With this latest change, you now have the flexibility to send payments without pre-creating a `beneficiary`.
+
+Specifically, customers can now send payments using the Transfer Money request by either:
+
+- Including **beneficiary details** directly within the request, along with the account details.
+- Including a `beneficiaryId` (similar to today’s behavior).
+
+This update simplifies payment processing and offers greater flexibility. See the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) guide. Start creating beneficiaries and payments today for a smoother payout experience! 🚀
+
+#### Enhancements
+
+##### Faster Transaction Processing with Document Upload
+We’ve enhanced our [Upload Transaction Receipt](https://docs.nium.com/apis/reference/uploadtransactionreceipt) request to streamline payment processing and minimize delays caused by RFIs.
+
+Customers can now upload supporting documentation linked to a payment, allowing us to process transactions faster. Specifically, after using the [Transfer Money](https://docs.nium.com/apis/reference/transfermoney) request to initiate a transaction, retrieve the system reference number from the response.
+
+Then use the [Upload Transaction Receipt](https://docs.nium.com/apis/reference/uploadtransactionreceipt) request to upload documentation; include the system reference number as the `transactionId` in the path parameter.
+
+For more information, see the following requests:
+
+- [Transfer Money](https://docs.nium.com/apis/reference/transfermoney)
+- [Upload Transaction Receipt](https://docs.nium.com/apis/reference/uploadtransactionreceipt)
+
+---
+
 ## December 10, 2024
 
 ### Core Platform
