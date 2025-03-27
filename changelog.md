@@ -1,3 +1,41 @@
+## March 18, 2025
+
+### Core Platform
+
+#### Enhancements
+
+#### New `rfiHashId` for Easier RFI Tracking
+
+A new parameter, `rfiHashId`, is now available in the following requests:
+
+- [Fetch Corporate Customer RFI Details​](/api#tag/customer-account---corporate/GET/api/v1/client/{clientHashId}/corporate/rfi)
+- [Respond to RFI for Corporate Customer](/api#tag/customer-account---corporate/POST/api/v1/client/{clientHashId}/corporate/rfi)
+
+You can now store and use an `rfiHashId` to uniquely identify and respond to Requests for Information (RFIs), helping ensure accurate tracking and preventing mix-ups.
+
+While `templateId` remains available, we strongly recommend migrating to `rfiHashId` for improved accuracy and future compatibility.
+
+For more details, see [Requests for Information (RFIs)](/docs/rfi-process-for-corporate-customers). If you have any questions, please contact your Nium account manager or [Nium Support](mailto:support@nium.com).
+
+### Payouts and Payins
+
+### New Features
+
+#### Nium Playbook Changelog
+
+We’ve launched a changelog for the **Nium Playbook**, making it easier to track updates to our transaction capabilities all in one place.
+
+Explore the changelog and stay up to date: [Nium Playbook](https://playbook.nium.com/)
+
+#### Failure Codes Guide
+
+We’ve published a new [Failure Codes](https://docs.nium.com/docs/failure-codes) guide outlining why transactions may fail and the standardized ISO codes that are returned. These codes help you by providing a:
+
+- **Simplified integration**: Standardized failure codes reduce the need to interpret multiple financial messages.
+- **Faster resolution**: Recommended actions are provided for each failure, helping you quickly identify and resolve issues.
+
+---
+
 ## March 4, 2025
 
 ### Core Platform
