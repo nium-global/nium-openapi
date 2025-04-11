@@ -46,3 +46,44 @@ components:
       type: string
       description: Nium One's reference number.
       example: RT0123456789
+    SourceCurrency:
+      type: string
+      description: This field contains the 3-letter [ISO-4217 authorization currency code](https://www.iso.org/iso-4217-currency-codes.html).
+      example: SGD
+    DestinationCurrency:
+      type: string
+      description: This field contains the 3-letter [ISO-4217 transaction currency code](https://www.iso.org/iso-4217-currency-codes.html).
+      example: SGD
+    PayoutMethod:
+      type: string
+      description: Transaction payout method
+      example: LOCAL
+      enum:
+        - LOCAL
+        - SWIFT
+        - WALLET
+        - CASH
+        - CARD
+        - PROXY
+        - CHECK
+    SwiftType:
+      type: string
+      description: Transaction swift type.
+      example: OUR
+      enum:
+        - OUR
+        - BEN
+        - SHA
+    SourceAmount:
+      type: number
+      format: double
+      description: Transaction authorization amount.
+      example: 1000
+    SourceCountry:
+      description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
+      type: string
+      example: US
+    DestinationCountry:
+      description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
+      type: string
+      example: SG
