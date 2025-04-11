@@ -75,8 +75,7 @@ components:
         - BEN
         - SHA
     SourceAmount:
-      type: number
-      format: double
+      type: string
       description: Transaction authorization amount.
       example: 1000
     SourceCountry:
