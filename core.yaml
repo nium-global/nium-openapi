@@ -42,22 +42,19 @@ components:
       format: UUID
       description: Unique end-to-end transaction reference number.
       example: abc1234-5d6e-0a8b-c8d7-3a7706a0c312
-    SystemReferenceNumber:
+    systemReferenceNumber:
       type: string
       description: Nium One's reference number.
       example: RT0123456789
-    SourceCurrency:
-      name: sourceCurrency
+    sourceCurrency:
       type: string
       description: This field contains the 3-letter [ISO-4217 authorization currency code](https://www.iso.org/iso-4217-currency-codes.html).
       example: SGD
-    DestinationCurrency:
-      name: destinationCurrency
+    destinationCurrency:
       type: string
       description: This field contains the 3-letter [ISO-4217 transaction currency code](https://www.iso.org/iso-4217-currency-codes.html).
       example: SGD
-    PayoutMethod:
-      name: payoutMethod
+    payoutMethod:
       type: string
       description: Transaction payout method
       example: LOCAL
@@ -69,8 +66,7 @@ components:
         - CARD
         - PROXY
         - CHECK
-    SwiftType:
-      name: swiftType
+    swiftType:
       type: string
       description: Transaction swift type.
       example: OUR
@@ -78,18 +74,15 @@ components:
         - OUR
         - BEN
         - SHA
-    SourceAmount:
-      name: sourceAmount
+    sourceAmount:
       type: string
       description: Transaction authorization amount.
       example: 1000
-    SourceCountry:
-      name: sourceCountry
-      description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
+    sourceCountry:
       type: string
+      description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
       example: US
-    DestinationCountry:
-      name: destinationCountry
-      description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
+    destinationCountry:
       type: string
+      description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
       example: SG
