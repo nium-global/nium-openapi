@@ -1,3 +1,98 @@
+## April 29, 2025
+
+### Payouts and Payins
+
+##### Local Funding Now Available in Brazilian Real
+
+You can now fund in **Brazilian Real (BRL)** locally through Nium using Brazil’s most widely used payment systems: **PIX** (Instant Payment Platform) and **TED** (Electronic Funds Transfer).
+
+This update helps clients with a presence in Brazil move money faster and reduce cross-border friction.
+
+For more information, see [Fund a Wallet](/docs/fund-wallet#brazil).
+
+---
+
+## April 15, 2025
+
+### Core Platform
+
+##### Settlement Report Now Available
+
+We’ve launched a daily **Settlement Report** to support your reconciliation efforts. The report includes all settled transactions across payins, payouts, P2P transfers, and fees.
+
+You can download the report via the Nium Portal or receive it securely via SFTP.
+
+For more information, see [Settlement Report](/docs/settlement-report).
+
+#### Enhancements
+
+##### Find Transactions Faster with Improved Filters
+
+We’ve enhanced the **Transactions** page in Nium Portal to help you locate the data you need—faster:
+
+- Search by **External ID**
+- View transactions across **all platform customers**
+- Filter by **date and time** with access to full transaction history
+
+For more information, see [Nium Portal](/docs/portal-reports#transactions-reports).
+
+---
+
+## April 1, 2025
+
+### Core Platform
+
+##### New `clientTransactionId` included in reconciliation labels
+
+`clientTransactionId` is now included as a label in the following transaction types:
+
+- `Wallet_Credit_Mode_Offline`
+- `Wallet_Credit_Mode_Offline_Third_Party`
+
+`clientTransactionId` is provided by clients in the [Fund Wallet](/api#tag/customer-funding/POST/api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/fund) request, helping you track transactions for reconciliation purposes.
+
+For more information, see [Transaction Response Labels](/docs/transaction-response-labels).
+
+### Issuance and Cards
+
+##### Convert virtual cards to physical cards
+
+Empower your customers with more choice. With the new [Convert Card](/api#tag/lifecycle/POST/api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/convert) request, you can upgrade an active virtual card to a physical one. This supports fast virtual issuance while still meeting customer demand for in-store or ATM access.
+
+For more information, see [Manage Cards](/docs/card-management).
+
+##### New Flutter SDK guides for Apple Pay and Google Pay
+
+Integrate digital wallet provisioning into your Flutter apps more easily. Our new guides walk you through implementing Apple Pay and Google Pay Push Provisioning using Nium’s SDKs, including platform channel setup, native code examples, and troubleshooting tips.
+
+Whether building for iOS or Android, get cards into wallets faster and streamline the in-app payment experience.
+
+For more information, see:
+
+- [Apple Pay - Flutter SDK](/docs/apple-flutter)
+- [Google Pay - Flutter SDK](/docs/google-flutter)
+
+### Payouts and Payins
+
+##### Improved bank account verification with Nium Verify
+
+Recent upgrades to **Nium Verify** improve visibility, clarity, and developer experience:
+
+- **Simplified integration:** You no longer need to pass the `customerId` in your requests.
+- **Track verification history:** Use the new [List Verifications](/api#tag/nium-verify/GET/api/v1/client/{clientHashId}/verifications) request to fetch all verifications sent to Nium.
+
+We've also refined our response data to help you act with confidence:
+
+- **Valid accounts:** New `derivedAccountDetails` object includes the account holder’s name from bank records—and local language name, where applicable.
+- **Invalid accounts:** New `failureCode` explains why verification failed (e.g., incorrect name, inactive account).
+- **Unsupported accounts:** Responses now provide more specific reasons, such as unsupported banks or currency-country mismatches.
+
+These changes deliver a smoother onboarding experience and reduce verification delays.
+
+Learn more in the updated [Nium Verify](/docs/account-verification).
+
+---
+
 ## March 18, 2025
 
 ### Core Platform
