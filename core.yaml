@@ -86,3 +86,26 @@ components:
       type: string
       description: This field accepts the 2-letter [ISO-2 country code](https://docs.nium.com/apis/docs/currency-and-country-codes) of the destination country.
       example: SG
+    remitterAccountType:
+      type: string
+      description: Remitter's account type as INDIVIDUAL or CORPORATE
+      example: INDIVIDUAL
+      enum:
+        - INDIVIDUAL
+        - CORPORATE
+    beneficiaryAccountType:
+      type: string
+      description: Beneficiary's account type as INDIVIDUAL or CORPORATE
+      example: INDIVIDUAL
+      enum:
+        - INDIVIDUAL
+        - CORPORATE
+    payoutRail:
+      type: string
+      description: Payout rail used for Payouts
+      example: us_ach
+      enum:
+        - us_ach
+        - us_fedwire
+        - ca_eft
+        - ca_interac
