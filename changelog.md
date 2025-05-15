@@ -1,3 +1,21 @@
+## May 13, 2025
+
+### Core
+
+##### Updated beneficiary validations
+
+- We've updated the validations when creating beneficiaries to align with the validations in place for creating payouts. You'll see a decrease in rejections due to typos or special characters. For more information, see [Add Beneficiary V2](/api#tag/beneficiary/POST/api/v2/client/{clientHashId}/customer/{customerHashId}/beneficiaries).
+
+##### Ongoing Due Diligence
+
+Corporate customers approved more than one year ago are subject to our **Ongoing Due Diligence (ODD)**.
+
+ODD is a periodic review process that applies to active customers based on their risk profile and transaction history. During this review, a compliance officer may issue one or more **Requests for Information (RFIs)**. You are expected to respond promptly to any RFIs to help complete the review.
+
+Failure to respond may result in temporary account suspension. For more information, see [Corporate Customers](/docs/overview-corporate-customer).
+
+---
+
 ## April 29, 2025
 
 ### Payouts and Payins
