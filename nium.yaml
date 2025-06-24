@@ -4,103 +4,102 @@ info:
     email: experience@nium.com
     name: Nium API Reference
     url: https://www.nium.com
-  description: >-
-    The Nium API is a RESTful platform that helps you build and scale global financial services including payouts, foreign exchange, onboarding, and digital wallets. It offers secure, resource-oriented endpoints for onboarding, wallet management, foreign exchange, payments, compliance, and more.
-
-
-    Built on standard REST principles, the Nium API uses **JSON-formatted requests and responses**, **HTTPS** for secure communication, and consistent conventions across all endpoints. Each integration is modular—so you can implement only what you need—and reliable, so your team can move fast with confidence.
-
-
-    You can use the Nium API to:
-      - Onboard individual or corporate customers with built-in **KYC/KYB** workflows.
-      - Manage digital wallets and transfer funds in real time.
-      - Access competitive **foreign exchange (FX)** rates and lock them securely.
-      - Make global payouts via bank transfers, cards, and local payment methods.
-      - Prefund and reconcile transactions for operational control.
-      - Monitor transactions and generate account statements.
-      - Handle compliance with document uploads and **RFI (Request for Information)** flows.
-
-      This reference includes everything you need to get started, including request and response structures, required headers, code samples, and schema definitions.  
-      
-      For more information about using Nium, see [Nium Documentation](/).
+  description: "The Nium API is a RESTful platform that helps you build and scale\
+    \ global financial services including payouts, foreign exchange, onboarding, and\
+    \ digital wallets. It offers secure, resource-oriented endpoints for onboarding,\
+    \ wallet management, foreign exchange, payments, compliance, and more.\n\nBuilt\
+    \ on standard REST principles, the Nium API uses **JSON-formatted requests and\
+    \ responses**, **HTTPS** for secure communication, and consistent conventions\
+    \ across all endpoints. Each integration is modular\u2014so you can implement\
+    \ only what you need\u2014and reliable, so your team can move fast with confidence.\n\
+    \nYou can use the Nium API to:\n  - Onboard individual or corporate customers\
+    \ with built-in **KYC/KYB** workflows.\n  - Manage digital wallets and transfer\
+    \ funds in real time.\n  - Access competitive **foreign exchange (FX)** rates\
+    \ and lock them securely.\n  - Make global payouts via bank transfers, cards,\
+    \ and local payment methods.\n  - Prefund and reconcile transactions for operational\
+    \ control.\n  - Monitor transactions and generate account statements.\n  - Handle\
+    \ compliance with document uploads and **RFI (Request for Information)** flows.\n\
+    \n  This reference includes everything you need to get started, including request\
+    \ and response structures, required headers, code samples, and schema definitions.\
+    \  \n  \n  For more information about using Nium, see [Nium Documentation](/)."
   license:
     name: Copyright (c) 2025 NIUM
   title: NIUM Platform
-  version: 2025.4.22
+  version: 2025.6.17
 servers:
 - url: https://gateway.nium.com/
 security:
 - default: []
 tags:
 - name: Client Prefund Account
-  description: >-
-    The **Client Prefund Account** requests let you fund your Nium account and track those funds across all currencies. The `client` resource represents your account with Nium.
-    
-
-    Prefunding ensures you have an available balance to support downstream activity—like customer wallet funding, card issuance, or cross-border payouts. The prefunding workflow includes:
-      - Transferring funds to a Nium-provided virtual account (per currency).
-      - Submitting a prefund request (via API) with transfer details and a reference number.
-      - Automatic reconciliation, where Nium validates the request against actual received funds.
-      - Balance visibility, so you can monitor prefund amounts in real time across all supported currencies.
-
-    Use these requests to:
-      - Initiate a prefund request after sending a bank transfer.
-      - Check the status of all prefund requests by `date`, `status`, or `referenceId`.
-      - Fetch available prefund balances across currencies to plan your funding needs
-    
-    These requests are critical for clients who manage high-volume payouts or need to maintain liquidity for funding wallets, issuing cards, or settling currency conversions. To learn more about how prefunding works, see [Program, Client, and Client Prefund Account](/docs/program-client-and-client-prefund-account).
+  description: "The **Client Prefund Account** requests let you fund your Nium account\
+    \ and track those funds across all currencies. The `client` resource represents\
+    \ your account with Nium.\n\nPrefunding ensures you have an available balance\
+    \ to support downstream activity\u2014like customer wallet funding, card issuance,\
+    \ or cross-border payouts. The prefunding workflow includes:\n  - Transferring\
+    \ funds to a Nium-provided virtual account (per currency).\n  - Submitting a prefund\
+    \ request (via API) with transfer details and a reference number.\n  - Automatic\
+    \ reconciliation, where Nium validates the request against actual received funds.\n\
+    \  - Balance visibility, so you can monitor prefund amounts in real time across\
+    \ all supported currencies.\n\nUse these requests to:\n  - Initiate a prefund\
+    \ request after sending a bank transfer.\n  - Check the status of all prefund\
+    \ requests by `date`, `status`, or `referenceId`.\n  - Fetch available prefund\
+    \ balances across currencies to plan your funding needs\n\nThese requests are\
+    \ critical for clients who manage high-volume payouts or need to maintain liquidity\
+    \ for funding wallets, issuing cards, or settling currency conversions. To learn\
+    \ more about how prefunding works, see [Program, Client, and Client Prefund Account](/docs/program-client-and-client-prefund-account)."
 - name: Client Settings
-  description: >-
-    Use the Client Settings requests to fetch and manage configuration details set at the client level. The `client` resource represents your account with Nium. These settings are defined during onboarding and determine how your program operates—including supported currencies, fee structures, funding limits, and compliance behavior.
-
-
-    These requests let you:
-      - Retrieve the full client profile, including name, region, regulatory details, and webhook configuration.
-      - Fetch fee configurations applied at the client level.
-      - Get limits and authorization settings for payin transactions.
-
-    These configurations are typically read-only and are set by the Nium team during onboarding. However, the details are essential for building dynamic integrations that respond to region-specific rules or client-level constraints.
-
-
-    For a full overview of how clients and programs are structured in Nium, see [Program, Client, and Client Prefund Account](/docs/program-client-and-client-prefund-account).
+  description: "Use the Client Settings requests to fetch and manage configuration\
+    \ details set at the client level. The `client` resource represents your account\
+    \ with Nium. These settings are defined during onboarding and determine how your\
+    \ program operates\u2014including supported currencies, fee structures, funding\
+    \ limits, and compliance behavior.\n\nThese requests let you:\n  - Retrieve the\
+    \ full client profile, including name, region, regulatory details, and webhook\
+    \ configuration.\n  - Fetch fee configurations applied at the client level.\n\
+    \  - Get limits and authorization settings for payin transactions.\n\nThese configurations\
+    \ are typically read-only and are set by the Nium team during onboarding. However,\
+    \ the details are essential for building dynamic integrations that respond to\
+    \ region-specific rules or client-level constraints.\n\nFor a full overview of\
+    \ how clients and programs are structured in Nium, see [Program, Client, and Client\
+    \ Prefund Account](/docs/program-client-and-client-prefund-account)."
 - name: Client Transactions
-  description: >-
-    Use the Fetch Client Transactions request to retrieve a complete view of financial activity across your client account. This request returns every transaction initiated under your program—including wallet loads, foreign exchange conversions, card payments, and payouts.
-
-
-    You can:
-      - Retrieve transactions by date range, `status`, `customerHashId`, `walletHashId`, or `transactionCurrency`.
-      - View transaction metadata like `amount`, `type`, and `settlementStatus`.
-
-    Use this request to support reporting, reconciliation, and troubleshooting across all customer transactions. For more information about transactions, see [Transactions](/docs/transaction-types).
+  description: "Use the Fetch Client Transactions request to retrieve a complete view\
+    \ of financial activity across your client account. This request returns every\
+    \ transaction initiated under your program\u2014including wallet loads, foreign\
+    \ exchange conversions, card payments, and payouts.\n\nYou can:\n  - Retrieve\
+    \ transactions by date range, `status`, `customerHashId`, `walletHashId`, or `transactionCurrency`.\n\
+    \  - View transaction metadata like `amount`, `type`, and `settlementStatus`.\n\
+    \nUse this request to support reporting, reconciliation, and troubleshooting across\
+    \ all customer transactions. For more information about transactions, see [Transactions](/docs/transaction-types)."
 - name: Customer Account - Individual
-  description: >-
-    Use the Customer Account – Individual requests to onboard, update, and manage individual customers under your client account. Individual customers are represented by the `customer` resource.
-    
-
-    These requests let you collect personal information, verify identity, and track onboarding status in compliance with Know Your Customer (KYC) requirements. You can:
-      - Add new individual `customers` and assign them wallets.
-      - Update `customer` or contact details.
-      - Upload documents and respond to Requests for Information (RFIs).
-      - Regenerate KYC URLs and fetch onboarding status.
-
-    For a full walkthrough of onboarding individual customers, see [Individual Customers](/docs/overview-individual-customer).
+  description: "Use the Customer Account \u2013 Individual requests to onboard, update,\
+    \ and manage individual customers under your client account. Individual customers\
+    \ are represented by the `customer` resource.\n\nThese requests let you collect\
+    \ personal information, verify identity, and track onboarding status in compliance\
+    \ with Know Your Customer (KYC) requirements. You can:\n  - Add new individual\
+    \ `customers` and assign them wallets.\n  - Update `customer` or contact details.\n\
+    \  - Upload documents and respond to Requests for Information (RFIs).\n  - Regenerate\
+    \ KYC URLs and fetch onboarding status.\n\nFor a full walkthrough of onboarding\
+    \ individual customers, see [Individual Customers](/docs/overview-individual-customer)."
 - name: Customer Account - Corporate
-  description: >-
-    Use the Customer Account – Corporate requests to onboard, update, and manage corporate customers under your client account. Corporate customers are also represented by the `customer` resource; however corporate customers are managed using the `/corporate` endpoint. These requests let you submit business entity details, verify documents, and track compliance status as part of the corporate Know Your Business (KYB) process.
-
-
-    You can:
-      - Onboard `corporate` customers and assign them wallets.
-      - Upload incorporation and compliance documents.
-      - Respond to Requests for Information (RFIs) for KYB verification.
-      - Update `corporate` profiles or business information.
-      - Regenerate KYB URLs and fetch onboarding status.
-
-    For a full walkthrough of onboarding `corporate` users, see [Corporate Customers](/docs/overview-corporate-customer).
+  description: "Use the Customer Account \u2013 Corporate requests to onboard, update,\
+    \ and manage corporate customers under your client account. Corporate customers\
+    \ are also represented by the `customer` resource; however corporate customers\
+    \ are managed using the `/corporate` endpoint. These requests let you submit business\
+    \ entity details, verify documents, and track compliance status as part of the\
+    \ corporate Know Your Business (KYB) process.\n\nYou can:\n  - Onboard `corporate`\
+    \ customers and assign them wallets.\n  - Upload incorporation and compliance\
+    \ documents.\n  - Respond to Requests for Information (RFIs) for KYB verification.\n\
+    \  - Update `corporate` profiles or business information.\n  - Regenerate KYB\
+    \ URLs and fetch onboarding status.\n\nFor a full walkthrough of onboarding `corporate`\
+    \ users, see [Corporate Customers](/docs/overview-corporate-customer)."
 - name: Customer Management
   description: >-
-    Use the Customer Management requests to view, search, and manage individual or corporate customers after onboarding; both corporate and individual customers are represented by the `customer` resource. These requests let you fetch customer details, list all customers under your account, and manage account-level actions like blocking or unblocking.
+    Use the Customer Management requests to view, search, and manage individual or
+    corporate customers after onboarding; both corporate and individual customers
+    are represented by the `customer` resource. These requests let you fetch customer
+    details, list all customers under your account, and manage account-level actions
+    like blocking or unblocking.
 
 
     You can:
@@ -109,56 +108,69 @@ tags:
       - Block or unblock a `customer`.
       - Download account statements by date range and currency.
 
-    For more information on the relationship between `customers` and `clients`, see [Parent-Child Hierarchy](/docs/parent-child-hierarchy).
+    For more information on the relationship between `customers` and `clients`, see
+    [Parent-Child Hierarchy](/docs/parent-child-hierarchy).
 - name: Customer Terms and Conditions
-  description: >-
-    Use the Customer Terms and Conditions requests to manage how end users review and accept your program’s terms during onboarding. These requests help you track customer acceptance and retrieve the latest version of your configured legal agreements.
-
-
-    You can:
-      - Retrieve the current terms and conditions configured for your account.
-      - Check whether a customer has accepted the terms.
-      - Record acceptance of terms for individual customers.
-
-    For more information on managing terms and when they need to be shown to customers, see [Onboarding](/docs/onboarding).
+  description: "Use the Customer Terms and Conditions requests to manage how end users\
+    \ review and accept your program\u2019s terms during onboarding. These requests\
+    \ help you track customer acceptance and retrieve the latest version of your configured\
+    \ legal agreements.\n\nYou can:\n  - Retrieve the current terms and conditions\
+    \ configured for your account.\n  - Check whether a customer has accepted the\
+    \ terms.\n  - Record acceptance of terms for individual customers.\n\nFor more\
+    \ information on managing terms and when they need to be shown to customers, see\
+    \ [Onboarding](/docs/onboarding)."
 - name: Open Banking (Onboarding)
   description: >-
-    Use the Open Banking (Onboarding) requests to retrieve verified customer account and payment data from regulated third-party providers. These requests support onboarding flows that comply with Open Banking standards, including AIS (Account Information Services) and PIS (Payment Initiation Services).
+    Use the Open Banking (Onboarding) requests to retrieve verified customer account
+    and payment data from regulated third-party providers. These requests support
+    onboarding flows that comply with Open Banking standards, including AIS (Account
+    Information Services) and PIS (Payment Initiation Services).
 
 
     You can:
       - Fetch bank account details using a consent ID (AIS flow).
       - Retrieve payment details using a system reference number (PIS flow).
 
-    These requests help streamline onboarding by prefilling customer data with bank-verified information, reducing manual input and ensuring compliance.
+    These requests help streamline onboarding by prefilling customer data with bank-verified
+    information, reducing manual input and ensuring compliance.
 
-    Open Banking onboarding is currently supported in the United Kingdom and select European Union countries where PSD2 regulations apply. For more information, see [Open Banking](/docs/open-banking).
+    Open Banking onboarding is currently supported in the United Kingdom and select
+    European Union countries where PSD2 regulations apply. For more information, see
+    [Open Banking](/docs/open-banking).
 - name: Accounts
-  description: >-
-    Use the Accounts requests to link and manage a customer’s external bank accounts; customer's bank accounts are represented by the `bankAccounts` resource. These requests allow you to connect external accounts for payout or funding purposes, verify ownership through authentication, and update or remove linked accounts as needed.
-
-
-    You can:
-      - Create and link a new bank account to a customer profile.
-      - Fetch, update, or delete linked bank accounts.
-      - Filter linked accounts by account number, tags, or currency.
-
-    These requests help you enable payouts for customers and verify bank account ownership. For more information, see [Direct Debit](/docs/direct-debit).
+  description: "Use the Accounts requests to link and manage a customer\u2019s external\
+    \ bank accounts; customer's bank accounts are represented by the `bankAccounts`\
+    \ resource. These requests allow you to connect external accounts for payout or\
+    \ funding purposes, verify ownership through authentication, and update or remove\
+    \ linked accounts as needed.\n\nYou can:\n  - Create and link a new bank account\
+    \ to a customer profile.\n  - Fetch, update, or delete linked bank accounts.\n\
+    \  - Filter linked accounts by account number, tags, or currency.\n\nThese requests\
+    \ help you enable payouts for customers and verify bank account ownership. For\
+    \ more information, see [Direct Debit](/docs/direct-debit)."
 - name: Onboarding Forms - Corporate
   description: >-
-    Use the Corporate Onboarding Forms requests to generate and manage onboarding form links for corporate customers; onboarding forms are represented by the `applications` resource. These requests support a secure, self-service onboarding experience where customers complete their KYB (Know Your Business) journey through a dynamic web form.
+    Use the Corporate Onboarding Forms requests to generate and manage onboarding
+    form links for corporate customers; onboarding forms are represented by the `applications`
+    resource. These requests support a secure, self-service onboarding experience
+    where customers complete their KYB (Know Your Business) journey through a dynamic
+    web form.
 
 
     You can:
-      - Create an `application` and generate a secure link to the onboarding form for the customer.
+      - Create an `application` and generate a secure link to the onboarding form
+    for the customer.
       - Regenerate an onboarding form link if the original expires.
       - Fetch `application` details and track completion status by section.
       - Identify and resolve submission errors or missing information.
 
-    Ideal for use cases where you want Nium to host the onboarding experience. For more information, see [Onboarding Forms](/docs/onboarding-forms).
+    Ideal for use cases where you want Nium to host the onboarding experience. For
+    more information, see [Onboarding Forms](/docs/onboarding-forms).
 - name: Customer Wallet Balance
   description: >-
-    Use the Customer Wallet Balance requests to manage wallets assigned to a customer; customer wallets are represented by the `wallet` resource. These requests return real-time balances across all configured currencies within the wallet, including any blocked or withheld amounts.
+    Use the Customer Wallet Balance requests to manage wallets assigned to a customer;
+    customer wallets are represented by the `wallet` resource. These requests return
+    real-time balances across all configured currencies within the wallet, including
+    any blocked or withheld amounts.
 
 
     You can:
@@ -167,10 +179,15 @@ tags:
       - View withheld balances set aside for compliance or operational holds.
       - Identify the default currency for the wallet.
 
-    These requests are useful for displaying wallet balances to customers, validating funding availability, or powering internal dashboards. For more information, see [Wallets](/docs/wallets).
+    These requests are useful for displaying wallet balances to customers, validating
+    funding availability, or powering internal dashboards. For more information, see
+    [Wallets](/docs/wallets).
 - name: Wallet to Wallet Transfers
   description: >-
-    Use the Wallet to Wallet Transfers requests to move funds between customer wallets, either across different clients or within the same client group. Customer wallets are represented by the `wallet` resource. Each transfer requires specifying the source and destination wallets and must use a supported currency.
+    Use the Wallet to Wallet Transfers requests to move funds between customer wallets,
+    either across different clients or within the same client group. Customer wallets
+    are represented by the `wallet` resource. Each transfer requires specifying the
+    source and destination wallets and must use a supported currency.
 
 
     You can:
@@ -178,10 +195,16 @@ tags:
       - Include customer comments and optional metadata to support reconciliation.
       - Specify exemption codes and purpose of transfer as needed.
 
-    Note: The peer-to-peer (P2P) transfer request has been deprecated. Use the Wallet to Wallet Transfer request for all wallet-to-wallet transfers moving forward. For more information, see [Wallet to Wallet Transfers](/docs/wallet-to-wallet-transfers).
+    Note: The peer-to-peer (P2P) transfer request has been deprecated. Use the Wallet
+    to Wallet Transfer request for all wallet-to-wallet transfers moving forward.
+    For more information, see [Wallet to Wallet Transfers](/docs/wallet-to-wallet-transfers).
 - name: Customer Wallet Transactions
   description: >-
-    Use the Customer Wallet Transactions requests to retrieve transaction history and manage transaction metadata for a specific customer wallet. Customer wallets are represented by the `wallet` resource. These requests allow you to fetch individual transactions, attach receipts, tag transactions, and update metadata like location or business classification.
+    Use the Customer Wallet Transactions requests to retrieve transaction history
+    and manage transaction metadata for a specific customer wallet. Customer wallets
+    are represented by the `wallet` resource. These requests allow you to fetch individual
+    transactions, attach receipts, tag transactions, and update metadata like location
+    or business classification.
 
 
     You can:
@@ -190,21 +213,25 @@ tags:
       - Tag transactions for categorization or tracking.
       - Add merchant location data or flag a transaction as business-related.
 
-    These requests are useful for building audit trails, powering transaction-level reporting, or enriching customer-facing interfaces. For more information, see [Transactions](/docs/transactions).
+    These requests are useful for building audit trails, powering transaction-level
+    reporting, or enriching customer-facing interfaces. For more information, see
+    [Transactions](/docs/transactions).
 - name: Customer Funding
-  description: >-
-    Use the Customer Funding requests to link, manage, and use funding instruments for topping up customer wallets. The funding source customer's use to fund wallets (bank accounts, cards, etc.) is represented by the `fundingInstrument` resource. These requests support multiple funding channels, including direct debit, cards, bank transfers, and prefunding.
-
-
-    You can:
-      - Link a `fundingInstrument` such as a card or bank account to a customer wallet.
-      - Confirm or delete existing `fundingInstruments`.
-      - Fund a wallet using a supported funding channel and currency pair.
-      
-    These requests let customers fund their wallets using external accounts. For more information, see [Fund a Wallet](/docs/fund-wallet).
+  description: "Use the Customer Funding requests to link, manage, and use funding\
+    \ instruments for topping up customer wallets. The funding source customer's use\
+    \ to fund wallets (bank accounts, cards, etc.) is represented by the `fundingInstrument`\
+    \ resource. These requests support multiple funding channels, including direct\
+    \ debit, cards, bank transfers, and prefunding.\n\nYou can:\n  - Link a `fundingInstrument`\
+    \ such as a card or bank account to a customer wallet.\n  - Confirm or delete\
+    \ existing `fundingInstruments`.\n  - Fund a wallet using a supported funding\
+    \ channel and currency pair.\n  \nThese requests let customers fund their wallets\
+    \ using external accounts. For more information, see [Fund a Wallet](/docs/fund-wallet)."
 - name: Customer Virtual Accounts
   description: >-
-    Use the Customer Virtual Accounts requests to assign and manage virtual account numbers (VANs) for a customer's wallet. Virtual accounts are represented by the `paymentId`. These virtual accounts act as unique identifiers for receiving funds, and enabling seamless payins via bank transfer.
+    Use the Customer Virtual Accounts requests to assign and manage virtual account
+    numbers (VANs) for a customer's wallet. Virtual accounts are represented by the
+    `paymentId`. These virtual accounts act as unique identifiers for receiving funds,
+    and enabling seamless payins via bank transfer.
 
 
     You can:
@@ -213,116 +240,130 @@ tags:
       - Add, update, or delete custom tags for each virtual account.
       - Download account ownership certificates, with optional balance details.
 
-    These requests are essential for customers who receive payments via virtual accounts. For more information, see [Virtual Account Number](/docs/virtual-account-number).
+    These requests are essential for customers who receive payments via virtual accounts.
+    For more information, see [Virtual Account Number](/docs/virtual-account-number).
 - name: Rates
   description: >-
-    Use the Rates requests to fetch real-time and historical foreign exchange (FX) rates for supported currency pairs. The rates returned are represented by the `exchangeRate` resource. These rates help you calculate conversion values, display FX data to customers, or power cross-currency transactions.
+    Use the Rates requests to fetch real-time and historical foreign exchange (FX)
+    rates for supported currency pairs. The rates returned are represented by the
+    `exchangeRate` resource. These rates help you calculate conversion values, display
+    FX data to customers, or power cross-currency transactions.
 
 
     You can:
       - Retrieve interbank exchange rates without markup.
       - View historical rates grouped by time window (e.g., hourly, daily).
 
-    These requests are useful for displaying FX rates, previewing conversions, or auditing pricing across time. For more information, see [Foreign Exchange](/docs/fx).
+    These requests are useful for displaying FX rates, previewing conversions, or
+    auditing pricing across time. For more information, see [Foreign Exchange](/docs/fx).
 - name: Quotes
-  description: >-
-    Use the Quotes requests to generate and manage Foreign Exchange (FX) quotes for supported currency pairs. The quotes returned are represented by the `quote` resource. Each quote includes the applicable exchange rate, markup, and lock period, and can be used for conversions within the quote’s validity window.
-
-
-    You can:
-      - Create a quote with a fixed lock period and conversion schedule.
-      - Retrieve details of a previously generated quote by quote ID.
-      - View the applicable markup and rate capture time for audit purposes.
-
-    These requests are useful for locking FX rates before executing a conversion. For more information, see [Foreign Exchange](/docs/fx).
+  description: "Use the Quotes requests to generate and manage Foreign Exchange (FX)\
+    \ quotes for supported currency pairs. The quotes returned are represented by\
+    \ the `quote` resource. Each quote includes the applicable exchange rate, markup,\
+    \ and lock period, and can be used for conversions within the quote\u2019s validity\
+    \ window.\n\nYou can:\n  - Create a quote with a fixed lock period and conversion\
+    \ schedule.\n  - Retrieve details of a previously generated quote by quote ID.\n\
+    \  - View the applicable markup and rate capture time for audit purposes.\n\n\
+    These requests are useful for locking FX rates before executing a conversion.\
+    \ For more information, see [Foreign Exchange](/docs/fx)."
 - name: Conversions
   description: >-
-    Use the Conversions requests to execute or cancel currency conversions between supported currencies in a customer wallet. Conversions returned are represented by the `conversion` resource. These requests use either real-time foreign exchange (FX) rates or pre-generated quotes and support scheduled or immediate settlement.
+    Use the Conversions requests to execute or cancel currency conversions between
+    supported currencies in a customer wallet. Conversions returned are represented
+    by the `conversion` resource. These requests use either real-time foreign exchange
+    (FX) rates or pre-generated quotes and support scheduled or immediate settlement.
 
 
     You can:
       - Create a `conversion` using a quote or live market rate.
       - Schedule a `conversion` for immediate, end-of-day, or future execution.
-      - Fetch the details of a `conversion` by `id`, `status, amounts, and markup rate.
+      - Fetch the details of a `conversion` by `id`, `status, amounts, and markup
+    rate.
       - Cancel or manually execute pending conversions before expiry.
 
-    These requests are essential for moving funds between currencies in customer wallets. For more information, see [Foreign Exchange](/docs/fx).
+    These requests are essential for moving funds between currencies in customer wallets.
+    For more information, see [Foreign Exchange](/docs/fx).
 - name: Quotes (Previous Version)
-  description: >-
-    Use the Quotes (Previous Version) requests to fetch the foreign exchange rate between two currencies, with optional source or destination amounts. This earlier version calculates the equivalent value but does not support quote locking or scheduling.
-
-
-    > ⚠️ **Deprecated**: This version is maintained for backward compatibility. Use the current [Quotes](/api#tag/quotes) version for full functionality.
-
-
-    You can:
-      - Retrieve exchange rates using a source or destination amount.
-      - Calculate equivalent amounts for supported currency pairs.
-
-    These requests are maintained for backward compatibility. For more advanced features, use the current [Quotes](/api#tag/quotes) requests instead.
+  description: "Use the Quotes (Previous Version) requests to fetch the foreign exchange\
+    \ rate between two currencies, with optional source or destination amounts. This\
+    \ earlier version calculates the equivalent value but does not support quote locking\
+    \ or scheduling.\n\n> \u26A0\uFE0F **Deprecated**: This version is maintained\
+    \ for backward compatibility. Use the current [Quotes](/api#tag/quotes) version\
+    \ for full functionality.\n\nYou can:\n  - Retrieve exchange rates using a source\
+    \ or destination amount.\n  - Calculate equivalent amounts for supported currency\
+    \ pairs.\n\nThese requests are maintained for backward compatibility. For more\
+    \ advanced features, use the current [Quotes](/api#tag/quotes) requests instead."
 - name: Conversions (Previous Version)
-  description: >-
-    Use the Conversions (Previous Version) request to convert funds from one currency to another within the same customer wallet. This version supports simple, real-time conversions without requiring quotes or scheduled execution.
-
-
-    > ⚠️ **Deprecated**: This version is maintained for backward compatibility. Use the current [Conversions](/api#tag/conversions) version for full functionality.
-
-
-    You can:
-      - Transfer balances between supported currency pairs.
-      - View exchange rates with applied markup.
-
-    This request is maintained for backward compatibility. For enhanced functionality like rate locking, future execution, or quote-based conversions, see the current [Conversions](/api#tag/conversions) requests instead.
+  description: "Use the Conversions (Previous Version) request to convert funds from\
+    \ one currency to another within the same customer wallet. This version supports\
+    \ simple, real-time conversions without requiring quotes or scheduled execution.\n\
+    \n> \u26A0\uFE0F **Deprecated**: This version is maintained for backward compatibility.\
+    \ Use the current [Conversions](/api#tag/conversions) version for full functionality.\n\
+    \nYou can:\n  - Transfer balances between supported currency pairs.\n  - View\
+    \ exchange rates with applied markup.\n\nThis request is maintained for backward\
+    \ compatibility. For enhanced functionality like rate locking, future execution,\
+    \ or quote-based conversions, see the current [Conversions](/api#tag/conversions)\
+    \ requests instead."
 - name: Beneficiary
   description: >-
-    Use the Beneficiary requests to add, validate, update, or delete payout recipients associated with a customer. Payout recipients are represented by the `beneficiary` resource. These requests support a wide range of payout corridors and methods, including bank accounts, cards, wallets, and proxy-based transfers.
+    Use the Beneficiary requests to add, validate, update, or delete payout recipients
+    associated with a customer. Payout recipients are represented by the `beneficiary`
+    resource. These requests support a wide range of payout corridors and methods,
+    including bank accounts, cards, wallets, and proxy-based transfers.
 
 
     You can:
-      - Add a new `beneficiary` and define payout method, account, and compliance details.
+      - Add a new `beneficiary` and define payout method, account, and compliance
+    details.
       - Validate account information based on destination country and currency.
       - Update or remove an existing `beneficiary`.
       - Fetch individual or all `beneficiaries` associated with a customer.
 
-    These requests are essential for sending payouts to verified recipients. For more information, see [Transfer Money](/docs/transfer-money).
+    These requests are essential for sending payouts to verified recipients. For more
+    information, see [Transfer Money](/docs/transfer-money).
 - name: Reference Data
   description: >-
-    Use the Reference Data requests to look up metadata required for making payouts. These requests return supported countries, currencies, corridors, and bank routing code formats to help you dynamically build payout forms and validate payout instructions.
+    Use the Reference Data requests to look up metadata required for making payouts.
+    These requests return supported countries, currencies, corridors, and bank routing
+    code formats to help you dynamically build payout forms and validate payout instructions.
 
 
     You can:
       - Search for routing codes using bank or branch name.
-      - Retrieve the structure and required fields for routing code types (e.g. SWIFT, IFSC, SORT CODE).
+      - Retrieve the structure and required fields for routing code types (e.g. SWIFT,
+    IFSC, SORT CODE).
       - Fetch supported corridors and payout methods for a given client or customer.
       - Validate country and currency combinations for a specific payout flow.
 
-    Use these requests to pre-fill payout forms and reduce errors when collecting recipient details. For more information, see [Routing Codes](/docs/routing-codes).
+    Use these requests to pre-fill payout forms and reduce errors when collecting
+    recipient details. For more information, see [Routing Codes](/docs/routing-codes).
 - name: Payout
-  description: >-
-    Use the Payout requests to initiate and manage transactions from a customer wallet to a beneficiary. Payouts and transfers are represented by the `remittance` resource and supports a range of payout methods including local bank transfers, SWIFT, cards, wallets, and proxy-based payments.
-
-
-    You can:
-      - Create a `remittance` using `beneficiary`, amount, and currency details.
-      - Track payout status and fetch remittance lifecycle events.
-      - Cancel a payout before it’s processed.
-
-    These requests are essential for sending funds to beneficiaries globally. For more information, see [Transfer Money](/docs/transfer-money).
+  description: "Use the Payout requests to initiate and manage transactions from a\
+    \ customer wallet to a beneficiary. Payouts and transfers are represented by the\
+    \ `remittance` resource and supports a range of payout methods including local\
+    \ bank transfers, SWIFT, cards, wallets, and proxy-based payments.\n\nYou can:\n\
+    \  - Create a `remittance` using `beneficiary`, amount, and currency details.\n\
+    \  - Track payout status and fetch remittance lifecycle events.\n  - Cancel a\
+    \ payout before it\u2019s processed.\n\nThese requests are essential for sending\
+    \ funds to beneficiaries globally. For more information, see [Transfer Money](/docs/transfer-money)."
 - name: Nium Verify
-  description: >-
-    Use Nium Verify requests confirm bank account details are valid before processing a payout or linking a funding source. Each verification request is represented by the `verification` resource and supports account verification via direct bank account details or another proxy identifiers (e.g., mobile number, UPI ID, virtual payment address).
-
-
-    You can:
-      - Initiate a `verification` using the customer’s account or proxy information.
-      - Fetch `verification` status, account holder name, and validation outcome.
-      - List all `verification` attempts made under your `clientHashId`.
-      - Track invalid inputs, failure reasons, and metadata for audits or troubleshooting.
-
-    These requests are essential for reducing failed payouts and validating beneficiary or sender accounts. For more information, see [Nium Verify](/docs/account-verification).
+  description: "Use Nium Verify requests confirm bank account details are valid before\
+    \ processing a payout or linking a funding source. Each verification request is\
+    \ represented by the `verification` resource and supports account verification\
+    \ via direct bank account details or another proxy identifiers (e.g., mobile number,\
+    \ UPI ID, virtual payment address).\n\nYou can:\n  - Initiate a `verification`\
+    \ using the customer\u2019s account or proxy information.\n  - Fetch `verification`\
+    \ status, account holder name, and validation outcome.\n  - List all `verification`\
+    \ attempts made under your `clientHashId`.\n  - Track invalid inputs, failure\
+    \ reasons, and metadata for audits or troubleshooting.\n\nThese requests are essential\
+    \ for reducing failed payouts and validating beneficiary or sender accounts. For\
+    \ more information, see [Nium Verify](/docs/account-verification)."
 - name: Simulators
   description: >-
-    Use the Simulator requests to simulate card events in sandbox environments. These requests simulate how the `transaction` and `settlement` resources change, allowing you to test how your integration handles various card lifecycle stages and transaction outcomes.
+    Use the Simulator requests to simulate card events in sandbox environments. These
+    requests simulate how the `transaction` and `settlement` resources change, allowing
+    you to test how your integration handles various card lifecycle stages and transaction
+    outcomes.
 
 
     You can:
@@ -330,10 +371,15 @@ tags:
       - Simulate a card clearing or settlement event.
       - Test transaction flows with different amounts, currencies, and merchant configurations.
 
-    These requests are useful for validating card transaction logic, testing edge cases, and preparing for live certification. For more information, see [Testing Nium](/docs/testing).
+    These requests are useful for validating card transaction logic, testing edge
+    cases, and preparing for live certification. For more information, see [Testing
+    Nium](/docs/testing).
 - name: Lifecycle
   description: >-
-    Use the Lifecycle requests to manage the status and lifecycle of a card. The cards you create are represented by the `card` resource; the requests let you activate new cards, block or unblock existing cards, and convert or replace cards based on customer needs.
+    Use the Lifecycle requests to manage the status and lifecycle of a card. The cards
+    you create are represented by the `card` resource; the requests let you activate
+    new cards, block or unblock existing cards, and convert or replace cards based
+    on customer needs.
 
 
     You can:
@@ -342,10 +388,15 @@ tags:
       - Convert a virtual card to a physical one.
       - Block and replace a card due to loss, damage, or fraud.
 
-    These requests are essential for maintaining secure card programs and ensuring customers can control their cards throughout the lifecycle. For more information, see [Cards](/docs/card-overview).
+    These requests are essential for maintaining secure card programs and ensuring
+    customers can control their cards throughout the lifecycle. For more information,
+    see [Cards](/docs/card-overview).
 - name: Security
   description: >-
-    Use the Security requests to manage sensitive card data such as PINs, CVVs, and full card numbers. These requests change the `card` resource and let you fetch or update encrypted card details, set or reset PINs, and unmask card data for secure usage.
+    Use the Security requests to manage sensitive card data such as PINs, CVVs, and
+    full card numbers. These requests change the `card` resource and let you fetch
+    or update encrypted card details, set or reset PINs, and unmask card data for
+    secure usage.
 
 
     You can:
@@ -354,10 +405,14 @@ tags:
       - Fetch ATM PINs or reveal encrypted security details when permitted.
       - Unmask card numbers for use in approved scenarios.
 
-    These requests are critical for enabling secure access to card details and maintaining compliance across card programs. For more information, see [Card Security](/docs/card-security).
+    These requests are critical for enabling secure access to card details and maintaining
+    compliance across card programs. For more information, see [Card Security](/docs/card-security).
 - name: 3DS
   description: >-
-    Use the 3DS requests to manage 3D Secure (Three-Domain Secure) authentication flows for customer card transactions. 3DS requests are represented by the `3ds` resource. These requests change the `3ds` resource and help verify cardholder identity before completing high-risk or online transactions.
+    Use the 3DS requests to manage 3D Secure (Three-Domain Secure) authentication
+    flows for customer card transactions. 3DS requests are represented by the `3ds`
+    resource. These requests change the `3ds` resource and help verify cardholder
+    identity before completing high-risk or online transactions.
 
 
     You can:
@@ -366,44 +421,50 @@ tags:
       - Fetch 3DS passcode enrollment status.
       - Handle out-of-band (OOB) authentication callbacks.
 
-    These requests help reduce fraud, support SCA (Strong Customer Authentication) compliance, and secure online card payments. For more information, see [3DS Security](/docs/3ds-overview).
+    These requests help reduce fraud, support SCA (Strong Customer Authentication)
+    compliance, and secure online card payments. For more information, see [3DS Security](/docs/3ds-overview).
 - name: Controls
-  description: >-
-    Use the Controls requests to configure transaction behavior on a customer’s card. These requests change the `card` resource and allow you to set spend limits, block or unblock specific merchant types, and restrict transactions by channel or geography.
-
-
-    You can:
-      - Set per-transaction, daily, monthly, or lifetime card spending limits.
-      - Block or unblock transaction channels such as in-store, online, ATM, and cross-border.
-      - Apply merchant category code (MCC) restrictions using whitelists or blacklists.
-      - Fetch current card limits and channel restrictions for auditing or updates.
-
-    These requests are essential for enforcing program rules, controlling fraud exposure, and adapting card behavior in real time. For more information, see [Manage Cards](/docs/card-management).
+  description: "Use the Controls requests to configure transaction behavior on a customer\u2019\
+    s card. These requests change the `card` resource and allow you to set spend limits,\
+    \ block or unblock specific merchant types, and restrict transactions by channel\
+    \ or geography.\n\nYou can:\n  - Set per-transaction, daily, monthly, or lifetime\
+    \ card spending limits.\n  - Block or unblock transaction channels such as in-store,\
+    \ online, ATM, and cross-border.\n  - Apply merchant category code (MCC) restrictions\
+    \ using whitelists or blacklists.\n  - Fetch current card limits and channel restrictions\
+    \ for auditing or updates.\n\nThese requests are essential for enforcing program\
+    \ rules, controlling fraud exposure, and adapting card behavior in real time.\
+    \ For more information, see [Manage Cards](/docs/card-management)."
 - name: Cards Reference Data
   description: >-
-    Use the Cards Reference Data request to fetch the reference exchange rate for a card transaction; the rate is represented by the `referenceRate` resource. This request returns the conversion rate between a source currency and a cardholder's billing currency, based on the selected card scheme (Visa or Mastercard).
+    Use the Cards Reference Data request to fetch the reference exchange rate for
+    a card transaction; the rate is represented by the `referenceRate` resource. This
+    request returns the conversion rate between a source currency and a cardholder's
+    billing currency, based on the selected card scheme (Visa or Mastercard).
 
 
     You can:
-      - Retrieve the reference foreign exchange (FX) rate for a specific transaction amount and currency pair.
+      - Retrieve the reference foreign exchange (FX) rate for a specific transaction
+    amount and currency pair.
       - Specify the card scheme to return the applicable network rate.
       - Use this data to preview or audit card conversion outcomes.
 
-    This request is helpful when calculating estimated billing amounts for cardholders. For more information, see [Cards](/docs/card-overview).
+    This request is helpful when calculating estimated billing amounts for cardholders.
+    For more information, see [Cards](/docs/card-overview).
 - name: Customer Fees
-  description: >-
-    Use the Customer Fees request to manually charge a custom fee to a customer’s wallet. This request changes the `customFee` resource and must be pre-approved by Nium before use due to regulatory requirements.
-
-
-    You can:
-      - Charge a fixed or percentage-based fee in any wallet-supported currency.
-      - Add fee details like name, amount, comments, and custom tags for tracking.
-      - Track the status and system reference number returned after charging a fee.
-
-    All fees must be disclosed in your customer terms and approved by Nium compliance. For more details on enabling fees, contact your Nium account manager or [Nium Support](mailto:support@nium.com). For more information, see [Fees](/docs/fees).
+  description: "Use the Customer Fees request to manually charge a custom fee to a\
+    \ customer\u2019s wallet. This request changes the `customFee` resource and must\
+    \ be pre-approved by Nium before use due to regulatory requirements.\n\nYou can:\n\
+    \  - Charge a fixed or percentage-based fee in any wallet-supported currency.\n\
+    \  - Add fee details like name, amount, comments, and custom tags for tracking.\n\
+    \  - Track the status and system reference number returned after charging a fee.\n\
+    \nAll fees must be disclosed in your customer terms and approved by Nium compliance.\
+    \ For more details on enabling fees, contact your Nium account manager or [Nium\
+    \ Support](mailto:support@nium.com). For more information, see [Fees](/docs/fees)."
 - name: Payouts
   description: >-
-    Use the Payouts - Testing request to simulate changes to a remittance status in sandbox. This request changes the `remittance` resource and enable you to test how your integration responds to payout lifecycle transitions.
+    Use the Payouts - Testing request to simulate changes to a remittance status in
+    sandbox. This request changes the `remittance` resource and enable you to test
+    how your integration responds to payout lifecycle transitions.
 
 
     You can:
@@ -411,29 +472,35 @@ tags:
       - Trigger RFI (Request for Information) flows using `requestInfoFor`.
       - Test how your system handles various edge cases in payout execution.
 
-    These requests are helpful for verifying your payout integration before going live. For more information, see [Testing Nium](/docs/testing).
+    These requests are helpful for verifying your payout integration before going
+    live. For more information, see [Testing Nium](/docs/testing).
 - name: Payin
   description: >-
-    Use the Payin - Testing requests to simulate wallet funding events and funding instrument status changes in sandbox. These requests change the `inwardPayment` and `fundingInstrument` resources and help validate how your integration responds to wallet funding flows.
+    Use the Payin - Testing requests to simulate wallet funding events and funding
+    instrument status changes in sandbox. These requests change the `inwardPayment`
+    and `fundingInstrument` resources and help validate how your integration responds
+    to wallet funding flows.
 
 
     You can:
       - Simulate a received wallet payment using a virtual account number.
-      - Update the status of a funding instrument (e.g., simulate micro-deposit success or failure).
-      - Test how your system handles wallet credits, external funding, and onboarding steps.
+      - Update the status of a funding instrument (e.g., simulate micro-deposit success
+    or failure).
+      - Test how your system handles wallet credits, external funding, and onboarding
+    steps.
 
-    These requests are useful for testing payin flows before going live. For more information, see [Testing Nium](/docs/testing).
+    These requests are useful for testing payin flows before going live. For more
+    information, see [Testing Nium](/docs/testing).
 - name: Customer
-  description: >-
-    Use the Customer - Testing requests to simulate transitions in a customer’s onboarding or compliance status. These requests change the `customer` resource and enables you to test how your integration handles real-world onboarding scenarios in sandbox.
-
-
-    You can:
-      - Simulate a transition from **ACTION_REQUIRED** to **RFI_REQUESTED**, **REJECTED**, or **COMPLIANCE_COMPLETED**.
-      - Trigger status changes in response to submitted documents or review outcomes.
-      - Validate how your platform reacts to onboarding workflows and compliance delays.
-
-    These requests are useful for testing customer onboarding logic and compliance edge cases. For more information, see [Testing Nium](/docs/testing).
+  description: "Use the Customer - Testing requests to simulate transitions in a customer\u2019\
+    s onboarding or compliance status. These requests change the `customer` resource\
+    \ and enables you to test how your integration handles real-world onboarding scenarios\
+    \ in sandbox.\n\nYou can:\n  - Simulate a transition from **ACTION_REQUIRED**\
+    \ to **RFI_REQUESTED**, **REJECTED**, or **COMPLIANCE_COMPLETED**.\n  - Trigger\
+    \ status changes in response to submitted documents or review outcomes.\n  - Validate\
+    \ how your platform reacts to onboarding workflows and compliance delays.\n\n\
+    These requests are useful for testing customer onboarding logic and compliance\
+    \ edge cases. For more information, see [Testing Nium](/docs/testing)."
 paths:
   /api/v1/client/{clientHashId}/prefund:
     post:
@@ -792,9 +859,9 @@ paths:
       description: >-
         This API provides all the fees that have been set at the client level by NIUM.
 
-        Refer to the following [Fees User Guide](/docs/fees-limits) for the Glossary of Fees
-        for pre-defined fees supported on the system
-      operationId: FeeDetails
+        Refer to the following [Fees User Guide](/docs/fees-limits) for the Glossary
+        of Fees for pre-defined fees supported on the system
+      operationId: FeeDetails_1
       parameters:
       - name: clientHashId
         in: path
@@ -7612,6 +7679,14 @@ paths:
         explode: false
         schema:
           $ref: '#/components/schemas/CoreApiHashId'
+      - name: x-idempotency-id
+        in: header
+        description: Unique Idempotency UUID
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
       - description: Enter a unique UUID value
         in: header
         name: x-request-id
@@ -11099,7 +11174,6 @@ paths:
               $ref: '#/components/schemas/VerifyRequest'
         description: verifyRequest
         required: true
-      description: Create a `verification` and verify a bank account. For more details, see [Nium Verify](/docs/account-verification).
       summary: Verify a Bank Account
       x-info:
         apiType: external
@@ -11649,7 +11723,8 @@ paths:
       tags:
       - Lifecycle
       summary: Convert Card
-      description: Convert your virtual card to a physical card. For more information, see [Manage Cards](/docs/card-management).
+      description: Convert your virtual card to a physical card. For more information,
+        see [Manage Cards](/docs/card-management).
       operationId: convertCard
       parameters:
       - name: clientHashId
@@ -11701,7 +11776,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
         '401':
           description: Unauthorized
           content:
@@ -11719,7 +11794,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
       x-info:
         apiType: external
   /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/lockAction:
@@ -12372,13 +12447,10 @@ paths:
       tags:
       - Security
       summary: Fetch ATM Pin
-      description: >-
-        Fetch the base-64 encoded ATM PIN for:
-        - Physical cards
-        - Virtual cards that you have upgraded to a physical card in your production environment. 
-        Please note:
-        - This request **does not** work for virtual cards. 
-        - Only allowed for the EU and UK cards.
+      description: 'Fetch the base-64 encoded ATM PIN for: - Physical cards - Virtual
+        cards that you have upgraded to a physical card in your production environment.  Please
+        note: - This request **does not** work for virtual cards.  - Only allowed
+        for the EU and UK cards.'
       operationId: FetchATMPin
       parameters:
       - name: clientHashId
@@ -12635,7 +12707,9 @@ paths:
 
         Please note, this request version is deprecated.
 
-        Eventually, a deprecated API version becomes unsupported. See [Fetch Card Data Encrypted](https://docs.nium.com/apis/reference/fetchcarddataencryptedv2) for the latest version of this request.
+        Eventually, a deprecated API version becomes unsupported. See [Fetch Card
+        Data Encrypted](https://docs.nium.com/apis/reference/fetchcarddataencryptedv2)
+        for the latest version of this request.
       operationId: FetchCVV2
       parameters:
       - name: clientHashId
@@ -14073,8 +14147,8 @@ paths:
       tags:
       - Payouts
       deprecated: false
-      description: Transition the `status` of a transaction using the `nextStatus` field. For more information, see [Testing Nium](/docs/testing).
-      summary: Simulate Transaction Status
+      description: Transition the `status` of a transaction using the `nextStatus`
+        field. For more information, see [Testing Nium](/docs/testing).
       operationId: simulateTransactionStatus
       requestBody:
         required: true
@@ -14365,8 +14439,8 @@ paths:
       tags:
       - Customer
       deprecated: false
-      description: Transition the compliance status of a customer account's using the `nextStatus` field. For more information, see [Testing Nium](/docs/testing).
-      summary: Simulate Customer Compliance Status
+      description: Transition the compliance status of a customer account's using
+        the `nextStatus` field. For more information, see [Testing Nium](/docs/testing).
       operationId: simulateAccountComplianceStatus
       requestBody:
         required: true
@@ -14792,8 +14866,7 @@ components:
           example: '100100'
         childCustomerHashId:
           type: string
-          description: >-
-            Unique ID for an individual customer linked to a parent-level
+          description: Unique ID for an individual customer linked to a parent-level
             corporate customer. Used to associate and track the child customer within
             a corporate customer's program.
           example: dcfe0a79-9386-4b50-a1e1-7299f6bfb0c0
@@ -15074,8 +15147,7 @@ components:
           - INACTIVE,ACTIVE,VIRTUAL_ACTIVE,TEMP_BLOCK,P_BLOCK
         childCustomerHashId:
           type: string
-          description: >-
-            Unique ID for an individual customer linked to a parent-level
+          description: Unique ID for an individual customer linked to a parent-level
             corporate customer. Used to associate and track the child customer within
             a corporate customer's program.
       description: Card details
@@ -15716,8 +15788,7 @@ components:
           example: '2197'
         childCustomerHashId:
           type: string
-          description: >-
-            Unique ID for an individual customer linked to a parent-level
+          description: Unique ID for an individual customer linked to a parent-level
             corporate customer. Used to associate and track the child customer within
             a corporate customer's program.
           example: 123e4567-e89b-12d3-a456-426614174000
@@ -15978,11 +16049,12 @@ components:
     DerivedAccountDetails:
       properties:
         name:
-          description: The name of the account holder associated with the verified bank account or proxy values (email, phone number, etc.).
+          description: The name of the account holder associated with the verified
+            bank account or proxy values (email, phone number, etc.).
           type: string
         nameLocal:
-          description: >-
-            Account holder's name in the regional language of the requested country, if provided.
+          description: Account holder's name in the regional language of the requested
+            country, if provided.
           type: string
       title: DerivedAccountDetails
       type: object
@@ -16065,8 +16137,7 @@ components:
     VerifyRequest:
       properties:
         accountHolderName:
-          description: >-
-            The name of the account holder.
+          description: The name of the account holder.
           type: string
         bank:
           $ref: '#/components/schemas/Bank'
@@ -16076,9 +16147,11 @@ components:
           type: string
         currency:
           description: >-
-            The 3-letter [ISO-4217 currency code] representing the currency for the account verification.
+            The 3-letter [ISO-4217 currency code] representing the currency for the
+            account verification.
 
-            This field specifies the currency in which the verification is conducted (e.g. MYR for Malaysian Ringgit).
+            This field specifies the currency in which the verification is conducted
+            (e.g. MYR for Malaysian Ringgit).
           type: string
         externalId:
           description: External client request ID to track verification response.
@@ -16096,8 +16169,7 @@ components:
     VerifyResponse:
       properties:
         accountHolderName:
-          description: >-
-            The name of the account holder.
+          description: The name of the account holder.
           type: string
         code:
           description: Error code indicating the type of error.
@@ -16108,9 +16180,11 @@ components:
           type: string
         currency:
           description: >-
-            The 3-letter [ISO-4217 currency code] representing the currency for the account verification.
+            The 3-letter [ISO-4217 currency code] representing the currency for the
+            account verification.
 
-            This field specifies the currency in which the verification is conducted (e.g. MYR for Malaysian Ringgit).
+            This field specifies the currency in which the verification is conducted
+            (e.g. MYR for Malaysian Ringgit).
           type: string
         date:
           description: The date and time when the verification was created
@@ -16134,7 +16208,8 @@ components:
           description: Failure code will be present if the verificationstatus is invalid.
           type: string
         id:
-          description: A unique account verification service id of the response. This is used to track the end-to-end flow of account verification.
+          description: A unique account verification service id of the response. This
+            is used to track the end-to-end flow of account verification.
           type: string
         status:
           description: The status of the verification (valid or invalid).
@@ -16575,8 +16650,8 @@ components:
             \ in the wallet. This field is required when estimatedMonthlyFundingCurrency\
             \ field is provided in the request.\nThe possible values are:\n\u2022\
             \ MF001: <1000\n\u2022 MF002: 1000-5000\n\u2022 MF003: 5001-10000\n\u2022\
-            \ MF004: 10001-20000\n\u2022 MF005: >20000\nSee the [Unified Add Customer](https://docs.nium.com/apis/docs/unified-add-customer-api) request\n\
-            Note: This field is mandatory for EU and UK."
+            \ MF004: 10001-20000\n\u2022 MF005: >20000\nSee the [Unified Add Customer](https://docs.nium.com/apis/docs/unified-add-customer-api)\
+            \ request\nNote: This field is mandatory for EU and UK."
           enum:
           - MF001
           - MF002
@@ -16625,8 +16700,9 @@ components:
         intendedUseOfAccount:
           description: >-
             This field accepts the customer's intended use of account.
-            
-            See the [Unified Add Customer](https://docs.nium.com/apis/docs/unified-add-customer-api) request for more information.
+
+            See the [Unified Add Customer](https://docs.nium.com/apis/docs/unified-add-customer-api)
+            request for more information.
           enum:
           - IU100
           - IU101
@@ -16906,10 +16982,14 @@ components:
         complianceStatus:
           description: >-
             The compliance status of the transactions. Available values include:
-              - **PENDING**: The transaction is under compliance review and may require additional checks before it can proceed.
-              - **RFI_REQUESTED**: Additional information has been requested to complete the compliance review of this transaction.
-              - **CLEAR**: The transaction has passed all compliance checks and can proceed to the next step in processing.
-              - **REJECTED**: The transaction did not meet compliance requirements and cannot proceed.
+              - **PENDING**: The transaction is under compliance review and may require
+            additional checks before it can proceed.
+              - **RFI_REQUESTED**: Additional information has been requested to complete
+            the compliance review of this transaction.
+              - **CLEAR**: The transaction has passed all compliance checks and can
+            proceed to the next step in processing.
+              - **REJECTED**: The transaction did not meet compliance requirements
+            and cannot proceed.
           type: string
         customerHashId:
           description: Unique customer identifier generated on customer creation
@@ -17198,6 +17278,8 @@ components:
           items:
             $ref: '#/components/schemas/ProfessionalDetailsResponseDTO'
           type: array
+        redirectURL:
+          type: string
         referenceId:
           type: string
         taxDetails:
@@ -21251,6 +21333,8 @@ components:
       properties:
         businessPartner:
           $ref: '#/components/schemas/BusinessPartnerV2'
+        redirectURL:
+          type: string
         referenceId:
           type: string
         stakeholderDetails:
@@ -22207,6 +22291,7 @@ components:
           - DE_LINKED
           - CANCELLED
           - LINKED
+          - INITIATED
           type: string
         statusDescription:
           description: This field contains the additional information of the status
@@ -22573,6 +22658,13 @@ components:
           enum:
           - DIRECT_DEBIT
           example: DIRECT_DEBIT
+          type: string
+        rails:
+          description: The payment rails which funds will be sent through.
+          enum:
+          - becs
+          - payto
+          example: payto
           type: string
         routingCodes:
           description: Accepts the List of routing code type and value.
@@ -23392,6 +23484,7 @@ components:
           - DE_LINKED
           - CANCELLED
           - LINKED
+          - INITIATED
           example: APPROVED
           type: string
         threeDSecureUsage:
@@ -24191,6 +24284,20 @@ components:
           type: array
       title: Applicant details
       type: object
+    ProductApplicantKycUrl:
+      properties:
+        redirectUrl:
+          description: Returned only if stakeholder redirectURL is available based
+            on the stakeholder kycMode.
+          example: https://integrations.partners.instarem.com/preprod/compliance/callback/load?kycUrlId=181ae550-b016-46bf-af6a-a8c49f01cdff&referenceId=561a3450-6016-46bf-af6a-a8c49f0erw334
+          type: string
+        referenceId:
+          description: ReferenceId of the stakeholder, sent in the request of Onboard
+            Corp Customer API.
+          example: 561a3450-6016-46bf-af6a-a8c49f0erw334
+          type: string
+      title: ApplicantKycUrl
+      type: object
     ProductAssociationDetails:
       properties:
         associationChairPerson:
@@ -24246,22 +24353,32 @@ components:
     ProductBankAccountDetails:
       properties:
         accountName:
+          description: 'The name of the beneficiary for the bank account. This field
+            can contain alphanumeric characters and the following special characters:
+            & . , ( ) _ '' / -. The maximum length is 140 characters.'
           type: string
         accountNumber:
+          description: Account number. This field can contain alphanumeric characters
+            for a maximum length of 35 characters.
           type: string
         bankAccountType:
           description: Type of Bank account.
           type: string
         bankName:
+          description: The name of the bank. The maximum length is 255 characters.
           type: string
         currency:
+          description: The primary currency of the bank account.
           type: string
         routingType:
+          description: Routing type of the bank account. Eg. SWIFT, BANK CODE.
           type: string
         routingType2:
           description: The routing type of the bank account.
           type: string
         routingValue:
+          description: Routing value of the bank account for the provided routingType.
+            This field can contain alphanumeric characters.
           type: string
         routingValue2:
           description: The routing value of the bank account.
@@ -24425,6 +24542,8 @@ components:
             SG: Optional
         bankAccountDetails:
           $ref: '#/components/schemas/ProductBankAccountDetails'
+          description: Bank account details of the corporate customer required to
+            perform auto sweep for refunds.
         businessName:
           description: >-
             This field contains the name of a business.
@@ -24650,6 +24769,7 @@ components:
             $ref: '#/components/schemas/ProductStakeholders'
           type: array
         stockSymbol:
+          description: The publicly traded stock or ticker symbol of the business.
           type: string
         taxDetails:
           description: >-
@@ -24817,8 +24937,6 @@ components:
       type: object
     ProductBusinessPartner:
       properties:
-        addresses:
-          $ref: '#/components/schemas/ProductAddresses'
         businessEntityType:
           description: >-
             This field accepts the entity type of the business partner. The acceptable
@@ -25321,6 +25439,8 @@ components:
             SG: Required
           type: string
         countryCode:
+          description: The country code of the contact number. Use Fetch corporate
+            constants API for valid values.
           type: string
         email:
           description: >-
@@ -25603,6 +25723,11 @@ components:
           description: This field contains the expiry time for redirect URL to be
             used for applicant KYC verification.
           type: string
+        kycURLs:
+          $ref: '#/components/schemas/KycUrls'
+          description: This object contains the KYC redirectURLs of applicant and
+            individual stakeholders. Alternately you can call Customer Details API
+            to get the referenceId or redirectURL.
         redirectUrl:
           description: This field contains the redirect URL to be used for applicant
             KYC verification.
@@ -25893,12 +26018,17 @@ components:
     DeviceDetails:
       properties:
         countryIP:
+          description: Country of the IP address e.g. US. Use Fetch corporate constants
+            API for valid values.
           type: string
         deviceInfo:
+          description: Information of the device e.g. Mac OS.
           type: string
         ipAddress:
+          description: IP address of the device e.g. 45.48.241.198
           type: string
         sessionId:
+          description: A unique identifier for the session, generated by your application.
           type: string
       title: DeviceDetails
       type: object
@@ -25979,19 +26109,6 @@ components:
           items:
             $ref: '#/components/schemas/ProductDocument'
           type: array
-        documentColor:
-          description: >-
-            This field accepts the color for Medicare card.
-
-
-            AU: Optional
-
-            EU: Optional
-
-            UK: Optional
-
-            SG: Optional
-          type: string
         documentExpiryDate:
           description: >-
             This field accepts the date of the document expiry
@@ -26034,33 +26151,8 @@ components:
             SG: Optional
           type: string
         documentIssuanceState:
-          type: string
-        documentIssuedDate:
-          description: >-
-            This field accepts the date of the document issuance. This field should
-            be sent when available on the document.
-
-
-            AU: Optional
-
-            EU: Optional
-
-            UK: Optional
-
-            SG: Optional
-          type: string
-        documentIssuingAuthority:
-          description: >-
-            This field accepts the name of the issuing authority of the document.
-
-
-            AU: Optional
-
-            EU: Optional
-
-            UK: Optional
-
-            SG: Optional
+          description: The state that issued the document. Applicable for documents
+            that differ in different states.
           type: string
         documentNumber:
           description: >-
@@ -26076,7 +26168,6 @@ components:
             UK: Optional
 
             SG: Optional
-          example: 6565666
           type: string
         documentReferenceNumber:
           description: >-
@@ -26177,8 +26268,11 @@ components:
       properties:
         credit:
           $ref: '#/components/schemas/ExpectedAccountCredit'
+          description: The expected account usage of all 3rd party inward transactions
+            or collections.
         debit:
           $ref: '#/components/schemas/ExpectedAccountDebit'
+          description: The expected account usage of all outward transactions.
         intendedUses:
           description: How the customer inteds to use the account.
           items:
@@ -26189,6 +26283,24 @@ components:
             2-3 lines of text. Maximum 300 characters.
           type: string
       title: ExpectedAccountUsage
+      type: object
+    KycUrls:
+      properties:
+        applicantKycUrl:
+          $ref: '#/components/schemas/ProductApplicantKycUrl'
+          description: Object to contain the KYC redirect URL of the applicant. Returned
+            only if applicant redirectURL is available based on the applicant kycMode.
+        stakeholderKycUrls:
+          description: 'Returned only if any of the applicant redirectURL is available
+            based on the kycMode. This object contains redirectURL and referenceId
+            of the stakeholder for whom the  redirectURL is issued. In case referenceId
+            not provided in the request of Onboard Corporate Customer, firstName,
+            middleName, lastName provided in this response can be used for identifying
+            the stakeholder. '
+          items:
+            $ref: '#/components/schemas/ProductStakeholderKycUrls'
+          type: array
+      title: KycUrls
       type: object
     ProductLegalDetails:
       properties:
@@ -26281,19 +26393,6 @@ components:
             UK: Required
 
             SG: Required
-          type: string
-        registrationType:
-          description: >-
-            This field accepts the registration type for the entity.
-
-
-            AU: Optional
-
-            EU: NA
-
-            UK: NA
-
-            SG: NA
           type: string
       title: LegalDetails
       type: object
@@ -26614,9 +26713,6 @@ components:
           description: This field accepts the position. Use the [Fetch Corporate Constants
             API](ref:fetchcorporateconstantsusingget) to get the list of valid enum
             values.
-          type: string
-        positionEndDate:
-          description: This field accepts the end date of the position.
           type: string
         positionStartDate:
           description: This field accepts the start date of the position.
@@ -27064,6 +27160,8 @@ components:
             SG: Required
           type: string
         intendedUseOfAccount:
+          description: The customer's intended use of the account. Use Fetch Corporate
+            Constants API for a valid set of values.
           type: string
         ofacLicencePresent:
           description: >-
@@ -27128,6 +27226,9 @@ components:
             SG: Required
           type: string
         transactionCountries:
+          description: An array of countries where the customers sends to or recieves
+            money from using this account. See Fetch Corporate Constants API for the
+            list of restricted countries.
           items:
             type: string
           type: array
@@ -27152,6 +27253,9 @@ components:
         additionalInfo:
           additionalProperties:
             type: string
+          description: An object that contains additional information about the stakeholder.
+            Details such as isPEP can be sent as Key value pair. Refer to region wise
+            guides for more details.
           type: object
         address:
           $ref: '#/components/schemas/ProductAddress'
@@ -27459,6 +27563,45 @@ components:
         title:
           type: string
       title: Stakeholder details
+      type: object
+    ProductStakeholderKycUrls:
+      properties:
+        dateOfBirth:
+          description: Date of birth of the stakeholder as provided in the request
+            of the Onboard Corporate Customer API.
+          example: '1992-10-01'
+          type: string
+        firstName:
+          description: First name of the stakeholder as provided in the request of
+            the Onboard Corporate Customer API.
+          example: John
+          type: string
+        lastName:
+          description: Last name of the stakeholder as provided in the request of
+            the Onboard Corporate Customer API.
+          example: Doe
+          type: string
+        middleName:
+          description: Middle name of the stakeholder as provided in the request of
+            the Onboard Corporate Customer API.
+          example: Unana
+          type: string
+        nationality:
+          description: Nationality of the stakeholder as provided in the request of
+            the Onboard Corporate Customer API.
+          example: IN
+          type: string
+        redirectUrl:
+          description: Returned only if stakeholder redirectURL is available based
+            on the stakeholder kycMode.
+          example: https://integrations.partners.instarem.com/preprod/compliance/callback/load?kycUrlId=181ae550-b016-46bf-af6a-a8c49f01cdff&referenceId=672b3450-6016-46bf-af6a-a8c49f0erac54
+          type: string
+        referenceId:
+          description: ReferenceId of the stakeholder, sent in the request of Onboard
+            Corp Customer API.
+          example: 672b3450-6016-46bf-af6a-a8c49f0erac54
+          type: string
+      title: StakeholderKycUrls
       type: object
     ProductStakeholders:
       properties:
@@ -28035,65 +28178,6 @@ components:
         value: Sales
       - key: Corporate Entity business
         value: Payroll
-    ApiErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - invalid_client_hash_id
-          - invalid_customer_hash_id
-          - invalid_wallet_hash_id
-          - invalid_card_hash_id
-          - customer_status_not_clear
-          - invalid_currency
-          - currency_not_configured
-          - wallet_creation_limit_exceeds
-          - tags_maximum_limit_exceeded
-          - tag_key_contains_special_chars
-          - unique_tag_key_required
-          - duplicate_client_transaction_config
-          - invalid_client_transaction_config
-          - invalid_transaction_category
-          - invalid_transaction_type
-          - wallet_currency_already_exists
-          - invalid_permission_to_override_customer_fee
-          - invalid_customer_fee_for_individual
-          - invalid_fee_type_for_customer_level
-          - invalid_FX_markup_flat_fee
-          - invalid_customer_fee_currency
-          - invalid_customer_fee_status
-          - fee_already_defined_for_auth_currency
-          - invalid_transaction_currency
-          - invalid_fee_currency
-          - customer_fee_above_threshold
-          - fee_currency_should_not_be_any
-          - customer_fee_does_not_exists
-          - customer_fee_update_not_allowed_for_region
-          - customer_fee_already_exists
-          - wallet_currency_removal_not_allowed
-          - invalid_system_reference_number
-          - invalid_status_for_remittance_cancel
-          - wallet_creation_not_allowed
-          - invalid_input
-          - resource_not_found
-          - invalid_date_range
-          - customer_exists_with_external_id
-          - payout_cancellation_failed
-          - wallet_creation_failed
-          - invalid_customer_age
-          - duplicate_externalId
-          - client_customer_not_found
-          - client_customer_compliance_not_completed
-          - invalid_customer_creation_combination
-          - invalid_input_provided
-          - missing_required_fields
-          - customer_exists
-          - incomplete_client_setup
-        description:
-          type: string
-        field:
-          type: string
     CurrencyDetail:
       type: object
       properties:
@@ -28171,6 +28255,65 @@ components:
           - top_up
           - virtual
           - base
+    ApiErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - invalid_client_hash_id
+          - invalid_customer_hash_id
+          - invalid_wallet_hash_id
+          - invalid_card_hash_id
+          - customer_status_not_clear
+          - invalid_currency
+          - currency_not_configured
+          - wallet_creation_limit_exceeds
+          - tags_maximum_limit_exceeded
+          - tag_key_contains_special_chars
+          - unique_tag_key_required
+          - duplicate_client_transaction_config
+          - invalid_client_transaction_config
+          - invalid_transaction_category
+          - invalid_transaction_type
+          - wallet_currency_already_exists
+          - invalid_permission_to_override_customer_fee
+          - invalid_customer_fee_for_individual
+          - invalid_fee_type_for_customer_level
+          - invalid_FX_markup_flat_fee
+          - invalid_customer_fee_currency
+          - invalid_customer_fee_status
+          - fee_already_defined_for_auth_currency
+          - invalid_transaction_currency
+          - invalid_fee_currency
+          - customer_fee_above_threshold
+          - fee_currency_should_not_be_any
+          - customer_fee_does_not_exists
+          - customer_fee_update_not_allowed_for_region
+          - customer_fee_already_exists
+          - wallet_currency_removal_not_allowed
+          - invalid_system_reference_number
+          - invalid_status_for_remittance_cancel
+          - wallet_creation_not_allowed
+          - invalid_input
+          - resource_not_found
+          - invalid_date_range
+          - customer_exists_with_external_id
+          - payout_cancellation_failed
+          - wallet_creation_failed
+          - invalid_customer_age
+          - duplicate_externalId
+          - client_customer_not_found
+          - client_customer_compliance_not_completed
+          - invalid_customer_creation_combination
+          - invalid_input_provided
+          - missing_required_fields
+          - customer_exists
+          - incomplete_client_setup
+        description:
+          type: string
+        field:
+          type: string
     TransactionsLocationDTO:
       required:
       - merchantLatitude
@@ -29020,6 +29163,23 @@ components:
           $ref: '#/components/schemas/BeneficiaryDetailsV3DTO'
         paymentAccount:
           $ref: '#/components/schemas/BeneficiaryPaymentAccount'
+    ChinaPayoutDetailsDTO:
+      required:
+      - orders
+      type: object
+      properties:
+        orders:
+          type: array
+          description: This object accepts the order details.
+          items:
+            $ref: '#/components/schemas/OrderDetailsDTO'
+      description: China order-level details
+    CorridorDataDTO:
+      type: object
+      properties:
+        cn:
+          $ref: '#/components/schemas/ChinaPayoutDetailsDTO'
+      description: Corridor specific data
     WalletDeviceDetailsDTO:
       type: object
       properties:
@@ -29043,6 +29203,35 @@ components:
           description: The session ID of the instance the customer is initiating.
           example: 40531ac01a6f11edafc28dba55d51275
       description: This object accepts the device and IP details for the transaction.
+    Goods:
+      required:
+      - quantity
+      type: object
+      properties:
+        quantity:
+          minimum: 0
+          type: integer
+          description: Quantity of the particular item which was sold
+          format: int32
+        category:
+          type: string
+          description: Category of the goods which was sold
+        name:
+          type: string
+          description: Name of the goods which was sold
+      description: This object accepts the goods details
+    Logistics:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of Logistics company used to ship goods. Required only
+            for goods trade.
+        trackingNumber:
+          type: string
+          description: Tracking number used to ship goods. Required only for goods
+            trade.
+      description: This object accepts the logistics details
     N1PaymentAccountDTO:
       required:
       - paymentAccountId
@@ -29053,6 +29242,68 @@ components:
           description: This is an unique beneficiary's payment account identifier.
           format: uuid
           example: 6964e6d3-df97-414f-bb39-ff2243ae990a
+    Order:
+      required:
+      - amount
+      - commodity
+      - number
+      - time
+      type: object
+      properties:
+        number:
+          type: string
+          description: Order number of the sale done by the seller/marketplace
+        amount:
+          type: number
+          description: Amount of the order of the sale done by the seller/marketplace
+          format: double
+        time:
+          pattern: ^\d{4}/(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])\s([01]\d|2[0-3]):[0-5]\d:[0-5]\d$
+          type: string
+          description: Date and time the sale done by the seller/marketplace
+        commodity:
+          type: string
+          description: Different based on purpose code.
+        description:
+          type: string
+          description: Order description
+      description: This object accepts the order
+    OrderDetailsDTO:
+      required:
+      - goods
+      - order
+      - seller
+      type: object
+      properties:
+        order:
+          $ref: '#/components/schemas/Order'
+        goods:
+          $ref: '#/components/schemas/Goods'
+        logistics:
+          $ref: '#/components/schemas/Logistics'
+        seller:
+          $ref: '#/components/schemas/Seller'
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        payer:
+          $ref: '#/components/schemas/Payer'
+        trade:
+          $ref: '#/components/schemas/Trade'
+      description: Order Details
+    Payer:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field for payer name already exists. Both Chinese and English
+            to be supported. Name of the buyer
+        bankAccountNumber:
+          type: string
+          description: Field for payer bank account number already exists
+        bankName:
+          type: string
+          description: Field for payer bank name already exists
+      description: This object accepts the payer details
     PaymentAccountOwnerIdentification:
       type: object
       properties:
@@ -29167,6 +29418,14 @@ components:
           - ca_eft
           - ca_interac
       description: This Object accepts payout rail details.
+    Recipient:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          description: Beneficiary phone number field can be used. No additional field
+            is required
+      description: This object accepts the recipient details
     RemittanceTransactionsRequestDTO:
       required:
       - beneficiary
@@ -29200,8 +29459,8 @@ components:
         purposeCode:
           type: string
           description: "This field accepts the purpose code for the payment. Refer\
-            \ to the [Glossary of Purpose Codes](/docs/purpose-of-transfer-codes) to\
-            \ identify the correct value to be provided.\n\nIf purpose code value\
+            \ to the [Glossary of Purpose Codes](/docs/purpose-of-transfer-codes)\
+            \ to identify the correct value to be provided.\n\nIf purpose code value\
             \ is not passed then the default value will be IR01802 (Advertising &\
             \ Public relations-related expenses).\n\nPurpose Code - Description\n\
             IR001         - Transfer to own account\nIR002         - Family Maintenance\n\
@@ -29317,10 +29576,9 @@ components:
             $ref: '#/components/schemas/ClientCustomTagDTO'
         beneficiaryIntermediaryBankCode:
           type: string
-          description: >-
-            The bank code of a correspondent bank to route SWIFT payments through. 
-            
-            Use this field if you prefer to specify a bank instead of using Nium's automatic routing.
+          description: "The bank code of a correspondent bank to route SWIFT payments\
+            \ through. \nUse this field if you prefer to specify a bank instead of\
+            \ using Nium's automatic routing."
         preferences:
           $ref: '#/components/schemas/Preferences'
         externalId:
@@ -29330,6 +29588,8 @@ components:
             Optional user-defined ID for tracking requests or transactions.
               - Must be 1-36 characters, using only letters, numbers, and hyphens.
               - Cannot start or end with a hyphen or contain consecutive hyphens.
+        corridorData:
+          $ref: '#/components/schemas/CorridorDataDTO'
     RemitterRequestDTO:
       required:
       - accountType
@@ -29422,6 +29682,46 @@ components:
           type: string
           description: A routing code value
       description: A routing code details
+    Seller:
+      required:
+      - identificationNumber
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: To be passed if seller is different than final beneficiary.
+            If it is the same, beneficiary name field will be used
+        identificationNumber:
+          type: string
+          description: To be passed if seller is different than final beneficiary.
+            If it is the same, beneficiary name field will be used
+        website:
+          type: string
+          description: Website of the seller or marketplace where the sale of goods
+            or services was done
+        bankAccountNumber:
+          type: string
+          description: Currency will be passed in the beneficiary account number field
+        id:
+          type: string
+          description: NA
+      description: This object accepts the seller details
+    Trade:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Will be derived from Remit Purpose Code
+        remarks:
+          type: string
+        declarationMode:
+          type: string
+        mode:
+          type: string
+        transactionDetails:
+          type: string
+      description: This object accepts the trade details
     CancelledRemittanceResponseDTO:
       type: object
       properties:
@@ -30083,6 +30383,9 @@ components:
             The name registered with the bank account. (Only supported in some corridors.
             For more information, see <a href="https://docs.nium.com/apis/docs/account-verification">Account
             Verification</a>.)
+        nameMatch:
+          type: string
+          description: Name match status of US account verification
     ClientFeeDetailsResponseDTO:
       type: object
       properties:
@@ -30537,8 +30840,7 @@ components:
             while new customer created.
         childCustomerHashId:
           type: string
-          description: >-
-            Unique ID for an individual customer linked to a parent-level
+          description: Unique ID for an individual customer linked to a parent-level
             corporate customer. Used to associate and track the child customer within
             a corporate customer's program.
         walletHashId:
@@ -30764,10 +31066,14 @@ components:
           type: string
           description: >-
             The compliance status of the transactions. Available values include:
-              - **PENDING**: The transaction is under compliance review and may require additional checks before it can proceed.
-              - **RFI_REQUESTED**: Additional information has been requested to complete the compliance review of this transaction.
-              - **CLEAR**: The transaction has passed all compliance checks and can proceed to the next step in processing.
-              - **REJECTED**: The transaction did not meet compliance requirements and cannot proceed.
+              - **PENDING**: The transaction is under compliance review and may require
+            additional checks before it can proceed.
+              - **RFI_REQUESTED**: Additional information has been requested to complete
+            the compliance review of this transaction.
+              - **CLEAR**: The transaction has passed all compliance checks and can
+            proceed to the next step in processing.
+              - **REJECTED**: The transaction did not meet compliance requirements
+            and cannot proceed.
           enum:
           - NONE
           - IN_PROGRESS
@@ -31009,6 +31315,9 @@ components:
         errorDescription:
           type: string
           description: This field contains ISO reason description.
+        paymode:
+          type: string
+          description: This field shows payout mode through which payment is processed.
     FxHoldLockResponseContent:
       type: object
       properties:
@@ -33051,35 +33360,35 @@ components:
           $ref: '#/components/schemas/CursorPagination'
       description: Paginated bank account response.
     CursorPagination:
-      type: object
-      properties:
-        totalRecords:
-          description: The total number of records available to be returned.
-          type: integer
-          example: 95
-          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
-        totalPages:
-          description: The total number of pages available for querying.
-          type: integer
-          example: 5
-          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
-        currentCursor:
-          description: The cursor for the current page of responses.
-          type: string
-        nextCursor:
-          description: The cursor for the next page of responses.
-          type: string
-        nextPageUrl:
-          description: The URL of the request for the next page of responses.
-          type: string
-          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
-        prevPageUrl:
-          description: The URL of the request for the previous page of responses.
-          type: string
-          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
       required:
       - currentCursor
       - nextCursor
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: The total number of records available to be returned.
+          example: 95
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        totalPages:
+          type: integer
+          description: The total number of pages available for querying.
+          example: 5
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        currentCursor:
+          type: string
+          description: The cursor for the current page of responses.
+        nextCursor:
+          type: string
+          description: The cursor for the next page of responses.
+        nextPageUrl:
+          type: string
+          description: The URL of the request for the next page of responses.
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
+        prevPageUrl:
+          type: string
+          description: The URL of the request for the previous page of responses.
+          x-field-extra-annotation: '@JsonInclude(JsonInclude.Include.NON_NULL)'
     MicroDepositDetails:
       type: object
       properties:
