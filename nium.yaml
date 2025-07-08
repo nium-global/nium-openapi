@@ -25,7 +25,7 @@ info:
   license:
     name: Copyright (c) 2025 NIUM
   title: NIUM Platform
-  version: 2025.6.17
+  version: 2025.7.2
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -855,13 +855,13 @@ paths:
     get:
       tags:
       - Client Settings
-      summary: Fee Details
+      summary: Fee Details v2
       description: >-
         This API provides all the fees that have been set at the client level by NIUM.
 
         Refer to the following [Fees User Guide](/docs/fees-limits) for the Glossary
         of Fees for pre-defined fees supported on the system
-      operationId: FeeDetails_1
+      operationId: FeeDetails
       parameters:
       - name: clientHashId
         in: path
@@ -920,6 +920,119 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletApiError'
+      x-info:
+        apiType: external
+  /api/v3/client/{clientHashId}/fees:
+    get:
+      tags:
+      - Client Settings
+      summary: Fee Details V3
+      description: >-
+        This API provides all the fees that have been set at the client level by NIUM.
+
+        Please refer to the following [Fees - Nium Developer Hub](https://docs.nium.com/baas/fees)
+        for the Glossary of Fees for pre-defined fees supported on the system
+      operationId: FeeDetailsV3
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          type: string
+          example: '{{$guid}}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeePricingResponseV3DTO'
+              example:
+                feePlans:
+                - planName: GOLD
+                  isDefault: true
+                  products:
+                  - name: payout
+                    fees:
+                    - fee: remit_proxy_fee
+                      rules:
+                      - type: nontier
+                        condition:
+                          operands:
+                          - sourceCurrency: USD
+                        price:
+                          type: percentage
+                          value: '2.5000'
+                          currency: USD
+                          percentageOf: source_amount
+                    - fee: remit_return_fee
+                      rules:
+                      - type: tier
+                        condition:
+                          operands:
+                          - sourceCurrency: SGD
+                        tier:
+                          'on':
+                            parameter: source_amount
+                            currency: SGD
+                            aggregatedBy: aggregated_volume
+                          ranges:
+                          - start: '0'
+                            end: '100'
+                            price:
+                              type: percentage
+                              value: '10'
+                              currency: USD
+                              percentageOf: source_amount
+                          - start: '101'
+                            end: '200'
+                            price:
+                              type: percentage
+                              value: '10'
+                              currency: USD
+                              percentageOf: source_amount
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletStandard404Error'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
   /api/v1/client/{clientHashId}/payin/limits:
@@ -6539,6 +6652,12 @@ paths:
         required: true
         schema:
           type: string
+      - description: x-idempotency-id
+        in: header
+        name: x-idempotency-id
+        required: false
+        schema:
+          type: string
       - description: Enter a unique UUID value
         in: header
         name: x-request-id
@@ -11776,7 +11895,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/NewErrorResponse'
         '401':
           description: Unauthorized
           content:
@@ -11794,7 +11913,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                $ref: '#/components/schemas/Standard500Error'
       x-info:
         apiType: external
   /api/v2/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/card/{cardHashId}/lockAction:
@@ -14147,6 +14266,7 @@ paths:
       tags:
       - Payouts
       deprecated: false
+      summary: Simulate Transaction Status
       description: Transition the `status` of a transaction using the `nextStatus`
         field. For more information, see [Testing Nium](/docs/testing).
       operationId: simulateTransactionStatus
@@ -14439,6 +14559,7 @@ paths:
       tags:
       - Customer
       deprecated: false
+      summary: Simulate Customer Onboarding Status
       description: Transition the compliance status of a customer account's using
         the `nextStatus` field. For more information, see [Testing Nium](/docs/testing).
       operationId: simulateAccountComplianceStatus
@@ -22292,6 +22413,7 @@ components:
           - CANCELLED
           - LINKED
           - INITIATED
+          - IN_PROGRESS
           type: string
         statusDescription:
           description: This field contains the additional information of the status
@@ -22842,6 +22964,7 @@ components:
           - BANKINGCIRCLE_PL
           - SCB
           - COLUMN
+          - CUSCAL
           example: DBS_SG
           type: string
         branchCode:
@@ -23485,6 +23608,7 @@ components:
           - CANCELLED
           - LINKED
           - INITIATED
+          - IN_PROGRESS
           example: APPROVED
           type: string
         threeDSecureUsage:
@@ -28178,6 +28302,86 @@ components:
         value: Sales
       - key: Corporate Entity business
         value: Payroll
+    ApiErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - invalid_client_hash_id
+          - invalid_customer_hash_id
+          - invalid_wallet_hash_id
+          - invalid_card_hash_id
+          - customer_status_not_clear
+          - invalid_currency
+          - currency_not_configured
+          - wallet_creation_limit_exceeds
+          - tags_maximum_limit_exceeded
+          - tag_key_contains_special_chars
+          - unique_tag_key_required
+          - duplicate_client_transaction_config
+          - invalid_client_transaction_config
+          - invalid_transaction_category
+          - invalid_transaction_type
+          - wallet_currency_already_exists
+          - invalid_permission_to_override_customer_fee
+          - invalid_customer_fee_for_individual
+          - invalid_fee_type_for_customer_level
+          - invalid_FX_markup_flat_fee
+          - invalid_customer_fee_currency
+          - invalid_customer_fee_status
+          - fee_already_defined_for_auth_currency
+          - invalid_transaction_currency
+          - invalid_fee_currency
+          - customer_fee_above_threshold
+          - fee_currency_should_not_be_any
+          - customer_fee_does_not_exists
+          - customer_fee_update_not_allowed_for_region
+          - customer_fee_already_exists
+          - wallet_currency_removal_not_allowed
+          - invalid_system_reference_number
+          - invalid_status_for_remittance_cancel
+          - wallet_creation_not_allowed
+          - invalid_input
+          - resource_not_found
+          - invalid_date_range
+          - customer_exists_with_external_id
+          - payout_cancellation_failed
+          - wallet_creation_failed
+          - invalid_customer_age
+          - duplicate_externalId
+          - client_customer_not_found
+          - client_customer_compliance_not_completed
+          - invalid_customer_creation_combination
+          - invalid_input_provided
+          - missing_required_fields
+          - customer_exists
+          - incomplete_client_setup
+          - client_not_active
+          - client_services_not_active
+          - invalid_destination_wallet_hash_id
+          - cross_currency_transfers_not_allowed
+          - source_or_destination_amount_should_be_positive
+          - sender_customer_status_not_clear
+          - receiver_customer_status_not_clear
+          - invalid_w2w_transfer_amount
+          - invalid_purpose
+          - pocket_definition_not_found
+          - invalid_client_license_entity
+          - invalid_client_type
+          - transaction_not_permitted
+          - sending_fund_not_permitted
+          - receiving_fund_not_permitted
+          - authenticationCode_or_exemptionCode_required
+          - invalid_authenticationCode_or_exemptionCode
+          - invalid_exemption_code
+          - feature_not_supported
+          - session_token_generation_failed
+          - onboarding_form_url_generation_failed
+        description:
+          type: string
+        field:
+          type: string
     CurrencyDetail:
       type: object
       properties:
@@ -28255,65 +28459,6 @@ components:
           - top_up
           - virtual
           - base
-    ApiErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - invalid_client_hash_id
-          - invalid_customer_hash_id
-          - invalid_wallet_hash_id
-          - invalid_card_hash_id
-          - customer_status_not_clear
-          - invalid_currency
-          - currency_not_configured
-          - wallet_creation_limit_exceeds
-          - tags_maximum_limit_exceeded
-          - tag_key_contains_special_chars
-          - unique_tag_key_required
-          - duplicate_client_transaction_config
-          - invalid_client_transaction_config
-          - invalid_transaction_category
-          - invalid_transaction_type
-          - wallet_currency_already_exists
-          - invalid_permission_to_override_customer_fee
-          - invalid_customer_fee_for_individual
-          - invalid_fee_type_for_customer_level
-          - invalid_FX_markup_flat_fee
-          - invalid_customer_fee_currency
-          - invalid_customer_fee_status
-          - fee_already_defined_for_auth_currency
-          - invalid_transaction_currency
-          - invalid_fee_currency
-          - customer_fee_above_threshold
-          - fee_currency_should_not_be_any
-          - customer_fee_does_not_exists
-          - customer_fee_update_not_allowed_for_region
-          - customer_fee_already_exists
-          - wallet_currency_removal_not_allowed
-          - invalid_system_reference_number
-          - invalid_status_for_remittance_cancel
-          - wallet_creation_not_allowed
-          - invalid_input
-          - resource_not_found
-          - invalid_date_range
-          - customer_exists_with_external_id
-          - payout_cancellation_failed
-          - wallet_creation_failed
-          - invalid_customer_age
-          - duplicate_externalId
-          - client_customer_not_found
-          - client_customer_compliance_not_completed
-          - invalid_customer_creation_combination
-          - invalid_input_provided
-          - missing_required_fields
-          - customer_exists
-          - incomplete_client_setup
-        description:
-          type: string
-        field:
-          type: string
     TransactionsLocationDTO:
       required:
       - merchantLatitude
@@ -30386,6 +30531,180 @@ components:
         nameMatch:
           type: string
           description: Name match status of US account verification
+    ClientFeeDetailsResponseV3DTO:
+      type: object
+      properties:
+        planName:
+          type: string
+          description: Name of Segment/Plan.
+          example: GOLD
+        isDefault:
+          type: boolean
+          description: This field describes whether the plan is default one or not
+          example: true
+        products:
+          type: array
+          description: The products array contains multiple product objects, each
+            representing the product Fee details.
+          items:
+            $ref: '#/components/schemas/ClientProductFeeDetailsResponseV3DTO'
+    ClientProductFeeDetailsResponseV3DTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the product.
+          example: PAYOUT
+        fees:
+          type: array
+          description: The fees array contains multiple objects, each representing
+            fee details.
+          items:
+            $ref: '#/components/schemas/ProductFeeDetailsResponseV3DTO'
+      description: The products array contains multiple product objects, each representing
+        the product Fee details.
+    Condition:
+      type: object
+      properties:
+        sourceCurrency:
+          type: string
+        destinationCurrency:
+          type: string
+        payoutMethod:
+          type: string
+        swiftType:
+          type: string
+        sourceAmount:
+          type: string
+        sourceCountry:
+          type: string
+        destinationCountry:
+          type: string
+        remitterAccountType:
+          type: string
+        beneficiaryAccountType:
+          type: string
+        payoutRail:
+          type: string
+        operator:
+          type: string
+          description: Denotes the operation between operators.
+          example: and
+        operands:
+          type: array
+          description: This object list of conditions.
+          example:
+          - sourceCurrency: USD
+          - destinationCurrency: TRY
+          items:
+            $ref: '#/components/schemas/Condition'
+      description: This object contains the condition.
+      example:
+        condition:
+          operator: and
+          operands:
+          - sourceCurrency: USD
+          - destinationCurrency: TRY
+    FeePricingResponseV3DTO:
+      type: object
+      properties:
+        feePlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientFeeDetailsResponseV3DTO'
+    FeeRuleV3DTO:
+      type: object
+      properties:
+        type:
+          type: string
+          description: It represent whether pricing is tiered or non-tiered.
+          example: tier
+        condition:
+          $ref: '#/components/schemas/Condition'
+        price:
+          $ref: '#/components/schemas/PriceV3'
+        tier:
+          $ref: '#/components/schemas/TierPrice'
+      description: The rules array contains multiple objects, each contains the condition
+        and fee values.
+    PriceV3:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Determines whether fee is flat or percentage.
+          example: percentage
+        value:
+          type: string
+          description: Value of fee.
+          example: '10'
+        currency:
+          type: string
+          description: ' Currency should be accepted as the [3-letter ISO-4217 currency
+            code].'
+          example: SGD
+        percentageOf:
+          type: string
+          description: Percentage on the parameter.
+          example: source_amount
+    ProductFeeDetailsResponseV3DTO:
+      type: object
+      properties:
+        fee:
+          type: string
+          description: Name of fee.
+          example: REMIT_BANK_FEE
+        rules:
+          type: array
+          description: The rules array contains multiple objects, each contains the
+            condition and fee values.
+          items:
+            $ref: '#/components/schemas/FeeRuleV3DTO'
+      description: The fees array contains multiple objects, each representing fee
+        details.
+    TierOn:
+      type: object
+      properties:
+        parameter:
+          type: string
+          description: This parameter determines which tier should be picked for charging.
+          example: source_amount
+        currency:
+          type: string
+          description: ' Currency should be accepted as the [3-letter ISO-4217 currency
+            code].'
+          example: GBP
+        aggregatedBy:
+          type: string
+          description: This parameter determines the tiering whether it is volumetric
+            or quantity.
+          example: aggregated_volume
+    TierPrice:
+      type: object
+      properties:
+        'on':
+          $ref: '#/components/schemas/TierOn'
+        ranges:
+          type: array
+          description: The ranges array contains multiple objects, each representing
+            range of fee tiers.
+          items:
+            $ref: '#/components/schemas/TierRange'
+    TierRange:
+      type: object
+      properties:
+        start:
+          type: string
+          description: Start value of the range.
+          example: '0'
+        end:
+          type: string
+          description: End value of the range.
+          example: '10'
+        price:
+          $ref: '#/components/schemas/PriceV3'
+      description: The ranges array contains multiple objects, each representing range
+        of fee tiers.
     ClientFeeDetailsResponseDTO:
       type: object
       properties:
