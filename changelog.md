@@ -1,3 +1,141 @@
+## August 5, 2025
+
+### Payouts and Payins
+
+#### New Feature
+
+##### Know When Funds Will Arrive — Estimated Delivery Time
+
+Clients can now view the expected delivery time of payouts at the moment a transaction is initiated. This information is shared via the `estimatedDeliveryTime` field in the `REMIT_TRANSACTION_SENT_TO_BANK` webhook.
+
+The timestamp reflects when the funds are expected to reach the beneficiary, based on real-time routing data, partner cutoffs, and local holidays.
+
+For more information, see [Remit Transaction Sent To Bank](/docs/reference/remit-transaction-sent-to-bank).
+
+#### Upcoming Regulatory Change
+
+Effective **October 9, 2025**, all **EUR Local** payouts from **EU-based** clients will undergo **Verification of Payee (VoP)** checks per EU regulation. Payouts with name mismatches will be rejected by default.
+
+See the VoP Migration Guide for integration details and configuration steps.
+
+---
+
+## July 22, 2025
+
+### Core
+
+#### Enhancements
+
+##### Tags added to Webhooks
+
+We've now added tags to the following webhooks. This change will help you manage webhooks more efficiently.
+
+- [Client KYB Status](/docs/reference/client-kyb-status)
+- [Customer Registration](/docs/reference/customer-registration)
+
+---
+
+## July 8, 2025
+
+### Core
+
+#### Enhancements
+
+##### More details for `Fee_Debit` transactions
+
+We’ve updated `Fee_Debit` transaction labels to give customers more context about the fees charged:
+
+- `feeName` — Shows which [predefined fee](/docs/fees#pre-defined-fees) applies to the transaction.
+- `tierType` — Indicates whether the fee is based on tier rules or non-tier rules, per the updated Fee Details v3 request.
+- `condition` — Lists the conditions under which the fee is charged (for example, `source_currency`, `destination_currency`, `destination_country`).
+
+Nium’s pricing engine now supports more customization options, including fees based on payout and payin methods and tiered pricing.  
+To view pricing with these options, use the [Fee Details v3 request](/api#tag/client-settings/GET/api/v3/client/{clientHashId}/fees).
+
+#### New Features
+
+##### E_DOC_VERIFY for UBOs and Directors in the EU, UK, and SG
+
+We’ve expanded the **E_DOC_VERIFY** KYC method to:
+
+- UBOs and Directors in the **EU** and **UK**.
+- Both **E_KYC** and **E_DOC_VERIFY** in **SG**.
+
+This reduces the need for notarized documents in the EU and speeds up the KYC process.  
+For implementation details, see *Onboarding Response – 200* to generate a `redirectURL` for stakeholders in these regions.
+
+##### No expiry for `redirectURL` in Corporate Onboarding
+
+`redirectURL` links for Corporate Onboarding no longer expire, unless the customer starts but does not complete the KYC flow in a single uninterrupted session.
+
+If the session times out, customers can restart the process using the same link or by refreshing their browser.  
+As a result, the [Regenerate KYC URL](/api#tag/customer-account---corporate/POST/api/v1/client/{clientHashId}/customer/{customerHashId}/regenerateKYCURL) API will be deprecated (currently still supported with a dummy expiry for existing integrations).
+
+##### Standardized Letter of Authorization
+
+The [Letter of Authorization (Power of Attorney)](/docs/letter-of-authorization-loa) is now standardized across all Nium regions. You can direct customers to the updated template.
+
+---
+
+## June 24, 2025
+
+### Core
+
+#### Enhancements
+
+##### Enhanced Pricing Engine
+
+Nium has enhanced its pricing engine, providing a variety of customizable pricing options such as pricing via different payout and payin methods, tiered pricing, and more.
+
+To view pricing based on advanced options, fetch the pricing details using the [Fee Details V3](/api#tag/client-settings/GET/api/v3/client/{clientHashId}/fees) request.
+
+---
+
+## June 10, 2025
+
+### Core
+
+#### New Features
+
+##### Enhanced Account Verification for Payouts
+
+Reduce failed transfers and improve payout success with Nium’s built-in bank verification. Before sending funds, confirm the recipient’s account details in real time—no test deposits or manual checks required. This helps you catch errors early, improve customer experience, and avoid unnecessary fees.
+
+For more information, see [Nium Verify](/docs/account-verification).
+
+---
+
+## May 27, 2025
+
+### Core
+
+#### New Features
+
+##### Local Funding now available in Brazil
+
+We have introduced Local Funding in Brazil for corporate customers, reducing costs and improving transaction speed.
+
+As part of our banking partner requirements, we must collect a Brazilian `taxId` or CNPJ (Cadastro Nacional da Pessoa Jurídica) account number for these customers. See [Fund a Wallet – Brazil](/docs/fund-wallet#brazil) for more information.
+
+### Payouts and Payins
+
+#### Enhancements
+
+##### Early Warning Services (EWS)
+
+We're excited to announce a powerful enhancement to Nium Verify—a new integration leveraging Early Warning Services (EWS) to deliver real-time, high-accuracy US bank account verification.
+
+- **Expanded Coverage in the US**: Benefit from broader bank coverage with industry-grade EWS data, addressing gaps left by traditional credit bureau-based verification.
+- **Improved Accuracy**: Significantly reduce verification failures and false negatives. Expect fewer `bank_not_supported` and `not_verified` responses.
+- **Name Match Insights**: Gain added payment confidence with `nameMatch` results:
+  - `match`
+  - `partial_match`
+  - `no_match`
+
+*Available only for US accounts.*
+
+---
+
 ## May 13, 2025
 
 ### Core
@@ -32,7 +170,7 @@ For more information, see [Fund a Wallet](/docs/fund-wallet#brazil).
 
 ## April 15, 2025
 
-### Core Platform
+### Core
 
 ##### Settlement Report Now Available
 
@@ -58,7 +196,7 @@ For more information, see [Nium Portal](/docs/portal-reports#transactions-report
 
 ## April 1, 2025
 
-### Core Platform
+### Core
 
 ##### New `clientTransactionId` included in reconciliation labels
 
@@ -113,7 +251,7 @@ Learn more in the updated [Nium Verify](/docs/account-verification).
 
 ## March 18, 2025
 
-### Core Platform
+### Core
 
 #### Enhancements
 
@@ -151,7 +289,7 @@ We’ve published a new [Failure Codes](https://docs.nium.com/docs/failure-codes
 
 ## March 4, 2025
 
-### Core Platform
+### Core
 
 #### Enhancements
 
@@ -166,7 +304,7 @@ Use the [Assign Payment ID](https://docs.nium.com/apis/reference/assignpaymentid
 
 ## February 18, 2025
 
-### Core Platform
+### Core
 
 #### Enhancements
 
@@ -192,7 +330,7 @@ For more information, see [Transaction Lifecycle](https://docs.nium.com/apis/ref
 
 ## February 4, 2025
 
-### Core Platform
+### Core
 
 #### Deprecation Notices
 
@@ -241,7 +379,7 @@ For more information, see the following requests:
 
 ## December 10, 2024
 
-### Core Platform
+### Core
 
 #### New Features
 
@@ -334,7 +472,7 @@ For more information, see [Paper Checks](https://docs.nium.com/apis/docs/paper-c
 
 ## November 12, 2024
 
-### Core Platform
+### Core
 
 #### New Features
 
@@ -383,7 +521,7 @@ We’ve added a new `beneficiaryIntermediaryBankCode` to the [Transfer Money](ht
 
 ## October 29, 2024
 
-### Core Platform
+### Core
 
 #### New Features
 
