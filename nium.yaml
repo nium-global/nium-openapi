@@ -25,7 +25,7 @@ info:
   license:
     name: Copyright (c) 2025 NIUM
   title: Nium API Reference
-  version: 2026.4.14
+  version: 2026.4.28
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -4825,7 +4825,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NewErrorResponse'
+                $ref: '#/components/schemas/ApiError'
           description: Bad Request
         '401':
           content:
@@ -4843,7 +4843,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Standard500Error'
+                $ref: '#/components/schemas/ApiError'
           description: Internal Server Error
       summary: Convert Card
       tags:
@@ -7817,14 +7817,17 @@ paths:
       - name: status
         in: query
         description: >-
-          Filter transactions based on the `status` of the transaction; details the
-          status of the transaction. Available values include:
-            - **CLEAR**: Transaction successfully processed and completed.
-            - **PENDING**: Transaction received and awaiting processing or review.
-            - **REJECT**: The transaction is rejected by compliance rules.
-            - **RFI_REQUESTED**: The transaction has been flagged by compliance rules.
-          Additional information has been requested for this transaction for compliance
-          purposes.
+          Filter transactions based on the `status` of the transaction. Available values include:
+            - **Approved**: Transaction is successfully authorized.
+            - **Rejected**: Transaction is rejected due to NIUM risk and compliance policies.
+            - **Blocked**: Transaction is blocked if customer wallet is blocked.
+            - **Pending**: Transaction authorization is awaiting success or failure.
+            - **Declined**: Transaction is declined.
+            - **Cancelled**: Transaction is cancelled by client.
+            - **AwaitingFunds**: Transaction is waiting for funds to be credited in customer's wallet.
+            - **Scheduled**: Transaction is scheduled to execute on a specific date.
+            - **Expired**: Scheduled transaction is expired due to insufficient funds.
+            - **Rejected**: Transaction is rejected due to NIUM risk and compliance policies.
         required: false
         schema:
           description: This parameter can filter the transactions based on status.
@@ -7834,17 +7837,13 @@ paths:
           - Approved
           - Declined
           - Blocked
-          - Reversal
-          - Released
           - Pending
           - InProgress
           - Rejected
-          - Returned
           - AwaitingFunds
           - Expired
           - Cancelled
           - Scheduled
-          - NA
           type: string
       - name: complianceStatus
         in: query
@@ -10630,23 +10629,35 @@ paths:
           type: string
       - name: status
         in: query
-        description: This parameter can filter the transactions based on status. The
-          detailed list of possible values is available in the response of this API.
+        description: >-
+          This parameter can filter the transactions based on `status` of the transaction.
+          Available values include:
+            - **Approved**: Transaction is successfully authorized.
+            - **Rejected**: Transaction is rejected due to NIUM risk and compliance policies.
+            - **Blocked**: Transaction is blocked if customer wallet is blocked.
+            - **Pending**: Transaction authorization is awaiting success or failure.
+            - **Declined**: Transaction is declined.
+            - **Cancelled**: Transaction is cancelled by client.
+            - **AwaitingFunds**: Transaction is waiting for funds to be credited in customer's wallet.
+            - **Scheduled**: Transaction is scheduled to execute on a specific date.
+            - **Expired**: Scheduled transaction is expired due to insufficient funds.
+            - **Rejected**: Transaction is rejected due to NIUM risk and compliance policies.
         required: false
         schema:
           description: This parameter can filter the transactions based on status.
             The detailed list of possible values is available in the response of this
             API.
           enum:
-          - 'NULL'
-          - IN_PROGRESS
-          - ACTION_REQUIRED
-          - RFI_REQUESTED
-          - RFI_RESPONDED
-          - COMPLETED
-          - ERROR
-          - REJECT
-          - EXPIRED
+          - Approved
+          - Declined
+          - Blocked
+          - Pending
+          - InProgress
+          - Rejected
+          - AwaitingFunds
+          - Expired
+          - Cancelled
+          - Scheduled
           type: string
       - name: complianceStatus
         in: query
@@ -14044,6 +14055,12 @@ paths:
           - intendedUseofAccountsFI
           - clientsProductsAndServicesOffered
           - intendedUseofAccountsVerify
+          - proposedSetup
+          - deliveryChannel
+          - clientEngagement
+          - onboardingSource
+          - segment
+          - clientsProductsAndServicesOfferedFIPlat
           type: string
       - name: countryCode
         in: query
@@ -17001,11 +17018,11 @@ components:
             type: string
           customerHashId:
             description: Unique identifier of the customer associated with the report
-            example: cst_123456
+            example: a6586b4b-3320-4d33-a223-3a15b9bcf6db
             type: string
           walletHashId:
             description: Wallet identifier for which the report is generated
-            example: wlt_987654
+            example: 8fa9114a-fc92-44cc-b6dd-bc0749557aa8
             type: string
           currencies:
             description: ISO-4217 currency codes. If not provided, statement is generated
@@ -17034,8 +17051,6 @@ components:
             default: PDF
             description: File type of the generated report
             enum:
-            - PDF
-            - CSV
             - PDF
             - CSV
             example: PDF
@@ -18327,7 +18342,6 @@ components:
           BV: '#/components/schemas/AddressDetailsWithMandatoryNoISOState'
           BW: '#/components/schemas/AddressDetailsWithMandatoryISOState'
           BY: '#/components/schemas/AddressDetailsWithMandatoryISOState'
-          BZ: '#/components/schemas/AddressDetailsWithMandatoryNoISOState'
           CA: '#/components/schemas/AddressDetailsWithMandatoryISOState'
           CC: '#/components/schemas/AddressDetailsWithMandatoryNoISOState'
           CD: '#/components/schemas/AddressDetailsWithMandatoryISOState'
@@ -19649,23 +19663,23 @@ components:
         the corporate entity to be onboarded. Use the [Fetch Corporate Constants API](ref:fetchcorporateconstants)
         to get the list of valid enum values.
       type: string
-    BZFullApplicantDetails:
+    BRFullApplicantDetails:
       allOf:
       - $ref: '#/components/schemas/HKApplicantDetailsDTO'
       - properties:
           positions:
             items:
-              $ref: '#/components/schemas/BZPositionDetails'
+              $ref: '#/components/schemas/BRPositionDetails'
             minItems: 1
             type: array
         required:
         - positions
         type: object
-      description: Applicant Details for BZ region, Full KYC
+      description: Applicant Details for BR region, Full KYC
       title: Applicant Details
-    BZFullApplicantDetailsCreate:
+    BRFullApplicantDetailsCreate:
       allOf:
-      - $ref: '#/components/schemas/BZFullApplicantDetails'
+      - $ref: '#/components/schemas/BRFullApplicantDetails'
       - properties:
           documents:
             items:
@@ -19680,11 +19694,11 @@ components:
                   $ref: '#/components/schemas/FileIds'
             type: array
         type: object
-      description: Applicant create Details for BZ region, Full KYC
+      description: Applicant create Details for BR region, Full KYC
       title: Applicant Details
-    BZFullApplicantDetailsResponse:
+    BRFullApplicantDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BZFullApplicantDetails'
+      - $ref: '#/components/schemas/BRFullApplicantDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/ApplicantReferenceId'
@@ -19695,12 +19709,12 @@ components:
               $ref: '#/components/schemas/DocumentDetailsResponse'
             type: array
         type: object
-      description: Applicant Response Details for BZ, full KYC
+      description: Applicant Response Details for BR, full KYC
       title: Applicant Details
       type: object
-    BZFullApplicantDetailsUpdate:
+    BRFullApplicantDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BZFullApplicantDetails'
+      - $ref: '#/components/schemas/BRFullApplicantDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/ApplicantReferenceId'
@@ -19709,20 +19723,20 @@ components:
               $ref: '#/components/schemas/DocumentDetailsResponse'
             type: array
         type: object
-      description: Applicant Update Details for BZ, full KYC
+      description: Applicant Update Details for BR, full KYC
       title: Applicant Details
       type: object
-    BZFullCorporateStakeholderDetails:
+    BRFullCorporateStakeholderDetails:
       allOf:
       - $ref: '#/components/schemas/CorporateStakeholderDetailsDTO'
       - properties:
           positions:
             items:
-              $ref: '#/components/schemas/BZPositionDetails'
+              $ref: '#/components/schemas/BRPositionDetails'
             minItems: 1
             type: array
         type: object
-      description: Corporate Stakeholder Details for BZ region, Full KYC
+      description: Corporate Stakeholder Details for BR region, Full KYC
       required:
       - businessName
       - businessRegistrationNumber
@@ -19730,163 +19744,163 @@ components:
       - registeredCountry
       title: Corporate Stakeholder
       type: object
-    BZFullCorporateStakeholderDetailsResponse:
+    BRFullCorporateStakeholderDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BZFullCorporateStakeholderDetails'
+      - $ref: '#/components/schemas/BRFullCorporateStakeholderDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/StakeholderReferenceId'
         type: object
-      description: Corporate Stakeholder Response Details for BZ, Full KYC
+      description: Corporate Stakeholder Response Details for BR, Full KYC
       title: Corporate Stakeholder
       type: object
-    BZFullCorporateStakeholderDetailsUpdate:
+    BRFullCorporateStakeholderDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BZFullCorporateStakeholderDetails'
+      - $ref: '#/components/schemas/BRFullCorporateStakeholderDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/StakeholderReferenceId'
         type: object
-      description: Corporate Stakeholder Update Details for BZ, Full KYC
+      description: Corporate Stakeholder Update Details for BR, Full KYC
       title: Corporate Stakeholder
       type: object
-    BZFullForeignCompanyOfficeCustomerDetails:
+    BRFullForeignCompanyOfficeCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerOtherDetails'
       - required:
         - documents
-      description: Contains customer details for BZ, corporate, full kycType and Foreign
+      description: Contains customer details for BR, corporate, full kycType and Foreign
         Company Office businessType
       title: Foreign Company Office
       type: object
-    BZFullForeignCompanyOfficeCustomerDetailsResponse:
-      description: Contains customer details for BZ, corporate, full kycType and Trust
+    BRFullForeignCompanyOfficeCustomerDetailsResponse:
+      description: Contains customer details for BR, corporate, full kycType and Trust
         businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeWithSearchIdCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeWithSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsResponse'
       title: Foreign Company Office
       type: object
-    BZFullForeignCompanyOfficeCustomerDetailsUpdate:
-      description: Contains customer details for BZ, corporate, full kycType and Trust
+    BRFullForeignCompanyOfficeCustomerDetailsUpdate:
+      description: Contains customer details for BR, corporate, full kycType and Trust
         businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeWithSearchIdCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeWithSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsUpdate'
       title: Foreign Company Office
       type: object
-    BZFullForeignCompanyOfficeCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullForeignCompanyOfficeCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to Foreign Company Office businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       type: object
-    BZFullForeignCompanyOfficeWithSearchIdCustomerDetailsResponse:
+    BRFullForeignCompanyOfficeWithSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullForeignCompanyOfficeWithSearchIdCustomerDetailsUpdate:
+    BRFullForeignCompanyOfficeWithSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsResponse:
+    BRFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsUpdate:
+    BRFullForeignCompanyOfficeWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullGeneralPartnershipCustomerDetails:
+    BRFullGeneralPartnershipCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerOtherDetails'
       - required:
         - documents
-      description: Contains customer details for BZ, corporate, full kycType and General
+      description: Contains customer details for BR, corporate, full kycType and General
         Partnership businessType
       title: General Partnership
       type: object
-    BZFullGeneralPartnershipCustomerDetailsResponse:
-      description: Contains customer details for BZ, corporate, full kycType and General
+    BRFullGeneralPartnershipCustomerDetailsResponse:
+      description: Contains customer details for BR, corporate, full kycType and General
         Partnership businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipWithSearchIdCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipWithoutSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipWithSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipWithoutSearchIdCustomerDetailsResponse'
       title: General Partnership
       type: object
-    BZFullGeneralPartnershipCustomerDetailsUpdate:
-      description: Contains customer details for BZ, corporate, full kycType and Association
+    BRFullGeneralPartnershipCustomerDetailsUpdate:
+      description: Contains customer details for BR, corporate, full kycType and Association
         businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipWithSearchIdCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipWithoutSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipWithSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipWithoutSearchIdCustomerDetailsUpdate'
       title: General Partnership
       type: object
-    BZFullGeneralPartnershipCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullGeneralPartnershipCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to General Partnership businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       type: object
-    BZFullGeneralPartnershipWithSearchIdCustomerDetailsResponse:
+    BRFullGeneralPartnershipWithSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullGeneralPartnershipWithSearchIdCustomerDetailsUpdate:
+    BRFullGeneralPartnershipWithSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullGeneralPartnershipWithoutSearchIdCustomerDetailsResponse:
+    BRFullGeneralPartnershipWithoutSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullGeneralPartnershipWithoutSearchIdCustomerDetailsUpdate:
+    BRFullGeneralPartnershipWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullIndividualStakeholderDetails:
+    BRFullIndividualStakeholderDetails:
       allOf:
       - $ref: '#/components/schemas/IndividualStakeholderDetails'
       - properties:
           positions:
             items:
-              $ref: '#/components/schemas/BZPositionDetails'
+              $ref: '#/components/schemas/BRPositionDetails'
             minItems: 1
             type: array
           documents:
@@ -19900,12 +19914,12 @@ components:
         - nationality
         - positions
         type: object
-      description: Individual Stakeholder Details for BZ region, Full KYC
+      description: Individual Stakeholder Details for BR region, Full KYC
       title: Individual Stakeholder
       type: object
-    BZFullIndividualStakeholderDetailsResponse:
+    BRFullIndividualStakeholderDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BZFullIndividualStakeholderDetails'
+      - $ref: '#/components/schemas/BRFullIndividualStakeholderDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/StakeholderReferenceId'
@@ -19916,12 +19930,12 @@ components:
               $ref: '#/components/schemas/DocumentDetailsResponse'
             type: array
         type: object
-      description: Individual Stakeholder Response Details for BZ, Full KYC
+      description: Individual Stakeholder Response Details for BR, Full KYC
       title: Individual Stakeholder
       type: object
-    BZFullIndividualStakeholderDetailsUpdate:
+    BRFullIndividualStakeholderDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BZFullIndividualStakeholderDetails'
+      - $ref: '#/components/schemas/BRFullIndividualStakeholderDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/StakeholderReferenceId'
@@ -19930,331 +19944,331 @@ components:
               $ref: '#/components/schemas/DocumentDetailsResponse'
             type: array
         type: object
-      description: Individual Stakeholder Update Details for BZ, Full KYC
+      description: Individual Stakeholder Update Details for BR, Full KYC
       title: Individual Stakeholder
       type: object
-    BZFullLimitedPartnershipCustomerDetails:
+    BRFullLimitedPartnershipCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipCustomerOtherDetails'
       - required:
         - documents
-      description: Contains customer details for BZ, corporate, full kycType and Limited
+      description: Contains customer details for BR, corporate, full kycType and Limited
         Partnership businessType
       title: Limited Partnership
       type: object
-    BZFullLimitedPartnershipCustomerDetailsResponse:
-      description: Contains customer details for BZ, corporate, full kycType and Limited  Partnership
+    BRFullLimitedPartnershipCustomerDetailsResponse:
+      description: Contains customer details for BR, corporate, full kycType and Limited  Partnership
         businessType
       oneOf:
       - $ref: '#/components/schemas/MXFullLimitedPartnershipWithSearchIdCustomerDetailsResponse'
       - $ref: '#/components/schemas/MXFullLimitedPartnershipWithoutSearchIdCustomerDetailsResponse'
       title: Limited Partnership
       type: object
-    BZFullLimitedPartnershipCustomerDetailsUpdate:
-      description: Contains customer details for BZ, corporate, full kycType and Limited
+    BRFullLimitedPartnershipCustomerDetailsUpdate:
+      description: Contains customer details for BR, corporate, full kycType and Limited
         Partnership businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipWithSearchIdCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipWithoutSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipWithSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipWithoutSearchIdCustomerDetailsUpdate'
       title: Limited Partnership
       type: object
-    BZFullLimitedPartnershipCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullLimitedPartnershipCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to Limited Partnership businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       title: Limited Partnership
       type: object
-    BZFullLimitedPartnershipWithSearchIdCustomerDetailsUpdate:
+    BRFullLimitedPartnershipWithSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullLimitedPartnershipWithoutSearchIdCustomerDetailsUpdate:
+    BRFullLimitedPartnershipWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullOthersCustomerDetails:
-      description: Contains customer details for BZ, corporate, full kycType and Others
+    BRFullOthersCustomerDetails:
+      description: Contains customer details for BR, corporate, full kycType and Others
         businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullOthersWithSearchIdCustomerDetails'
-      - $ref: '#/components/schemas/BZFullOthersWithoutSearchIdCustomerDetails'
+      - $ref: '#/components/schemas/BRFullOthersWithSearchIdCustomerDetails'
+      - $ref: '#/components/schemas/BRFullOthersWithoutSearchIdCustomerDetails'
       title: Others
       type: object
-    BZFullOthersCustomerDetailsResponse:
+    BRFullOthersCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullOthersCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullOthersCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullOthersCustomerDetailsUpdate:
+    BRFullOthersCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullOthersCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullOthersCustomerOtherDetails'
       - required:
         - documents
-      description: Contains customer details for BZ, corporate, full kycType and Others
+      description: Contains customer details for BR, corporate, full kycType and Others
         businessType
       title: Others
       type: object
-    BZFullOthersCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullOthersCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to Others businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       type: object
-    BZFullOthersWithSearchIdCustomerDetails:
+    BRFullOthersWithSearchIdCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullOthersCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullOthersCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullOthersWithoutSearchIdCustomerDetails:
+    BRFullOthersWithoutSearchIdCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullOthersCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullOthersCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullPrivateCompanyCustomerDetails:
-      description: Contains customer details for BZ, corporate, full kycType and Private
+    BRFullPrivateCompanyCustomerDetails:
+      description: Contains customer details for BR, corporate, full kycType and Private
         Company businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullPrivateCompanyWithSearchIdCustomerDetails'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyWithoutSearchIdCustomerDetails'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyWithSearchIdCustomerDetails'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyWithoutSearchIdCustomerDetails'
       title: Private Company
       type: object
-    BZFullPrivateCompanyCustomerDetailsResponse:
-      description: Contains customer details for BZ, corporate, full kycType and Private
+    BRFullPrivateCompanyCustomerDetailsResponse:
+      description: Contains customer details for BR, corporate, full kycType and Private
         Company businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullPrivateCompanyWithSearchIdCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyWithoutSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyWithSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyWithoutSearchIdCustomerDetailsResponse'
       title: Private Company
       type: object
-    BZFullPrivateCompanyCustomerDetailsUpdate:
-      description: Contains customer details for BZ, corporate, full kycType and Private
+    BRFullPrivateCompanyCustomerDetailsUpdate:
+      description: Contains customer details for BR, corporate, full kycType and Private
         Company businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullPrivateCompanyWithSearchIdCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyWithoutSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyWithSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyWithoutSearchIdCustomerDetailsUpdate'
       title: Private Company
       type: object
-    BZFullPrivateCompanyCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullPrivateCompanyCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to Private Company businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       type: object
-    BZFullPrivateCompanyWithSearchIdCustomerDetails:
+    BRFullPrivateCompanyWithSearchIdCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullPrivateCompanyWithSearchIdCustomerDetailsResponse:
+    BRFullPrivateCompanyWithSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullPrivateCompanyWithSearchIdCustomerDetailsUpdate:
+    BRFullPrivateCompanyWithSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullPrivateCompanyWithoutSearchIdCustomerDetails:
+    BRFullPrivateCompanyWithoutSearchIdCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullPrivateCompanyWithoutSearchIdCustomerDetailsResponse:
+    BRFullPrivateCompanyWithoutSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullPrivateCompanyWithoutSearchIdCustomerDetailsUpdate:
+    BRFullPrivateCompanyWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullPublicCompanyCustomerDetails:
+    BRFullPublicCompanyCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerOtherDetails'
       - required:
         - documents
-      description: Contains customer details for BZ, corporate, full kycType and Public
+      description: Contains customer details for BR, corporate, full kycType and Public
         Company businessType
       title: Public Company
       type: object
-    BZFullPublicCompanyCustomerDetailsResponse:
-      description: Contains customer details for BZ, corporate, full kycType and Public
-        Company businessType
-      oneOf:
-      - $ref: '#/components/schemas/BZFullPublicCompanyWithSearchIdCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPublicCompanyWithoutSearchIdCustomerDetailsResponse'
-      title: Public Company
-      type: object
-    BZFullPublicCompanyCustomerDetailsUpdate:
-      description: Contains customer details for BZ, corporate, full kycType and Public
+    BRFullPublicCompanyCustomerDetailsResponse:
+      description: Contains customer details for BR, corporate, full kycType and Public
         Company businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullPublicCompanyWithSearchIdCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPublicCompanyWithoutSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPublicCompanyWithSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPublicCompanyWithoutSearchIdCustomerDetailsResponse'
       title: Public Company
       type: object
-    BZFullPublicCompanyCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullPublicCompanyCustomerDetailsUpdate:
+      description: Contains customer details for BR, corporate, full kycType and Public
+        Company businessType
+      oneOf:
+      - $ref: '#/components/schemas/BRFullPublicCompanyWithSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPublicCompanyWithoutSearchIdCustomerDetailsUpdate'
+      title: Public Company
+      type: object
+    BRFullPublicCompanyCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to Public Company businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       type: object
-    BZFullPublicCompanyWithSearchIdCustomerDetailsResponse:
+    BRFullPublicCompanyWithSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullPublicCompanyWithSearchIdCustomerDetailsUpdate:
+    BRFullPublicCompanyWithSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullPublicCompanyWithoutSearchIdCustomerDetailsResponse:
+    BRFullPublicCompanyWithoutSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullPublicCompanyWithoutSearchIdCustomerDetailsUpdate:
+    BRFullPublicCompanyWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullSoleTraderCustomerDetails:
-      description: Contains customer details for BZ, corporate, full kycType and Sole
+    BRFullSoleTraderCustomerDetails:
+      description: Contains customer details for BR, corporate, full kycType and Sole
         Trader businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullSoleTraderWithSearchIdCustomerDetails'
-      - $ref: '#/components/schemas/BZFullSoleTraderWithoutSearchIdCustomerDetails'
+      - $ref: '#/components/schemas/BRFullSoleTraderWithSearchIdCustomerDetails'
+      - $ref: '#/components/schemas/BRFullSoleTraderWithoutSearchIdCustomerDetails'
       title: Sole Trader
       type: object
-    BZFullSoleTraderCustomerDetailsResponse:
-      description: Contains customer details for BZ, corporate, full kycType and Sole
+    BRFullSoleTraderCustomerDetailsResponse:
+      description: Contains customer details for BR, corporate, full kycType and Sole
         Trader businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullSoleTraderWithSearchIdCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullSoleTraderWithoutSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullSoleTraderWithSearchIdCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullSoleTraderWithoutSearchIdCustomerDetailsResponse'
       title: Sole Trader
       type: object
-    BZFullSoleTraderCustomerDetailsUpdate:
-      description: Contains customer details for BZ, corporate, full kycType and Sole
+    BRFullSoleTraderCustomerDetailsUpdate:
+      description: Contains customer details for BR, corporate, full kycType and Sole
         Trader businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullSoleTraderWithSearchIdCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullSoleTraderWithoutSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullSoleTraderWithSearchIdCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullSoleTraderWithoutSearchIdCustomerDetailsUpdate'
       title: Sole Trader
       type: object
-    BZFullSoleTraderCustomerOtherDetails:
-      description: Contains customer details for BZ, corporate, full kycType specific
+    BRFullSoleTraderCustomerOtherDetails:
+      description: Contains customer details for BR, corporate, full kycType specific
         to Sole Trader businessType
       properties:
         documents:
           items:
-            $ref: '#/components/schemas/BusinessDocumentsBZ'
+            $ref: '#/components/schemas/BusinessDocumentsBR'
           type: array
       type: object
-    BZFullSoleTraderWithSearchIdCustomerDetails:
+    BRFullSoleTraderWithSearchIdCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullSoleTraderWithSearchIdCustomerDetailsResponse:
+    BRFullSoleTraderWithSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullSoleTraderWithSearchIdCustomerDetailsUpdate:
+    BRFullSoleTraderWithSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerOtherDetails'
       - $ref: '#/components/schemas/SearchIdSchema'
       title: E_KYB
       type: object
-    BZFullSoleTraderWithoutSearchIdCustomerDetails:
+    BRFullSoleTraderWithoutSearchIdCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsCreate'
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsCreate'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullSoleTraderWithoutSearchIdCustomerDetailsResponse:
+    BRFullSoleTraderWithoutSearchIdCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZFullSoleTraderWithoutSearchIdCustomerDetailsUpdate:
+    BRFullSoleTraderWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
       type: object
-    BZMinApplicantDetails:
+    BRMinApplicantDetails:
       allOf:
       - $ref: '#/components/schemas/ApplicantDetailsDTO'
       - properties:
@@ -20267,9 +20281,9 @@ components:
         type: object
       title: Applicant Details
       type: object
-    BZMinApplicantDetailsUpdate:
+    BRMinApplicantDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BZMinApplicantDetails'
+      - $ref: '#/components/schemas/BRMinApplicantDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/ApplicantReferenceId'
@@ -20277,7 +20291,7 @@ components:
       description: Applicant Update Details for MX, minimum KYC
       title: Applicant Details
       type: object
-    BZMinCorporateStakeholderDetails:
+    BRMinCorporateStakeholderDetails:
       allOf:
       - $ref: '#/components/schemas/CorporateStakeholderDetailsDTO'
       - properties:
@@ -20293,7 +20307,7 @@ components:
         type: object
       title: Corporate Stakeholder
       type: object
-    BZMinIndividualStakeholderDetails:
+    BRMinIndividualStakeholderDetails:
       allOf:
       - $ref: '#/components/schemas/IndividualStakeholderDetails'
       - properties:
@@ -20315,17 +20329,17 @@ components:
         type: object
       title: Individual Stakeholder
       type: object
-    BZMinIndividualStakeholderDetailsUpdate:
+    BRMinIndividualStakeholderDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BZMinIndividualStakeholderDetails'
+      - $ref: '#/components/schemas/BRMinIndividualStakeholderDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/StakeholderReferenceId'
         type: object
-      description: Individual Stakeholder Update Details for BZ, minimum KYC
+      description: Individual Stakeholder Update Details for BR, minimum KYC
       title: Individual Stakeholder
       type: object
-    BZPositionDetails:
+    BRPositionDetails:
       description: Positions held by the applicant in the company. More than one position
         title can be selected
       properties:
@@ -20623,7 +20637,7 @@ components:
       - country
       - postcode
       type: object
-    BaseBZCorporateCustomerDetails:
+    BaseBRCorporateCustomerDetails:
       allOf:
       - $ref: '#/components/schemas/BaseHKCustomer'
       - properties:
@@ -20654,7 +20668,7 @@ components:
         - registeredDate
         type: object
       description: Contains common customer details for corporate
-    BaseBZIndividualCustomerDetails:
+    BaseBRIndividualCustomerDetails:
       allOf:
       - $ref: '#/components/schemas/BaseHKCustomer'
       - properties:
@@ -20907,9 +20921,9 @@ components:
       description: Contains common update customer details for corporate, AU region,
         full kycType
       type: object
-    BaseCorporateBZFullCustomerDetails:
+    BaseCorporateBRFullCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseBZCorporateCustomerDetails'
+      - $ref: '#/components/schemas/BaseBRCorporateCustomerDetails'
       - properties:
           businessType:
             description: Legal entity type of the corporate stakeholder of the company
@@ -21009,75 +21023,75 @@ components:
         - sizeOfBusiness
         - tradeName
         type: object
-      description: Contains common customer details for corporate, BZ region, full
+      description: Contains common customer details for corporate, BR region, full
         kycType
-    BaseCorporateBZFullCustomerDetailsCreate:
+    BaseCorporateBRFullCustomerDetailsCreate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetails'
       - properties:
           applicant:
-            $ref: '#/components/schemas/BZFullApplicantDetailsCreate'
+            $ref: '#/components/schemas/BRFullApplicantDetailsCreate'
           stakeholders:
             properties:
               individual:
                 items:
-                  $ref: '#/components/schemas/BZFullIndividualStakeholderDetails'
+                  $ref: '#/components/schemas/BRFullIndividualStakeholderDetails'
                 type: array
               corporate:
                 items:
-                  $ref: '#/components/schemas/BZFullCorporateStakeholderDetails'
+                  $ref: '#/components/schemas/BRFullCorporateStakeholderDetails'
                 type: array
             type: object
         required:
         - applicant
         type: object
-      description: Contains common create customer details for corporate, BZ region,
+      description: Contains common create customer details for corporate, BR region,
         full kycType
       type: object
-    BaseCorporateBZFullCustomerDetailsResponse:
+    BaseCorporateBRFullCustomerDetailsResponse:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetails'
       - properties:
           applicant:
-            $ref: '#/components/schemas/BZFullApplicantDetailsResponse'
+            $ref: '#/components/schemas/BRFullApplicantDetailsResponse'
           stakeholders:
             properties:
               individual:
                 items:
-                  $ref: '#/components/schemas/BZFullIndividualStakeholderDetailsResponse'
+                  $ref: '#/components/schemas/BRFullIndividualStakeholderDetailsResponse'
                 type: array
               corporate:
                 items:
-                  $ref: '#/components/schemas/BZFullCorporateStakeholderDetailsResponse'
+                  $ref: '#/components/schemas/BRFullCorporateStakeholderDetailsResponse'
                 type: array
             type: object
         required:
         - applicant
         type: object
-      description: Contains common customer details response for corporate, BZ region,
+      description: Contains common customer details response for corporate, BR region,
         full kycType
       type: object
-    BaseCorporateBZFullCustomerDetailsUpdate:
+    BaseCorporateBRFullCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseCorporateBRFullCustomerDetails'
       - properties:
           applicant:
-            $ref: '#/components/schemas/BZFullApplicantDetailsUpdate'
+            $ref: '#/components/schemas/BRFullApplicantDetailsUpdate'
           stakeholders:
             properties:
               individual:
                 items:
-                  $ref: '#/components/schemas/BZFullIndividualStakeholderDetailsUpdate'
+                  $ref: '#/components/schemas/BRFullIndividualStakeholderDetailsUpdate'
                 type: array
               corporate:
                 items:
-                  $ref: '#/components/schemas/BZFullCorporateStakeholderDetailsUpdate'
+                  $ref: '#/components/schemas/BRFullCorporateStakeholderDetailsUpdate'
                 type: array
             type: object
         required:
         - applicant
         type: object
-      description: Contains common update customer details for corporate, BZ region,
+      description: Contains common update customer details for corporate, BR region,
         full kycType
       type: object
     BaseCorporateCAFullCustomerDetails:
@@ -21749,7 +21763,7 @@ components:
       type: object
     BaseCorporateIDFullCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseCorporateIDFullCustomerDetails'
       - properties:
           applicant:
             $ref: '#/components/schemas/IDFullApplicantDetailsUpdate'
@@ -21761,7 +21775,7 @@ components:
                 type: array
               corporate:
                 items:
-                  $ref: '#/components/schemas/BZFullCorporateStakeholderDetailsUpdate'
+                  $ref: '#/components/schemas/IDFullCorporateStakeholderDetailsUpdate'
                 type: array
             type: object
         required:
@@ -22050,24 +22064,9 @@ components:
       type: object
     BaseCorporateMXFullCustomerDetailsResponse:
       allOf:
+      - $ref: '#/components/schemas/BaseCustomerDetailsV5Response'
       - $ref: '#/components/schemas/BaseCorporateMXFullCustomerDetails'
-      - properties:
-          applicant:
-            $ref: '#/components/schemas/MXFullApplicantDetailsResponse'
-          stakeholders:
-            properties:
-              individual:
-                items:
-                  $ref: '#/components/schemas/MXFullIndividualStakeholderDetailsResponse'
-                type: array
-              corporate:
-                items:
-                  $ref: '#/components/schemas/MXFullCorporateStakeholderDetailsResponse'
-                type: array
-            type: object
-        required:
-        - applicant
-        type: object
+      - $ref: '#/components/schemas/IDFullApplicantAndStakeholderDetailsResponse'
       description: Contains common customer details response for corporate, MX region,
         full kycType
       type: object
@@ -22980,6 +22979,62 @@ components:
             - debit
             - intendedUses
             type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for AU, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualAUFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
           bankAccountDetails:
             $ref: '#/components/schemas/BankAccountDetails2'
         required:
@@ -22994,9 +23049,9 @@ components:
       description: Contains customer details for AU, Individual and full kycType
       title: Full KYC
       type: object
-    BaseIndividualBZFullCustomerDetails:
+    BaseIndividualBRFullCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseBZIndividualCustomerDetails'
+      - $ref: '#/components/schemas/BaseBRIndividualCustomerDetails'
       - properties:
           kycStatus:
             type: string
@@ -23040,21 +23095,83 @@ components:
             - debit
             - intendedUses
             type: object
-          bankAccountDetails:
-            $ref: '#/components/schemas/BankAccountDetails2'
         required:
         - applicantDeclaration
         - applicantDeclarationTimeStamp
-        - bankAccountDetails
         - deviceDetails
         - expectedAccountUsage
         - mobile
         - mobileCountryCode
         type: object
-      description: Contains customer details for BZ, Individual and full kycType
+      description: Contains customer details for BR, Individual and full kycType
       title: Full KYC
       type: object
     BaseIndividualCAFullCustomerDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseHKIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          occupation:
+            description: Occupation of the individual customer
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  averageTransactionValue:
+                    $ref: '#/components/schemas/AverageTransactionValue'
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  averageTransactionValue:
+                    $ref: '#/components/schemas/AverageTransactionValue'
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        - occupation
+        type: object
+      description: Contains customer details for CA, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualCAFullCustomerDetailsWithBankDetails:
       allOf:
       - $ref: '#/components/schemas/BaseHKIndividualCustomerDetails'
       - properties:
@@ -23232,6 +23349,89 @@ components:
             - debit
             - intendedUses
             type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - birthCountry
+        - deviceDetails
+        - expectedAccountUsage
+        - isPep
+        - mobile
+        - mobileCountryCode
+        - taxDetails
+        type: object
+      description: Contains customer details for EU, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualEUFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          birthCountry:
+            $ref: '#/components/schemas/CountryCode'
+          taxDetails:
+            description: Tax details of the individual customer. At least one tax
+              detail is required.
+            items:
+              $ref: '#/components/schemas/TaxDetails2'
+            minItems: 1
+            type: array
+          isPep:
+            description: This field accepts true or false to indicate if the individual
+              customer is a Politically Exposed Person (PEP) or not.
+            type: boolean
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            description: Expected account usage details of the individual customer
+              for payins.
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                description: Description of the intended Uses of the account in case
+                  intendedUses is selected as "Other"
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  averageTransactionValue:
+                    $ref: '#/components/schemas/AverageTransactionValue'
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  averageTransactionValue:
+                    $ref: '#/components/schemas/AverageTransactionValue'
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
           bankAccountDetails:
             $ref: '#/components/schemas/BankAccountDetails2'
         required:
@@ -23295,12 +23495,9 @@ components:
             - debit
             - intendedUses
             type: object
-          bankAccountDetails:
-            $ref: '#/components/schemas/BankAccountDetails2'
         required:
         - applicantDeclaration
         - applicantDeclarationTimeStamp
-        - bankAccountDetails
         - deviceDetails
         - expectedAccountUsage
         - mobile
@@ -23309,10 +23506,12 @@ components:
       description: Contains customer details for HK, Individual and full kycType
       title: Full KYC
       type: object
-    BaseIndividualIDFullCustomerDetails:
+    BaseIndividualHKFullCustomerDetailsWithBankDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseBZIndividualCustomerDetails'
+      - $ref: '#/components/schemas/BaseHKIndividualCustomerDetails'
       - properties:
+          kycStatus:
+            type: string
           applicantDeclaration:
             type: boolean
           applicantDeclarationTimeStamp:
@@ -23364,10 +23563,196 @@ components:
         - mobile
         - mobileCountryCode
         type: object
+      description: Contains customer details for HK, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualIDFullCustomerDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseBRIndividualCustomerDetails'
+      - properties:
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for ID, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualIDFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseBRIndividualCustomerDetails'
+      - properties:
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
+          bankAccountDetails:
+            $ref: '#/components/schemas/BankAccountDetails2'
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - bankAccountDetails
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
       description: Contains customer details for ID, Individual and full kycType
       title: Full KYC
       type: object
     BaseIndividualJPFullCustomerDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseJPIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          firstName_local:
+            description: The first name in the local language or native script of
+              the country of residence or nationality (for example, non-Latin characters).
+            type: string
+          lastName_local:
+            description: The last name (surname) in the local language or native script
+              of the country of residence or nationality.
+            type: string
+          occupation:
+            description: Occupation of the individual customer
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - firstName_local
+        - lastName_local
+        - mobile
+        - mobileCountryCode
+        - occupation
+        type: object
+      description: Contains customer details for JP, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualJPFullCustomerDetailsWithBankDetails:
       allOf:
       - $ref: '#/components/schemas/BaseJPIndividualCustomerDetails'
       - properties:
@@ -23487,6 +23872,65 @@ components:
             - debit
             - intendedUses
             type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for MX, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualMXFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseMXIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
           bankAccountDetails:
             $ref: '#/components/schemas/BankAccountDetails2'
         required:
@@ -23542,6 +23986,69 @@ components:
                     $ref: '#/components/schemas/MonthlyTransactionVolume'
                   topTransactionCountries:
                     $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for NL, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualNLFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  averageTransactionValue:
+                    $ref: '#/components/schemas/AverageTransactionValue'
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  averageTransactionValue:
+                    $ref: '#/components/schemas/AverageTransactionValue'
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
                 required:
                 - monthlyTransactionVolume
                 - topTransactionCountries
@@ -23615,6 +24122,69 @@ components:
             - debit
             - intendedUses
             type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for SG, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualSGFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          taxDetails:
+            description: List of tax details
+            items:
+              $ref: '#/components/schemas/TaxDetails2'
+            type: array
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
           bankAccountDetails:
             $ref: '#/components/schemas/BankAccountDetails2'
         required:
@@ -23679,6 +24249,70 @@ components:
             - debit
             - intendedUses
             type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - isPep
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for UK, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualUKFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          isPep:
+            type: boolean
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            description: This field accepts the applicant Politically Exposed Person
+              or Not.
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                minLength: 20
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
           bankAccountDetails:
             $ref: '#/components/schemas/BankAccountDetails2'
         required:
@@ -23730,6 +24364,64 @@ components:
                     $ref: '#/components/schemas/MonthlyTransactionVolume'
                   topTransactionCountries:
                     $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+            required:
+            - credit
+            - debit
+            - intendedUses
+            type: object
+        required:
+        - applicantDeclaration
+        - applicantDeclarationTimeStamp
+        - deviceDetails
+        - expectedAccountUsage
+        - mobile
+        - mobileCountryCode
+        type: object
+      description: Contains customer details for US, Individual and full kycType
+      title: Full KYC
+      type: object
+    BaseIndividualUSFullCustomerDetailsWithBankDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseIndividualCustomerDetails'
+      - properties:
+          kycStatus:
+            type: string
+          applicantDeclaration:
+            type: boolean
+          applicantDeclarationTimeStamp:
+            pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+            type: string
+          deviceDetails:
+            $ref: '#/components/schemas/DeviceDetails'
+          expectedAccountUsage:
+            properties:
+              intendedUses:
+                $ref: '#/components/schemas/IntendedUses'
+              intendedUsesDescription:
+                maxLength: 300
+                type: string
+              credit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                required:
+                - monthlyTransactionVolume
+                - topTransactionCountries
+                type: object
+              debit:
+                properties:
+                  monthlyTransactionVolume:
+                    $ref: '#/components/schemas/MonthlyTransactionVolume'
+                  topTransactionCountries:
+                    $ref: '#/components/schemas/TopTransactionCountries'
+                  bankAccountDetails:
+                    $ref: '#/components/schemas/BankAccountDetails2'
                 required:
                 - monthlyTransactionVolume
                 - topTransactionCountries
@@ -23886,7 +24578,11 @@ components:
       description: Base report request. The reportType field determines the concrete
         request structure.
       discriminator:
+        mapping:
+          CUSTOMER_ACCOUNT_STATEMENT: '#/components/schemas/AccountStatementRequest'
         propertyName: reportType
+      oneOf:
+      - $ref: '#/components/schemas/AccountStatementRequest'
       properties:
         reportType:
           description: Type of report to generate
@@ -25247,7 +25943,7 @@ components:
             title: AU-Documents
             type: string
         type: object
-    BusinessDocumentsBZ:
+    BusinessDocumentsBR:
       allOf:
       - $ref: '#/components/schemas/BusinessDocuments'
       - properties:
@@ -25261,7 +25957,7 @@ components:
             - proof_of_business
             - proof_of_address
             - business_registration_doc
-            title: BZ-Documents
+            title: BR-Documents
             type: string
         type: object
     BusinessDocumentsCA:
@@ -25354,11 +26050,14 @@ components:
       - properties:
           type:
             enum:
-            - NAR1
-            - NNC1
-            - NN3
+            - passport
+            - trust_deed
+            - LOA
+            - national_id
+            - driver_licence
             - ownership_chart
             - partnership_deed
+            - association_deed
             - proof_of_business
             - proof_of_address
             - business_registration_doc
@@ -27603,6 +28302,8 @@ components:
       - end_of_day
       - next_day
       - 2_days
+      - 3_days
+      - 7_days
       example: immediate
       title: ConversionSchedule
       type: string
@@ -27938,103 +28639,103 @@ components:
           description: The address registered to the corporation being onboarded.
       title: Corporate addresses
       type: object
-    CorporateBZCustomerDetails:
+    CorporateBRCustomerDetails:
       discriminator:
         mapping:
-          full: '#/components/schemas/CorporateBZFullCustomerDetails'
-          minimum: '#/components/schemas/CorporateBZMinCustomerDetailsCreate'
+          full: '#/components/schemas/CorporateBRFullCustomerDetails'
+          minimum: '#/components/schemas/CorporateBRMinCustomerDetailsCreate'
         propertyName: kycType
       oneOf:
-      - $ref: '#/components/schemas/CorporateBZMinCustomerDetailsCreate'
-      - $ref: '#/components/schemas/CorporateBZFullCustomerDetails'
-      title: BZ
-    CorporateBZCustomerDetailsResponse:
+      - $ref: '#/components/schemas/CorporateBRMinCustomerDetailsCreate'
+      - $ref: '#/components/schemas/CorporateBRFullCustomerDetails'
+      title: BR
+    CorporateBRCustomerDetailsResponse:
       discriminator:
         mapping:
-          full: '#/components/schemas/CorporateBZFullCustomerDetailsResponse'
-          minimum: '#/components/schemas/CorporateBZMinCustomerDetailsResponse'
+          full: '#/components/schemas/CorporateBRFullCustomerDetailsResponse'
+          minimum: '#/components/schemas/CorporateBRMinCustomerDetailsResponse'
         propertyName: kycType
       oneOf:
-      - $ref: '#/components/schemas/CorporateBZMinCustomerDetailsResponse'
-      - $ref: '#/components/schemas/CorporateBZFullCustomerDetailsResponse'
-      title: BZ
-    CorporateBZCustomerDetailsUpdate:
+      - $ref: '#/components/schemas/CorporateBRMinCustomerDetailsResponse'
+      - $ref: '#/components/schemas/CorporateBRFullCustomerDetailsResponse'
+      title: BR
+    CorporateBRCustomerDetailsUpdate:
       discriminator:
         mapping:
-          full: '#/components/schemas/CorporateBZFullCustomerDetailsUpdate'
-          minimum: '#/components/schemas/CorporateBZMinCustomerDetailsUpdate'
+          full: '#/components/schemas/CorporateBRFullCustomerDetailsUpdate'
+          minimum: '#/components/schemas/CorporateBRMinCustomerDetailsUpdate'
         propertyName: kycType
       oneOf:
-      - $ref: '#/components/schemas/CorporateBZMinCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/CorporateBZFullCustomerDetailsUpdate'
-      title: BZ
+      - $ref: '#/components/schemas/CorporateBRMinCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/CorporateBRFullCustomerDetailsUpdate'
+      title: BR
       type: object
-    CorporateBZFullCustomerDetails:
-      description: Contains customer details for BZ, Corporate and full kycType
+    CorporateBRFullCustomerDetails:
+      description: Contains customer details for BR, Corporate and full kycType
       discriminator:
         mapping:
-          foreign_company_office: '#/components/schemas/BZFullForeignCompanyOfficeCustomerDetails'
-          general_partnership: '#/components/schemas/BZFullGeneralPartnershipCustomerDetails'
-          limited_partnership: '#/components/schemas/BZFullLimitedPartnershipCustomerDetails'
-          others: '#/components/schemas/BZFullOthersCustomerDetails'
-          private_company: '#/components/schemas/BZFullPrivateCompanyCustomerDetails'
-          public_company: '#/components/schemas/BZFullPublicCompanyCustomerDetails'
-          sole_trader: '#/components/schemas/BZFullSoleTraderCustomerDetails'
+          foreign_company_office: '#/components/schemas/BRFullForeignCompanyOfficeCustomerDetails'
+          general_partnership: '#/components/schemas/BRFullGeneralPartnershipCustomerDetails'
+          limited_partnership: '#/components/schemas/BRFullLimitedPartnershipCustomerDetails'
+          others: '#/components/schemas/BRFullOthersCustomerDetails'
+          private_company: '#/components/schemas/BRFullPrivateCompanyCustomerDetails'
+          public_company: '#/components/schemas/BRFullPublicCompanyCustomerDetails'
+          sole_trader: '#/components/schemas/BRFullSoleTraderCustomerDetails'
         propertyName: businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerDetails'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerDetails'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerDetails'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerDetails'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerDetails'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipCustomerDetails'
-      - $ref: '#/components/schemas/BZFullOthersCustomerDetails'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerDetails'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerDetails'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerDetails'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerDetails'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerDetails'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipCustomerDetails'
+      - $ref: '#/components/schemas/BRFullOthersCustomerDetails'
       title: Full KYC
-    CorporateBZFullCustomerDetailsResponse:
-      description: Contains customer details response for BZ, Corporate and full kycType
+    CorporateBRFullCustomerDetailsResponse:
+      description: Contains customer details response for BR, Corporate and full kycType
       discriminator:
         mapping:
-          foreign_company_office: '#/components/schemas/BZFullForeignCompanyOfficeCustomerDetailsResponse'
-          general_partnership: '#/components/schemas/BZFullGeneralPartnershipCustomerDetailsResponse'
-          limited_partnership: '#/components/schemas/BZFullLimitedPartnershipCustomerDetailsResponse'
-          others: '#/components/schemas/BZFullOthersCustomerDetailsResponse'
-          private_company: '#/components/schemas/BZFullPrivateCompanyCustomerDetailsResponse'
-          public_company: '#/components/schemas/BZFullPublicCompanyCustomerDetailsResponse'
-          sole_trader: '#/components/schemas/BZFullSoleTraderCustomerDetailsResponse'
+          foreign_company_office: '#/components/schemas/BRFullForeignCompanyOfficeCustomerDetailsResponse'
+          general_partnership: '#/components/schemas/BRFullGeneralPartnershipCustomerDetailsResponse'
+          limited_partnership: '#/components/schemas/BRFullLimitedPartnershipCustomerDetailsResponse'
+          others: '#/components/schemas/BRFullOthersCustomerDetailsResponse'
+          private_company: '#/components/schemas/BRFullPrivateCompanyCustomerDetailsResponse'
+          public_company: '#/components/schemas/BRFullPublicCompanyCustomerDetailsResponse'
+          sole_trader: '#/components/schemas/BRFullSoleTraderCustomerDetailsResponse'
         propertyName: businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipCustomerDetailsResponse'
-      - $ref: '#/components/schemas/BZFullOthersCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipCustomerDetailsResponse'
+      - $ref: '#/components/schemas/BRFullOthersCustomerDetailsResponse'
       title: Full KYC
-    CorporateBZFullCustomerDetailsUpdate:
-      description: Contains update customer details for BZ, Corporate and full kycType
+    CorporateBRFullCustomerDetailsUpdate:
+      description: Contains update customer details for BR, Corporate and full kycType
       discriminator:
         mapping:
-          foreign_company_office: '#/components/schemas/BZFullForeignCompanyOfficeCustomerDetailsUpdate'
-          general_partnership: '#/components/schemas/BZFullGeneralPartnershipCustomerDetailsUpdate'
-          limited_partnership: '#/components/schemas/BZFullLimitedPartnershipCustomerDetailsUpdate'
-          others: '#/components/schemas/BZFullOthersCustomerDetailsUpdate'
-          private_company: '#/components/schemas/BZFullPrivateCompanyCustomerDetailsUpdate'
-          public_company: '#/components/schemas/BZFullPublicCompanyCustomerDetailsUpdate'
-          sole_trader: '#/components/schemas/BZFullSoleTraderCustomerDetailsUpdate'
+          foreign_company_office: '#/components/schemas/BRFullForeignCompanyOfficeCustomerDetailsUpdate'
+          general_partnership: '#/components/schemas/BRFullGeneralPartnershipCustomerDetailsUpdate'
+          limited_partnership: '#/components/schemas/BRFullLimitedPartnershipCustomerDetailsUpdate'
+          others: '#/components/schemas/BRFullOthersCustomerDetailsUpdate'
+          private_company: '#/components/schemas/BRFullPrivateCompanyCustomerDetailsUpdate'
+          public_company: '#/components/schemas/BRFullPublicCompanyCustomerDetailsUpdate'
+          sole_trader: '#/components/schemas/BRFullSoleTraderCustomerDetailsUpdate'
         propertyName: businessType
       oneOf:
-      - $ref: '#/components/schemas/BZFullSoleTraderCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPrivateCompanyCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullForeignCompanyOfficeCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullGeneralPartnershipCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullLimitedPartnershipCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullOthersCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullSoleTraderCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPrivateCompanyCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullPublicCompanyCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullForeignCompanyOfficeCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullGeneralPartnershipCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullLimitedPartnershipCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/BRFullOthersCustomerDetailsUpdate'
       title: Corporate Full KYC - Update
-    CorporateBZMinCustomerDetails:
+    CorporateBRMinCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseBZCorporateCustomerDetails'
+      - $ref: '#/components/schemas/BaseBRCorporateCustomerDetails'
       - properties:
           sizeOfBusiness:
             description: Contains Size Of business details
@@ -28072,50 +28773,50 @@ components:
         - natureOfBusiness
         - sizeOfBusiness
         type: object
-      description: Contains customer details for BZ, corporate and minimum kycType
+      description: Contains customer details for BR, corporate and minimum kycType
       title: Minimum KYC
       type: object
-    CorporateBZMinCustomerDetailsCreate:
+    CorporateBRMinCustomerDetailsCreate:
       allOf:
-      - $ref: '#/components/schemas/CorporateBZMinCustomerDetails'
+      - $ref: '#/components/schemas/CorporateBRMinCustomerDetails'
       - properties:
           applicant:
-            $ref: '#/components/schemas/BZMinApplicantDetails'
+            $ref: '#/components/schemas/BRMinApplicantDetails'
           stakeholders:
             properties:
               individual:
                 items:
-                  $ref: '#/components/schemas/BZMinIndividualStakeholderDetails'
+                  $ref: '#/components/schemas/BRMinIndividualStakeholderDetails'
                 type: array
               corporate:
                 items:
-                  $ref: '#/components/schemas/BZMinCorporateStakeholderDetails'
+                  $ref: '#/components/schemas/BRMinCorporateStakeholderDetails'
                 type: array
             type: object
         required:
         - applicant
         type: object
-      description: Contains create customer details for corporate, BZ region, minimum
+      description: Contains create customer details for corporate, BR region, minimum
         kycType
       title: Minimum KYC
       type: object
-    CorporateBZMinCustomerDetailsResponse:
+    CorporateBRMinCustomerDetailsResponse:
       allOf:
       - $ref: '#/components/schemas/BaseCustomerDetailsV5Response'
-      - $ref: '#/components/schemas/CorporateBZMinCustomerDetails'
+      - $ref: '#/components/schemas/CorporateBRMinCustomerDetails'
       title: Minimum KYC
       type: object
-    CorporateBZMinCustomerDetailsUpdate:
+    CorporateBRMinCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/CorporateBZMinCustomerDetails'
+      - $ref: '#/components/schemas/CorporateBRMinCustomerDetails'
       - properties:
           applicant:
-            $ref: '#/components/schemas/BZMinApplicantDetailsUpdate'
+            $ref: '#/components/schemas/BRMinApplicantDetailsUpdate'
           stakeholders:
             properties:
               individual:
                 items:
-                  $ref: '#/components/schemas/BZMinIndividualStakeholderDetailsUpdate'
+                  $ref: '#/components/schemas/BRMinIndividualStakeholderDetailsUpdate'
                 type: array
               corporate:
                 items:
@@ -28125,7 +28826,7 @@ components:
         required:
         - applicant
         type: object
-      description: Contains update customer details for corporate, BZ region, minimum
+      description: Contains update customer details for corporate, BR region, minimum
         kycType
       title: Minimum KYC
       type: object
@@ -28173,7 +28874,7 @@ components:
           type: string
         document:
           items:
-            $ref: '#/components/schemas/CustomerDocument'
+            $ref: '#/components/schemas/Document1'
           type: array
       title: Corporate business details document detail
       type: object
@@ -28454,7 +29155,7 @@ components:
       discriminator:
         mapping:
           AU: '#/components/schemas/CorporateAUCustomerDetails'
-          BZ: '#/components/schemas/CorporateBZCustomerDetails'
+          BR: '#/components/schemas/CorporateBRCustomerDetails'
           CA: '#/components/schemas/CorporateCACustomerDetails'
           EU: '#/components/schemas/CorporateEUCustomerDetails'
           HK: '#/components/schemas/CorporateHKCustomerDetails'
@@ -28477,14 +29178,14 @@ components:
       - $ref: '#/components/schemas/CorporateHKCustomerDetails'
       - $ref: '#/components/schemas/CorporateJPCustomerDetails'
       - $ref: '#/components/schemas/CorporateMXCustomerDetails'
-      - $ref: '#/components/schemas/CorporateBZCustomerDetails'
+      - $ref: '#/components/schemas/CorporateBRCustomerDetails'
       - $ref: '#/components/schemas/CorporateIDCustomerDetails'
       title: Corporate Customer
     CorporateCustomerDetailsResponse:
       discriminator:
         mapping:
           AU: '#/components/schemas/CorporateAUCustomerDetailsResponse'
-          BZ: '#/components/schemas/CorporateBZCustomerDetailsResponse'
+          BR: '#/components/schemas/CorporateBRCustomerDetailsResponse'
           CA: '#/components/schemas/CorporateCACustomerDetailsResponse'
           EU: '#/components/schemas/CorporateEUCustomerDetailsResponse'
           HK: '#/components/schemas/CorporateHKCustomerDetailsResponse'
@@ -28507,14 +29208,14 @@ components:
       - $ref: '#/components/schemas/CorporateHKCustomerDetailsResponse'
       - $ref: '#/components/schemas/CorporateJPCustomerDetailsResponse'
       - $ref: '#/components/schemas/CorporateMXCustomerDetailsResponse'
-      - $ref: '#/components/schemas/CorporateBZCustomerDetailsResponse'
+      - $ref: '#/components/schemas/CorporateBRCustomerDetailsResponse'
       - $ref: '#/components/schemas/CorporateIDCustomerDetailsResponse'
       title: Corporate Customer
     CorporateCustomerDetailsUpdate:
       discriminator:
         mapping:
           AU: '#/components/schemas/CorporateAUCustomerDetailsUpdate'
-          BZ: '#/components/schemas/CorporateBZCustomerDetailsUpdate'
+          BR: '#/components/schemas/CorporateBRCustomerDetailsUpdate'
           CA: '#/components/schemas/CorporateCACustomerDetailsUpdate'
           EU: '#/components/schemas/CorporateEUCustomerDetailsUpdate'
           HK: '#/components/schemas/CorporateHKCustomerDetailsUpdate'
@@ -28537,7 +29238,7 @@ components:
       - $ref: '#/components/schemas/CorporateHKCustomerDetailsUpdate'
       - $ref: '#/components/schemas/CorporateJPCustomerDetailsUpdate'
       - $ref: '#/components/schemas/CorporateMXCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/CorporateBZCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/CorporateBRCustomerDetailsUpdate'
       - $ref: '#/components/schemas/CorporateIDCustomerDetailsUpdate'
       title: Corporate Customer
       type: object
@@ -29190,7 +29891,7 @@ components:
         required:
         - applicant
         type: object
-      description: Contains create customer details for corporate, BZ region, minimum
+      description: Contains create customer details for corporate, ID region, minimum
         kycType
       title: Minimum KYC
       type: object
@@ -29210,11 +29911,11 @@ components:
             properties:
               individual:
                 items:
-                  $ref: '#/components/schemas/BZMinIndividualStakeholderDetailsUpdate'
+                  $ref: '#/components/schemas/IDMinIndividualStakeholderDetailsUpdate'
                 type: array
               corporate:
                 items:
-                  $ref: '#/components/schemas/MXMinCorporateStakeholderDetailsUpdate'
+                  $ref: '#/components/schemas/IDMinCorporateStakeholderDetailsUpdate'
                 type: array
             type: object
         required:
@@ -31579,15 +32280,6 @@ components:
       summary: List Customer Details v5
       title: CustomerDetailsV5ResponseList
       type: object
-    CustomerDocument:
-      properties:
-        fileName:
-          type: string
-        fileType:
-          type: string
-        document:
-          type: string
-      type: object
     CustomerDocumentDetail:
       properties:
         documentType:
@@ -31626,7 +32318,7 @@ components:
           type: string
         document:
           items:
-            $ref: '#/components/schemas/CustomerDocument'
+            $ref: '#/components/schemas/Document1'
           type: array
       title: DocumentDetail
       type: object
@@ -32406,6 +33098,15 @@ components:
         standardDirectDebitLimits:
           $ref: '#/components/schemas/AllLimitsDTO'
       title: Direct Debit Maximum Limits
+      type: object
+    Document1:
+      properties:
+        fileName:
+          type: string
+        fileType:
+          type: string
+        document:
+          type: string
       type: object
     DocumentDetails:
       properties:
@@ -35792,6 +36493,16 @@ components:
       description: Corporate Stakeholder Response Details for ID, Full KYC
       title: Corporate Stakeholder
       type: object
+    IDFullCorporateStakeholderDetailsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/IDFullCorporateStakeholderDetails'
+      - properties:
+          referenceId:
+            $ref: '#/components/schemas/StakeholderReferenceId'
+        type: object
+      description: Corporate Stakeholder Update Details for ID, Full KYC
+      title: Corporate Stakeholder
+      type: object
     IDFullIndividualStakeholderDetails:
       allOf:
       - $ref: '#/components/schemas/IndividualStakeholderDetails'
@@ -35836,7 +36547,7 @@ components:
       type: object
     IDFullIndividualStakeholderDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BZFullIndividualStakeholderDetails'
+      - $ref: '#/components/schemas/IDFullIndividualStakeholderDetails'
       - properties:
           referenceId:
             $ref: '#/components/schemas/StakeholderReferenceId'
@@ -35845,7 +36556,7 @@ components:
               $ref: '#/components/schemas/DocumentDetailsResponse'
             type: array
         type: object
-      description: Individual Stakeholder Update Details for BZ, Full KYC
+      description: Individual Stakeholder Update Details for ID, Full KYC
       title: Individual Stakeholder
       type: object
     IDFullLimitedPartnershipCustomerDetails:
@@ -36100,8 +36811,8 @@ components:
       type: object
     IDFullPublicCompanyWithoutSearchIdCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/BaseCorporateBZFullCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/BZFullPublicCompanyCustomerOtherDetails'
+      - $ref: '#/components/schemas/BaseCorporateIDFullCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/IDFullPublicCompanyCustomerOtherDetails'
       - required:
         - documents
       title: MANUAL_KYB
@@ -36288,6 +36999,16 @@ components:
         type: object
       title: Corporate Stakeholder
       type: object
+    IDMinCorporateStakeholderDetailsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/IDMinCorporateStakeholderDetails'
+      - properties:
+          referenceId:
+            $ref: '#/components/schemas/StakeholderReferenceId'
+        type: object
+      description: Corporate Stakeholder Update Details for ID, minimum KYC
+      title: Corporate Stakeholder
+      type: object
     IDMinIndividualStakeholderDetails:
       allOf:
       - $ref: '#/components/schemas/IndividualStakeholderDetails'
@@ -36308,6 +37029,16 @@ components:
         required:
         - positions
         type: object
+      title: Individual Stakeholder
+      type: object
+    IDMinIndividualStakeholderDetailsUpdate:
+      allOf:
+      - $ref: '#/components/schemas/IDMinIndividualStakeholderDetails'
+      - properties:
+          referenceId:
+            $ref: '#/components/schemas/StakeholderReferenceId'
+        type: object
+      description: Individual Stakeholder Update Details for ID, minimum KYC
       title: Individual Stakeholder
       type: object
     IDPositionDetails:
@@ -36419,7 +37150,7 @@ components:
       type: object
     IndividualAUFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualAUFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualAUFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AUAddressDTO'
@@ -36596,51 +37327,51 @@ components:
       - $ref: '#/components/schemas/IndividualAUMinCustomerDetails'
       title: Minimum KYC
       type: object
-    IndividualBZCustomerDetails:
+    IndividualBRCustomerDetails:
       discriminator:
         mapping:
-          full: '#/components/schemas/IndividualBZFullCustomerDetails'
-          minimum: '#/components/schemas/IndividualBZMinCustomerDetails'
+          full: '#/components/schemas/IndividualBRFullCustomerDetails'
+          minimum: '#/components/schemas/IndividualBRMinCustomerDetails'
         propertyName: kycType
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZMinCustomerDetails'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetails'
-      title: BZ
-    IndividualBZCustomerDetailsResponse:
+      - $ref: '#/components/schemas/IndividualBRMinCustomerDetails'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetails'
+      title: BR
+    IndividualBRCustomerDetailsResponse:
       discriminator:
         mapping:
-          full: '#/components/schemas/IndividualBZFullCustomerDetailsResponse'
-          minimum: '#/components/schemas/IndividualBZMinCustomerDetailsResponse'
+          full: '#/components/schemas/IndividualBRFullCustomerDetailsResponse'
+          minimum: '#/components/schemas/IndividualBRMinCustomerDetailsResponse'
         propertyName: kycType
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZMinCustomerDetailsResponse'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsResponse'
+      - $ref: '#/components/schemas/IndividualBRMinCustomerDetailsResponse'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsResponse'
       title: MX
-    IndividualBZCustomerDetailsUpdate:
+    IndividualBRCustomerDetailsUpdate:
       discriminator:
         mapping:
-          full: '#/components/schemas/IndividualBZFullCustomerDetailsUpdate'
-          minimum: '#/components/schemas/IndividualBZMinCustomerDetailsUpdate'
+          full: '#/components/schemas/IndividualBRFullCustomerDetailsUpdate'
+          minimum: '#/components/schemas/IndividualBRMinCustomerDetailsUpdate'
         propertyName: kycType
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZMinCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsUpdate'
-      title: BZ
+      - $ref: '#/components/schemas/IndividualBRMinCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsUpdate'
+      title: BR
       type: object
-    IndividualBZFullCustomerDetails:
+    IndividualBRFullCustomerDetails:
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParent'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithNoParent'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParent'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithNoParent'
       title: Full KYC
-    IndividualBZFullCustomerDetailsResponse:
+    IndividualBRFullCustomerDetailsResponse:
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithNoParentResponse'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentResponse'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithNoParentResponse'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentResponse'
       title: Full KYC
       type: object
-    IndividualBZFullCustomerDetailsUpdate:
+    IndividualBRFullCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetails'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetails'
       - properties:
           documents:
             items:
@@ -36649,9 +37380,9 @@ components:
         type: object
       title: Full KYC
       type: object
-    IndividualBZFullCustomerDetailsWithNoParent:
+    IndividualBRFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualMXFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualMXFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -36661,24 +37392,24 @@ components:
       title: Employee Onboarding - False
       type: object
       x-jsonTypeName: IndividualMXFullCustomerDetailsWithoutParentCustomerHashId
-    IndividualBZFullCustomerDetailsWithNoParentResponse:
+    IndividualBRFullCustomerDetailsWithNoParentResponse:
       allOf:
       - $ref: '#/components/schemas/BaseCustomerDetailsV5Response'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithNoParent'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithNoParent'
       - $ref: '#/components/schemas/KycModeAndDocuments'
       title: Employee Onboarding - False
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithoutParentCustomerHashIdResponse
-    IndividualBZFullCustomerDetailsWithParent:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithoutParentCustomerHashIdResponse
+    IndividualBRFullCustomerDetailsWithParent:
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentAndCorpBilling'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentAndNoCorpBilling'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentAndCorpBilling'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentAndNoCorpBilling'
       title: Employee Onboarding - True
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithParentCustomerHashId
-    IndividualBZFullCustomerDetailsWithParentAndCorpBilling:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithParentCustomerHashId
+    IndividualBRFullCustomerDetailsWithParentAndCorpBilling:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualBZFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualBRFullCustomerDetails'
       - properties:
           parentCustomerHashId:
             description: This field contains the unique identifier of the corporate
@@ -36694,18 +37425,18 @@ components:
         type: object
       title: Spend Management Use case
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithParentAndWithoutBillingAddress
-    IndividualBZFullCustomerDetailsWithParentAndCorpBillingResponse:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithParentAndWithoutBillingAddress
+    IndividualBRFullCustomerDetailsWithParentAndCorpBillingResponse:
       allOf:
       - $ref: '#/components/schemas/BaseCustomerDetailsV5Response'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentAndCorpBilling'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentAndCorpBilling'
       - $ref: '#/components/schemas/KycModeAndDocuments'
       title: Spend Management Use case
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithParentAndWithoutBillingAddressResponse
-    IndividualBZFullCustomerDetailsWithParentAndNoCorpBilling:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithParentAndWithoutBillingAddressResponse
+    IndividualBRFullCustomerDetailsWithParentAndNoCorpBilling:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualBZFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualBRFullCustomerDetails'
       - properties:
           parentCustomerHashId:
             description: This field contains the unique identifier of the corporate
@@ -36719,25 +37450,25 @@ components:
         type: object
       title: Payroll Management Use case
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithParentAndWithBillingAddress
-    IndividualBZFullCustomerDetailsWithParentAndNoCorpBillingResponse:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithParentAndWithBillingAddress
+    IndividualBRFullCustomerDetailsWithParentAndNoCorpBillingResponse:
       allOf:
       - $ref: '#/components/schemas/BaseCustomerDetailsV5Response'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentAndNoCorpBilling'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentAndNoCorpBilling'
       - $ref: '#/components/schemas/KycModeAndDocuments'
       title: Payroll Management Use case
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithParentAndWithBillingAddressResponse
-    IndividualBZFullCustomerDetailsWithParentResponse:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithParentAndWithBillingAddressResponse
+    IndividualBRFullCustomerDetailsWithParentResponse:
       oneOf:
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentAndCorpBillingResponse'
-      - $ref: '#/components/schemas/IndividualBZFullCustomerDetailsWithParentAndNoCorpBillingResponse'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentAndCorpBillingResponse'
+      - $ref: '#/components/schemas/IndividualBRFullCustomerDetailsWithParentAndNoCorpBillingResponse'
       title: Employee Onboarding - True
       type: object
-      x-jsonTypeName: IndividualBZFullCustomerDetailsWithParentCustomerHashIdResponse
-    IndividualBZMinCustomerDetails:
+      x-jsonTypeName: IndividualBRFullCustomerDetailsWithParentCustomerHashIdResponse
+    IndividualBRMinCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseBZIndividualCustomerDetails'
+      - $ref: '#/components/schemas/BaseBRIndividualCustomerDetails'
       - properties:
           website:
             maxLength: 255
@@ -36765,18 +37496,18 @@ components:
         - expectedAccountUsage
         - natureOfBusiness
         type: object
-      description: Contains customer details for BZ, Individual and minimum kycType
+      description: Contains customer details for BR, Individual and minimum kycType
       title: Minimum KYC
       type: object
-    IndividualBZMinCustomerDetailsResponse:
+    IndividualBRMinCustomerDetailsResponse:
       allOf:
       - $ref: '#/components/schemas/BaseCustomerDetailsV5Response'
-      - $ref: '#/components/schemas/IndividualBZMinCustomerDetails'
+      - $ref: '#/components/schemas/IndividualBRMinCustomerDetails'
       title: Minimum KYC
       type: object
-    IndividualBZMinCustomerDetailsUpdate:
+    IndividualBRMinCustomerDetailsUpdate:
       allOf:
-      - $ref: '#/components/schemas/IndividualBZMinCustomerDetails'
+      - $ref: '#/components/schemas/IndividualBRMinCustomerDetails'
       title: Minimum KYC
       type: object
     IndividualCACustomerDetails:
@@ -36830,7 +37561,7 @@ components:
       type: object
     IndividualCAFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualCAFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualCAFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -36998,7 +37729,7 @@ components:
       discriminator:
         mapping:
           AU: '#/components/schemas/IndividualAUCustomerDetails'
-          BZ: '#/components/schemas/IndividualBZCustomerDetails'
+          BR: '#/components/schemas/IndividualBRCustomerDetails'
           CA: '#/components/schemas/IndividualCACustomerDetails'
           EU: '#/components/schemas/IndividualEUCustomerDetails'
           HK: '#/components/schemas/IndividualHKCustomerDetails'
@@ -37021,14 +37752,14 @@ components:
       - $ref: '#/components/schemas/IndividualHKCustomerDetails'
       - $ref: '#/components/schemas/IndividualJPCustomerDetails'
       - $ref: '#/components/schemas/IndividualMXCustomerDetails'
-      - $ref: '#/components/schemas/IndividualBZCustomerDetails'
+      - $ref: '#/components/schemas/IndividualBRCustomerDetails'
       - $ref: '#/components/schemas/IndividualIDCustomerDetails'
       title: Individual Customer
     IndividualCustomerDetailsResponse:
       discriminator:
         mapping:
           AU: '#/components/schemas/IndividualAUCustomerDetailsResponse'
-          BZ: '#/components/schemas/IndividualBZCustomerDetailsResponse'
+          BR: '#/components/schemas/IndividualBRCustomerDetailsResponse'
           CA: '#/components/schemas/IndividualCACustomerDetailsResponse'
           EU: '#/components/schemas/IndividualEUCustomerDetailsResponse'
           HK: '#/components/schemas/IndividualHKCustomerDetailsResponse'
@@ -37051,7 +37782,7 @@ components:
       - $ref: '#/components/schemas/IndividualHKCustomerDetailsResponse'
       - $ref: '#/components/schemas/IndividualJPCustomerDetailsResponse'
       - $ref: '#/components/schemas/IndividualMXCustomerDetailsResponse'
-      - $ref: '#/components/schemas/IndividualBZCustomerDetailsResponse'
+      - $ref: '#/components/schemas/IndividualBRCustomerDetailsResponse'
       - $ref: '#/components/schemas/IndividualIDCustomerDetailsResponse'
       title: Individual Customer
       type: object
@@ -37059,7 +37790,7 @@ components:
       discriminator:
         mapping:
           AU: '#/components/schemas/IndividualAUCustomerDetailsUpdate'
-          BZ: '#/components/schemas/IndividualBZCustomerDetailsUpdate'
+          BR: '#/components/schemas/IndividualBRCustomerDetailsUpdate'
           CA: '#/components/schemas/IndividualCACustomerDetailsUpdate'
           EU: '#/components/schemas/IndividualEUCustomerDetailsUpdate'
           HK: '#/components/schemas/IndividualHKCustomerDetailsUpdate'
@@ -37082,7 +37813,7 @@ components:
       - $ref: '#/components/schemas/IndividualHKCustomerDetailsUpdate'
       - $ref: '#/components/schemas/IndividualJPCustomerDetailsUpdate'
       - $ref: '#/components/schemas/IndividualMXCustomerDetailsUpdate'
-      - $ref: '#/components/schemas/IndividualBZCustomerDetailsUpdate'
+      - $ref: '#/components/schemas/IndividualBRCustomerDetailsUpdate'
       - $ref: '#/components/schemas/IndividualIDCustomerDetailsUpdate'
       title: Individual Customer
       type: object
@@ -37527,7 +38258,7 @@ components:
       type: object
     IndividualEUFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualEUFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualEUFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -37763,7 +38494,7 @@ components:
       type: object
     IndividualHKFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualHKFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualHKFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -37920,7 +38651,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/IndividualIDMinCustomerDetailsUpdate'
       - $ref: '#/components/schemas/IndividualIDFullCustomerDetailsUpdate'
-      title: BZ
+      title: ID
       type: object
     IndividualIDFullCustomerDetails:
       oneOf:
@@ -37946,7 +38677,7 @@ components:
       type: object
     IndividualIDFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualIDFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualIDFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -38032,7 +38763,7 @@ components:
       x-jsonTypeName: IndividualIDFullCustomerDetailsWithParentCustomerHashIdResponse
     IndividualIDMinCustomerDetails:
       allOf:
-      - $ref: '#/components/schemas/BaseBZIndividualCustomerDetails'
+      - $ref: '#/components/schemas/BaseBRIndividualCustomerDetails'
       - properties:
           website:
             maxLength: 255
@@ -38125,7 +38856,7 @@ components:
       type: object
     IndividualJPFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualJPFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualJPFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -38338,7 +39069,7 @@ components:
       type: object
     IndividualMXFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualMXFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualMXFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -38517,7 +39248,7 @@ components:
       type: object
     IndividualNLFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualNLFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualNLFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -38745,7 +39476,7 @@ components:
       type: object
     IndividualSGFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualSGFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualSGFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -39025,7 +39756,7 @@ components:
       type: object
     IndividualUKFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualUKFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualUKFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -39256,7 +39987,7 @@ components:
       type: object
     IndividualUSFullCustomerDetailsWithNoParent:
       allOf:
-      - $ref: '#/components/schemas/BaseIndividualUSFullCustomerDetails'
+      - $ref: '#/components/schemas/BaseIndividualUSFullCustomerDetailsWithBankDetails'
       - properties:
           billingAddress:
             $ref: '#/components/schemas/AddressDTO'
@@ -40234,6 +40965,9 @@ components:
         status:
           description: The status of the request. Available values include:<ul><li><strong>PENDING</strong></li><li><strong>FAILED</strong></li></ul>
           type: string
+        statusDescription:
+          description: This field contains the description of the status.
+          type: string
       title: Link Account response
       type: object
     LinkAccountResponseV2:
@@ -40599,24 +41333,6 @@ components:
         type: object
       description: Applicant create Details for MX region, Full KYC
       title: Applicant Details
-    MXFullApplicantDetailsResponse:
-      allOf:
-      - $ref: '#/components/schemas/MXFullApplicantDetails'
-      - properties:
-          referenceId:
-            $ref: '#/components/schemas/ApplicantReferenceId'
-          kycMode:
-            type: string
-          kycStatus:
-            type: string
-          documents:
-            items:
-              $ref: '#/components/schemas/DocumentDetailsResponse'
-            type: array
-        type: object
-      description: Applicant Response Details for MX, full KYC
-      title: Applicant Details
-      type: object
     MXFullApplicantDetailsUpdate:
       allOf:
       - $ref: '#/components/schemas/MXFullApplicantDetails'
@@ -40647,18 +41363,6 @@ components:
       - businessRegistrationNumber
       - positions
       - registeredCountry
-      title: Corporate Stakeholder
-      type: object
-    MXFullCorporateStakeholderDetailsResponse:
-      allOf:
-      - $ref: '#/components/schemas/MXFullCorporateStakeholderDetails'
-      - properties:
-          referenceId:
-            $ref: '#/components/schemas/StakeholderReferenceId'
-          kycStatus:
-            type: string
-        type: object
-      description: Corporate Stakeholder Response Details for MX, Full KYC
       title: Corporate Stakeholder
       type: object
     MXFullCorporateStakeholderDetailsUpdate:
@@ -40822,24 +41526,6 @@ components:
         - positions
         type: object
       description: Individual Stakeholder Details for MX region, Full KYC
-      title: Individual Stakeholder
-      type: object
-    MXFullIndividualStakeholderDetailsResponse:
-      allOf:
-      - $ref: '#/components/schemas/MXFullIndividualStakeholderDetails'
-      - properties:
-          referenceId:
-            $ref: '#/components/schemas/StakeholderReferenceId'
-          kycMode:
-            type: string
-          kycStatus:
-            type: string
-          documents:
-            items:
-              $ref: '#/components/schemas/DocumentDetailsResponse'
-            type: array
-        type: object
-      description: Individual Stakeholder Response Details for MX, Full KYC
       title: Individual Stakeholder
       type: object
     MXFullIndividualStakeholderDetailsUpdate:
@@ -43228,6 +43914,7 @@ components:
           enum:
           - SOLANA
           - BASE
+          - ETHEREUM
           type: string
       required:
       - bankName
@@ -43253,6 +43940,7 @@ components:
           enum:
           - SOLANA
           - BASE
+          - ETHEREUM
           type: string
       type: object
     PaymentIdTagRequestDTO:
@@ -53097,6 +53785,7 @@ components:
           enum:
           - SOLANA
           - BASE
+          - ETHEREUM
           type: string
         status:
           description: The current status of the funding instrument.
