@@ -69,7 +69,7 @@ For implementation details, see *Onboarding Response – 200* to generate a `red
 `redirectURL` links for Corporate Onboarding no longer expire, unless the customer starts but does not complete the KYC flow in a single uninterrupted session.
 
 If the session times out, customers can restart the process using the same link or by refreshing their browser.  
-As a result, the [Regenerate KYC URL](/api#tag/customer-account---corporate/POST/api/v1/client/{clientHashId}/customer/{customerHashId}/regenerateKYCURL) API will be deprecated (currently still supported with a dummy expiry for existing integrations).
+As a result, the [Regenerate KYC URL](/api#tag/customer-account-corporate/POST/api/v1/client/{clientHashId}/customer/{customerHashId}/regenerateKYCURL) API will be deprecated (currently still supported with a dummy expiry for existing integrations).
 
 ##### Standardized Letter of Authorization
 
@@ -259,8 +259,8 @@ Learn more in the updated [Nium Verify](/docs/account-verification).
 
 A new parameter, `rfiHashId`, is now available in the following requests:
 
-- [Fetch Corporate Customer RFI Details​](/api#tag/customer-account---corporate/GET/api/v1/client/{clientHashId}/corporate/rfi)
-- [Respond to RFI for Corporate Customer](/api#tag/customer-account---corporate/POST/api/v1/client/{clientHashId}/corporate/rfi)
+- [Fetch Corporate Customer RFI Details](/api#tag/customer-account-corporate/GET/api/v1/client/{clientHashId}/corporate/rfi)
+- [Respond to RFI for Corporate Customer](/api#tag/customer-account-corporate/POST/api/v1/client/{clientHashId}/corporate/rfi)
 
 You can now store and use an `rfiHashId` to uniquely identify and respond to Requests for Information (RFIs), helping ensure accurate tracking and preventing mix-ups.
 
