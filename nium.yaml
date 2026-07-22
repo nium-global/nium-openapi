@@ -25,7 +25,7 @@ info:
   license:
     name: Copyright (c) 2025 NIUM
   title: Nium API Reference
-  version: 2026.7.8
+  version: 2026.7.22
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -462,6 +462,8 @@ tags:
 
     This request is helpful when calculating estimated billing amounts for cardholders.
     For more information, see [Cards](/docs/cards).
+- name: Request for Information
+  description: REST APIs for Request for Information
 - name: Customer Fees
   description: "Use the Customer Fees request to manually charge a custom fee to a\
     \ customer\u2019s wallet. This request changes the `customFee` resource and must\
@@ -1517,7 +1519,7 @@ paths:
     get:
       description: This API allows you to fetch user lists under a client with optional
         search parameters.
-      operationId: listUsers
+      operationId: listUsers_1
       parameters:
       - name: clientHashId
         in: path
@@ -12893,163 +12895,6 @@ paths:
       - Payout
       x-info:
         apiType: external
-  /api/v1/client/{clientHashId}/customer/{customerHashId}/currency/{currencyCode}/payout/schema:
-    get:
-      description: This API allows you to fetch the payout validation schema.
-      operationId: PayoutValidationSchema
-      parameters:
-      - name: clientHashId
-        in: path
-        description: Unique client identifier generated and shared before API handshake.
-        required: true
-        schema:
-          type: string
-      - name: customerHashId
-        in: path
-        description: Unique customer identifier generated on customer creation.
-        required: true
-        schema:
-          type: string
-      - name: currencyCode
-        in: path
-        description: This field accepts the 3-letter ISO-4217 currency code.
-        required: true
-        schema:
-          type: string
-      - name: payoutMethod
-        in: query
-        description: This field can accept the different modes of payout.
-        required: true
-        schema:
-          enum:
-          - CARD
-          - WALLET
-          - CASH
-          - SWIFT
-          - LOCAL
-          - PROXY
-          - CHECK
-          type: string
-      - name: destinationCountry
-        in: query
-        description: This field accepts the destination country.
-        required: true
-        schema:
-          pattern: ^[A-Z]{2}$
-          type: string
-      - description: Enter a unique UUID value.
-        in: header
-        name: x-request-id
-        schema:
-          example: '{{$guid}}'
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              example:
-                $schema: http://json-schema.org/draft-07/schema#
-                $id: unified.sgd.local.json
-                type: object
-                title: SGD Local Unified Schema
-                required:
-                - transactionNumber
-                - destinationCurrency
-                - destinationAmount
-                - destinationCountry
-                - remitterName
-                - remitterAccountType
-                - beneficiaryName
-                - beneficiaryAccountType
-                - routingCodeType1
-                - routingCodeValue1
-                properties:
-                  beneficiaryAccountType:
-                    enum:
-                    - INDIVIDUAL
-                    - CORPORATE
-                    title: Beneficiary Account Type
-                    type: string
-                  destinationAmount:
-                    $id: '#/properties/destinationAmount'
-                    maximum: '10000000'
-                    maximumDecimals: '2'
-                    title: Destination Amount
-                    type: number
-                  destinationCurrency:
-                    $id: '#/properties/destinationCurrency'
-                    const: SGD
-                    title: Destination Currency
-                    type: string
-                  remitterAccountType:
-                    enum:
-                    - INDIVIDUAL
-                    - CORPORATE
-                    title: Remitter Account Type
-                    type: string
-                  transactionNumber:
-                    $id: '#/properties/transactionNumber'
-                    description: Transaction number can contain only these special
-                      characters - (- _). Length should not be more than 60 characters.
-                    pattern: ^[a-zA-Z0-9-_]{1,60}$
-                    title: Transaction Number
-                    type: string
-                allOf:
-                - if:
-                    properties:
-                      clientLegalEntity:
-                        const: AU
-                    required:
-                    - clientLegalEntity
-                  then:
-                    required:
-                    - beneficiaryAddress
-                    - beneficiaryCity
-                    - beneficiaryBankName
-              schema:
-                type: string
-          description: OK - Returns validation schema
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletApiErrorResponses'
-          description: BadRequest
-        '401':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Unauthorized
-        '403':
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Forbidden
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletStandard404Error'
-          description: Not Found
-        '409':
-          content:
-            '*/*':
-              schema:
-                type: string
-          description: Conflict
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
-      summary: Payout Validation Schema
-      tags:
-      - Payout
-      x-info:
-        apiType: external
   /api/v1/client/{clientHashId}/verifications/{verificationId}:
     get:
       description: Fetch a Nium Verify verification. For more information, see [Nium
@@ -16032,6 +15877,250 @@ paths:
         optional: false
         security-types:
         - api_key
+  /api/v5/client/{clientHashId}/rfi/{rfiId}:
+    get:
+      description: Returns full details for one RFI by its rfiId (UUID).
+      operationId: FetchSingleRfi
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          pattern: ^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$
+          type: string
+      - name: rfiId
+        in: path
+        description: Unique RFI identifier (UUID).
+        required: true
+        schema:
+          format: uuid
+          type: string
+        example: 550e8400-e29b-41d4-a716-446655440000
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          example: '{{$guid}}'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RfiDetailsDto'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchSingleRfiErrorResponse400'
+          description: BadRequest
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rfi-one-serviceErrorResponse404'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rfi-one-serviceErrorResponse500'
+          description: Internal Server Error
+      summary: Fetch Single RFI
+      tags:
+      - Request for Information
+      x-info:
+        apiType: external
+  /api/v5/client/{clientHashId}/customer/{customerHashId}/rfis:
+    get:
+      description: Returns a paginated list of RFIs for the given client and customer,
+        filtered by entity and optional reference or status.
+      operationId: FetchRfiDetails
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          pattern: ^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$
+          type: string
+      - name: customerHashId
+        in: path
+        description: Unique customer identifier generated on customer creation.
+        required: true
+        schema:
+          pattern: ^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$
+          type: string
+      - name: rfiEntity
+        in: query
+        description: RFI entity type.
+        required: true
+        schema:
+          description: RFI entity type.
+          enum:
+          - ONBOARDING
+          - TRANSACTION
+          - ICC_RECON
+          type: string
+      - name: rfiEntityReferenceId
+        in: query
+        description: Optional reference id on the RFI entity.
+        required: false
+        schema:
+          type: string
+      - name: externalReferenceId
+        in: query
+        description: Optional external reference id.
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Optional RFI status filter.
+        required: false
+        schema:
+          description: RFI status.
+          enum:
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - RFI_CLOSED
+          type: string
+      - name: page
+        in: query
+        description: Zero-based page index.
+        required: false
+        schema:
+          default: 0
+          format: int32
+          minimum: 0
+          type: integer
+        example: 0
+      - name: size
+        in: query
+        description: Page size (max 100).
+        required: false
+        schema:
+          default: 20
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        example: 20
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          example: '{{$guid}}'
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RfiPageResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchRfiDetailsErrorResponse400'
+          description: BadRequest
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rfi-one-serviceErrorResponse404'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rfi-one-serviceErrorResponse500'
+          description: Internal Server Error
+      summary: Fetch RFI Details
+      tags:
+      - Request for Information
+      x-info:
+        apiType: external
+  /api/v5/client/{clientHashId}/rfi/response:
+    post:
+      description: Submits one or more RFI responses in sequence. Each item must include
+        either a typed response payload or a cannotRespondReason in the response field.
+      operationId: RespondToRfi
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique client identifier generated and shared before API handshake.
+        required: true
+        schema:
+          pattern: ^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$
+          type: string
+      - description: Enter a unique UUID value.
+        in: header
+        name: x-request-id
+        schema:
+          example: '{{$guid}}'
+          type: string
+      requestBody:
+        description: JSON array of RFI response requests, processed in order. Each
+          item is identified by rfiId and must include a response that is either a
+          typed payload or a cannotRespondReason.
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/rfi-one-serviceRfiResponseRequest'
+              type: array
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                mixedBatch:
+                  description: mixedBatch
+                  summary: One success and one failure
+                  value:
+                    failed: 1
+                    results:
+                    - rfiId: 550e8400-e29b-41d4-a716-446655440000
+                      status: RFI_RESPONDED
+                    - errors:
+                      - code: document_not_accessible
+                        description: 'File not found or inaccessible: 4e1c54cc-9f76-45b0-a4aa-9c514c4df981'
+                        field: response.fileAttachment
+                      rfiId: 660e8400-e29b-41d4-a716-446655440001
+                      status: FAILED
+                    success: 1
+                    total: 2
+              schema:
+                $ref: '#/components/schemas/RfiResponseBatchResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespondToRfiErrorResponse400'
+          description: BadRequest
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rfi-one-serviceErrorResponse404'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rfi-one-serviceErrorResponse500'
+          description: Internal Server Error
+      summary: Respond to RFI
+      tags:
+      - Request for Information
+      x-info:
+        apiType: external
   /api/v1/client/{clientHashId}/customer/{customerHashId}/wallet/{walletHashId}/fees:
     post:
       description: "This API allows you to levy a custom fee.\n\n\u26A0\uFE0F **WARNING**\
@@ -19068,6 +19157,45 @@ components:
         - state
         type: object
       title: State Mandatory Without ISO States
+    AddressDto:
+      properties:
+        addressLine1:
+          description: First line of the address.
+          example: 200 Collins Street
+          maxLength: 255
+          minLength: 0
+          type: string
+        addressLine2:
+          description: Second line of the address.
+          example: 200 Collins Street
+          maxLength: 255
+          minLength: 0
+          type: string
+        city:
+          description: City.
+          example: Melbourne
+          maxLength: 100
+          minLength: 0
+          type: string
+        country:
+          description: Two-letter ISO country code.
+          example: AU
+          maxLength: 2
+          minLength: 2
+          type: string
+        postcode:
+          description: Postal code. Alphanumeric, 3 to 10 characters.
+          example: '3000'
+          pattern: ^(?![- ])([A-Za-z0-9-# ]{3,10})$
+          type: string
+        state:
+          description: State or province.
+          example: VIC
+          maxLength: 100
+          minLength: 0
+          type: string
+      title: Address
+      type: object
     AddressV2:
       properties:
         addressLine1:
@@ -38786,6 +38914,7 @@ components:
       - customer_onboarding_form
       - client_onboarding_form
       - kyc_form
+      - user_kyc_form
       - customer_onboarding_rfi
       - transaction_rfi
       - customer_updation_form
@@ -39004,6 +39133,88 @@ components:
           items:
             $ref: '#/components/schemas/FetchQuoteError'
           type: array
+      type: object
+    FetchRfiDetailsErrorDetail:
+      properties:
+        code:
+          description: >-
+            Error codes returned by Fetch RFI Details API for HTTP 400.
+
+
+            * `invalid_client_hash_id`: The clientHashId path parameter is invalid.
+
+            * `invalid_customer_hash_id`: The customerHashId path parameter is invalid.
+
+            * `missing_required_fields`: A required query parameter is missing.
+
+            * `invalid_input`: A query parameter value is invalid (e.g. page, size,
+            rfiEntity, status).
+          enum:
+          - invalid_client_hash_id
+          - invalid_customer_hash_id
+          - missing_required_fields
+          - invalid_input
+          type: string
+        description:
+          description: Human-readable error message.
+          type: string
+        field:
+          description: Request field name without array index prefix.
+          type:
+          - string
+          - 'null'
+      required:
+      - code
+      - description
+      type: object
+    FetchRfiDetailsErrorResponse400:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/FetchRfiDetailsErrorDetail'
+          type: array
+      required:
+      - errors
+      type: object
+    FetchSingleRfiErrorDetail400:
+      properties:
+        code:
+          description: >-
+            Error codes returned by Fetch Single RFI API for HTTP 400.
+
+
+            * `invalid_client_hash_id`: The clientHashId path parameter is invalid.
+
+            * `invalid_input`: The rfiId path parameter value is invalid (e.g. not
+            a valid UUID).
+
+            * `rfi_client_mismatch`: The RFI does not belong to the client in the
+            request path.
+          enum:
+          - invalid_client_hash_id
+          - invalid_input
+          - rfi_client_mismatch
+          type: string
+        description:
+          description: Human-readable error message.
+          type: string
+        field:
+          description: Request field name without array index prefix.
+          type:
+          - string
+          - 'null'
+      required:
+      - code
+      - description
+      type: object
+    FetchSingleRfiErrorResponse400:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/FetchSingleRfiErrorDetail400'
+          type: array
+      required:
+      - errors
       type: object
     FileCreationRequest:
       properties:
@@ -42060,6 +42271,51 @@ components:
       - fileName
       - fileType
       title: Identification Document
+      type: object
+    IdentityDocumentDto:
+      properties:
+        backFileId:
+          description: fileId (UUID) for the back of the identity document.
+          example: 990e8400-e29b-41d4-a716-446655440004
+          format: uuid
+          type: string
+        documentExpiryDate:
+          description: Document expiry date.
+          example: '2030-06-24'
+          format: date
+          pattern: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
+          type: string
+        documentIssuanceCountry:
+          description: ISO country code of document issuance.
+          example: AU
+          maxLength: 2
+          minLength: 2
+          type: string
+        documentNumber:
+          description: Document number.
+          maxLength: 100
+          minLength: 0
+          type: string
+        documentReferenceNumber:
+          description: Document reference number.
+          example: '123456789'
+          maxLength: 100
+          minLength: 0
+          type: string
+        documentType:
+          description: Type of identity document.
+          example: PASSPORT
+          maxLength: 100
+          minLength: 0
+          type: string
+        frontFileId:
+          description: fileId (UUID) for the front of the identity document.
+          example: 880e8400-e29b-41d4-a716-446655440003
+          format: uuid
+          maxLength: 500
+          minLength: 1
+          type: string
+      title: Identity document
       type: object
     IndividualAUCustomerDetails:
       oneOf:
@@ -49297,6 +49553,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/CustomerOnboardingFormRequest'
       - $ref: '#/components/schemas/KycFormRequest'
+      - $ref: '#/components/schemas/UserKycFormRequest'
       - $ref: '#/components/schemas/CustomerOnboardingRFIRequest'
       - $ref: '#/components/schemas/TransactionRFIRequest'
       - $ref: '#/components/schemas/CustomerUpdationFormRequest'
@@ -49399,11 +49656,6 @@ components:
           example: NL
           title: Region
           type: string
-      required:
-      - entityReferenceId
-      - entityType
-      - kycMode
-      - region
       title: biometric_kyc
       type: object
     NlIndividualCustomerKycRequest:
@@ -53382,6 +53634,11 @@ components:
           type: string
         gpi:
           $ref: '#/components/schemas/GPIResponseDTO'
+        isCancellable:
+          description: Indicates whether this transaction can currently be cancelled
+            via the Cancel Remittance API. Present only on the latest status event;
+            absent on historical events.
+          type: boolean
         lastUpdatedAt:
           format: date-time
           type: string
@@ -53866,6 +54123,47 @@ components:
           type: string
       title: Respond Rfi Response
       type: object
+    RespondToRfiErrorDetail:
+      properties:
+        code:
+          description: >-
+            Error codes returned by Respond to RFI API for HTTP 400 (request structure
+            errors only).
+
+
+            * `invalid_client_hash_id`: The clientHashId path parameter is invalid.
+
+            * `invalid_request_body`: The request body is malformed JSON or not a
+            JSON array.
+
+            * `invalid_input`: A field in the request body has an invalid value or
+            format.
+          enum:
+          - invalid_client_hash_id
+          - invalid_request_body
+          - invalid_input
+          type: string
+        description:
+          description: Human-readable error message.
+          type: string
+        field:
+          description: Request field name without array index prefix.
+          type:
+          - string
+          - 'null'
+      required:
+      - code
+      - description
+      type: object
+    RespondToRfiErrorResponse400:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/RespondToRfiErrorDetail'
+          type: array
+      required:
+      - errors
+      type: object
     RetrieveCardDetailsResponseDTO:
       properties:
         cvv:
@@ -53887,6 +54185,112 @@ components:
           type: string
         monthlyVolume:
           type: string
+      type: object
+    RfiDetailsDto:
+      properties:
+        clientHashId:
+          description: Unique client identifier.
+          example: '{{clientHashId}}'
+          type: string
+        comment:
+          description: Additional comment on the RFI.
+          type: string
+        customerHashId:
+          description: Unique customer identifier.
+          type: string
+        entityType:
+          description: Entity type associated with the RFI.
+          enum:
+          - CUSTOMER
+          - APPLICANT
+          - STAKEHOLDER
+          - REMITTER
+          - BENEFICIARY
+          type: string
+        externalReferenceId:
+          description: External reference id.
+          type: string
+        label:
+          description: Human-readable label for the RFI field.
+          type: string
+        mandatoryFieldTypes:
+          description: Field types that must be provided in the response.
+          items:
+            type: string
+            description: Field type that determines the expected response payload.
+            enum:
+            - CONFIRMATION
+            - TEXT
+            - CHOICE
+            - MULTI_CHOICE
+            - FILE_ATTACHMENT
+            - IDENTITY_DOCUMENT
+            - URL
+            - ADDRESS
+            - DATE
+          type: array
+        metadata:
+          $ref: '#/components/schemas/RfiMetadataDto'
+        optionalFieldTypes:
+          description: Field types that may optionally be provided in the response.
+          items:
+            type: string
+            description: Field type that determines the expected response payload.
+            enum:
+            - CONFIRMATION
+            - TEXT
+            - CHOICE
+            - MULTI_CHOICE
+            - FILE_ATTACHMENT
+            - IDENTITY_DOCUMENT
+            - URL
+            - ADDRESS
+            - DATE
+          type: array
+        query:
+          description: RFI query or question presented to the client.
+          type: string
+        rfiEntity:
+          description: RFI entity type.
+          enum:
+          - ONBOARDING
+          - TRANSACTION
+          - ICC_RECON
+          type: string
+        rfiEntityReferenceId:
+          description: Reference id on the RFI entity.
+          type: string
+        rfiExpiry:
+          description: Expiry timestamp for the RFI.
+          example: '2026-06-24 10:00:00.000'
+          format: date-time
+          type: string
+        rfiId:
+          description: Unique RFI identifier (UUID).
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+        rfiRaisedAt:
+          description: Timestamp when the RFI was raised.
+          example: '2026-06-24 10:00:00.000'
+          format: date-time
+          type: string
+        rfiRespondedAt:
+          description: Timestamp when the RFI was responded to.
+          example: '2026-06-24 10:00:00.000'
+          format: date-time
+          type: string
+        status:
+          description: RFI status.
+          enum:
+          - RFI_REQUESTED
+          - RFI_RESPONDED
+          - RFI_CLOSED
+          type: string
+        url:
+          description: URL associated with the RFI, when applicable.
+          type: string
+      title: RFI details
       type: object
     RfiIdentificationDoc:
       description: This field is an object which holds document details. It is required
@@ -53934,6 +54338,145 @@ components:
       required:
       - identificationType
       title: Rfi identification doc
+      type: object
+    RfiMetadataDto:
+      properties:
+        enumCategory:
+          description: Enum category for CHOICE or MULTI_CHOICE field types.
+          type: string
+        text:
+          description: Additional display text for the RFI field.
+          type: string
+      title: RFI metadata
+      type: object
+    RfiPageResponse:
+      properties:
+        content:
+          type: array
+          description: List of RFI details matching the filter.
+          items:
+            $ref: '#/components/schemas/RfiDetailsDto'
+        totalElements:
+          description: Total number of RFIs matching the filter.
+          format: int64
+          type: string
+        totalPages:
+          description: Total number of pages in the response.
+          format: int32
+          type: string
+      title: RFI page response
+      type: object
+    RfiResponseBatchResponse:
+      description: Batch outcome for one or more RFI response submissions. Returns
+        HTTP 200 when the body is a valid JSON array; per-item failures are reported
+        in results with status FAILED. FAILED items include errors; RFI_RESPONDED
+        items omit errors.
+      example:
+        total: 2
+        success: 1
+        failed: 1
+        results:
+        - rfiId: 550e8400-e29b-41d4-a716-446655440000
+          status: RFI_RESPONDED
+        - errors:
+          - code: document_not_accessible
+            description: 'File not found or inaccessible: 4e1c54cc-9f76-45b0-a4aa-9c514c4df981'
+            field: response.fileAttachment
+          rfiId: 660e8400-e29b-41d4-a716-446655440001
+          status: FAILED
+      properties:
+        failed:
+          description: Number of failed submissions
+          example: 1
+          format: int32
+          type: integer
+        results:
+          description: Per-request outcomes in the same order as the request array.
+            Failed items include errors with code, description, and field.
+          items:
+            $ref: '#/components/schemas/RfiResponseResultDto'
+          type: array
+        success:
+          description: Number of successfully responded RFIs
+          example: 1
+          format: int32
+          type: integer
+        total:
+          description: Total number of requests in the batch
+          example: 2
+          format: int32
+          type: integer
+      type: object
+    RfiResponsePayloadDto:
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressDto'
+        cannotRespondReason:
+          description: Client-selected reason when the RFI cannot be responded to
+            (e.g. document not available, customer unresponsive).
+          example: DOCUMENT_UNAVAILABLE
+          type: string
+        choice:
+          description: Single choice value for CHOICE field type.
+          example: string
+          type: string
+        confirmation:
+          description: Boolean confirmation value for CONFIRMATION field type.
+          example: true
+          type: boolean
+        date:
+          description: Date value for DATE field type.
+          example: '2026-06-24'
+          format: date
+          type: string
+        fileAttachment:
+          description: List of fileId values (UUID) for FILE_ATTACHMENT field type.
+          example:
+          - 770e8400-e29b-41d4-a716-446655440002
+          items:
+            type: string
+          type: array
+        identityDocument:
+          description: Identity document details for IDENTITY_DOCUMENT field type.
+          items:
+            $ref: '#/components/schemas/IdentityDocumentDto'
+          type: array
+        multiChoice:
+          description: Multiple choice values for MULTI_CHOICE field type.
+          example:
+          - string
+          items:
+            type: string
+            minLength: 1
+          type: array
+        text:
+          description: Free-text response for TEXT field type.
+          example: string
+          maxLength: 2000
+          minLength: 0
+          type: string
+      title: RFI response payload
+      type: object
+    RfiResponseResultDto:
+      description: Outcome of a single RFI response submission within a batch
+      properties:
+        errors:
+          description: Validation or processing errors for this item. Present only
+            when status is FAILED; omitted for RFI_RESPONDED.
+          items:
+            $ref: '#/components/schemas/rfi-one-serviceValidationError'
+          type: array
+        rfiId:
+          description: RFI id from the request
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
+        status:
+          description: Submission outcome
+          enum:
+          - RFI_RESPONDED
+          - FAILED
+          example: FAILED
+          type: string
       type: object
     RiskAssessmentInfoV2:
       properties:
@@ -57715,119 +58258,6 @@ components:
       - receiptFileName
       - receiptType
       type: object
-    TypedErrorApiErrorCode:
-      properties:
-        code:
-          enum:
-          - invalid_client_hash_id
-          - invalid_customer_hash_id
-          - invalid_wallet_hash_id
-          - invalid_card_hash_id
-          - customer_status_not_clear
-          - invalid_currency
-          - currency_not_configured
-          - wallet_creation_limit_exceeds
-          - tags_maximum_limit_exceeded
-          - tag_key_contains_special_chars
-          - unique_tag_key_required
-          - duplicate_client_transaction_config
-          - invalid_client_transaction_config
-          - invalid_transaction_category
-          - invalid_transaction_type
-          - wallet_currency_already_exists
-          - invalid_permission_to_override_customer_fee
-          - invalid_customer_fee_for_individual
-          - invalid_fee_type_for_customer_level
-          - invalid_FX_markup_flat_fee
-          - invalid_customer_fee_currency
-          - invalid_customer_fee_status
-          - fee_already_defined_for_auth_currency
-          - invalid_transaction_currency
-          - invalid_fee_currency
-          - customer_fee_above_threshold
-          - fee_currency_should_not_be_any
-          - customer_fee_does_not_exists
-          - customer_fee_update_not_allowed_for_region
-          - customer_fee_already_exists
-          - wallet_currency_removal_not_allowed
-          - invalid_system_reference_number
-          - invalid_status_for_remittance_cancel
-          - wallet_creation_not_allowed
-          - invalid_input
-          - resource_not_found
-          - invalid_date_range
-          - customer_exists_with_external_id
-          - payout_cancellation_failed
-          - wallet_creation_failed
-          - invalid_customer_age
-          - duplicate_externalId
-          - client_customer_not_found
-          - client_customer_compliance_not_completed
-          - invalid_customer_creation_combination
-          - invalid_input_provided
-          - missing_required_fields
-          - customer_exists
-          - incomplete_client_setup
-          - client_not_active
-          - client_services_not_active
-          - invalid_destination_wallet_hash_id
-          - cross_currency_transfers_not_allowed
-          - source_or_destination_amount_should_be_positive
-          - sender_customer_status_not_clear
-          - receiver_customer_status_not_clear
-          - invalid_w2w_transfer_amount
-          - invalid_purpose
-          - pocket_definition_not_found
-          - invalid_client_license_entity
-          - invalid_client_type
-          - transaction_not_permitted
-          - sending_fund_not_permitted
-          - receiving_fund_not_permitted
-          - authenticationCode_or_exemptionCode_required
-          - invalid_authenticationCode_or_exemptionCode
-          - invalid_exemption_code
-          - invalid_scheduled_payout_date
-          - feature_not_supported
-          - session_token_generation_failed
-          - onboarding_form_url_generation_failed
-          - transaction_not_found
-          - duplicate_transaction_found
-          - transaction_compliance_profile_not_found
-          - transaction_compliance_profile_mapping_not_found
-          - missing_required_field
-          - invalid_request
-          - internal_server_error
-          - missing_required_documents
-          - invalid_plugin_feature
-          - currency_code_is_mandatory
-          - currency_code_invalid_for_client
-          - field_missing
-          - unsupported_field
-          - incorrect_value
-          - unsupported_value
-          - incorrect_format
-          - malformed_request
-          - duplicate_entry
-          - not_allowed
-          - inactive
-          - not_found
-          - duplicate_request
-          - already_exists
-          - conflict
-          - request_timeout
-          - unauthorized
-          - forbidden
-          - service_unavailable
-          - dependency_failure
-          - invalid_combination
-          - validation_error
-          - deprecated_field
-          type: string
-        description:
-          type: string
-        field:
-          type: string
-      type: object
     TypedErrorErrorCodes:
       properties:
         code:
@@ -61511,6 +61941,18 @@ components:
       - $ref: '#/components/schemas/UsIndividualStakeholderKycRequest'
       - $ref: '#/components/schemas/UsIndividualCustomerKycRequest'
       title: US
+    UserKycFormRequest:
+      allOf:
+      - $ref: '#/components/schemas/NformifySessionBase'
+      - properties:
+          userHashId:
+            description: User hash identifier
+            format: UUID
+            type: string
+        required:
+        - userHashId
+        type: object
+      title: User KYC Form
     UserListResponse:
       properties:
         pagination:
@@ -61586,6 +62028,12 @@ components:
         kycStatus:
           description: KYC verification status of the user.
           type: string
+        kycStatusMap:
+          additionalProperties:
+            description: KYC status per mode, mapped for UI display.
+            type: string
+          description: KYC status per mode, mapped for UI display.
+          type: object
         lastName:
           type: string
         middleName:
@@ -62116,13 +62564,6 @@ components:
           type: string
         field:
           type: string
-      type: object
-    WalletApiErrorResponses:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/TypedErrorApiErrorCode'
-          type: array
       type: object
     WalletApiResponse2:
       properties:
@@ -63417,6 +63858,73 @@ components:
         totalEmployees:
           type: string
       type: object
+    rfi-one-serviceErrorResponse404:
+      properties:
+        code:
+          enum:
+          - not_found
+          example: not_found
+          type: string
+        description:
+          example: Resource not found
+          type: string
+      required:
+      - code
+      - description
+      type: object
+    rfi-one-serviceErrorResponse500:
+      properties:
+        code:
+          enum:
+          - internal_error
+          example: internal_error
+          type: string
+        description:
+          example: An internal error occurred
+          type: string
+      required:
+      - code
+      - description
+      type: object
+    rfi-one-serviceRfiResponseRequest:
+      properties:
+        comment:
+          description: Optional comment accompanying the RFI response or cannot-respond
+            submission.
+          maxLength: 1000
+          minLength: 0
+          type: string
+        response:
+          $ref: '#/components/schemas/RfiResponsePayloadDto'
+          description: Typed response payload or cannotRespondReason.
+        rfiId:
+          description: RFI id to respond to.
+          format: uuid
+          type: string
+      required:
+      - response
+      - rfiId
+      title: RFI response request item
+      type: object
+    rfi-one-serviceValidationError:
+      description: Field-level validation error
+      properties:
+        code:
+          description: Machine-readable error code in snake_case
+          example: document_not_accessible
+          type: string
+        description:
+          description: Human-readable error message
+          example: 'File not found or inaccessible: 4e1c54cc-9f76-45b0-a4aa-9c514c4df981'
+          type: string
+        field:
+          description: Request field name without array index prefix (e.g. fieldType,
+            response.text)
+          example: response.fileAttachment
+          type:
+          - string
+          - 'null'
+      type: object
   securitySchemes:
     default:
       in: header
@@ -63471,6 +63979,9 @@ x-tagGroups:
   - 3DS
   - Controls
   - Cards Reference Data
+- name: RFIs
+  tags:
+  - Request for Information
 - name: Fees
   tags:
   - Customer Fees
