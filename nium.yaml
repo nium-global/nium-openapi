@@ -25,7 +25,7 @@ info:
   license:
     name: Copyright (c) 2025 NIUM
   title: Nium API Reference
-  version: 2026.7.22
+  version: 2026.7.30
 servers:
 - url: https://gateway.nium.com/
 security:
@@ -1045,11 +1045,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fee Details V3
       tags:
       - Client Settings
@@ -1614,11 +1610,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: List Users
       tags:
       - User Management
@@ -1691,11 +1683,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponse'
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create User
       tags:
       - User Management
@@ -1768,11 +1756,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Get User
       tags:
       - User Management
@@ -1846,11 +1830,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Submit User KYC
       tags:
       - User Management
@@ -2088,11 +2068,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: List Customers v5
       tags:
       - Customer Onboarding V5
@@ -2675,11 +2651,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponse'
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create Customer v5
       tags:
       - Customer Onboarding V5
@@ -2751,11 +2723,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: List Hosted Form Applications
       tags:
       - Customer Onboarding V5
@@ -2829,11 +2797,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Get Customer v5
       tags:
       - Customer Onboarding V5
@@ -2915,11 +2879,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponses'
           description: Unprocessable Entity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Update Customer v5
       tags:
       - Customer Onboarding V5
@@ -3010,11 +2970,7 @@ paths:
                 $ref: '#/components/schemas/ApiErrorResponse'
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Submit KYC for customer entity
       tags:
       - Customer Onboarding V5
@@ -3085,12 +3041,13 @@ paths:
           content:
             application/json:
               examples:
-                SuccessResponse:
-                  description: SuccessResponse
+                500 response Internal Server Error:
+                  description: 500 response Internal Server Error
                   value:
                     errors:
-                    - code: Internal_server_error
-                      description: invalid request , please provide valid value
+                    - code: string
+                      description: string
+                      field: string
           description: 500 response Internal Server Error
       summary: Fetch Public Corporate Details
       tags:
@@ -3142,12 +3099,13 @@ paths:
           content:
             application/json:
               examples:
-                SuccessResponse:
-                  description: SuccessResponse
+                500 response Internal Server Error:
+                  description: 500 response Internal Server Error
                   value:
                     errors:
-                    - code: Internal_server_error
-                      description: invalid request , please provide valid value
+                    - code: string
+                      description: string
+                      field: string
           description: 500 response Internal Server Error
       summary: Fetch Exhaustive Corporate Details
       tags:
@@ -5485,11 +5443,7 @@ paths:
                 $ref: '#/components/schemas/externalAccountServiceStandard403Error'
           description: Error response when the requested resource is forbidden.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch linked bank accounts
       tags:
       - Accounts
@@ -5588,11 +5542,7 @@ paths:
                 $ref: '#/components/schemas/externalAccountServiceStandard403Error'
           description: Error response when the requested resource is forbidden.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create a linked bank account
       tags:
       - Accounts
@@ -5722,11 +5672,7 @@ paths:
                 $ref: '#/components/schemas/externalAccountServiceStandard404Error'
           description: Error response when the requested resource is not found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Confirm linked bank account authentication
       tags:
       - Accounts
@@ -5734,71 +5680,6 @@ paths:
       x-info:
         apiType: external
   /api/v1/client/{clientHashId}/customer/{customerHashId}/bankAccounts/{bankAccountId}:
-    delete:
-      deprecated: false
-      description: This API is used to delete a linked bank account.
-      operationId: unlinkBankAccount
-      parameters:
-      - name: clientHashId
-        in: path
-        description: Unique identifier of the client.
-        required: true
-        schema:
-          format: UUID
-          type: string
-      - name: customerHashId
-        in: path
-        description: Unique identifier of the customer.
-        required: true
-        schema:
-          format: UUID
-          type: string
-      - description: Enter a universally unique identifier (UUID).
-        in: header
-        name: x-request-id
-        schema:
-          example: '{{$guid}}'
-          type: string
-      - name: bankAccountId
-        in: path
-        description: Unique identifier of the linked bank account.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/BankAccountId'
-      responses:
-        '200':
-          description: Bank account unlinked
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
-          description: Error response when the request is unauthorized.
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
-          description: Error response when the requested resource is forbidden.
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
-          description: Error response when the requested resource is not found.
-        '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
-      summary: Delete linked bank account
-      tags:
-      - Accounts
-      x-info:
-        apiType: external
     get:
       deprecated: false
       description: This API is used to fetch a linked bank account.
@@ -5878,11 +5759,7 @@ paths:
                 $ref: '#/components/schemas/externalAccountServiceStandard404Error'
           description: Error response when the requested resource is not found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch linked bank account
       tags:
       - Accounts
@@ -5987,15 +5864,72 @@ paths:
                 $ref: '#/components/schemas/externalAccountServiceStandard404Error'
           description: Error response when the requested resource is not found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Update linked bank account
       tags:
       - Accounts
       x-codegen-request-body-name: BankAccountUpdateRequest
+      x-info:
+        apiType: external
+    delete:
+      deprecated: false
+      description: This API is used to delete a linked bank account.
+      operationId: unlinkBankAccount
+      parameters:
+      - name: clientHashId
+        in: path
+        description: Unique identifier of the client.
+        required: true
+        schema:
+          format: UUID
+          type: string
+      - name: customerHashId
+        in: path
+        description: Unique identifier of the customer.
+        required: true
+        schema:
+          format: UUID
+          type: string
+      - description: Enter a universally unique identifier (UUID).
+        in: header
+        name: x-request-id
+        schema:
+          example: '{{$guid}}'
+          type: string
+      - name: bankAccountId
+        in: path
+        description: Unique identifier of the linked bank account.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/BankAccountId'
+      responses:
+        '200':
+          description: Bank account unlinked
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard401Error'
+          description: Error response when the request is unauthorized.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard403Error'
+          description: Error response when the requested resource is forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/externalAccountServiceStandard404Error'
+          description: Error response when the requested resource is not found.
+        '500':
+          $ref: '#/components/responses/Standard500ErrorResponse'
+      summary: Delete linked bank account
+      tags:
+      - Accounts
       x-info:
         apiType: external
   /api/v1/client/{clientHashId}/applications:
@@ -6164,11 +6098,7 @@ paths:
                 $ref: '#/components/schemas/onboarding-form-serviceStandard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Regenerate Onboarding Form URL
       tags:
       - Onboarding Forms - Corporate
@@ -6257,11 +6187,7 @@ paths:
                 $ref: '#/components/schemas/onboarding-form-serviceStandard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch Application Details
       tags:
       - Onboarding Forms - Corporate
@@ -6323,11 +6249,7 @@ paths:
                 $ref: '#/components/schemas/ProductStandard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductStandard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create a Session
       tags:
       - Sessions
@@ -6388,17 +6310,9 @@ paths:
                 $ref: '#/components/schemas/document-storage-serviceErrorResponse403'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/document-storage-serviceErrorResponse500'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
         '503':
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/document-storage-serviceErrorResponse500'
-          description: Service Unavailable
+          $ref: '#/components/responses/Standard500Error503Response'
       servers:
       - description: SANDBOX server
         url: https://document-storage-sandbox.nium.com
@@ -6467,17 +6381,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse400Upload'
           description: File not found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/document-storage-serviceErrorResponse500'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
         '503':
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/document-storage-serviceErrorResponse500'
-          description: Service Unavailable
+          $ref: '#/components/responses/Standard500Error503Response'
       servers:
       - description: SANDBOX server
         url: https://document-storage-sandbox.nium.com
@@ -6671,11 +6577,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Update Wallet
       tags:
       - Customer Wallet Balance
@@ -6778,11 +6680,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch Wallet
       tags:
       - Customer Wallet Balance
@@ -6875,11 +6773,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Add Wallet
       tags:
       - Customer Wallet Balance
@@ -8558,11 +8452,7 @@ paths:
                 $ref: '#/components/schemas/PayinStandard404Error'
           description: Error response when the requested resource is not found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayinStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Add funding instrument V2
       tags:
       - Customer Funding
@@ -8992,11 +8882,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Assign Payment ID V2
       tags:
       - Customer Virtual Accounts
@@ -9160,11 +9046,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Verification of Payee Consent
       tags:
       - Customer Virtual Accounts
@@ -9508,11 +9390,7 @@ paths:
                 $ref: '#/components/schemas/Descriptive404Error'
           description: Error response when the requested resource cannot be found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FXStandard500Error'
-          description: Error response when service has internal error.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create Quote
       tags:
       - Quotes
@@ -9668,11 +9546,7 @@ paths:
                 $ref: '#/components/schemas/Descriptive404Error'
           description: Error response when the requested resource cannot be found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FXStandard500Error'
-          description: Error response when service has internal error.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch Quote by ID
       tags:
       - Quotes
@@ -9839,11 +9713,7 @@ paths:
                 $ref: '#/components/schemas/Descriptive404Error'
           description: Error response when the requested resource cannot be found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FXStandard500Error'
-          description: Error response when service has internal error.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create Conversion
       tags:
       - Conversions
@@ -9978,11 +9848,7 @@ paths:
                 $ref: '#/components/schemas/Descriptive404Error'
           description: Error response when the requested resource cannot be found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FXStandard500Error'
-          description: Error response when service has internal error.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch Conversion by id
       tags:
       - Conversions
@@ -10087,11 +9953,7 @@ paths:
                 $ref: '#/components/schemas/Descriptive404Error'
           description: Error response when the requested resource cannot be found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FXStandard500Error'
-          description: Error response when service has internal error.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Cancel Conversion
       tags:
       - Conversions
@@ -10183,11 +10045,7 @@ paths:
                 $ref: '#/components/schemas/Descriptive404Error'
           description: Error response when the requested resource cannot be found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FXStandard500Error'
-          description: Error response when service has internal error.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Execute Conversion
       tags:
       - Conversions
@@ -12567,11 +12425,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Cancel Remittance
       tags:
       - Payout
@@ -12651,11 +12505,7 @@ paths:
                 type: string
           description: Conflict
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Validate Transfer Money
       tags:
       - Payout
@@ -12719,11 +12569,7 @@ paths:
                 $ref: '#/components/schemas/bulk-payout-serviceStandard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Create a Batch Payout
       tags:
       - Payout
@@ -12816,11 +12662,7 @@ paths:
                 $ref: '#/components/schemas/bulk-payout-serviceStandard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: List Payouts in a Batch
       tags:
       - Payout
@@ -12885,11 +12727,7 @@ paths:
                 $ref: '#/components/schemas/bulk-payout-serviceStandard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch Batch Payout Status
       tags:
       - Payout
@@ -12976,15 +12814,7 @@ paths:
                 $ref: '#/components/schemas/Standard404Error'
           description: Not Found
         '500':
-          content:
-            application/json:
-              example:
-                errors:
-                - code: internal_error
-                  description: unexpected error occurred on the server
-              schema:
-                $ref: '#/components/schemas/AccountVerificationStandard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse2'
       summary: Fetch Verification
       tags:
       - Nium Verify
@@ -13114,15 +12944,7 @@ paths:
                 $ref: '#/components/schemas/AccountVerificationStandard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              example:
-                errors:
-                - code: internal_error
-                  description: unexpected error occurred on the server
-              schema:
-                $ref: '#/components/schemas/AccountVerificationStandard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse2'
       summary: List Verifications
       tags:
       - Nium Verify
@@ -13592,15 +13414,7 @@ paths:
                 $ref: '#/components/schemas/Standard404Error'
           description: Schema not found.
         '500':
-          content:
-            application/json:
-              example:
-                errors:
-                - code: internal_error
-                  description: unexpected error occurred on the server
-              schema:
-                $ref: '#/components/schemas/AccountVerificationStandard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse2'
       summary: Fetch validation schema for Nium Verify
       tags:
       - Nium Verify
@@ -14078,11 +13892,7 @@ paths:
                 $ref: '#/components/schemas/Standard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Get Card Details Widget
       tags:
       - Lifecycle
@@ -14226,11 +14036,7 @@ paths:
                 $ref: '#/components/schemas/Standard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Convert Card
       tags:
       - Lifecycle
@@ -14745,11 +14551,7 @@ paths:
                 $ref: '#/components/schemas/Standard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch ATM Pin V2
       tags:
       - Security
@@ -14825,11 +14627,7 @@ paths:
                 $ref: '#/components/schemas/Standard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Set/Reset PIN V2
       tags:
       - Security
@@ -14899,11 +14697,7 @@ paths:
                 $ref: '#/components/schemas/Standard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Show Security Details Encrypted
       tags:
       - Security
@@ -15042,11 +14836,7 @@ paths:
                 $ref: '#/components/schemas/Standard403Error'
           description: Forbidden
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Standard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Add or Update passcode
       tags:
       - 3DS
@@ -15923,11 +15713,7 @@ paths:
                 $ref: '#/components/schemas/rfi-one-serviceErrorResponse404'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/rfi-one-serviceErrorResponse500'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch Single RFI
       tags:
       - Request for Information
@@ -16034,11 +15820,7 @@ paths:
                 $ref: '#/components/schemas/rfi-one-serviceErrorResponse404'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/rfi-one-serviceErrorResponse500'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch RFI Details
       tags:
       - Request for Information
@@ -16111,11 +15893,7 @@ paths:
                 $ref: '#/components/schemas/rfi-one-serviceErrorResponse404'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/rfi-one-serviceErrorResponse500'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Respond to RFI
       tags:
       - Request for Information
@@ -16269,11 +16047,7 @@ paths:
                 $ref: '#/components/schemas/ProductApiError'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductStandard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Initiate report generation
       tags:
       - Reports
@@ -16344,11 +16118,7 @@ paths:
                 $ref: '#/components/schemas/ProductApiError'
           description: Not Found
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductStandard500Error'
-          description: Internal Server Error
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Download generated report
       tags:
       - Reports
@@ -16436,7 +16206,7 @@ paths:
                 $ref: '#/components/schemas/SimulateUnprocessableEntityErrorDTO'
           description: Unprocessable Entity
         '500':
-          $ref: '#/components/responses/n1-simulationInternalError'
+          $ref: '#/components/responses/Standard500ErrorResponse'
       security:
       - default: []
       summary: Simulate Transaction Status
@@ -16641,11 +16411,7 @@ paths:
                 $ref: '#/components/schemas/externalAccountServiceStandard404Error'
           description: Error response when the requested resource is not found.
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/externalAccountServiceStandard500Error'
-          description: Error response when an internal error occurs.
+          $ref: '#/components/responses/Standard500ErrorResponse'
       summary: Fetch micro-deposit details
       tags:
       - Customer
@@ -16723,7 +16489,7 @@ paths:
                 $ref: '#/components/schemas/SimulateUnprocessableEntityErrorDTO'
           description: Unprocessable Entity
         '500':
-          $ref: '#/components/responses/n1-simulationInternalError'
+          $ref: '#/components/responses/Standard500ErrorResponse'
       security:
       - default: []
       summary: Simulate Customer Onboarding Status
@@ -16834,7 +16600,7 @@ paths:
                 $ref: '#/components/schemas/SimulateUnprocessableEntityErrorDTO'
           description: Unprocessable Entity
         '500':
-          $ref: '#/components/responses/n1-simulationInternalError'
+          $ref: '#/components/responses/Standard500ErrorResponse'
       security:
       - default: []
       summary: Simulate Customer Onboarding Status (V5)
@@ -16953,24 +16719,6 @@ components:
                 type: string
             type: object
       description: Response when the submitted request is forbidden.
-    n1-simulationInternalError:
-      content:
-        application/json:
-          schema:
-            properties:
-              code:
-                default: internal_error
-                enum:
-                - internal_error
-                - external_dependent_system_failed
-                type: string
-              description:
-                default: An internal error occurred
-                enum:
-                - An internal error occurred
-                type: string
-            type: object
-      description: Response when an internal error occurs.
     n1-simulationUnauthorized:
       content:
         application/json:
@@ -16988,6 +16736,28 @@ components:
                 type: string
             type: object
       description: Response when the submitted request is unauthorized.
+    Standard500ErrorResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Standard500Error'
+      description: Internal Server Error
+    Standard500ErrorResponse2:
+      content:
+        application/json:
+          example:
+            errors:
+            - code: internal_error
+              description: unexpected error occurred on the server
+          schema:
+            $ref: '#/components/schemas/Standard500Error'
+      description: Internal Server Error
+    Standard500Error503Response:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Standard500Error'
+      description: Service Unavailable
   schemas:
     AUAddressDTO:
       allOf:
@@ -17977,16 +17747,6 @@ components:
           description: Detailed information about the returned error(s).
           items:
             $ref: '#/components/schemas/ErrorDetails403'
-          type: array
-      required:
-      - errors
-      type: object
-    AccountVerificationStandard500Error:
-      properties:
-        errors:
-          description: Detailed information about the returned errors.
-          items:
-            $ref: '#/components/schemas/ErrorDetails500'
           type: array
       required:
       - errors
@@ -26953,8 +26713,6 @@ components:
     BaseReportRequest:
       description: Base report request. The reportType field determines the concrete
         request structure.
-      oneOf:
-      - $ref: '#/components/schemas/AccountStatementRequest'
       properties:
         reportType:
           description: Type of report to generate
@@ -37532,17 +37290,6 @@ components:
         description:
           example: You are not authorized to access this resource
           type: string
-    Error500:
-      properties:
-        code:
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-          example: internal_error
-          type: string
-        description:
-          example: Internal server error occurred
-          type: string
     ErrorCodeMapping:
       properties:
         code:
@@ -37647,24 +37394,6 @@ components:
               - `bank_code_not_supported`: Bank code is not supported.
               - `country_currency_not_supported`: Country-currency combination not
             supported.
-          type: string
-        field:
-          description: Field associated with the error (if applicable).
-          type: string
-      required:
-      - code
-      - description
-      type: object
-    ErrorDetails500:
-      description: Detailed information about the returned errors.
-      properties:
-        code:
-          description: Code detailing the type of error.
-          enum:
-          - internal_error
-          type: string
-        description:
-          description: Unexpected error ocurred on the server side. Retry the request.
           type: string
         field:
           description: Field associated with the error (if applicable).
@@ -38894,20 +38623,6 @@ components:
           - Resource not found
           type: string
       type: object
-    FXStandard500Error:
-      properties:
-        code:
-          default: internal_error
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-          type: string
-        description:
-          default: An internal error occurred
-          enum:
-          - An internal error occurred
-          type: string
-      type: object
     FeatureType:
       description: Type of form being used for the `session`.
       enum:
@@ -39479,11 +39194,7 @@ components:
           example: 472e130b-ed14-4829-9e6d-81a9d8dce72e
           type: string
         fx_rate:
-          description: >-
-            The base exchange rate provided by Nium, before any markup is applied.
-
-             The legacy API returns the net exchange rate. To derive the base rate,
-            combine this value with `markup_rate`.
+          description: Effective FX rate after deducting the `markup_rate`.
           example: '74.719'
           type: string
         hold_expiry_at:
@@ -50875,19 +50586,6 @@ components:
           type: string
       title: Standard404Error
       type: object
-    PayinStandard500Error:
-      properties:
-        code:
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-          type: string
-        description:
-          enum:
-          - An internal error occurred
-          type: string
-      title: Standard 500 error
-      type: object
     Payment:
       properties:
         creditorAccount:
@@ -53005,20 +52703,6 @@ components:
           default: Resource not found
           enum:
           - Resource not found
-          type: string
-      type: object
-    ProductStandard500Error:
-      properties:
-        code:
-          default: internal_error
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-          type: string
-        description:
-          default: An internal error occurred
-          enum:
-          - An internal error occurred.
           type: string
       type: object
     ProfessionalDetailsResponseDTO:
@@ -63639,14 +63323,6 @@ components:
           type: array
       required:
       - errors
-    document-storage-serviceErrorResponse500:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/Error500'
-          type: array
-      required:
-      - errors
     externalAccountServiceCountry:
       description: The ISO 3166-2 country code.
       maxLength: 2
@@ -63759,20 +63435,6 @@ components:
           - Resource not found
           type: string
       type: object
-    externalAccountServiceStandard500Error:
-      properties:
-        code:
-          default: internal_error
-          enum:
-          - internal_error
-          - external_dependent_system_failed
-          type: string
-        description:
-          default: An internal error occurred
-          enum:
-          - An internal error occurred
-          type: string
-      type: object
     historicalRateErrorCodes400:
       description: >-
         The detailed error code associated with HTTP status 400.
@@ -63867,20 +63529,6 @@ components:
           type: string
         description:
           example: Resource not found
-          type: string
-      required:
-      - code
-      - description
-      type: object
-    rfi-one-serviceErrorResponse500:
-      properties:
-        code:
-          enum:
-          - internal_error
-          example: internal_error
-          type: string
-        description:
-          example: An internal error occurred
           type: string
       required:
       - code
