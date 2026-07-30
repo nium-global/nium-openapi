@@ -26713,8 +26713,6 @@ components:
     BaseReportRequest:
       description: Base report request. The reportType field determines the concrete
         request structure.
-      oneOf:
-      - $ref: '#/components/schemas/AccountStatementRequest'
       properties:
         reportType:
           description: Type of report to generate
