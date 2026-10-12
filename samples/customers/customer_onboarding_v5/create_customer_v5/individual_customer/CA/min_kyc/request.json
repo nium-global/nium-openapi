@@ -1,0 +1,44 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "CA",
+  "firstName": "John",
+  "middleName": "Michael",
+  "lastName": "Johnson",
+  "externalId": "6e93474b-791b-54f8-9fcc-74c9c1e46d65",
+  "mobile": "6135551234",
+  "email": "ca.individual.min@nium.com",
+  "nationality": "CA",
+  "mobileCountryCode": "1",
+  "dateOfBirth": "1985-05-15",
+  "website": "https://www.johnjohnson-ca.com",
+  "annualIncome": "CA008",
+  "incomeSourceType": "STUDENT",
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "Toronto",
+    "state": "ON",
+    "postcode": "M5H2N2",
+    "country": "CA"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVCA01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVCA01"
+    },
+    "intendedUses": ["IU104"]
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "CA12345678",
+      "issuanceCountry": "CA",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

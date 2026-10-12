@@ -1,0 +1,7 @@
+{
+  "region": "CA",
+  "entityType": "applicant",
+  "entityReferenceId": "1232e2d1-7f63-433d-9e3b-3c0a26773eb3",
+  "isResident": true,
+  "kycMode": "e_kyc"
+}

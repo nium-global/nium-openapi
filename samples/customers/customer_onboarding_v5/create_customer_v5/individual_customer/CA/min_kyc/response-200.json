@@ -1,0 +1,65 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "a3695160-bd9c-4147-86d7-c60951dc7ea8",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "ba35581d-f12a-4494-96fc-9b7e79aca6b0",
+  "referenceId": "43896ab6-acbb-4542-ad24-bdd217d29ac7",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "CA",
+  "externalId": "6e93474b-791b-54f8-9fcc-74c9c1e46d65",
+  "tags": [],
+  "segment": null,
+  "firstName": "John",
+  "middleName": "Michael",
+  "lastName": "Johnson",
+  "email": "ca.individual.min@nium.com",
+  "nationality": "CA",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "6135551234",
+  "mobileCountryCode": "1",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "CA008",
+  "taxDetails": [],
+  "website": "https://www.johnjohnson-ca.com",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVCA01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVCA01"
+    },
+    "intendedUses": [
+      "IU104"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "Toronto",
+    "postcode": "M5H2N2",
+    "country": "CA",
+    "state": "ON"
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "CA12345678",
+      "issuanceCountry": "CA",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

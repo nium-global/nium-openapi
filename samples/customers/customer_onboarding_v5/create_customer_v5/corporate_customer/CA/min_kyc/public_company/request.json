@@ -1,0 +1,74 @@
+{
+  "kycType": "minimum",
+  "region": "CA",
+  "type": "corporate",
+  "businessType": "public_company",
+  "businessName": "IDFC America Inc 17488",
+  "externalId": "fc9b8226-d8c3-5e17-8393-4c77e79c594",
+  "businessRegistrationNumber": "US123056789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "CA",
+  "website": "https://www.idfc-us.com",
+  "sizeOfBusiness": {
+    "annualTurnover": "CA008"
+  },
+  "applicant": {
+    "externalId": "88b6c24b-ae08-5ff0-bd15-dab683aa07c6",
+    "firstName": "John",
+    "middleName": "Michael",
+    "lastName": "Johnson",
+    "dateOfBirth": "1978-09-25",
+    "nationality": "CA",
+    "email": "john.johnson@example.com",
+    "mobile": "2125551234",
+    "mobileCountryCode": "1",
+    "sharePercentage": "85.0",
+    "address": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "Toronto",
+      "state": "CA-ON",
+      "country": "CA",
+      "postcode": "M5H2N2"
+    },
+    "positions": [
+      {
+        "title": "director"
+      }
+    ]
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVCA03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVCA03"
+    },
+    "intendedUses": [
+      "iu001",
+      "iu003"
+    ]
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "Toronto",
+      "state": "CA-ON",
+      "country": "CA",
+      "postcode": "M5H2N2"
+    },
+    "registeredAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "Toronto",
+      "state": "CA-ON",
+      "country": "CA",
+      "postcode": "M5H2N2"
+    }
+  }
+}

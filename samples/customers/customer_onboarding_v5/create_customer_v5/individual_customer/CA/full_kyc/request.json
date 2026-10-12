@@ -1,0 +1,91 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "CA",
+  "externalId": "50bede75-973d-5543-b47c-d147d362bd15",
+  "firstName": "Naveen",
+  "middleName": "Kumar",
+  "lastName": "Reddy",
+  "email": "user780@nium.com",
+  "nationality": "CA",
+  "dateOfBirth": "1990-04-17",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-21 15:45:30",
+  "mobile": "87753053",
+  "mobileCountryCode": "1",
+  "website": "www.test.com",
+  "annualTurnover": "100GBP",
+  "incomeSourceType": "Student",
+  "isPep": false,
+  "tags": [
+    {
+      "key": "key",
+      "value": "value"
+    }
+  ],
+  "deviceDetails": {
+    "ipCountryCode": "CA",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "40531ac01a6f11edafc28dba55d51275"
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU104"
+    ],
+    "credit": {
+      "monthlyTransactionVolume": "MVCA03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVCA03",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVCA03",
+      "topTransactionCountries": [
+        "CA"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "bankName": "Royal Bank of Canada",
+    "accountNumber": "773989",
+    "currency": "CAD",
+    "bankAccountType": "saving",
+    "bankCountry": "CA",
+    "routingCodes": [
+      {
+        "type": "TRANSIT NUMBER",
+        "value": "23457"
+      },
+      {
+        "type": "swift",
+        "value": "ROYCCAT2"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "123 Billing Street",
+    "addressLine2": "Suite 1",
+    "city": "Toronto",
+    "state": "CA-AB",
+    "postcode": "M5H2N2",
+    "country": "CA"
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "fileIds": [
+        "316b746f-3d94-4210-8a84-7a7e7620e404"
+      ]
+    }
+  ],
+  "occupation": "OC1001"
+}

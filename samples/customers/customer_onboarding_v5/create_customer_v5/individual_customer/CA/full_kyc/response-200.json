@@ -1,0 +1,96 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "928d4659-9240-4ee9-a74b-0f95aa3e4341",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "4f9d7cd6-6ab5-424e-a3b7-26a7986c0568",
+  "referenceId": "20d9177d-d2f2-4b4f-9aea-9484dc89b6c1",
+  "userHashId": "59ffd09e-89a2-4453-a56a-60cfb32271a9",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "CA",
+  "tags": [
+    {
+      "key": "key",
+      "value": "value"
+    }
+  ],
+  "externalId": "50bede75-973d-5543-b47c-d147d362bd15",
+  "firstName": "Naveen",
+  "middleName": "Kumar",
+  "lastName": "Reddy",
+  "email": "user780@nium.com",
+  "nationality": "CA",
+  "dateOfBirth": "1990-04-17",
+  "mobile": "87753053",
+  "mobileCountryCode": "1",
+  "kycStatus": "kyc_required",
+  "occupation": "OC1001",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-21 15:45:30",
+  "deviceDetails": {
+    "ipCountryCode": "CA",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "40531ac01a6f11edafc28dba55d51275"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU104"
+    ],
+    "intendedUsesDescription": null,
+    "credit": {
+      "averageTransactionValue": "ATVCA03",
+      "monthlyTransactionVolume": "MVCA03",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": null,
+      "monthlyTransactionVolume": "MVCA03",
+      "topTransactionCountries": [
+        "CA"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "accountNumber": "xxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Royal Bank of Canada",
+    "bankCountry": "CA",
+    "currency": "CAD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "TRANSIT NUMBER",
+        "value": "xxxxx"
+      },
+      {
+        "type": "swift",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "123 Billing Street",
+    "addressLine2": "Suite 1",
+    "city": "Toronto",
+    "postcode": "M5H2N2",
+    "country": "CA",
+    "state": "CA-AB"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

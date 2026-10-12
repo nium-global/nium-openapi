@@ -1,0 +1,48 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "US",
+  "firstName": "John",
+  "middleName": "Michael",
+  "lastName": "Johnson",
+  "externalId": "us-ind-min-123456789012",
+  "mobile": "2125551234",
+  "email": "us.individual.min@nium.com",
+  "nationality": "US",
+  "mobileCountryCode": "1",
+  "dateOfBirth": "1985-05-15",
+  "website": "https://www.johnjohnson-us.com",
+  "annualIncome": "US001",
+  "incomeSourceType": "student",
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "New York",
+    "state": "Us-NW",
+    "postcode": "10118",
+    "country": "US"
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUS03"
+    },
+    "intendedUses": [
+      "IU107"
+    ]
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "US12345678",
+      "issuanceCountry": "US",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

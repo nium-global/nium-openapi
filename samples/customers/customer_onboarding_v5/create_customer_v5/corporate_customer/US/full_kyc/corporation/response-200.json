@@ -1,0 +1,203 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "ab3ec5ec-8b3f-4036-abfa-07b906a5397c",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "9dd20360-4cf6-4e5d-a202-4d2e57d19a52",
+  "referenceId": "43aa26c5-7da0-4dec-91a5-0a61c1c59ccc",
+  "userHashId": "73b28633-5aec-4108-890a-a270c8f805cd",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "US",
+  "externalId": "CORP-US-FULL-BANK-002",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "Boston Tech LLC",
+  "businessRegistrationNumber": "US9876543",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "US",
+  "website": "https://www.bostontech.com",
+  "businessType": "corporation",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "stockSymbol": null,
+  "listedExchange": null,
+  "trustType": null,
+  "tradeName": "BostonTech",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "200 Broadway",
+      "addressLine2": "Floor 5",
+      "city": "New York",
+      "postcode": "10007",
+      "country": "US",
+      "state": "US-NY"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "businessAddress": {
+      "addressLine1": "100 Main Street",
+      "addressLine2": "Suite 200",
+      "city": "New York",
+      "postcode": "10001",
+      "country": "US",
+      "state": "US-NY"
+    }
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "US"
+    ],
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": "Software consulting services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Business payments and operating expenses",
+    "credit": {
+      "averageTransactionValue": "ATVUS01",
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVUS01",
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM006",
+    "annualTurnover": "US008"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "US",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "sess-us-corp-full-002"
+  },
+  "bankAccountDetails": {
+    "accountName": "Boston Tech LLC",
+    "accountNumber": "xxxxxxxxx",
+    "bankAccountType": "checking",
+    "bankName": "JPMorgan Chase",
+    "bankCountry": "US",
+    "currency": "USD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "ACH CODE",
+        "value": "xxxxxxxxx"
+      },
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": null,
+    "firstName": "James",
+    "middleName": null,
+    "lastName": "Johnson",
+    "dateOfBirth": "1978-11-15",
+    "nationality": "US",
+    "email": "james.us.corp.full.002@bostontech.com",
+    "mobile": "2125551236",
+    "mobileCountryCode": "1",
+    "sharePercentage": "51",
+    "address": {
+      "addressLine1": "50 West 34th St",
+      "addressLine2": "Apt 10",
+      "city": "New York",
+      "postcode": "10001",
+      "country": "US",
+      "state": "US-NY"
+    },
+    "positions": [
+      {
+        "title": "director"
+      },
+      {
+        "title": "control_prong"
+      }
+    ],
+    "referenceId": "7fb32f0e-38c3-4f60-9618-c5607de98216",
+    "kycMode": null,
+    "kycStatus": "kyc_required",
+    "documents": [
+      {
+        "type": "passport",
+        "fileIds": [
+          "6ff094d7-1fa8-4645-833f-33093a3458c6"
+        ],
+        "identificationNumber": null,
+        "issuanceCountry": null,
+        "expiryDate": null
+      }
+    ],
+    "biometricUrl": null
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "us-ubo-full-002",
+        "firstName": "Emily",
+        "middleName": null,
+        "lastName": "Davis",
+        "dateOfBirth": "1983-12-15",
+        "nationality": "US",
+        "email": "emily.ubo.002@bostontech.com",
+        "mobile": "3105551235",
+        "mobileCountryCode": "1",
+        "sharePercentage": "35",
+        "address": {
+          "addressLine1": "1 Wall Street",
+          "addressLine2": "Floor 25",
+          "city": "New York",
+          "postcode": "10005",
+          "country": "US",
+          "state": "US-NY"
+        },
+        "positions": [
+          {
+            "title": "ubo"
+          }
+        ],
+        "documents": null,
+        "referenceId": "49171973-55f8-40b1-8aaa-086817822530",
+        "kycMode": null,
+        "kycStatus": "kyc_required",
+        "biometricUrl": null
+      }
+    ],
+    "corporate": null
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "6ff094d7-1fa8-4645-833f-33093a3458c6"
+      ]
+    }
+  ]
+}

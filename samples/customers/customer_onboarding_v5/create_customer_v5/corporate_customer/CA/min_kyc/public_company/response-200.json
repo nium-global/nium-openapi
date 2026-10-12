@@ -1,0 +1,68 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "dcf36571-d03f-4d06-81f1-15d4b972d504",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "665cf6c7-1b96-4ab5-a5af-851c467d28e1",
+  "referenceId": "c1727f1c-4ba0-4731-aa55-60ecbcfeb5ca",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "CA",
+  "tags": null,
+  "externalId": "fc9b8226-d8c3-5e17-8393-4c77e79c594",
+  "searchId": null,
+  "businessName": "IDFC America Inc 17488",
+  "businessRegistrationNumber": "US123056789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "CA",
+  "website": "https://www.idfc-us.com",
+  "sizeOfBusiness": {
+    "annualTurnover": "CA008"
+  },
+  "sourceOfFunds": null,
+  "taxDetails": null,
+  "stockSymbol": null,
+  "businessType": "public_company",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVCA03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVCA03"
+    },
+    "intendedUses": [
+      "iu001",
+      "iu003"
+    ],
+    "intendedUsesDescription": null
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "Toronto",
+      "postcode": "M5H2N2",
+      "country": "CA",
+      "state": "CA-ON"
+    },
+    "registeredAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "Toronto",
+      "postcode": "M5H2N2",
+      "country": "CA",
+      "state": "CA-ON"
+    }
+  }
+}
