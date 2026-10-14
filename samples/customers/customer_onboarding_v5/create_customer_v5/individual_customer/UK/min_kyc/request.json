@@ -1,0 +1,24 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "UK",
+  "externalId": "IND-UK-MIN-1001",
+  "firstName": "James",
+  "lastName": "Smith",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "GB",
+  "email": "james.uk.ind.min.0011@londontech.co.uk",
+  "mobile": "7700900130",
+  "mobileCountryCode": "44",
+  "website": "https://www.londontech.co.uk",
+  "billingAddress": {
+    "addressLine1": "10 Downing Street",
+    "city": "London",
+    "state": "England",
+    "postcode": "SW1A 2AA",
+    "country": "GB"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  }
+}

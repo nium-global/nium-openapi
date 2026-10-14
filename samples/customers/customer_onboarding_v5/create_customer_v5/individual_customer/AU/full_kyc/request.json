@@ -1,0 +1,58 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "AU",
+  "externalId": "IND-AU-FULL-BANK-003",
+  "firstName": "Daniel",
+  "lastName": "Wilson",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "AU",
+  "email": "daniel.au.ind.full.bank.003@sydneytech.com.au",
+  "mobile": "412345685",
+  "mobileCountryCode": "61",
+  "incomeSourceType": "Salary",
+  "annualIncome": "120000AUD",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "AU",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-au-ind-full-bank-003"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU106"],
+    "intendedUsesDescription": "Day-to-day personal spending",
+    "credit": {
+      "monthlyTransactionVolume": "MVAU01",
+      "topTransactionCountries": ["AU"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVAU01",
+      "topTransactionCountries": ["AU"]
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "101 Collins Street",
+    "addressLine2": "Suite 4",
+    "city": "Melbourne",
+    "streetType": "Street",
+    "state": "AU-VIC",
+    "country": "AU",
+    "postcode": "3000"
+  },
+  "bankAccountDetails": {
+    "accountName": "Daniel Wilson",
+    "accountNumber": "123456795",
+    "bankAccountType": "current",
+    "bankName": "ANZ Bank",
+    "bankCountry": "AU",
+    "currency": "AUD",
+    "routingCodes": [
+      { "type": "BSB CODE", "value": "013006" }
+    ]
+  }
+}

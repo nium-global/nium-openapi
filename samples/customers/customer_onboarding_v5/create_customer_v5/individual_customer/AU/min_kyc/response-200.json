@@ -1,0 +1,67 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "62ec38db-71be-4bb6-9446-554ffec37363",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "4e7294af-d7e0-4330-a73e-f18d02147372",
+  "referenceId": "b88fc8b4-3d05-46c7-8b6b-176147296be3",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "AU",
+  "externalId": "IND-AU-MIN-BANK-001",
+  "tags": [],
+  "segment": null,
+  "firstName": "Daniel",
+  "middleName": null,
+  "lastName": "Wilson",
+  "email": "daniel.au.ind.min.bank.001@sydneytech.com.au",
+  "nationality": "AU",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "412345681",
+  "mobileCountryCode": "61",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "AU001",
+  "sourceOfFunds": null,
+  "taxDetails": [],
+  "website": "https://www.danielwilson-au.com",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVAU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVAU01"
+    },
+    "intendedUses": [
+      "IU100"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "101 Collins Street",
+    "addressLine2": "Suite 4",
+    "city": "Melbourne",
+    "postcode": "3000",
+    "country": "AU",
+    "state": "AU-VIC",
+    "streetType": null
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "identificationNumber": "AU12345679",
+      "issuanceCountry": "AU",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

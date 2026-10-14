@@ -1,0 +1,122 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "AU",
+  "externalId": "CORP-AU-FULL-BANK-002",
+  "businessType": "private_company",
+  "businessName": "Sydney Tech Full Pty Ltd",
+  "businessRegistrationNumber": "987654321",
+  "tradeName": "SydneyTech",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "AU",
+  "website": "https://www.sydneytech.com.au",
+  "isMultiLayeredCompany": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "taxDetails": [
+    {
+      "taxCountry": "AU",
+      "taxNumber": "51824753558"
+    }
+  ],
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "registeredAddress": {
+      "addressLine1": "200 George Street",
+      "addressLine2": "Level 10",
+      "city": "Sydney",
+      "state": "AU-NSW",
+      "country": "AU",
+      "postcode": "2000"
+    },
+    "businessAddress": {
+      "addressLine1": "100 Collins Street",
+      "addressLine2": "Level 20",
+      "city": "Melbourne",
+      "state": "AU-VIC",
+      "country": "AU",
+      "postcode": "3000"
+    }
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": ["6ff094d7-1fa8-4645-833f-33093a3458c6"]
+    }
+  ],
+  "applicant": {
+    "firstName": "Liam",
+    "lastName": "Wilson",
+    "dateOfBirth": "1980-09-25",
+    "nationality": "AU",
+    "email": "liam.au.corp.full.bank.002@sydneytech.com.au",
+    "mobile": "412345680",
+    "mobileCountryCode": "61",
+    "sharePercentage": "51",
+    "address": {
+      "addressLine1": "50 Bourke Street",
+      "addressLine2": "Apt 5",
+      "city": "Melbourne",
+      "state": "AU-VIC",
+      "country": "AU",
+      "postcode": "3000"
+    },
+    "positions": [
+      {
+        "title": "director"
+      }
+    ],
+    "documents": [
+      {
+        "type": "passport",
+        "identificationNumber": "AU12345678",
+        "issuanceCountry": "AU",
+        "expiryDate": "2030-12-20",
+        "fileIds": ["6ff094d7-1fa8-4645-833f-33093a3458c6"]
+      }
+    ]
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"],
+    "operatingCountries": ["AU"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "credit": {
+      "monthlyTransactionVolume": "MVAU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVAU01",
+      "topTransactionCountries": ["AU"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVAU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVAU01",
+      "topTransactionCountries": ["AU"]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "em009",
+    "annualTurnover": "au009"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "AU",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "sess-au-corp-full-bank-002"
+  },
+  "bankAccountDetails": {
+    "accountName": "Sydney Tech Full Pty Ltd",
+    "accountNumber": "123456790",
+    "bankAccountType": "current",
+    "bankName": "ANZ Bank",
+    "bankCountry": "AU",
+    "currency": "AUD",
+    "routingCodes": [
+      {
+        "type": "BSB CODE",
+        "value": "013006"
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "25979bc7-4dfd-4b88-87c3-e7f7f4fedc9a",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "bf19dcdc-f8b8-41b6-afce-9054e2e99512",
+  "referenceId": "ee1c5c45-c1a1-4311-9e35-18be1aa82487",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "AU",
+  "externalId": "au-corp-min-123456789012",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "IDFC Australia Limited 1748860633673",
+  "businessRegistrationNumber": "AU123456789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "AU",
+  "website": "https://www.idfc-au.com",
+  "sizeOfBusiness": {
+    "annualTurnover": "AU008"
+  },
+  "sourceOfFunds": null,
+  "taxDetails": null,
+  "businessType": "public_company",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVAU03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVAU03"
+    },
+    "intendedUses": [
+      "iu001",
+      "iu003"
+    ],
+    "intendedUsesDescription": null
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "Level 42, 101 Collins Street",
+      "addressLine2": "Suite 4",
+      "city": "Melbourne",
+      "postcode": "3000",
+      "country": "AU",
+      "state": "AU-VIC",
+      "streetType": "Poling"
+    },
+    "registeredAddress": {
+      "addressLine1": "Level 42, 101 Collins Street",
+      "addressLine2": "Suite 4",
+      "city": "Melbourne",
+      "postcode": "3000",
+      "country": "AU",
+      "state": "AU-VIC",
+      "streetType": "Poling"
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "48c97ddf-abb7-47ee-9e9c-7ff230a345f7",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "8c1a20ab-c7d1-4e01-9314-f22d208230fa",
+  "referenceId": "e966dc68-d335-4e5e-8b80-c233de61c223",
+  "userHashId": "73133173-682b-4172-b5a8-508f28956ac7",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "UK",
+  "externalId": "CORP-UK-FULL-1707",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "London Tech Full Limited1",
+  "businessRegistrationNumber": "UK09654393",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "GB",
+  "website": "https://www.londontech.co.uk",
+  "businessType": "private_company",
+  "applicantDeclaration": true,
+  "isMultiLayeredCompany": false,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "industryDescription": null,
+  "tradeName": "LondonTech",
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "10 Downing Street",
+      "addressLine2": null,
+      "city": "London",
+      "postcode": "SW1A 2AA",
+      "country": "GB",
+      "state": "England"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": true
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "GB"
+    ],
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": "Software and IT services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "averageTransactionValue": "ATVUK02",
+      "monthlyTransactionVolume": "MVUK01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "GB"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVUK02",
+      "monthlyTransactionVolume": "MVUK01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "GB"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM006",
+    "annualTurnover": "GB001"
+  },
+  "otaDetails": null,
+  "deviceDetails": {
+    "ipCountryCode": "GB",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-uk-corp-full-001"
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "accountNumber": "xxxxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Example UK Bank",
+    "bankCountry": "GB",
+    "currency": "GBP",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SORT CODE",
+        "value": "xxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": "APP-UK-FULL-001",
+    "firstName": "James",
+    "middleName": null,
+    "lastName": "Smith",
+    "dateOfBirth": "1985-05-15",
+    "nationality": "GB",
+    "email": "james.uk.full.001@londontech.co.uk",
+    "mobile": "7700900124",
+    "mobileCountryCode": "44",
+    "sharePercentage": "80",
+    "address": {
+      "addressLine1": "10 Downing Street",
+      "addressLine2": null,
+      "city": "London",
+      "postcode": "SW1A 2AA",
+      "country": "GB",
+      "state": "England"
+    },
+    "isPep": false,
+    "positions": [
+      {
+        "title": "Director"
+      }
+    ],
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null,
+    "referenceId": "d0c19cfd-e9ce-4c8a-94c1-a63f3ce78425",
+    "kycStatus": "kyc_required"
+  },
+  "stakeholders": null,
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "6ff094d7-1fa8-4645-833f-33093a3458c6"
+      ]
+    }
+  ]
+}

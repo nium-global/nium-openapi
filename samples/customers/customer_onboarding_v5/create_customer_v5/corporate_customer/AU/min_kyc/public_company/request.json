@@ -1,0 +1,77 @@
+{
+  "kycType": "minimum",
+  "region": "AU",
+  "type": "corporate",
+  "businessType": "public_company",
+  "businessName": "IDFC Australia Limited 1748860633673",
+  "externalId": "au-corp-min-123456789012",
+  "businessRegistrationNumber": "AU123456789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "AU",
+  "website": "https://www.idfc-au.com",
+  "sizeOfBusiness": {
+    "annualTurnover": "AU008"
+  },
+  "applicant": {
+    "externalId": "au-applicant-987654321098",
+    "firstName": "James",
+    "middleName": "Robert",
+    "lastName": "Smith",
+    "dateOfBirth": "1980-05-15",
+    "nationality": "AU",
+    "email": "james.smith@example.com",
+    "mobile": "0412345678",
+    "mobileCountryCode": "61",
+    "sharePercentage": "75.5",
+    "address": {
+      "addressLine1": "Level 42, 101 Collins Street",
+      "addressLine2": "Suite 4",
+      "city": "Melbourne",
+      "state": "AU-VIC",
+      "streetType": "Poling",
+      "country": "AU",
+      "postcode": "3000"
+    },
+    "positions": [
+      {
+        "title": "director"
+      }
+    ]
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVAU03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVAU03"
+    },
+    "intendedUses": [
+      "iu001",
+      "iu003"
+    ]
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "Level 42, 101 Collins Street",
+      "addressLine2": "Suite 4",
+      "city": "Melbourne",
+      "state": "AU-VIC",
+      "country": "AU",
+      "streetType": "Poling",
+      "postcode": "3000"
+    },
+    "registeredAddress": {
+      "addressLine1": "Level 42, 101 Collins Street",
+      "addressLine2": "Suite 4",
+      "city": "Melbourne",
+      "state": "AU-VIC",
+      "streetType": "Poling",
+      "country": "AU",
+      "postcode": "3000"
+    }
+  }
+}

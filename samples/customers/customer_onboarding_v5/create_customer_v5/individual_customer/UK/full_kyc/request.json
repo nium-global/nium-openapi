@@ -1,0 +1,62 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "UK",
+  "externalId": "IND-UK-FULL-0901",
+  "firstName": "James",
+  "lastName": "Smith",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "GB",
+  "email": "james.uk.ind.full.1001@londontech.co.uk",
+  "mobile": "7710900131",
+  "mobileCountryCode": "44",
+  "incomeSourceType": "salaried_employee",
+  "annualIncome": "ai005",
+  "isPep": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "GB",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-uk-ind-full-001"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU100"],
+    "intendedUsesDescription": "Personal payments and local transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVUK02",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUK02",
+      "topTransactionCountries": ["GB"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVUK02",
+      "topTransactionCountries": ["GB"]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "bankName": "Example UK Bank",
+    "accountNumber": "12345678",
+    "currency": "GBP",
+    "bankAccountType": "saving",
+    "bankCountry": "GB",
+    "routingCodes": [
+      {
+        "type": "SORT CODE",
+        "value": "622294"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "10 Downing Street",
+    "city": "London",
+    "state": "England",
+    "postcode": "SW1A 2AA",
+    "country": "GB"
+  }
+}

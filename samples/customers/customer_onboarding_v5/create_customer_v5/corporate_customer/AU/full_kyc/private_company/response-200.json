@@ -1,0 +1,166 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "402221a0-df01-4b52-b7d2-1684c080c10a",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "667089e8-7116-4596-979d-81a9cd65b6aa",
+  "referenceId": "8f1d8624-1d62-49bd-96f6-ccb5728b9349",
+  "userHashId": "7e03edc6-88ec-4d08-8bb4-93f3c9bd60fd",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "AU",
+  "externalId": "CORP-AU-FULL-BANK-002",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "Sydney Tech Full Pty Ltd",
+  "businessRegistrationNumber": "987654321",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "AU",
+  "website": "https://www.sydneytech.com.au",
+  "businessType": "private_company",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "formerName": null,
+  "tradeName": "SydneyTech",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "200 George Street",
+      "addressLine2": "Level 10",
+      "city": "Sydney",
+      "postcode": "2000",
+      "country": "AU",
+      "state": "AU-NSW",
+      "streetType": null
+    },
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "businessAddress": {
+      "addressLine1": "100 Collins Street",
+      "addressLine2": "Level 20",
+      "city": "Melbourne",
+      "postcode": "3000",
+      "country": "AU",
+      "state": "AU-VIC",
+      "streetType": null
+    }
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "AU"
+    ],
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "iu002"
+    ],
+    "intendedUsesDescription": null,
+    "credit": {
+      "averageTransactionValue": "ATVAU01",
+      "monthlyTransactionVolume": "MVAU01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "AU"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVAU01",
+      "monthlyTransactionVolume": "MVAU01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "AU"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "em009",
+    "annualTurnover": "au009"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "AU",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "sess-au-corp-full-bank-002"
+  },
+  "bankAccountDetails": {
+    "accountName": "Sydney Tech Full Pty Ltd",
+    "accountNumber": "xxxxxxxxx",
+    "bankAccountType": "current",
+    "bankName": "ANZ Bank",
+    "bankCountry": "AU",
+    "currency": "AUD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "BSB CODE",
+        "value": "xxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": null,
+    "firstName": "Liam",
+    "middleName": null,
+    "lastName": "Wilson",
+    "dateOfBirth": "1980-09-25",
+    "nationality": "AU",
+    "email": "liam.au.corp.full.bank.002@sydneytech.com.au",
+    "mobile": "412345680",
+    "mobileCountryCode": "61",
+    "sharePercentage": "51",
+    "address": {
+      "addressLine1": "50 Bourke Street",
+      "addressLine2": "Apt 5",
+      "city": "Melbourne",
+      "postcode": "3000",
+      "country": "AU",
+      "state": "AU-VIC",
+      "streetType": null
+    },
+    "kycMode": null,
+    "birthCountry": null,
+    "taxDetails": null,
+    "trustBeneficiaryClass": null,
+    "positions": [
+      {
+        "title": "director"
+      }
+    ],
+    "referenceId": "25ef2e09-29ff-4644-b65f-ecff34f6c7fb",
+    "kycStatus": "kyc_required",
+    "documents": [
+      {
+        "type": "passport",
+        "fileIds": [
+          "6ff094d7-1fa8-4645-833f-33093a3458c6"
+        ],
+        "identificationNumber": null,
+        "issuanceCountry": null,
+        "expiryDate": null
+      }
+    ],
+    "biometricUrl": null
+  },
+  "stakeholders": null,
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "6ff094d7-1fa8-4645-833f-33093a3458c6"
+      ]
+    }
+  ]
+}
