@@ -1,0 +1,48 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "BR",
+  "firstName": "John",
+  "middleName": "Michael",
+  "lastName": "Johnson",
+  "externalId": "9f4c9104-fba8-52de-a4f5-4cb78a71edd2",
+  "mobile": "2125551234",
+  "email": "us.individual.min@nium.com",
+  "nationality": "BR",
+  "mobileCountryCode": "55",
+  "dateOfBirth": "1985-05-15",
+  "website": "https://www.johnjohnson-us.com",
+  "annualIncome": "BR01",
+  "incomeSourceType": "student",
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "Sao Paulo",
+    "state": "SP",
+    "postcode": "01001000",
+    "country": "BR"
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVBR01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVBR03"
+    },
+    "intendedUses": [
+      "IU004"
+    ]
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "US12345678",
+      "issuanceCountry": "BR",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

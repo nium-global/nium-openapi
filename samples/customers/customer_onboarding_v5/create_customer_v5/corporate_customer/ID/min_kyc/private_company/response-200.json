@@ -1,0 +1,65 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "6d3b15de-8218-4296-85d4-ea16dca0900c",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "15a83ce6-de4c-43a4-b4f2-3fdbb83c8bef",
+  "referenceId": "7e4e69f0-7c7a-41e5-a6c2-3a7bd8bbfbb9",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "ID",
+  "tags": null,
+  "externalId": "CORP-ID-MIN-BANK-001",
+  "searchId": null,
+  "businessName": "Jakarta Tech PVT.",
+  "businessRegistrationNumber": "3234567890124",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "ID",
+  "website": "https://www.jakartatech.co.id",
+  "sizeOfBusiness": {
+    "annualTurnover": "ID001"
+  },
+  "sourceOfFunds": null,
+  "businessType": "private_company",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVID01"
+    },
+    "intendedUses": [
+      "iu002"
+    ],
+    "intendedUsesDescription": "Supplier payments and operating expenses"
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "addressLine2": null,
+      "city": "0394",
+      "postcode": "12190",
+      "country": "ID",
+      "state": "ID-JK"
+    },
+    "registeredAddress": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "addressLine2": null,
+      "city": "0394",
+      "postcode": "12190",
+      "country": "ID",
+      "state": "ID-JK"
+    }
+  }
+}

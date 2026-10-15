@@ -1,0 +1,46 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "ID",
+  "externalId": "IND-ID-MIN-BANK-001",
+  "firstName": "Budi",
+  "lastName": "Santoso",
+  "dateOfBirth": "1983-06-15",
+  "nationality": "ID",
+  "email": "budi.id.ind.min.bank.001@jakartatech.co.id",
+  "mobile": "81234567894",
+  "mobileCountryCode": "62",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "ID002",
+  "natureOfBusiness": { "industryCodes": ["IS244"] },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVID01"
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "Jl. Kemang Raya 10",
+    "city": "0394",
+    "state": "ID-JK",
+    "country": "ID",
+    "postcode": "12730"
+  },
+  "documents": [{
+    "type": "national_id",
+    "identificationNumber": "3175012345670001",
+    "issuanceCountry": "ID"
+  }],
+  "bankAccountDetails": {
+    "accountName": "Budi Santoso",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "Bank Central Asia",
+    "bankCountry": "ID",
+    "currency": "IDR",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [{ "type": "SWIFT", "value": "CENAIDJA" }]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "SG",
+  "externalId": "CORP-SG-MIN-001",
+  "businessType": "OTHERS",
+  "businessName": "Singapore Tech Min Pte Ltd",
+  "businessRegistrationNumber": "SG201234567",
+  "registeredDate": "2020-07-20",
+  "website": "https://www.singaporetech.sg",
+  "fiOnboardingDate": "2026-03-30",
+  "externalRiskSeverity": "low",
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "state": "SG",
+      "country": "SG",
+      "postcode": "048616"
+    },
+    "businessAddress": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "state": "SG",
+      "country": "SG",
+      "postcode": "048616"
+    }
+  },
+  "applicant": {
+    "externalId": "APP-SG-MIN-001",
+    "firstName": "Wei",
+    "lastName": "Tan",
+    "dateOfBirth": "1982-03-10",
+    "nationality": "SG",
+    "email": "wei.sg.min.001@singaporetech.sg",
+    "mobile": "91234567",
+    "mobileCountryCode": "65",
+    "sharePercentage": "80.0",
+    "address": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "state": "SG",
+      "country": "SG",
+      "postcode": "048616"
+    },
+    "positions": [{ "title": "director" }]
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "UBO-SG-MIN-001",
+        "firstName": "Li",
+        "lastName": "Chen",
+        "sharePercentage": "20.0",
+        "positions": [{ "title": "ubo" }]
+      }
+    ]
+  }
+}

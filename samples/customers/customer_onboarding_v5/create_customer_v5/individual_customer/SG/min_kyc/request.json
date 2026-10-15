@@ -1,0 +1,35 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "SG",
+  "externalId": "IND-SG-MIN-002",
+  "firstName": "Wei",
+  "lastName": "Tan",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "SG",
+  "email": "wei.sg.ind.min.002@singaporetech.sg",
+  "mobile": "91234581",
+  "mobileCountryCode": "65",
+  "website": "https://www.singaporetech.sg",
+  "fiOnboardingDate": "2026-03-30",
+  "externalRiskSeverity": "low",
+  "billingAddress": {
+    "addressLine1": "1 Raffles Place",
+    "addressLine2": "#40-61",
+    "city": "Singapore",
+    "state": "SG",
+    "postcode": "048616",
+    "country": "SG"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "identificationNumber": "K1234567A",
+      "issuanceCountry": "SG",
+      "expiryDate": "2030-12-20"
+    }
+  ]
+}

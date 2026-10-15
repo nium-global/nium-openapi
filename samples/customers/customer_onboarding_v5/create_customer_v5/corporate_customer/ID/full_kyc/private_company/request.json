@@ -1,0 +1,128 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "ID",
+  "externalId": "CORP-ID-FULL-009",
+  "businessName": "Surabaya Tech Full PTQ.",
+  "businessRegistrationNumber": "3234567890453",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "ID",
+  "businessType": "private_company",
+  "tradeName": "SurabayaTech",
+  "website": "https://www.surabayatech.co.id",
+  "isMultiLayeredCompany": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "taxDetails": [
+    {
+      "taxCountry": "ID",
+      "taxNumber": "123456789012346"
+    }
+  ],
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": true,
+    "registeredAddress": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "city": "0394",
+      "state": "ID-JK",
+      "country": "ID",
+      "postcode": "12190"
+    }
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"],
+    "industryDescription": "Software consulting and IT services",
+    "operatingCountries": ["ID"]
+  },
+  "sizeOfBusiness": {
+    "annualTurnover": "ID001",
+    "totalEmployees": "EM001"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU002"],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVID01",
+      "topTransactionCountries": ["ID"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVID01",
+      "topTransactionCountries": ["ID"]
+    }
+  },
+  "deviceDetails": {
+    "ipCountryCode": "ID",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-id-corp-full-007"
+  },
+  "bankAccountDetails": {
+    "accountName": "Surabaya Tech Full PT",
+    "accountNumber": "1234567890",
+    "bankAccountType": "current",
+    "bankName": "Bank Central Asia",
+    "bankCountry": "ID",
+    "currency": "IDR",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "CENAIDJA" }
+    ]
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": ["6ff094d7-1fa8-4645-833f-33093a3458c6"]
+    },
+    {
+      "type": "establishment_deed",
+      "fileIds": ["697e8549-4791-4e0a-b971-80b5c97734bf"]
+    },
+    {
+      "type": "tax_identification_doc",
+      "fileIds": ["afe29573-4ff3-4d0e-a103-ba09fdb55539"]
+    }
+  ],
+  "applicant": {
+    "externalId": "APP-ID-FULL-007",
+    "firstName": "Budi",
+    "lastName": "Santoso",
+    "dateOfBirth": "1983-06-15",
+    "nationality": "ID",
+    "email": "budi.id.full.007@surabayatech.co.id",
+    "mobile": "81234567901",
+    "mobileCountryCode": "62",
+    "address": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "city": "0394",
+      "state": "ID-JK",
+      "country": "ID",
+      "postcode": "12190"
+    },
+    "positions": [{ "title": "DIRECTOR" }]
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "UBO-ID-FULL-007",
+        "firstName": "Siti",
+        "lastName": "Rahayu",
+        "dateOfBirth": "1980-02-20",
+        "nationality": "ID",
+        "email": "siti.id.full.007@surabayatech.co.id",
+        "mobile": "81234567902",
+        "mobileCountryCode": "62",
+        "address": {
+          "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+          "city": "0394",
+          "state": "ID-JK",
+          "country": "ID",
+          "postcode": "12190"
+        },
+        "positions": [{ "title": "UBO" }]
+      }
+    ]
+  }
+}

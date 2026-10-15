@@ -1,0 +1,55 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "21ffcaf1-ac58-4907-9524-1cf4143aa0a2",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "d262acae-0911-447e-9789-979c2d4955f4",
+  "referenceId": "09839f4e-8445-449d-8044-712f874525ff",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "SG",
+  "externalId": "IND-SG-MIN-002",
+  "tags": [],
+  "segment": null,
+  "firstName": "Wei",
+  "middleName": null,
+  "lastName": "Tan",
+  "email": "wei.sg.ind.min.002@singaporetech.sg",
+  "nationality": "SG",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "91234581",
+  "mobileCountryCode": "65",
+  "website": "https://www.singaporetech.sg",
+  "gender": null,
+  "taxDetails": [],
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "1 Raffles Place",
+    "addressLine2": "#40-61",
+    "city": "Singapore",
+    "postcode": "048616",
+    "country": "SG",
+    "state": "SG"
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "identificationNumber": "K1234567A",
+      "issuanceCountry": "SG",
+      "expiryDate": "2030-12-20"
+    }
+  ],
+  "fiOnboardingDate": "2026-03-30",
+  "externalRiskSeverity": "low"
+}

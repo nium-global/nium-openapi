@@ -1,0 +1,144 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "49fe8e44-3e0e-44da-9171-881147531d57",
+            "walletType": "base"
+        }
+    ],
+    "customerHashId": "1cb1d961-6d96-44c2-a375-bb50d924dcc1",
+    "referenceId": "353d66a2-bd7c-4a63-aacc-571115ec6d34",
+    "userHashId": "d9a94855-8bbc-4803-86ce-2f4c225d9607",
+    "status": "pending",
+    "subStatus": null,
+    "oddStatus": null,
+    "type": "corporate",
+    "kycType": "full",
+    "region": "BR",
+    "tags": null,
+    "externalId": "CORP-BR-FULL-009",
+    "searchId": null,
+    "businessName": "Salvador Nova Ledger Ltdaa",
+    "businessRegistrationNumber": "7000108",
+    "registeredDate": "2018-05-10",
+    "registeredCountry": "BR",
+    "website": "https://www.salvadornova.com.br",
+    "businessType": "private_company",
+    "applicantDeclaration": true,
+    "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+    "tradeName": "SalvadorNova",
+    "isMultiLayeredCompany": false,
+    "addresses": {
+        "registeredAddress": {
+            "addressLine1": "Av. Paulista 1578",
+            "addressLine2": null,
+            "city": "Sao Paulo",
+            "postcode": "01310200",
+            "country": "BR",
+            "state": "BR-SP"
+        },
+        "isBusinessAddressSameAsRegisteredAddress": true
+    },
+    "natureOfBusiness": {
+        "operatingCountries": [
+            "BR"
+        ],
+        "industryCodes": [
+            "IS244"
+        ],
+        "industryDescription": "Software consulting and technology services"
+    },
+    "expectedAccountUsage": {
+        "intendedUses": [
+            "iu002"
+        ],
+        "intendedUsesDescription": "Supplier payments and operating expenses",
+        "credit": {
+            "averageTransactionValue": "ATVBR01",
+            "monthlyTransactionVolume": "MVBR01",
+            "monthlyTransactions": "ATC01",
+            "topTransactionCountries": [
+                "BR"
+            ]
+        },
+        "debit": {
+            "averageTransactionValue": "ATVBR01",
+            "monthlyTransactionVolume": "MVBR01",
+            "monthlyTransactions": "ATC01",
+            "topTransactionCountries": [
+                "BR"
+            ]
+        }
+    },
+    "sizeOfBusiness": {
+        "totalEmployees": "EM001",
+        "annualTurnover": "BR01"
+    },
+    "deviceDetails": {
+        "ipCountryCode": "BR",
+        "deviceInfo": "macOS",
+        "ipAddress": "192.168.1.1",
+        "sessionId": "sess-br-corp-full-009"
+    },
+    "bankAccountDetails": {
+        "accountName": "Salvador Nova Ledger Ltdaq",
+        "accountNumber": "xxxxxxxx",
+        "bankAccountType": "checking",
+        "bankName": "Itau Unibanco",
+        "bankCountry": "BR",
+        "currency": "BRL",
+        "bankCode": null,
+        "identificationType": "CNPJ",
+        "identificationValue": "12.345.678/0001-90",
+        "localRegisteredName": null,
+        "payoutMethod": "LOCAL",
+        "routingCodes": [
+            {
+                "type": "BRANCH CODE",
+                "value": "xxxx"
+            },
+            {
+                "type": "SWIFT",
+                "value": "xxxxxxxx"
+            }
+        ]
+    },
+    "applicant": {
+        "externalId": null,
+        "firstName": "Rafael",
+        "middleName": null,
+        "lastName": "Silva",
+        "dateOfBirth": "1982-04-18",
+        "nationality": "BR",
+        "email": "rafael.br.full.009@salvadornova.com.br",
+        "mobile": 11987654350,
+        "mobileCountryCode": "55",
+        "sharePercentage": null,
+        "address": {
+            "addressLine1": "Rua Augusta 200",
+            "addressLine2": null,
+            "city": "Sao Paulo",
+            "postcode": "01304000",
+            "country": "BR",
+            "state": "BR-SP"
+        },
+        "positions": [
+            {
+                "title": "DIRECTOR"
+            }
+        ],
+        "referenceId": "78140105-f1d3-4bb4-8c89-92d41f006ad3",
+        "kycMode": null,
+        "kycStatus": "kyc_required",
+        "documents": null,
+        "biometricUrl": null
+    },
+    "stakeholders": null,
+    "documents": [
+        {
+            "type": "business_registration_doc",
+            "fileIds": [
+                "6ff094d7-1fa8-4645-833f-33093a3458c6"
+            ]
+        }
+    ]
+}

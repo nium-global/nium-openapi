@@ -1,0 +1,63 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "86e46cad-0634-4542-9b86-d70bc454ee0a",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "b6967c29-f20f-48ad-9c8b-7ab215fefa6a",
+  "referenceId": "9adf4297-f838-4fca-b3c6-c2d14c32f0f6",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "ID",
+  "tags": [],
+  "externalId": "IND-ID-MIN-BANK-001",
+  "firstName": "Budi",
+  "middleName": null,
+  "lastName": "Santoso",
+  "email": "budi.id.ind.min.bank.001@jakartatech.co.id",
+  "nationality": "ID",
+  "dateOfBirth": "1983-06-15",
+  "mobile": "81234567894",
+  "mobileCountryCode": "62",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "ID002",
+  "website": null,
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVID01"
+    },
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "Jl. Kemang Raya 10",
+    "addressLine2": null,
+    "city": "0394",
+    "postcode": "12730",
+    "country": "ID",
+    "state": "ID-JK"
+  },
+  "documents": [
+    {
+      "type": "national_id",
+      "identificationNumber": "3175012345670001",
+      "issuanceCountry": "ID",
+      "expiryDate": null
+    }
+  ]
+}
