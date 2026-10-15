@@ -1,0 +1,170 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "0de0f509-67de-406c-8fb0-3d67aea5c3aa",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "cac50316-4d8d-435a-9e47-684870d51261",
+  "referenceId": "cad54aa6-b6c6-410b-a6f7-de106689f0ee",
+  "userHashId": "686cf088-2ae2-4768-b261-0b23f0e9bb5a",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "JP",
+  "tags": null,
+  "externalId": "CORP-JP-FULL-101",
+  "searchId": null,
+  "businessName": "safews Tech Corporation 7",
+  "businessRegistrationNumber": "3142647890789",
+  "registeredDate": "2005-04-01",
+  "registeredCountry": "JP",
+  "website": "https://www.tokyotech.co.jp",
+  "businessType": "public_company",
+  "businessName_local": "東京テクノロジー株式会社",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "tradeName": "TokyoTech",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "2-7-1 Marunouchi",
+      "addressLine2": "Chiyoda Building 5F",
+      "city": "Chiyoda",
+      "postcode": "1000005",
+      "country": "JP",
+      "state": "JP-13"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": true
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "JP"
+    ],
+    "industryCodes": [
+      "IS134"
+    ],
+    "industryDescription": "Technology and software services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Business payments and international transfers",
+    "credit": {
+      "averageTransactionValue": "ATVJP01",
+      "monthlyTransactionVolume": "MVJP01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "JP"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVJP01",
+      "monthlyTransactionVolume": "MVJP01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "JP"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "em009",
+    "annualTurnover": "JP001"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "JP",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-jp-corp-full-101"
+  },
+  "bankAccountDetails": {
+    "accountName": "Tokyo Tech Corporation",
+    "accountNumber": "xxxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Mitsubishi UFJ Bank",
+    "bankCountry": "JP",
+    "currency": "JPY",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "swift",
+        "value": "xxxxxxxx"
+      },
+      {
+        "type": "BRANCH CODE",
+        "value": "xxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": null,
+    "firstName": "Hiroshi",
+    "middleName": null,
+    "lastName": "Tanaka",
+    "firstName_local": "ヒロシ",
+    "lastName_local": "タナカ",
+    "dateOfBirth": "1980-05-15",
+    "nationality": "JP",
+    "email": "hiroshi.full.tanaka101@tokyotech.co.jp",
+    "mobile": "9012345678",
+    "mobileCountryCode": "81",
+    "occupation": "OC0001",
+    "sharePercentage": "15.00",
+    "address": {
+      "addressLine1": "1-1-1 Shinjuku",
+      "addressLine2": null,
+      "city": "Shinjuku",
+      "postcode": "1600022",
+      "country": "JP",
+      "state": "JP-13"
+    },
+    "positions": [
+      {
+        "title": "Director"
+      }
+    ],
+    "kycMode": null,
+    "documents": [
+      {
+        "type": "passport",
+        "fileIds": [
+          "6ff094d7-1fa8-4645-833f-33093a3458c6"
+        ],
+        "identificationNumber": null,
+        "issuanceCountry": null,
+        "expiryDate": null
+      }
+    ],
+    "biometricUrl": null,
+    "referenceId": "3f504e9b-137d-4459-a9c0-c09c255735be",
+    "kycStatus": "kyc_required"
+  },
+  "stakeholders": null,
+  "documents": [
+    {
+      "type": "ownership_chart",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    },
+    {
+      "type": "proof_of_address",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    },
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    }
+  ]
+}

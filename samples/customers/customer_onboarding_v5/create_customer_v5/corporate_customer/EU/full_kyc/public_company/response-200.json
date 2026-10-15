@@ -1,0 +1,175 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "ddd43f02-7b65-4d73-bb30-b57821f93b59",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "50adc25f-86f8-4851-879f-76ae36021600",
+  "referenceId": "820434a1-f5a0-4960-a2d9-0ee9b38fd00b",
+  "userHashId": "f77c61d8-7132-4d3f-ad54-58428e0208fd",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "EU",
+  "externalId": "ea75a956-bbf5-4e70-b09a-e05cb8b65551",
+  "tags": [
+    {
+      "key": "key_67cef24340df",
+      "value": "value_56606dcf8aa4"
+    }
+  ],
+  "segment": null,
+  "searchId": null,
+  "businessName": "testcustmerN6QAenv17170",
+  "businessRegistrationNumber": "1236794",
+  "registeredDate": "2025-04-21",
+  "registeredCountry": "FR",
+  "website": "www.hdfc345.com",
+  "businessType": "public_company",
+  "taxDetails": [
+    {
+      "taxCountry": "FR",
+      "taxNumber": "4983935935"
+    }
+  ],
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-20 15:49:30",
+  "tradeName": "tradeName_f57f429a7dfb",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "indiviAddress 123",
+      "addressLine2": "indiviAdd 234",
+      "city": "indiviCity",
+      "postcode": "10178",
+      "country": "DE",
+      "state": "berlin"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "businessAddress": {
+      "addressLine1": "indiviAdd1",
+      "addressLine2": "indiviAdd2",
+      "city": "indiviCity",
+      "postcode": "10178",
+      "country": "DE",
+      "state": "berlin"
+    }
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "FR"
+    ],
+    "industryCodes": [
+      "IS134"
+    ],
+    "industryDescription": "industryDescription_864de5f58049"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU100"
+    ],
+    "intendedUsesDescription": "intendedUsesDescription_78d7fdff1d03",
+    "credit": {
+      "averageTransactionValue": "ATVEU01",
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "FR"
+      ],
+      "topRemitters": [
+        "TEST"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVEU01",
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "FR"
+      ],
+      "topBeneficiaries": [
+        "topBeneficiaries_7aaf5e207bab"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM006",
+    "annualTurnover": "EU012"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "eu",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "40531ac01a6f11edafc28dba55d51275"
+  },
+  "bankAccountDetails": {
+    "accountName": "Account Name",
+    "accountNumber": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Central Bank of Malta",
+    "bankCountry": "MT",
+    "currency": "EUR",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": "357244f3-b4f9-4c54-92df-b472123a6067",
+    "firstName": "OXzzlshNEs",
+    "middleName": "applicantMiddle",
+    "lastName": "applicantLast",
+    "dateOfBirth": "1990-04-21",
+    "nationality": "SG",
+    "email": "pasumarthi.sashank+5173@nium.com",
+    "mobile": "7337223608",
+    "mobileCountryCode": "65",
+    "sharePercentage": "98.0",
+    "address": {
+      "addressLine1": "indiviAdd1",
+      "addressLine2": "indiviAdd2",
+      "city": "indiviCity",
+      "postcode": "10178",
+      "country": "DE",
+      "state": "berlin"
+    },
+    "isPep": false,
+    "birthCountry": "FR",
+    "taxDetails": [
+      {
+        "taxCountry": "FR",
+        "taxNumber": "3874684"
+      }
+    ],
+    "positions": [
+      {
+        "title": "Director",
+        "startDate": "2025-04-21"
+      }
+    ],
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null,
+    "referenceId": "0e3167eb-08f0-4105-ae0e-3eeb0f6d4704",
+    "kycStatus": "kyc_required"
+  },
+  "stakeholders": null,
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "787244f3-b4f9-4c54-02af-b472123a6067"
+      ]
+    }
+  ]
+}

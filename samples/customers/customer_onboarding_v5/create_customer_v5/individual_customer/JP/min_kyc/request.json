@@ -1,0 +1,57 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "JP",
+  "externalId": "IND-JP-MIN-BANK-002",
+  "firstName": "Hiroshi",
+  "lastName": "Tanaka",
+  "firstName_local": "ヒロシ",
+  "lastName_local": "タナカ",
+  "dateOfBirth": "1980-05-15",
+  "nationality": "JP",
+  "email": "hiroshi.ind.min.bank.002@tokyotech.co.jp",
+  "mobile": "9012345693",
+  "mobileCountryCode": "81",
+  "occupation": "OC0001",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "JP005",
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "credit": {
+      "averageTransactionValue": "ATVJP01",
+      "monthlyTransactionVolume": "MVJP01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "1-1-1 Shinjuku",
+    "city": "Shinjuku",
+    "state": "JP-13",
+    "postcode": "1600022",
+    "country": "JP"
+  },
+  "documents": [
+    {
+      "type": "national_id",
+      "identificationNumber": "123456789098",
+      "issuanceCountry": "JP"
+    }
+  ],
+  "bankAccountDetails": {
+    "accountName": "Hiroshi Tanaka",
+    "accountNumber": "1234567",
+    "bankAccountType": "current",
+    "bankName": "MUFG Bank",
+    "localRegisteredName": "三菱UFJ銀行",
+    "bankCountry": "JP",
+    "currency": "JPY",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "BOTKJPJT" },
+      { "type": "BRANCH CODE", "value": "001" }
+    ]
+  }
+}
