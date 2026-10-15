@@ -1,0 +1,65 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "9f927a25-7929-4e32-88fa-53fb4d3b4a80",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "48e2e3bb-0ba6-42e6-946a-63e022a431ef",
+  "referenceId": "487f73ce-d631-4eca-82a4-2a9837f3031c",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "HK",
+  "tags": null,
+  "externalId": "CORP-HK-MIN-BANK-001",
+  "searchId": null,
+  "businessName": "Harbour Tech Ltd..",
+  "businessRegistrationNumber": "88776654",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "HK",
+  "website": "https://www.harbourtech.hk",
+  "sizeOfBusiness": {
+    "annualTurnover": "hk009"
+  },
+  "sourceOfFunds": null,
+  "businessType": "private_company",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVHK01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVHK01"
+    },
+    "intendedUses": [
+      "iu002"
+    ],
+    "intendedUsesDescription": null
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "1 Harbour Road",
+      "addressLine2": "Unit 18B",
+      "city": "Wan Chai",
+      "postcode": "000000",
+      "country": "HK",
+      "state": "HK"
+    },
+    "registeredAddress": {
+      "addressLine1": "8 Finance Street",
+      "addressLine2": "Level 12",
+      "city": "Central",
+      "postcode": "000000",
+      "country": "HK",
+      "state": "HK"
+    }
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "d843d55b-31d5-4aac-b8b1-75add3f4773a",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "07ebeaa6-85e3-4263-a147-7eb172ea382c",
+  "referenceId": "2b7f10a2-659a-4bdd-a510-b3363174238d",
+  "userHashId": "de07e334-4869-4a26-95e8-fd1e814a22e8",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "HK",
+  "tags": null,
+  "externalId": "CORP-HK-FULL-001",
+  "searchId": null,
+  "businessName": "Harbour Tech Full Ltd",
+  "businessRegistrationNumber": "87654321",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "HK",
+  "website": "https://www.harbourtech.hk",
+  "businessType": "private_company",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "tradeName": "HarbourTech",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "8 Finance Street",
+      "addressLine2": "Level 12",
+      "city": "Central",
+      "postcode": "000000",
+      "country": "HK",
+      "state": "HK"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "businessAddress": {
+      "addressLine1": "1 Harbour Road",
+      "addressLine2": "Unit 18B",
+      "city": "Wan Chai",
+      "postcode": "000000",
+      "country": "HK",
+      "state": "HK"
+    }
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "HK"
+    ],
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": "Software consulting and technology services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "iu002"
+    ],
+    "intendedUsesDescription": "Business payments and international transfers",
+    "credit": {
+      "averageTransactionValue": "ATVHK01",
+      "monthlyTransactionVolume": "MVHK01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "HK"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVHK01",
+      "monthlyTransactionVolume": "MVHK01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "HK"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "em009",
+    "annualTurnover": "hk009"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "HK",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-hk-corp-full-001"
+  },
+  "bankAccountDetails": {
+    "accountName": "Harbour Tech Full Ltd",
+    "accountNumber": "xxxxxxxxx",
+    "bankAccountType": "current",
+    "bankName": "HSBC",
+    "bankCountry": "HK",
+    "currency": "HKD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": null,
+    "firstName": "Mei",
+    "middleName": null,
+    "lastName": "Chan",
+    "dateOfBirth": "1984-07-30",
+    "nationality": "HK",
+    "email": "mei.hk.full.001@harbourtech.hk",
+    "mobile": 91234567,
+    "mobileCountryCode": "852",
+    "sharePercentage": "20.00",
+    "address": {
+      "addressLine1": "10 Queens Road",
+      "addressLine2": null,
+      "city": "Central",
+      "postcode": "000000",
+      "country": "HK",
+      "state": "HK"
+    },
+    "positions": [
+      {
+        "title": "director"
+      }
+    ],
+    "referenceId": "557b28eb-3d0b-4b14-9ccb-6b90065c2cd4",
+    "kycMode": null,
+    "kycStatus": "kyc_required",
+    "documents": [
+      {
+        "type": "passport",
+        "fileIds": [
+          "6ff094d7-1fa8-4645-833f-33093a3458c6"
+        ],
+        "identificationNumber": null,
+        "issuanceCountry": null,
+        "expiryDate": null
+      }
+    ],
+    "biometricUrl": null
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "hk-ubo-001-aaaa-bbbb-cccc-ddddeeee0001",
+        "firstName": "Wing",
+        "middleName": null,
+        "lastName": "Lau",
+        "dateOfBirth": "1980-12-05",
+        "nationality": "HK",
+        "email": "wing.hk.full.001@harbourtech.hk",
+        "mobile": "98765432",
+        "mobileCountryCode": "852",
+        "sharePercentage": "80",
+        "address": {
+          "addressLine1": "5 Des Voeux Road",
+          "addressLine2": null,
+          "city": "Central",
+          "postcode": "000000",
+          "country": "HK",
+          "state": "HK"
+        },
+        "positions": [
+          {
+            "title": "UBO"
+          }
+        ],
+        "documents": null,
+        "referenceId": "be58d127-1862-4e39-b063-bc0e66020d17",
+        "kycMode": null,
+        "kycStatus": "kyc_required",
+        "biometricUrl": null
+      }
+    ],
+    "corporate": null
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    },
+    {
+      "type": "NAR1",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    },
+    {
+      "type": "NNC1",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "9e20c1ee-0fce-469b-844c-56be67ec63e6",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "48281240-fdae-4c4f-bb08-c826d790ee0f",
+  "referenceId": "7eb0e9de-1b99-442d-846f-af3205502251",
+  "userHashId": "fb82a372-4b94-473a-b02d-02468e71ca43",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "HK",
+  "tags": null,
+  "externalId": "IND-HK-FULL-007",
+  "firstName": "Mei",
+  "middleName": null,
+  "lastName": "Chan",
+  "email": "mei.hk.ind.full.007@harbourtech.hk",
+  "nationality": "HK",
+  "dateOfBirth": "1984-07-30",
+  "mobile": "91234570",
+  "mobileCountryCode": "852",
+  "kycStatus": "kyc_required",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "HK",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "40531ac01a6f11edafc28dba55d51313"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU100"
+    ],
+    "intendedUsesDescription": null,
+    "credit": {
+      "monthlyTransactionVolume": "MVHK01",
+      "topTransactionCountries": [
+        "HK"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVHK01",
+      "topTransactionCountries": [
+        "HK"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Mei Chan",
+    "accountNumber": "xxxxxxxxx",
+    "bankAccountType": "current",
+    "bankName": "HSBC Hong Kong",
+    "bankCountry": "HK",
+    "currency": "HKD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "10 Queens Road",
+    "addressLine2": null,
+    "city": "Central",
+    "postcode": "000000",
+    "country": "HK",
+    "state": "HK"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

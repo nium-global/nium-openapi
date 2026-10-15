@@ -1,0 +1,53 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "HK",
+  "externalId": "IND-HK-MIN-BANK-001",
+  "firstName": "Mei",
+  "lastName": "Chan",
+  "dateOfBirth": "1984-07-30",
+  "nationality": "HK",
+  "email": "mei.hk.ind.min.bank.001@harbourtech.hk",
+  "mobile": "91234582",
+  "mobileCountryCode": "852",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "HK002",
+  "billingAddress": {
+    "addressLine1": "10 Queens Road",
+    "city": "Central",
+    "state": "HK",
+    "postcode": "000000",
+    "country": "HK"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU100"],
+    "credit": {
+      "averageTransactionValue": "ATVHK01",
+      "monthlyTransactionVolume": "MVHK01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "identificationNumber": "HK99887766",
+      "issuanceCountry": "HK",
+      "expiryDate": "2030-12-20"
+    }
+  ],
+  "bankAccountDetails": {
+    "accountName": "Mei Chan",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "HSBC Hong Kong",
+    "bankCountry": "HK",
+    "currency": "HKD",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "HSBCHKHH" }
+    ]
+  }
+}
