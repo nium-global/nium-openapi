@@ -1,0 +1,86 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "SG",
+  "externalId": "316b746f-3d94-4210-8a84-7a7e7620e404",
+  "firstName": "Naveen",
+  "middleName": "Kumar",
+  "lastName": "Reddy",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-21 15:45:30",
+  "email": "user1748269416780@nium.com",
+  "nationality": "SG",
+  "dateOfBirth": "1990-04-17",
+  "mobile": "87753053",
+  "mobileCountryCode": "65",
+  "website": "www.test.com",
+  "annualIncome": "100GBP",
+  "incomeSourceType": "Salary",
+  "isPep": false,
+  "tags": [
+    {
+      "key": "key",
+      "value": "value"
+    }
+  ],
+  "deviceDetails": {
+    "ipCountryCode": "SG",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "40531ac01a6f11edafc28dba55d51275"
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVSG03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVSG03",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    },
+    "intendedUses": [
+      "IU104"
+    ],
+    "debit": {
+      "monthlyTransactionVolume": "MVSG03",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "bankName": "Bank of Shanghai (Hong Kong) Limited",
+    "accountNumber": "77989",
+    "currency": "SGD",
+    "bankAccountType": "saving",
+    "bankCountry": "SG",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "DBSSSGSG"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "123 Billing Street",
+    "addressLine2": "Suite 1",
+    "city": "Singapore",
+    "state": "SG",
+    "postcode": "123456",
+    "country": "SG"
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "fileIds": [
+        "316b746f-3d94-4210-8a84-7a7e7620e404"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "3b1bd66f-debe-4b49-84c9-89efe399eb62",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "ce3e562e-1adc-4756-a7eb-e627f19982ec",
+    "referenceId": "f919ae00-9cca-44b9-a998-d4649e62223d",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "type": "individual",
+    "kycType": "minimum",
+    "region": "BR",
+    "tags": [],
+    "externalId": "9f4c9104-fba8-52de-a4f5-4cb78a71edd2",
+    "firstName": "John",
+    "middleName": "Michael",
+    "lastName": "Johnson",
+    "email": "us.individual.min@nium.com",
+    "nationality": "BR",
+    "dateOfBirth": "1985-05-15",
+    "mobile": "2125551234",
+    "mobileCountryCode": "55",
+    "incomeSourceType": "student",
+    "annualIncome": "BR01",
+    "website": "https://www.johnjohnson-us.com",
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS136"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVBR01",
+            "monthlyTransactions": "ATC01",
+            "averageTransactionValue": "ATVBR03"
+        },
+        "intendedUses": [
+            "IU004"
+        ],
+        "intendedUsesDescription": null
+    },
+    "billingAddress": {
+        "addressLine1": "350 5th Avenue",
+        "addressLine2": "Suite 7800",
+        "city": "Sao Paulo",
+        "postcode": "01001000",
+        "country": "BR",
+        "state": "SP"
+    },
+    "documents": [
+        {
+            "type": "PASSPORT",
+            "identificationNumber": "US12345678",
+            "issuanceCountry": "BR",
+            "expiryDate": "2030-09-23"
+        }
+    ]
+}

@@ -1,0 +1,177 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "US",
+  "externalId": "CORP-US-FULL-BANK-002",
+  "businessType": "corporation",
+  "businessName": "Boston Tech LLC",
+  "businessRegistrationNumber": "US9876543",
+  "tradeName": "BostonTech",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "US",
+  "website": "https://www.bostontech.com",
+  "isMultiLayeredCompany": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "taxDetails": [
+    {
+      "taxCountry": "US",
+      "taxNumber": "123456789"
+    }
+  ],
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "registeredAddress": {
+      "addressLine1": "200 Broadway",
+      "addressLine2": "Floor 5",
+      "city": "New York",
+      "state": "US-NY",
+      "country": "US",
+      "postcode": "10007"
+    },
+    "businessAddress": {
+      "addressLine1": "100 Main Street",
+      "addressLine2": "Suite 200",
+      "city": "New York",
+      "state": "US-NY",
+      "country": "US",
+      "postcode": "10001"
+    }
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "6ff094d7-1fa8-4645-833f-33093a3458c6"
+      ]
+    }
+  ],
+  "applicant": {
+    "firstName": "James",
+    "lastName": "Johnson",
+    "dateOfBirth": "1978-11-15",
+    "nationality": "US",
+    "occupation": "Software Engineer",
+    "email": "james.us.corp.full.002@bostontech.com",
+    "mobile": "2125551236",
+    "mobileCountryCode": "1",
+    "sharePercentage": "51",
+    "address": {
+      "addressLine1": "50 West 34th St",
+      "addressLine2": "Apt 10",
+      "city": "New York",
+      "state": "US-NY",
+      "country": "US",
+      "postcode": "10001"
+    },
+    "positions": [
+      {
+        "title": "director",
+        "startDate": "2018-05-10"
+      },
+      {
+        "title": "control_prong",
+        "startDate": "2018-05-10"
+      }
+    ],
+    "documents": [
+      {
+        "type": "passport",
+        "identificationNumber": "US12345678",
+        "issuanceCountry": "US",
+        "expiryDate": "2030-12-20",
+        "fileIds": [
+          "6ff094d7-1fa8-4645-833f-33093a3458c6"
+        ]
+      }
+    ]
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "us-ubo-full-002",
+        "firstName": "Emily",
+        "lastName": "Davis",
+        "dateOfBirth": "1983-12-15",
+        "nationality": "US",
+        "email": "emily.ubo.002@bostontech.com",
+        "mobile": "3105551235",
+        "mobileCountryCode": "1",
+        "sharePercentage": "35",
+        "address": {
+          "addressLine1": "1 Wall Street",
+          "addressLine2": "Floor 25",
+          "city": "New York",
+          "state": "US-NY",
+          "country": "US",
+          "postcode": "10005"
+        },
+        "positions": [
+          {
+            "title": "ubo"
+          }
+        ]
+      }
+    ]
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": "Software consulting services",
+    "operatingCountries": [
+      "US"
+    ]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Business payments and operating expenses",
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUS01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUS01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM006",
+    "annualTurnover": "US008"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "US",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "sess-us-corp-full-002"
+  },
+  "bankAccountDetails": {
+    "accountName": "Boston Tech LLC",
+    "accountNumber": "123456790",
+    "bankAccountType": "Checking",
+    "bankName": "JPMorgan Chase",
+    "bankCountry": "US",
+    "currency": "USD",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "ACH CODE",
+        "value": "021000021"
+      },
+      {
+        "type": "SWIFT",
+        "value": "CHASUS33"
+      }
+    ]
+  }
+}

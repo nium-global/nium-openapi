@@ -1,0 +1,32 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "UK",
+  "externalId": "CORP-UK-MIN-0113",
+  "businessType": "ASSOCIATION",
+  "businessName": "London Tech Mini Limited.",
+  "businessRegistrationNumber": "1294560",
+  "registeredDate": "2020-07-20",
+  "website": "https://www.londontech.co.uk",
+  "fiOnboardingDate": "2026-03-30",
+  "externalRiskSeverity": "low",
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "10 Downing Street",
+      "city": "London",
+      "state": "England",
+      "country": "GB",
+      "postcode": "SW1A 2AA"
+    },
+    "businessAddress": {
+      "addressLine1": "10 Downing Street",
+      "city": "London",
+      "state": "England",
+      "country": "GB",
+      "postcode": "SW1A 2AA"
+    }
+  }
+}

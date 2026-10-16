@@ -1,0 +1,91 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "43926229-ef0b-4599-a354-0af75b7d57d6",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "e85b76f1-b732-49e9-985b-63472f195559",
+  "referenceId": "38f815d4-295c-410d-9a23-e3a5902d3b81",
+  "userHashId": "4afe4877-833a-46f8-9977-a70c08f81c4c",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "JP",
+  "tags": null,
+  "externalId": "IND-JP-FULL-004",
+  "firstName": "Hiroshi",
+  "middleName": null,
+  "lastName": "Tanaka",
+  "firstName_local": "ヒロシ",
+  "lastName_local": "タナカ",
+  "email": "hiroshi.ind.full.004@tokyotech.co.jp",
+  "nationality": "JP",
+  "dateOfBirth": "1980-05-15",
+  "mobile": "9012345685",
+  "mobileCountryCode": "81",
+  "kycStatus": "kyc_required",
+  "occupation": "OC0001",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "JP",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-jp-ind-full-004"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Personal payments and international transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVJP01",
+      "topTransactionCountries": [
+        "JP"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVJP01",
+      "topTransactionCountries": [
+        "JP"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Hiroshi Tanaka",
+    "accountNumber": "xxxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Mitsubishi UFJ Bank",
+    "bankCountry": "JP",
+    "currency": "JPY",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "swift",
+        "value": "xxxxxxxx"
+      },
+      {
+        "type": "BRANCH CODE",
+        "value": "xxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "1-1-1 Shinjuku",
+    "addressLine2": null,
+    "city": "Shinjuku",
+    "postcode": "1600022",
+    "country": "JP",
+    "state": "JP-13"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

@@ -1,0 +1,67 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "3cea266e-23a8-479f-9132-f17dde17ae3c",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "b147d032-d4db-4bee-aabe-60ae60b19fcf",
+  "referenceId": "89e01864-76e9-402f-9f41-65e5e3c809b4",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "EU",
+  "externalId": "eu-ind-min-123456789012",
+  "tags": [],
+  "segment": null,
+  "firstName": "Hans",
+  "middleName": "Friedrich",
+  "lastName": "Mueller",
+  "email": "eu.individual.min@nium.com",
+  "nationality": "DE",
+  "dateOfBirth": "1985-05-15",
+  "mobile": null,
+  "mobileCountryCode": "49",
+  "incomeSourceType": "Student",
+  "annualIncome": "EU001",
+  "sourceOfFunds": null,
+  "taxDetails": [],
+  "website": null,
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVEU03"
+    },
+    "intendedUses": [
+      "Iu108",
+      "IU107"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "Unter den Linden 1",
+    "addressLine2": "Ebene 5",
+    "city": "Berlin",
+    "postcode": "10117",
+    "country": "DE",
+    "state": "EU-BR"
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "DE12345678",
+      "issuanceCountry": "DE",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

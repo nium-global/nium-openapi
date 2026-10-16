@@ -1,0 +1,46 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "EU",
+  "firstName": "Hans",
+  "middleName": "Friedrich",
+  "lastName": "Mueller",
+  "externalId": "eu-ind-min-123456789012",
+  "email": "eu.individual.min@nium.com",
+  "nationality": "DE",
+  "dateOfBirth": "1985-05-15",
+  "annualIncome": "EU001",
+  "incomeSourceType": "Student",
+  "billingAddress": {
+    "addressLine1": "Unter den Linden 1",
+    "addressLine2": "Ebene 5",
+    "city": "Berlin",
+    "state": "EU-BR",
+    "postcode": "10117",
+    "country": "DE"
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVEU03"
+    },
+    "intendedUses": [
+      "Iu108",
+      "IU107"
+    ]
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "DE12345678",
+      "issuanceCountry": "DE",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

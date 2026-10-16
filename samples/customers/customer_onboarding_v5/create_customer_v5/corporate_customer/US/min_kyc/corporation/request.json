@@ -1,0 +1,89 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "US",
+  "externalId": "CORP-US-MIN-BANK-001",
+  "businessType": "corporation",
+  "businessName": "Boston Tech Inc",
+  "businessRegistrationNumber": "US123456789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "US",
+  "website": "https://www.bostontech.com",
+  "sizeOfBusiness": {
+    "annualTurnover": "US008"
+  },
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "New York",
+      "state": "US-NY",
+      "country": "US",
+      "postcode": "10118"
+    },
+    "businessAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "New York",
+      "state": "US-NY",
+      "country": "US",
+      "postcode": "10118"
+    }
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUS01"
+    }
+  },
+  "applicant": {
+    "firstName": "James",
+    "lastName": "Johnson",
+    "dateOfBirth": "1978-09-25",
+    "nationality": "US",
+    "email": "james.us.corp.min.001@bostontech.com",
+    "mobile": "2125551235",
+    "mobileCountryCode": "1",
+    "address": {
+      "addressLine1": "50 West 34th St",
+      "addressLine2": "Apt 10",
+      "city": "New York",
+      "state": "US-NY",
+      "country": "US",
+      "postcode": "10001"
+    },
+    "positions": [
+      {
+        "title": "director"
+      }
+    ]
+  },
+  "bankAccountDetails": {
+    "accountName": "Boston Tech Inc",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "JPMorgan Chase",
+    "bankCountry": "US",
+    "currency": "USD",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "ACH CODE",
+        "value": "021000021"
+      },
+      {
+        "type": "SWIFT",
+        "value": "CHASUS33"
+      }
+    ]
+  }
+}

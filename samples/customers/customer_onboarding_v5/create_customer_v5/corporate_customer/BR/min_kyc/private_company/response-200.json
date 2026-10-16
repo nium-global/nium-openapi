@@ -1,0 +1,65 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "4166b596-51b0-4038-9d56-33536c5d6444",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "c26a6881-c103-45f4-b09e-2cf47f121411",
+    "referenceId": "fd04c338-f61d-49b6-b7ee-0caa092cf648",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "type": "corporate",
+    "kycType": "minimum",
+    "region": "BR",
+    "tags": null,
+    "externalId": "CORP-BR-MIN-BANK-001",
+    "searchId": null,
+    "businessName": "Sao Paulo Ledger Bank Ltda",
+    "businessRegistrationNumber": "51234567000198",
+    "registeredDate": "2018-05-10",
+    "registeredCountry": "BR",
+    "website": "https://www.saopaulotech.com.br",
+    "sizeOfBusiness": {
+        "annualTurnover": "BR01"
+    },
+    "sourceOfFunds": null,
+    "businessType": "private_company",
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS244"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVBR01",
+            "monthlyTransactions": "ATC01",
+            "averageTransactionValue": "ATVBR01"
+        },
+        "intendedUses": [
+            "iu002"
+        ],
+        "intendedUsesDescription": "Supplier payments and operating expenses"
+    },
+    "addresses": {
+        "businessAddress": {
+            "addressLine1": "Av. Paulista 1000",
+            "addressLine2": null,
+            "city": "Sao Paulo",
+            "postcode": "01310100",
+            "country": "BR",
+            "state": "BR-SP"
+        },
+        "registeredAddress": {
+            "addressLine1": "Av. Paulista 1000",
+            "addressLine2": null,
+            "city": "Sao Paulo",
+            "postcode": "01310100",
+            "country": "BR",
+            "state": "BR-SP"
+        }
+    }
+}

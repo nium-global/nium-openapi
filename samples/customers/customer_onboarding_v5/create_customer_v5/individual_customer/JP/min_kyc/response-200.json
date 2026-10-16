@@ -1,0 +1,65 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "b3ab83b5-0db7-4e05-a479-02d743660820",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "3515cc08-ccd4-4613-b3fa-621a04239c3c",
+  "referenceId": "c723dbfb-bc48-4f5c-ae6f-a04e3b82342e",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "JP",
+  "tags": [],
+  "externalId": "IND-JP-MIN-BANK-002",
+  "firstName": "Hiroshi",
+  "middleName": null,
+  "lastName": "Tanaka",
+  "firstName_local": "ヒロシ",
+  "lastName_local": "タナカ",
+  "email": "hiroshi.ind.min.bank.002@tokyotech.co.jp",
+  "nationality": "JP",
+  "dateOfBirth": "1980-05-15",
+  "mobile": "9012345693",
+  "mobileCountryCode": "81",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "JP005",
+  "website": null,
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVJP01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVJP01"
+    },
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "1-1-1 Shinjuku",
+    "addressLine2": null,
+    "city": "Shinjuku",
+    "postcode": "1600022",
+    "country": "JP",
+    "state": "JP-13"
+  },
+  "documents": [
+    {
+      "type": "national_id",
+      "identificationNumber": "123456789098",
+      "issuanceCountry": "JP",
+      "expiryDate": null
+    }
+  ]
+}

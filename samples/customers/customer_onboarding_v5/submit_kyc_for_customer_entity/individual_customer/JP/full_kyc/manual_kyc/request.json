@@ -1,0 +1,18 @@
+{
+    "region": "JP",
+    "entityType": "individual_customer",
+    "entityReferenceId": "38f815d4-295c-410d-9a23-e3a5902d3b81",
+    "isResident": true,
+    "kycMode": "manual_kyc",
+    "proofOfIdentityDocument": [
+        {
+            "type": "national_id",
+            "identificationNumber": "343241212134",
+            "issuanceCountry": "JP",
+            "fileIds": [
+                "697e8549-4791-4e0a-b971-80b5c97734bf"
+            ],
+            "expiryDate": "2028-03-06"
+        }
+    ]
+}

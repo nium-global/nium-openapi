@@ -1,0 +1,9 @@
+{
+    "customerHashId": "8c1a20ab-c7d1-4e01-9314-f22d208230fa",
+    "kycStatus": "initiated",
+    "externalId": "APP-UK-FULL-001",
+    "referenceId": "d0c19cfd-e9ce-4c8a-94c1-a63f3ce78425",
+    "entityType": "applicant",
+    "kycMode": "biometric_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/compliance/callback/load?referenceNumber=962900b5-dee9-4a15-a807-6f91b93f14db"
+}

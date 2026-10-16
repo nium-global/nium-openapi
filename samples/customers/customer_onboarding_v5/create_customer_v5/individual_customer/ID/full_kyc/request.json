@@ -1,0 +1,50 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "ID",
+  "externalId": "IND-ID-FULL-BANK-001",
+  "firstName": "Budi",
+  "lastName": "Santoso",
+  "dateOfBirth": "1983-06-15",
+  "nationality": "ID",
+  "email": "budi.id.ind.full.bank.001@jakartatech.co.id",
+  "mobile": "81234567895",
+  "mobileCountryCode": "62",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "ID",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-id-ind-full-bank-001"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "intendedUsesDescription": "Personal payments and domestic transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "topTransactionCountries": ["ID"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVID01",
+      "topTransactionCountries": ["ID"]
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "Jl. Kemang Raya 10",
+    "city": "0394",
+    "state": "ID-JK",
+    "country": "ID",
+    "postcode": "12730"
+  },
+  "bankAccountDetails": {
+    "accountName": "Budi Santoso",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "Bank Central Asia",
+    "bankCountry": "ID",
+    "currency": "IDR",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [{ "type": "SWIFT", "value": "CENAIDJA" }]
+  }
+}

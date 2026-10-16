@@ -1,0 +1,73 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "US",
+  "externalId": "IND-US-FULL-BANK-001",
+  "firstName": "John",
+  "lastName": "Johnson",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "US",
+  "email": "john.us.ind.full.001@bostontech.com",
+  "mobile": "2125551238",
+  "mobileCountryCode": "1",
+  "incomeSourceType": "CONTRACTOR",
+  "annualIncome": "100000USD",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "US",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-us-ind-full-001"
+  },
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU106"
+    ],
+    "intendedUsesDescription": "Day-to-day personal spending",
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "New York",
+    "state": "US-NY",
+    "country": "US",
+    "postcode": "10118"
+  },
+  "bankAccountDetails": {
+    "accountName": "Boston Tech LLC",
+    "accountNumber": "123456790",
+    "bankAccountType": "Checking",
+    "bankName": "JPMorgan Chase",
+    "bankCountry": "US",
+    "currency": "USD",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "ACH CODE",
+        "value": "021000021"
+      },
+      {
+        "type": "SWIFT",
+        "value": "CHASUS33"
+      }
+    ]
+  }
+}

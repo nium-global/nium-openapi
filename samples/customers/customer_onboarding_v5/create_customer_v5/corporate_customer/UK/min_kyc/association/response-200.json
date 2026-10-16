@@ -1,0 +1,75 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "7b345297-d89c-4648-9735-bc87f64d0447",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "f10a86c0-c2de-48e7-b23a-78f78c370f04",
+  "referenceId": "9848df46-e27a-4087-b7c1-0058f7d802e5",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "UK",
+  "externalId": "CORP-UK-MIN-0113",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessType": "ASSOCIATION",
+  "businessName": "London Tech Mini Limited.",
+  "businessRegistrationNumber": "1294560",
+  "registeredDate": "2020-07-20",
+  "taxDetails": null,
+  "website": "https://www.londontech.co.uk",
+  "fiOnboardingDate": "2026-03-30",
+  "externalRiskSeverity": "low",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "10 Downing Street",
+      "addressLine2": null,
+      "city": "London",
+      "postcode": "SW1A 2AA",
+      "country": "GB",
+      "state": "England"
+    },
+    "registeredAddress": {
+      "addressLine1": "10 Downing Street",
+      "addressLine2": null,
+      "city": "London",
+      "postcode": "SW1A 2AA",
+      "country": "GB",
+      "state": "England"
+    }
+  },
+  "applicant": {
+    "externalId": null,
+    "firstName": "Suraj",
+    "middleName": "singh fze",
+    "lastName": "llc",
+    "dateOfBirth": null,
+    "nationality": null,
+    "email": null,
+    "mobile": null,
+    "mobileCountryCode": null,
+    "sharePercentage": null,
+    "taxDetails": null,
+    "address": null,
+    "positions": [
+      {
+        "title": "director"
+      }
+    ],
+    "documents": null,
+    "referenceId": "7737d6d7-d849-4d2c-bbeb-affbd757e53d"
+  },
+  "stakeholders": null
+}

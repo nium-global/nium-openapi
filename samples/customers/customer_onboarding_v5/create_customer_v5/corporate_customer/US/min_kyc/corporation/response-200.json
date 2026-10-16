@@ -1,0 +1,67 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "9e1449e2-d5dc-4ede-a676-9dd9626caaed",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "9b612bd2-0ff0-45c3-b6c2-b69c9cac3b8d",
+  "referenceId": "4b201723-abe8-4d96-b239-42f8aa75873a",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "US",
+  "externalId": "CORP-US-MIN-BANK-001",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "Boston Tech Inc",
+  "businessRegistrationNumber": "US123456789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "US",
+  "website": "https://www.bostontech.com",
+  "sizeOfBusiness": {
+    "annualTurnover": "US008"
+  },
+  "sourceOfFunds": null,
+  "taxDetails": null,
+  "businessType": "corporation",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUS01"
+    },
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": null
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "New York",
+      "postcode": "10118",
+      "country": "US",
+      "state": "US-NY"
+    },
+    "registeredAddress": {
+      "addressLine1": "350 5th Avenue",
+      "addressLine2": "Suite 7800",
+      "city": "New York",
+      "postcode": "10118",
+      "country": "US",
+      "state": "US-NY"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "EU",
+  "externalId": "{{externalId}}",
+  "firstName": "Sharma",
+  "middleName": "",
+  "lastName": "Test",
+  "email": "{{email}}",
+  "nationality": "FR",
+  "isPep": false,
+  "applicantDeclarationTimeStamp": "2025-08-20 15:49:30",
+  "applicantDeclaration": "true",
+  "dateOfBirth": "2000-08-01",
+  "birthCountry": "fr",
+  "mobile": "{{mobile}}",
+  "mobileCountryCode": "33",
+  "website": "www.test4.com",
+  "taxDetails": [
+    {
+      "taxNumber": "TAX123",
+      "taxCountry": "FR"
+    }
+  ],
+  "tags": [
+    {
+      "key": "testing",
+      "value": "Automation"
+    },
+    {
+      "key": "key1",
+      "value": "value1"
+    }
+  ],
+  "deviceDetails": {
+    "ipCountryCode": "eu",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.16",
+    "sessionId": "hello-world"
+  },
+  "expectedAccountUsage": {
+    "intendedUsesDescription": "intendedUsesDescriptionintendedUsesDescription",
+    "credit": {
+      "monthlyTransactionVolume": "MVEU01",
+      "topTransactionCountries": [
+        "FR"
+      ]
+    },
+    "intendedUses": [
+      "IU104"
+    ],
+    "debit": {
+      "monthlyTransactionVolume": "MVEU01",
+      "topTransactionCountries": [
+        "FR"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Account Name",
+    "bankName": "Central Bank of Malta",
+    "accountNumber": "MT84MALT011000012345MTLCAST001S",
+    "currency": "EUR",
+    "bankAccountType": "saving",
+    "bankCountry": "MT",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "MALTMTMT"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "Test Add 123, Building 1, Block 2, Area 3",
+    "addressLine2": "Test Add 123, Building 1, Block 2, Area 3",
+    "city": "Lorem ipsum dolor sit amet, consectetuer.",
+    "state": "ddfd",
+    "postcode": "SW1W",
+    "country": "LT"
+  }
+}

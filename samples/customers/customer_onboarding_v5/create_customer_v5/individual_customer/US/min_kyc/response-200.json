@@ -1,0 +1,66 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "bb80dc2f-bccb-40ff-84cd-21b675a62d55",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "c9ad64e8-c94a-4332-acf6-86c83d26a38c",
+  "referenceId": "15a00e08-fc12-43df-a604-ef50cf68d433",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "US",
+  "externalId": "us-ind-min-123456789012",
+  "tags": [],
+  "segment": null,
+  "firstName": "John",
+  "middleName": "Michael",
+  "lastName": "Johnson",
+  "email": "us.individual.min@nium.com",
+  "nationality": "US",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "2125551234",
+  "mobileCountryCode": "1",
+  "incomeSourceType": "student",
+  "annualIncome": "US001",
+  "sourceOfFunds": null,
+  "taxDetails": [],
+  "website": "https://www.johnjohnson-us.com",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVUS03"
+    },
+    "intendedUses": [
+      "IU107"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "New York",
+    "postcode": "10118",
+    "country": "US",
+    "state": "Us-NW"
+  },
+  "documents": [
+    {
+      "type": "PASSPORT",
+      "identificationNumber": "US12345678",
+      "issuanceCountry": "US",
+      "expiryDate": "2030-09-23"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "HK",
+  "externalId": "IND-HK-FULL-007",
+  "firstName": "Mei",
+  "lastName": "Chan",
+  "dateOfBirth": "1984-07-30",
+  "nationality": "HK",
+  "email": "mei.hk.ind.full.007@harbourtech.hk",
+  "mobile": "91234570",
+  "mobileCountryCode": "852",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "HK",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "40531ac01a6f11edafc28dba55d51313"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU100"],
+    "credit": {
+      "monthlyTransactionVolume": "MVHK01",
+      "topTransactionCountries": ["HK"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVHK01",
+      "topTransactionCountries": ["HK"]
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "10 Queens Road",
+    "city": "Central",
+    "state": "HK",
+    "country": "HK",
+    "postcode": "000000"
+  },
+  "bankAccountDetails": {
+    "accountName": "Mei Chan",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "HSBC Hong Kong",
+    "bankCountry": "HK",
+    "currency": "HKD",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "HSBCHKHH"
+      }
+    ]
+  }
+}

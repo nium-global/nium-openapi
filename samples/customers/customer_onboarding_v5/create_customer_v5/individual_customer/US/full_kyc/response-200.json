@@ -1,0 +1,89 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "5fe3a7a3-e127-4017-9d3e-81de62596fa3",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "ae373ba3-a980-4e0d-8fa0-517520ecb81e",
+  "referenceId": "d808618f-21f8-4ca8-8623-2fb4ea5f436a",
+  "userHashId": "0ceb1a72-c202-4da2-9432-9d58f5314b1c",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "US",
+  "externalId": "IND-US-FULL-BANK-001",
+  "tags": null,
+  "segment": null,
+  "firstName": "John",
+  "middleName": null,
+  "lastName": "Johnson",
+  "email": "john.us.ind.full.001@bostontech.com",
+  "nationality": "US",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "2125551238",
+  "mobileCountryCode": "1",
+  "kycStatus": "kyc_required",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "US",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-us-ind-full-001"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU106"
+    ],
+    "intendedUsesDescription": "Day-to-day personal spending",
+    "credit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVUS01",
+      "topTransactionCountries": [
+        "US"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Boston Tech LLC",
+    "accountNumber": "xxxxxxxxx",
+    "bankAccountType": "checking",
+    "bankName": "JPMorgan Chase",
+    "bankCountry": "US",
+    "currency": "USD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "ACH CODE",
+        "value": "xxxxxxxxx"
+      },
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "350 5th Avenue",
+    "addressLine2": "Suite 7800",
+    "city": "New York",
+    "postcode": "10118",
+    "country": "US",
+    "state": "US-NY"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

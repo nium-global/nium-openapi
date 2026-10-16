@@ -1,0 +1,115 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "SG",
+  "externalId": "CORP-SG-FULL-1001",
+  "businessName": "Singapore Tech Full Ptet Ltd",
+  "businessRegistrationNumber": "SG212345679",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "SG",
+  "businessType": "private_company",
+  "tradeName": "SingaporeTech",
+  "website": "https://www.singaporetech.sg",
+  "isMultiLayeredCompany": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "taxDetails": [{ "taxCountry": "SG", "taxNumber": "201234567G" }],
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": true,
+    "registeredAddress": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "state": "SG",
+      "country": "SG",
+      "postcode": "048616"
+    }
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"],
+    "industryDescription": "Software and IT services",
+    "operatingCountries": ["SG"]
+  },
+  "sizeOfBusiness": { "annualTurnover": "SG001", "totalEmployees": "EM006" },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "monthlyTransactionVolume": "MVSG02",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVSG01",
+      "topTransactionCountries": ["SG"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVSG02",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVSG01",
+      "topTransactionCountries": ["SG"]
+    }
+  },
+  "deviceDetails": {
+    "ipCountryCode": "SG",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-sg-corp-full-001"
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "bankName": "Bank of Shanghai (Hong Kong) Limited",
+    "accountNumber": "77989",
+    "currency": "SGD",
+    "bankAccountType": "saving",
+    "bankCountry": "SG",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "DBSSSGSG"
+      }
+    ]
+  },
+  "documents": [{ "type": "business_registration_doc", "fileIds": ["316b746f-3d94-4210-8a84-7a7e7620e404"] }],
+  "applicant": {
+    "externalId": "APP-SG-FULL-001",
+    "firstName": "Wei",
+    "lastName": "Tan",
+    "dateOfBirth": "1982-03-10",
+    "nationality": "SG",
+    "email": "wei.sg.full.001@singaporetech.sg",
+    "mobile": "91234568",
+    "mobileCountryCode": "65",
+    "isPep": false,
+    "sharePercentage": "80",
+    "address": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "state": "SG",
+      "country": "SG",
+      "postcode": "048616"
+    },
+    "positions": [{ "title": "Director", "startDate": "2020-07-20" }]
+  },
+  "stakeholders": {
+    "individual": [{
+      "externalId": "UBO-SG-FULL-001",
+      "firstName": "Li",
+      "lastName": "Chen",
+      "dateOfBirth": "1980-02-20",
+      "nationality": "SG",
+      "email": "li.sg.full.001@singaporetech.sg",
+      "mobile": "91234569",
+      "mobileCountryCode": "65",
+      "sharePercentage": "20",
+      "isPep": false,
+      "address": {
+        "addressLine1": "1 Raffles Place",
+        "addressLine2": "#40-61",
+        "city": "Singapore",
+        "state": "SG",
+        "country": "SG",
+        "postcode": "048616"
+      },
+      "positions": [{ "title": "UBO", "startDate": "2020-07-20" }]
+    }]
+  }
+}

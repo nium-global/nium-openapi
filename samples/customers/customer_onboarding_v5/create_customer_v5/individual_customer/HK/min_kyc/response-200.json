@@ -1,0 +1,63 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "da1723e5-858f-468d-ac19-89da50d8681f",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "67958ae1-9bd5-4e92-b40e-a4204dc130be",
+  "referenceId": "354f5fd8-14ff-4742-8e8f-86db415c28bd",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "HK",
+  "tags": [],
+  "externalId": "IND-HK-MIN-BANK-001",
+  "firstName": "Mei",
+  "middleName": null,
+  "lastName": "Chan",
+  "email": "mei.hk.ind.min.bank.001@harbourtech.hk",
+  "nationality": "HK",
+  "dateOfBirth": "1984-07-30",
+  "mobile": "91234582",
+  "mobileCountryCode": "852",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "HK002",
+  "website": null,
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVHK01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVHK01"
+    },
+    "intendedUses": [
+      "IU100"
+    ],
+    "intendedUsesDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "10 Queens Road",
+    "addressLine2": null,
+    "city": "Central",
+    "postcode": "000000",
+    "country": "HK",
+    "state": "HK"
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "identificationNumber": "HK99887766",
+      "issuanceCountry": "HK",
+      "expiryDate": "2030-12-20"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "a6d8608c-bc47-480d-bcc1-17f7e70a77b8",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "9b0540ed-848e-4470-8fa9-d5f122ce44a1",
+  "referenceId": "48c91052-6a26-4d31-a6a6-06584d5e8772",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "JP",
+  "tags": null,
+  "externalId": "CORP-JP-MIN-BANK-002",
+  "searchId": null,
+  "businessName": "Tokyo Min Tech.",
+  "businessRegistrationNumber": "3142647890888",
+  "registeredDate": "2005-04-01",
+  "registeredCountry": "JP",
+  "website": "https://www.tokyotech.co.jp",
+  "sizeOfBusiness": {
+    "annualTurnover": "JP001"
+  },
+  "businessName_local": null,
+  "sourceOfFunds": null,
+  "businessType": "private_company",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS134"
+    ],
+    "industryDescription": "Technology and software services"
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVJP01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVJP01"
+    },
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Business payments and domestic transfers"
+  },
+  "addresses": {
+    "businessAddress": null,
+    "registeredAddress": {
+      "addressLine1": "2-7-1 Marunouchi",
+      "addressLine2": "Chiyoda Building 5F",
+      "city": "Chiyoda",
+      "postcode": "1000005",
+      "country": "JP",
+      "state": "JP-13"
+    }
+  }
+}

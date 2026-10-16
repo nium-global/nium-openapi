@@ -1,0 +1,86 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "9b2f31ad-c3c7-4170-8cbd-219265512b56",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "c826165b-be7e-4efa-82d2-8a803c8c0b72",
+  "referenceId": "baafea89-f78a-47f1-85d4-4d5881e384ab",
+  "userHashId": "8fd93c56-688a-46f0-87fc-a2c55ac741a8",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "UK",
+  "externalId": "IND-UK-FULL-0901",
+  "tags": null,
+  "segment": null,
+  "firstName": "James",
+  "middleName": null,
+  "lastName": "Smith",
+  "email": "james.uk.ind.full.1001@londontech.co.uk",
+  "nationality": "GB",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "7710900131",
+  "mobileCountryCode": "44",
+  "kycStatus": "kyc_required",
+  "isPep": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "GB",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-uk-ind-full-001"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU100"
+    ],
+    "intendedUsesDescription": "Personal payments and local transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVUK02",
+      "topTransactionCountries": [
+        "GB"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVUK02",
+      "topTransactionCountries": [
+        "GB"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "accountNumber": "xxxxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Example UK Bank",
+    "bankCountry": "GB",
+    "currency": "GBP",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SORT CODE",
+        "value": "xxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "10 Downing Street",
+    "addressLine2": null,
+    "city": "London",
+    "postcode": "SW1A 2AA",
+    "country": "GB",
+    "state": "England"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

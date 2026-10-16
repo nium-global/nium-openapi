@@ -1,0 +1,91 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "8c41f42e-cfbd-48ac-97b0-173b86a4ac27",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "ccbc0b99-355f-489b-a165-b7ed326a6d48",
+  "referenceId": "4ff0c14a-dade-4f8e-b09a-a73ed1780451",
+  "userHashId": "2f635647-0b56-4848-87e9-8eaaae04072c",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "SG",
+  "externalId": "316b746f-3d94-4210-8a84-7a7e7620e404",
+  "tags": [
+    {
+      "key": "key",
+      "value": "value"
+    }
+  ],
+  "segment": null,
+  "firstName": "Naveen",
+  "middleName": "Kumar",
+  "lastName": "Reddy",
+  "email": "user1748269416780@nium.com",
+  "nationality": "SG",
+  "dateOfBirth": "1990-04-17",
+  "mobile": "87753053",
+  "mobileCountryCode": "65",
+  "kycStatus": "kyc_required",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-21 15:45:30",
+  "taxDetails": null,
+  "deviceDetails": {
+    "ipCountryCode": "SG",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "40531ac01a6f11edafc28dba55d51275"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU104"
+    ],
+    "intendedUsesDescription": null,
+    "credit": {
+      "monthlyTransactionVolume": "MVSG03",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVSG03",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "accountNumber": "xxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Bank of Shanghai (Hong Kong) Limited",
+    "bankCountry": "SG",
+    "currency": "SGD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "123 Billing Street",
+    "addressLine2": "Suite 1",
+    "city": "Singapore",
+    "postcode": "123456",
+    "country": "SG",
+    "state": "SG"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

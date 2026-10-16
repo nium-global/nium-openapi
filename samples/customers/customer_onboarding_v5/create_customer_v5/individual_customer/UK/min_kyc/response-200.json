@@ -1,0 +1,48 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "bbae1ecd-6132-43ae-98d6-c42a134032fa",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "8270266d-79ad-440f-9a60-36e097d3c07f",
+  "referenceId": "8a62189e-1550-44a7-93ce-8a50c33f34de",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "UK",
+  "externalId": "IND-UK-MIN-1001",
+  "tags": [],
+  "segment": null,
+  "firstName": "James",
+  "middleName": null,
+  "lastName": "Smith",
+  "email": "james.uk.ind.min.0011@londontech.co.uk",
+  "nationality": "GB",
+  "dateOfBirth": "1985-05-15",
+  "mobile": "7700900130",
+  "mobileCountryCode": "44",
+  "website": "https://www.londontech.co.uk",
+  "gender": null,
+  "taxDetails": [],
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "billingAddress": {
+    "addressLine1": "10 Downing Street",
+    "addressLine2": null,
+    "city": "London",
+    "postcode": "SW1A 2AA",
+    "country": "GB",
+    "state": "England"
+  },
+  "documents": [],
+  "fiOnboardingDate": null,
+  "externalRiskSeverity": null
+}

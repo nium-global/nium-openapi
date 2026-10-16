@@ -1,0 +1,153 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "1f8b15cf-dd03-4471-ada3-bf827817f57d",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "e544f7ed-af6a-4f52-84b9-8bdfa79f8d4a",
+  "referenceId": "eac8cdeb-1908-4074-ba44-f3e348e9eaa3",
+  "userHashId": "c41d4590-91fe-4f2f-aa39-7405604d45b2",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "CA",
+  "tags": null,
+  "externalId": "CORP-CA-FULL-1001",
+  "searchId": null,
+  "businessName": "Toronto Tech Inc.lTD.",
+  "businessRegistrationNumber": "123656789RC0002",
+  "registeredDate": "2019-03-15",
+  "registeredCountry": "CA",
+  "website": "https://www.torontotech.ca",
+  "businessType": "private_company",
+  "taxDetails": [
+    {
+      "taxCountry": "CA",
+      "taxNumber": "123456789"
+    }
+  ],
+  "stockSymbol": null,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2024-01-01 12:00:00",
+  "tradeName": "Toronto Tech",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "100 King Street West",
+      "addressLine2": "Suite 5600",
+      "city": "Toronto",
+      "postcode": "M5X1C7",
+      "country": "CA",
+      "state": "CA-ON"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": true
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "CA"
+    ],
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": "Software consulting and technology services for Canadian businesses."
+  },
+  "listedExchange": null,
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "iu002"
+    ],
+    "intendedUsesDescription": null,
+    "credit": {
+      "averageTransactionValue": "ATVCA01",
+      "monthlyTransactionVolume": "MVCA01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "CA"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVCA01",
+      "monthlyTransactionVolume": "MVCA01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "CA"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "em009",
+    "annualTurnover": "ca009"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "ca",
+    "deviceInfo": "macOS",
+    "ipAddress": "45.48.241.198",
+    "sessionId": "40531ac01a6f11edafc28dba55d51280"
+  },
+  "bankAccountDetails": {
+    "accountName": "Toronto Tech Inc",
+    "accountNumber": "xxxxxxx",
+    "bankAccountType": "current",
+    "bankName": "Royal Bank of Canada",
+    "bankCountry": "CA",
+    "currency": "cad",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "TRANSIT NUMBER",
+        "value": "xxxxx"
+      },
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": null,
+    "firstName": "Sarah",
+    "middleName": null,
+    "lastName": "Martin",
+    "dateOfBirth": "1985-06-20",
+    "nationality": "CA",
+    "email": "sarah.ca.corp.full.001@torontotech.ca",
+    "mobile": "4165550101",
+    "mobileCountryCode": "1",
+    "sharePercentage": "51",
+    "address": {
+      "addressLine1": "200 Bay Street",
+      "addressLine2": null,
+      "city": "Toronto",
+      "postcode": "M5J2J1",
+      "country": "CA",
+      "state": "CA-ON"
+    },
+    "occupation": "OC0001",
+    "positions": [
+      {
+        "title": "director"
+      }
+    ],
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null,
+    "referenceId": "1232e2d1-7f63-433d-9e3b-3c0a26773eb3",
+    "kycStatus": "pending"
+  },
+  "stakeholders": null,
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "6ff094d7-1fa8-4645-833f-33093a3458c6"
+      ]
+    }
+  ]
+}

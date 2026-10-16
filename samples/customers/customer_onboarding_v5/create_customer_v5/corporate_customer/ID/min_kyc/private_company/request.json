@@ -1,0 +1,66 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "ID",
+  "externalId": "CORP-ID-MIN-BANK-001",
+  "businessName": "Jakarta Tech PVT.",
+  "businessRegistrationNumber": "3234567890124",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "ID",
+  "businessType": "private_company",
+  "website": "https://www.jakartatech.co.id",
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "city": "0394",
+      "state": "ID-JK",
+      "country": "ID",
+      "postcode": "12190"
+    },
+    "businessAddress": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "city": "0394",
+      "state": "ID-JK",
+      "country": "ID",
+      "postcode": "12190"
+    }
+  },
+  "natureOfBusiness": { "industryCodes": ["IS244"] },
+  "sizeOfBusiness": { "annualTurnover": "ID001" },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVID01"
+    }
+  },
+  "applicant": {
+    "firstName": "Budi",
+    "lastName": "Santoso",
+    "dateOfBirth": "1983-06-15",
+    "nationality": "ID",
+    "email": "budi.id.corp.min.bank.001@jakartatech.co.id",
+    "mobile": "81234567891",
+    "mobileCountryCode": "62",
+    "address": {
+      "addressLine1": "Jl. Kemang Raya 10",
+      "city": "0394",
+      "state": "ID-JK",
+      "country": "ID",
+      "postcode": "12730"
+    },
+    "positions": [{ "title": "director" }]
+  },
+  "bankAccountDetails": {
+    "accountName": "Jakarta Tech PT",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "Bank Central Asia",
+    "bankCountry": "ID",
+    "currency": "IDR",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [{ "type": "SWIFT", "value": "CENAIDJA" }]
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "region": "SG",
+    "entityType": "applicant",
+    "entityReferenceId": "1eaf5fc9-656e-4af2-bac1-d73dad1c15e4",
+    "isResident": true,
+    "kycMode": "e_kyc"
+}

@@ -1,0 +1,55 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "BR",
+  "externalId": "IND-BR-FULL-001",
+  "firstName": "Rafael",
+  "lastName": "Silva",
+  "dateOfBirth": "1982-04-18",
+  "nationality": "BR",
+  "email": "rafael.br.ind.full.001@saopaulotech.com.br",
+  "mobile": "11987654321",
+  "mobileCountryCode": "55",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "BR",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-br-ind-full-001"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "intendedUsesDescription": "Personal payments and international transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVBR01",
+      "topTransactionCountries": ["BR"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVBR01",
+      "topTransactionCountries": ["BR"]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Rafael Silva",
+    "accountNumber": "12345678",
+    "bankAccountType": "saving",
+    "bankName": "Itau Unibanco",
+    "bankCountry": "BR",
+    "currency": "BRL",
+    "payoutMethod": "LOCAL",
+    "identificationType": "CPF",
+    "identificationValue": "52998224725",
+    "routingCodes": [
+      { "type": "BRANCH CODE", "value": "0001" },
+      { "type": "SWIFT", "value": "ITAUBRSP" }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "Av. Paulista 1000",
+    "city": "Sao Paulo",
+    "state": "BR-SP",
+    "country": "BR",
+    "postcode": "01310100"
+  }
+}

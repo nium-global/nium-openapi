@@ -1,0 +1,68 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "c973dd6b-a600-4e94-adfd-18e6efb43de1",
+      "walletType": "virtual"
+    }
+  ],
+  "customerHashId": "14fde61f-8134-4171-8c1c-6928dc31e537",
+  "referenceId": "198c7033-4386-4cb0-b485-2d4ba9067105",
+  "userHashId": null,
+  "status": "clear",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "EU",
+  "externalId": "CORP-EU-MIN-001",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "Berlin Tech Min GmbH",
+  "businessRegistrationNumber": "EU123456789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "DE",
+  "website": null,
+  "sizeOfBusiness": {
+    "annualTurnover": "EU008"
+  },
+  "sourceOfFunds": null,
+  "taxDetails": null,
+  "businessType": "TRUST",
+  "natureOfBusiness": {
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": null
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVEU03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVEU03"
+    },
+    "intendedUses": [
+      "iu001",
+      "iu003"
+    ],
+    "intendedUsesDescription": null
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "Unter den Linden 1",
+      "addressLine2": "Ebene 5",
+      "city": "Berlin",
+      "postcode": "10117",
+      "country": "DE",
+      "state": "Berlin"
+    },
+    "registeredAddress": {
+      "addressLine1": "Unter den Linden 1",
+      "addressLine2": "Ebene 5",
+      "city": "Berlin",
+      "postcode": "10117",
+      "country": "DE",
+      "state": "Berlin"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "customerHashId": "e46e183d-e73d-440f-876d-7bdc585197be",
+    "kycStatus": "initiated",
+    "externalId": "IND-ID-FULL-BANK-001",
+    "referenceId": "8e5d6c67-6066-4807-a544-77be027983cb",
+    "entityType": "individual_customer",
+    "kycMode": "biometric_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/compliance/callback/load?referenceNumber=5cc9ddab-905d-4f8e-a5b8-8bafa599620b"
+}

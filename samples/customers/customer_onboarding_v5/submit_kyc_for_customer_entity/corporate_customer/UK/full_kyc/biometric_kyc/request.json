@@ -1,0 +1,7 @@
+{
+    "region": "UK",
+    "entityType": "applicant",
+    "entityReferenceId": "d0c19cfd-e9ce-4c8a-94c1-a63f3ce78425",
+    "isResident": true,
+    "kycMode": "biometric_kyc"
+}

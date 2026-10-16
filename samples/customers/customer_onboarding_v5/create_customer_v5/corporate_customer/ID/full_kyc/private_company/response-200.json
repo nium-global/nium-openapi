@@ -1,0 +1,197 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "02eeea00-2f2e-48e5-8981-3206065b474d",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "01a197b5-3290-45bc-a7fd-3cd1ea28b62c",
+  "referenceId": "6353f0f2-7d4d-4325-96e1-374df015276b",
+  "userHashId": "c4439cb4-415c-485d-b01c-1a057fd9c00b",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "ID",
+  "tags": null,
+  "externalId": "CORP-ID-FULL-009",
+  "searchId": null,
+  "businessName": "Surabaya Tech Full PTQ.",
+  "businessRegistrationNumber": "3234567890453",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "ID",
+  "website": "https://www.surabayatech.co.id",
+  "businessType": "private_company",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "tradeName": "SurabayaTech",
+  "stockSymbol": null,
+  "listedExchange": null,
+  "taxDetails": [
+    {
+      "taxCountry": "ID",
+      "taxNumber": "123456789012346"
+    }
+  ],
+  "trustType": null,
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "addressLine2": null,
+      "city": "0394",
+      "postcode": "12190",
+      "country": "ID",
+      "state": "ID-JK"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": true
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "ID"
+    ],
+    "industryCodes": [
+      "IS244"
+    ],
+    "industryDescription": "Software consulting and IT services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU002"
+    ],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "averageTransactionValue": "ATVID01",
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "ID"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVID01",
+      "monthlyTransactionVolume": "MVID01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "ID"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM001",
+    "annualTurnover": "ID001"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "ID",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-id-corp-full-007"
+  },
+  "bankAccountDetails": {
+    "accountName": "Surabaya Tech Full PT",
+    "accountNumber": "xxxxxxxxxx",
+    "bankAccountType": "current",
+    "bankName": "Bank Central Asia",
+    "bankCountry": "ID",
+    "currency": "IDR",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": "APP-ID-FULL-007",
+    "firstName": "Budi",
+    "middleName": null,
+    "lastName": "Santoso",
+    "dateOfBirth": "1983-06-15",
+    "nationality": "ID",
+    "email": "budi.id.full.007@surabayatech.co.id",
+    "mobile": 81234567901,
+    "mobileCountryCode": "62",
+    "sharePercentage": null,
+    "address": {
+      "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+      "addressLine2": null,
+      "city": "0394",
+      "postcode": "12190",
+      "country": "ID",
+      "state": "ID-JK"
+    },
+    "trustBeneficiaryClass": null,
+    "positions": [
+      {
+        "title": "DIRECTOR"
+      }
+    ],
+    "referenceId": "9ffb63b9-5922-4f41-92d3-b200eac95ba1",
+    "kycMode": null,
+    "kycStatus": "kyc_required",
+    "documents": null,
+    "biometricUrl": null
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "UBO-ID-FULL-007",
+        "firstName": "Siti",
+        "middleName": null,
+        "lastName": "Rahayu",
+        "dateOfBirth": "1980-02-20",
+        "nationality": "ID",
+        "email": "siti.id.full.007@surabayatech.co.id",
+        "mobile": "81234567902",
+        "mobileCountryCode": "62",
+        "sharePercentage": null,
+        "address": {
+          "addressLine1": "Jl. Jend. Sudirman Kav. 52-53",
+          "addressLine2": null,
+          "city": "0394",
+          "postcode": "12190",
+          "country": "ID",
+          "state": "ID-JK"
+        },
+        "trustBeneficiaryClass": null,
+        "positions": [
+          {
+            "title": "UBO"
+          }
+        ],
+        "documents": null,
+        "referenceId": "e29ce038-1f40-4b0d-9dd4-aed4d0689921",
+        "kycMode": null,
+        "kycStatus": "kyc_required",
+        "biometricUrl": null
+      }
+    ],
+    "corporate": null
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "6ff094d7-1fa8-4645-833f-33093a3458c6"
+      ]
+    },
+    {
+      "type": "establishment_deed",
+      "fileIds": [
+        "697e8549-4791-4e0a-b971-80b5c97734bf"
+      ]
+    },
+    {
+      "type": "tax_identification_doc",
+      "fileIds": [
+        "afe29573-4ff3-4d0e-a103-ba09fdb55539"
+      ]
+    }
+  ]
+}

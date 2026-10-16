@@ -1,0 +1,182 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "61325cd1-b078-4b5e-8ade-81884b49a7f2",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "0fce6762-8906-421d-b022-7997141eb7f9",
+  "referenceId": "bd78f3c4-cf5c-4496-a8f6-17d56f4098b4",
+  "userHashId": "d193d2dc-a4da-426b-8a87-57dd8a469ca0",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "corporate",
+  "kycType": "full",
+  "region": "SG",
+  "externalId": "CORP-SG-FULL-1001",
+  "tags": null,
+  "segment": null,
+  "searchId": null,
+  "businessName": "Singapore Tech Full Ptet Ltd",
+  "businessRegistrationNumber": "SG212345679",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "SG",
+  "website": "https://www.singaporetech.sg",
+  "businessType": "private_company",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "formerName": null,
+  "tradeName": "SingaporeTech",
+  "isMultiLayeredCompany": false,
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "postcode": "048616",
+      "country": "SG",
+      "state": "SG"
+    },
+    "isBusinessAddressSameAsRegisteredAddress": true
+  },
+  "taxDetails": [
+    {
+      "taxCountry": "SG",
+      "taxNumber": "201234567G"
+    }
+  ],
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "SG"
+    ],
+    "industryCodes": [
+      "IS136"
+    ],
+    "industryDescription": "Software and IT services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "averageTransactionValue": "ATVSG01",
+      "monthlyTransactionVolume": "MVSG02",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVSG01",
+      "monthlyTransactionVolume": "MVSG02",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": [
+        "SG"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM006",
+    "annualTurnover": "SG001"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "SG",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-sg-corp-full-001"
+  },
+  "bankAccountDetails": {
+    "accountName": "Name",
+    "accountNumber": "xxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Bank of Shanghai (Hong Kong) Limited",
+    "bankCountry": "SG",
+    "currency": "SGD",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "applicant": {
+    "externalId": "APP-SG-FULL-001",
+    "firstName": "Wei",
+    "middleName": null,
+    "lastName": "Tan",
+    "dateOfBirth": "1982-03-10",
+    "nationality": "SG",
+    "email": "wei.sg.full.001@singaporetech.sg",
+    "mobile": "91234568",
+    "mobileCountryCode": "65",
+    "sharePercentage": "80",
+    "address": {
+      "addressLine1": "1 Raffles Place",
+      "addressLine2": "#40-61",
+      "city": "Singapore",
+      "postcode": "048616",
+      "country": "SG",
+      "state": "SG"
+    },
+    "positions": [
+      {
+        "title": "Director"
+      }
+    ],
+    "referenceId": "1eaf5fc9-656e-4af2-bac1-d73dad1c15e4",
+    "kycMode": null,
+    "kycStatus": "kyc_required",
+    "documents": null,
+    "biometricUrl": null
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "UBO-SG-FULL-001",
+        "firstName": "Li",
+        "middleName": null,
+        "lastName": "Chen",
+        "dateOfBirth": "1980-02-20",
+        "nationality": "SG",
+        "email": "li.sg.full.001@singaporetech.sg",
+        "mobile": "91234569",
+        "mobileCountryCode": "65",
+        "sharePercentage": "20",
+        "address": {
+          "addressLine1": "1 Raffles Place",
+          "addressLine2": "#40-61",
+          "city": "Singapore",
+          "postcode": "048616",
+          "country": "SG",
+          "state": "SG"
+        },
+        "positions": [
+          {
+            "title": "UBO"
+          }
+        ],
+        "documents": null,
+        "referenceId": "99db4476-57ba-4564-896c-13e14694c478",
+        "kycMode": null,
+        "kycStatus": "kyc_required",
+        "biometricUrl": null
+      }
+    ],
+    "corporate": null
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "316b746f-3d94-4210-8a84-7a7e7620e404"
+      ]
+    }
+  ]
+}

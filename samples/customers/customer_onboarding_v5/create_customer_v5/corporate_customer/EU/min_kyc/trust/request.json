@@ -1,0 +1,64 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "EU",
+  "externalId": "CORP-EU-MIN-001",
+  "businessType": "TRUST",
+  "businessName": "Berlin Tech Min GmbH",
+  "businessRegistrationNumber": "EU123456789",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "DE",
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "sizeOfBusiness": {
+    "annualTurnover": "EU008"
+  },
+  "expectedAccountUsage": {
+    "credit": {
+      "monthlyTransactionVolume": "MVEU03",
+      "monthlyTransactions": "ATC03",
+      "averageTransactionValue": "ATVEU03"
+    },
+    "intendedUses": ["iu001", "iu003"]
+  },
+  "applicant": {
+    "externalId": "EU-APP-MIN-001",
+    "firstName": "Hans",
+    "middleName": "Friedrich",
+    "lastName": "Mueller",
+    "dateOfBirth": "1975-06-18",
+    "nationality": "DE",
+    "email": "hans.mueller@example.com",
+    "mobile": "1701234567",
+    "mobileCountryCode": "49",
+    "sharePercentage": "70.0",
+    "address": {
+      "addressLine1": "Unter den Linden 1",
+      "addressLine2": "Ebene 5",
+      "city": "Berlin",
+      "state": "Berlin",
+      "country": "DE",
+      "postcode": "10117"
+    },
+    "positions": [{ "title": "director" }]
+  },
+  "addresses": {
+    "businessAddress": {
+      "addressLine1": "Unter den Linden 1",
+      "addressLine2": "Ebene 5",
+      "city": "Berlin",
+      "state": "Berlin",
+      "country": "DE",
+      "postcode": "10117"
+    },
+    "registeredAddress": {
+      "addressLine1": "Unter den Linden 1",
+      "addressLine2": "Ebene 5",
+      "city": "Berlin",
+      "state": "Berlin",
+      "country": "DE",
+      "postcode": "10117"
+    }
+  }
+}

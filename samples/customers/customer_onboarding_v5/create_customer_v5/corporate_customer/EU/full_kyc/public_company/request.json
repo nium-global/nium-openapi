@@ -1,0 +1,153 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "EU",
+  "externalId": "{{$randomUUID}}",
+  "businessName": "{{businessName}}",
+  "businessDescription": null,
+  "listedExchange": null,
+  "businessRegistrationNumber": "1236794",
+  "registeredDate": "2025-04-21",
+  "registeredCountry": "FR",
+  "website": "www.hdfc345.com",
+  "isMultiLayeredCompany": false,
+  "businessType": "public_company",
+  "bankAccountDetails": {
+    "accountName": "Account Name",
+    "bankName": "Central Bank of Malta",
+    "accountNumber": "MT84MALT011000012345MTLCAST001S",
+    "currency": "EUR",
+    "bankAccountType": "saving",
+    "bankCountry": "MT",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "MALTMTMT"
+      }
+    ]
+  },
+  "taxDetails": [
+    {
+      "taxCountry": "FR",
+      "taxNumber": "4983935935"
+    }
+  ],
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-20 15:49:30",
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": false,
+    "registeredAddress": {
+      "addressLine1": "indiviAddress 123",
+      "addressLine2": "indiviAdd 234",
+      "city": "indiviCity",
+      "state": "berlin",
+      "postcode": "10178",
+      "country": "DE"
+    },
+    "businessAddress": {
+      "addressLine1": "indiviAdd1",
+      "addressLine2": "indiviAdd2",
+      "city": "indiviCity",
+      "state": "berlin",
+      "postcode": "10178",
+      "country": "DE"
+    }
+  },
+  "applicant": {
+    "externalId": "357244f3-b4f9-4c54-92df-b472123a6067",
+    "firstName": "OXzzlshNEs",
+    "middleName": "applicantMiddle",
+    "lastName": "applicantLast",
+    "dateOfBirth": "1990-04-21",
+    "isPep": false,
+    "nationality": "SG",
+    "email": "{{email}}",
+    "mobile": "7337223608",
+    "mobileCountryCode": "65",
+    "sharePercentage": 98.0,
+    "address": {
+      "addressLine1": "indiviAdd1",
+      "addressLine2": "indiviAdd2",
+      "city": "indiviCity",
+      "state": "berlin",
+      "postcode": "10178",
+      "country": "DE"
+    },
+    "birthCountry": "FR",
+    "taxDetails": [
+      {
+        "taxCountry": "FR",
+        "taxNumber": "3874684"
+      }
+    ],
+    "documents": null,
+    "positions": [
+      {
+        "title": "Director",
+        "startDate": "2025-04-21"
+      }
+    ]
+  },
+  "natureOfBusiness": {
+    "operatingCountries": [
+      "FR"
+    ],
+    "industryCodes": [
+      "IS134"
+    ],
+    "industryDescription": "industryDescription_864de5f58049"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU100"
+    ],
+    "intendedUsesDescription": "intendedUsesDescription_78d7fdff1d03",
+    "credit": {
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVEU01",
+      "topTransactionCountries": [
+        "FR"
+      ],
+      "topRemitters": [
+        "TEST"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "averageTransactionValue": "ATVEU01",
+      "topTransactionCountries": [
+        "FR"
+      ],
+      "topBeneficiaries": [
+        "topBeneficiaries_7aaf5e207bab"
+      ]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "EM006",
+    "annualTurnover": "EU012"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "eu",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "40531ac01a6f11edafc28dba55d51275"
+  },
+  "tags": [
+    {
+      "key": "key_67cef24340df",
+      "value": "value_56606dcf8aa4"
+    }
+  ],
+  "tradeName": "tradeName_f57f429a7dfb",
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": [
+        "787244f3-b4f9-4c54-02af-b472123a6067"
+      ]
+    }
+  ]
+}

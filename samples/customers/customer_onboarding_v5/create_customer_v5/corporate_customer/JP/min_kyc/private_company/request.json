@@ -1,0 +1,75 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "JP",
+  "externalId": "CORP-JP-MIN-BANK-002",
+  "businessName": "Tokyo Min Tech.",
+  "businessRegistrationNumber": "3142647890888",
+  "registeredDate": "2005-04-01",
+  "registeredCountry": "JP",
+  "businessType": "private_company",
+  "website": "https://www.tokyotech.co.jp",
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "2-7-1 Marunouchi",
+      "addressLine2": "Chiyoda Building 5F",
+      "city": "Chiyoda",
+      "state": "JP-13",
+      "postcode": "1000005",
+      "country": "JP"
+    }
+  },
+  "natureOfBusiness": {
+    "operatingCountries": ["JP"],
+    "industryCodes": ["IS134"],
+    "industryDescription": "Technology and software services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "intendedUsesDescription": "Business payments and domestic transfers",
+    "credit": {
+      "averageTransactionValue": "ATVJP01",
+      "monthlyTransactionVolume": "MVJP01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "sizeOfBusiness": {
+    "annualTurnover": "JP001"
+  },
+  "applicant": {
+    "firstName": "Hiroshi",
+    "lastName": "Tanaka",
+    "firstName_local": "ヒロシ",
+    "lastName_local": "タナカ",
+    "dateOfBirth": "1980-05-15",
+    "nationality": "JP",
+    "email": "hiroshi.jp.min.bank.002@tokyotech.co.jp",
+    "mobile": "9012345694",
+    "mobileCountryCode": "81",
+    "occupation": "OC0001",
+    "address": {
+      "addressLine1": "1-1-1 Shinjuku",
+      "city": "Shinjuku",
+      "state": "JP-13",
+      "postcode": "1600022",
+      "country": "JP"
+    },
+    "positions": [
+      { "title": "director" }
+    ]
+  },
+  "bankAccountDetails": {
+    "accountName": "Tokyo Min Tech KK",
+    "accountNumber": "1234567",
+    "bankAccountType": "current",
+    "bankName": "MUFG Bank",
+    "localRegisteredName": "三菱UFJ銀行",
+    "bankCountry": "JP",
+    "currency": "JPY",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "BOTKJPJT" },
+      { "type": "BRANCH CODE", "value": "001" }
+    ]
+  }
+}

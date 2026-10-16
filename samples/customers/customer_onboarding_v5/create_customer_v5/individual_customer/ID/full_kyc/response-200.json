@@ -1,0 +1,84 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "79cb0de9-fc78-421f-a4f0-24e9b748a071",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "e46e183d-e73d-440f-876d-7bdc585197be",
+  "referenceId": "8e5d6c67-6066-4807-a544-77be027983cb",
+  "userHashId": "259e4dd5-77f2-4b24-9dd9-63f291696650",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "ID",
+  "tags": null,
+  "externalId": "IND-ID-FULL-BANK-001",
+  "firstName": "Budi",
+  "middleName": null,
+  "lastName": "Santoso",
+  "email": "budi.id.ind.full.bank.001@jakartatech.co.id",
+  "nationality": "ID",
+  "dateOfBirth": "1983-06-15",
+  "mobile": "81234567895",
+  "mobileCountryCode": "62",
+  "kycStatus": "kyc_required",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "ID",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-id-ind-full-bank-001"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU001"
+    ],
+    "intendedUsesDescription": "Personal payments and domestic transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVID01",
+      "topTransactionCountries": [
+        "ID"
+      ]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVID01",
+      "topTransactionCountries": [
+        "ID"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Budi Santoso",
+    "accountNumber": "xxxxxxxxx",
+    "bankAccountType": "current",
+    "bankName": "Bank Central Asia",
+    "bankCountry": "ID",
+    "currency": "IDR",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "Jl. Kemang Raya 10",
+    "addressLine2": null,
+    "city": "0394",
+    "postcode": "12730",
+    "country": "ID",
+    "state": "ID-JK"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

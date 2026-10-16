@@ -1,0 +1,104 @@
+{
+  "wallets": [
+    {
+      "walletHashId": "0b55d4a3-54fb-4d12-b5e7-3602d23d430d",
+      "walletType": "base"
+    }
+  ],
+  "customerHashId": "ccf2897a-be57-4f04-9591-c988159b1b6d",
+  "referenceId": "265e3636-a246-4572-93bf-f4f85338b90c",
+  "userHashId": "81d3ad92-8d78-4bc5-8283-013d41bda687",
+  "status": "pending",
+  "subStatus": null,
+  "oddStatus": null,
+  "type": "individual",
+  "kycType": "full",
+  "region": "EU",
+  "externalId": "EMXKuntsMIndi46XXz",
+  "tags": [
+    {
+      "key": "testing",
+      "value": "Automation"
+    },
+    {
+      "key": "key1",
+      "value": "value1"
+    }
+  ],
+  "segment": null,
+  "firstName": "Sharma",
+  "middleName": "",
+  "lastName": "Test",
+  "email": "pasumarthi.sashank+5173@nium.com",
+  "nationality": "FR",
+  "dateOfBirth": "2000-08-01",
+  "mobile": "2000005143",
+  "mobileCountryCode": "33",
+  "kycStatus": "kyc_required",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2025-08-20 15:49:30",
+  "birthCountry": "fr",
+  "taxDetails": [
+    {
+      "taxCountry": "FR",
+      "taxNumber": "TAX123"
+    }
+  ],
+  "isPep": false,
+  "deviceDetails": {
+    "ipCountryCode": "eu",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.16",
+    "sessionId": "hello-world"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU104"
+    ],
+    "intendedUsesDescription": "intendedUsesDescriptionintendedUsesDescription",
+    "credit": {
+      "averageTransactionValue": null,
+      "monthlyTransactionVolume": "MVEU01",
+      "topTransactionCountries": [
+        "FR"
+      ]
+    },
+    "debit": {
+      "averageTransactionValue": null,
+      "monthlyTransactionVolume": "MVEU01",
+      "topTransactionCountries": [
+        "FR"
+      ]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Account Name",
+    "accountNumber": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "bankAccountType": "saving",
+    "bankName": "Central Bank of Malta",
+    "bankCountry": "MT",
+    "currency": "EUR",
+    "bankCode": null,
+    "identificationType": null,
+    "identificationValue": null,
+    "localRegisteredName": null,
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      {
+        "type": "SWIFT",
+        "value": "xxxxxxxx"
+      }
+    ]
+  },
+  "billingAddress": {
+    "addressLine1": "Test Add 123, Building 1, Block 2, Area 3",
+    "addressLine2": "Test Add 123, Building 1, Block 2, Area 3",
+    "city": "Lorem ipsum dolor sit amet, consectetuer.",
+    "postcode": "SW1W",
+    "country": "LT",
+    "state": "ddfd"
+  },
+  "kycMode": null,
+  "documents": null,
+  "biometricUrl": null
+}

@@ -1,0 +1,74 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "HK",
+  "externalId": "CORP-HK-MIN-BANK-001",
+  "businessName": "Harbour Tech Ltd..",
+  "businessRegistrationNumber": "88776654",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "HK",
+  "businessType": "private_company",
+  "website": "https://www.harbourtech.hk",
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "8 Finance Street",
+      "addressLine2": "Level 12",
+      "city": "Central",
+      "state": "HK",
+      "postcode": "000000",
+      "country": "HK"
+    },
+    "businessAddress": {
+      "addressLine1": "1 Harbour Road",
+      "addressLine2": "Unit 18B",
+      "city": "Wan Chai",
+      "state": "HK",
+      "postcode": "000000",
+      "country": "HK"
+    }
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "credit": {
+      "averageTransactionValue": "ATVHK01",
+      "monthlyTransactionVolume": "MVHK01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "sizeOfBusiness": {
+    "annualTurnover": "hk009"
+  },
+  "applicant": {
+    "firstName": "Mei",
+    "lastName": "Chan",
+    "dateOfBirth": "1984-07-30",
+    "nationality": "HK",
+    "email": "mei.hk.min.bank.001@harbourtech.hk",
+    "mobile": "91234581",
+    "mobileCountryCode": "852",
+    "address": {
+      "addressLine1": "10 Queens Road",
+      "city": "Central",
+      "state": "HK",
+      "postcode": "000000",
+      "country": "HK"
+    },
+    "positions": [
+      { "title": "director" }
+    ]
+  },
+  "bankAccountDetails": {
+    "accountName": "Harbour Tech Ltd",
+    "accountNumber": "123456789",
+    "bankAccountType": "current",
+    "bankName": "HSBC Hong Kong",
+    "bankCountry": "HK",
+    "currency": "HKD",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "HSBCHKHH" }
+    ]
+  }
+}

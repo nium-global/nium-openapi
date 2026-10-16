@@ -1,0 +1,55 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "JP",
+  "externalId": "IND-JP-FULL-004",
+  "firstName": "Hiroshi",
+  "lastName": "Tanaka",
+  "firstName_local": "ヒロシ",
+  "lastName_local": "タナカ",
+  "dateOfBirth": "1980-05-15",
+  "nationality": "JP",
+  "email": "hiroshi.ind.full.004@tokyotech.co.jp",
+  "mobile": "9012345685",
+  "mobileCountryCode": "81",
+  "occupation": "OC0001",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "billingAddress": {
+    "addressLine1": "1-1-1 Shinjuku",
+    "city": "Shinjuku",
+    "state": "JP-13",
+    "postcode": "1600022",
+    "country": "JP"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "JP",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-jp-ind-full-004"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "intendedUsesDescription": "Personal payments and international transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVJP01",
+      "topTransactionCountries": ["JP"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVJP01",
+      "topTransactionCountries": ["JP"]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Hiroshi Tanaka",
+    "accountNumber": "1234567",
+    "bankAccountType": "saving",
+    "bankName": "Mitsubishi UFJ Bank",
+    "bankCountry": "JP",
+    "currency": "JPY",
+    "routingCodes": [
+      { "type": "swift", "value": "BOTKJPJT" },
+      { "type": "BRANCH CODE", "value": "003" }
+    ]
+  }
+}
