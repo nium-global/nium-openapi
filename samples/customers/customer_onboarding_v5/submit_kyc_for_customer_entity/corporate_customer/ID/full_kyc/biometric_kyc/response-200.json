@@ -1,0 +1,9 @@
+{
+    "customerHashId": "01a197b5-3290-45bc-a7fd-3cd1ea28b62c",
+    "kycStatus": "initiated",
+    "externalId": "UBO-ID-FULL-007",
+    "referenceId": "e29ce038-1f40-4b0d-9dd4-aed4d0689921",
+    "entityType": "individual_stakeholder",
+    "kycMode": "biometric_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/compliance/callback/load?referenceNumber=bbe73996-d5d0-4151-938e-5dd121ea53f1"
+}

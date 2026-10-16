@@ -1,0 +1,7 @@
+{
+    "region": "SG",
+    "entityType": "individual_customer",
+    "entityReferenceId": "4ff0c14a-dade-4f8e-b09a-a73ed1780451",
+    "isResident": true,
+    "kycMode": "e_kyc"
+}

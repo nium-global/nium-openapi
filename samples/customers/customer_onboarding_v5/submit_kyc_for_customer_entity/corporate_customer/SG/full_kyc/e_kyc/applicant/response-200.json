@@ -1,0 +1,9 @@
+{
+    "customerHashId": "0fce6762-8906-421d-b022-7997141eb7f9",
+    "kycStatus": "initiated",
+    "externalId": "APP-SG-FULL-001",
+    "referenceId": "1eaf5fc9-656e-4af2-bac1-d73dad1c15e4",
+    "entityType": "applicant",
+    "kycMode": "e_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/myinfo/callback?code=a23597b7-292b-4e27-9456-046e3e6744e0&state=59aadc5a-8c18-4526-9869-5efbe01e5c2f&error=&error-description="
+}

@@ -1,0 +1,9 @@
+{
+    "customerHashId": "1cb1d961-6d96-44c2-a375-bb50d924dcc1",
+    "kycStatus": "initiated",
+    "externalId": null,
+    "referenceId": "78140105-f1d3-4bb4-8c89-92d41f006ad3",
+    "entityType": "applicant",
+    "kycMode": "biometric_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/jumio/start?referenceNumber=23ac262d-8e05-487b-9488-cc5ad90fc3a0"
+}

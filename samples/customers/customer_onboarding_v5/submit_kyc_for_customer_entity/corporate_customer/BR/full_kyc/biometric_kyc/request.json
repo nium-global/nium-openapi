@@ -1,0 +1,7 @@
+{
+    "region": "BR",
+    "entityType": "applicant",
+    "entityReferenceId": "78140105-f1d3-4bb4-8c89-92d41f006ad3",
+    "isResident": false,
+    "kycMode": "biometric_kyc"
+}

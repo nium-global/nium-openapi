@@ -1,0 +1,8 @@
+{
+    "customerHashId": "e85b76f1-b732-49e9-985b-63472f195559",
+    "kycStatus": "initiated",
+    "externalId": "IND-JP-FULL-004",
+    "referenceId": "38f815d4-295c-410d-9a23-e3a5902d3b81",
+    "entityType": "individual_customer",
+    "kycMode": "manual_kyc"
+}

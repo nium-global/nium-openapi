@@ -1,0 +1,9 @@
+{
+    "customerHashId": "ccbc0b99-355f-489b-a165-b7ed326a6d48",
+    "kycStatus": "initiated",
+    "externalId": "316b746f-3d94-4210-8a84-7a7e7620e404",
+    "referenceId": "4ff0c14a-dade-4f8e-b09a-a73ed1780451",
+    "entityType": "individual_customer",
+    "kycMode": "e_kyc",
+    "biometricUrl": "https://sandbox.api.myinfo.gov.sg/com/v3/authorise?client_id=STG-201422465R-INSTAREM-PARTNERCARD&state=f9a85563-0182-4278-b359-a00ea6ec2cb1&attributes=uinfin,name,dob,regadd,nationality,passexpirydate&purpose=InstaRem%20account%20registration.&redirect_uri=https://idv.sandbox.nium.com/sandbox/myinfo/callback"
+}
