@@ -1,0 +1,80 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "fddd6fc6-d293-4966-ac3d-8caea6c848ae",
+            "walletType": "base"
+        }
+    ],
+    "customerHashId": "f75981c3-46ee-4bec-b269-23164ffd8275",
+    "referenceId": "a471ab2d-6cf8-48dd-8f33-e8fad3b30c08",
+    "userHashId": "532fc006-f8d6-449b-a01e-8dae027d6c4a",
+    "status": "pending",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "full",
+    "region": "MX",
+    "tags": null,
+    "externalId": "IND-MX-FULL-12",
+    "firstName": "Carlos",
+    "middleName": null,
+    "lastName": "Hernandez",
+    "email": "carlos.mx.in.fu1ll.002@mexicotech.mx",
+    "nationality": "MX",
+    "dateOfBirth": "1985-03-12",
+    "mobile": "5512345628",
+    "mobileCountryCode": "52",
+    "kycStatus": "kyc_required",
+    "applicantDeclaration": true,
+    "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+    "deviceDetails": {
+        "ipCountryCode": "MX",
+        "deviceInfo": "MAC",
+        "ipAddress": "192.168.1.1",
+        "sessionId": "sess-mx-ind-full-002"
+    },
+    "expectedAccountUsage": {
+        "intendedUses": [
+            "IU001"
+        ],
+        "intendedUsesDescription": "Personal payments and international transfers",
+        "credit": {
+            "monthlyTransactionVolume": "MVMX01",
+            "topTransactionCountries": [
+                "MX"
+            ]
+        },
+        "debit": {
+            "monthlyTransactionVolume": "MVMX01",
+            "topTransactionCountries": [
+                "MX"
+            ]
+        }
+    },
+    "bankAccountDetails": {
+        "accountName": "Carlos Hernandez",
+        "accountNumber": "xxxxxxxxxxxxxxxxxx",
+        "bankAccountType": "current",
+        "bankName": "BBVA Mexico",
+        "bankCountry": "MX",
+        "currency": "MXN",
+        "bankCode": null,
+        "identificationType": null,
+        "identificationValue": null,
+        "localRegisteredName": null,
+        "payoutMethod": "LOCAL",
+        "routingCodes": null
+    },
+    "billingAddress": {
+        "addressLine1": "Paseo de la Reforma 250",
+        "addressLine2": null,
+        "city": "Mexico City",
+        "postcode": "06600",
+        "country": "MX",
+        "state": "MX-CMX"
+    },
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null
+}

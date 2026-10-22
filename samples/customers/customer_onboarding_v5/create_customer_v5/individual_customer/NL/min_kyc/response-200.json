@@ -1,0 +1,68 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "eb079f76-8bdc-470e-86a9-e61bc1c87514",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "eb354e2b-2611-4bac-b146-16c9343501f2",
+    "referenceId": "a7c5393c-1296-4bd7-bfc7-70e22af580c9",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "minimum",
+    "region": "NL",
+    "externalId": "IND-NL-MIN-BANK-1001",
+    "tags": [],
+    "segment": null,
+    "oddResponse": null,
+    "firstName": "Pieter",
+    "middleName": null,
+    "lastName": "van der Berg",
+    "email": "pieter.ind.min.bank.1001@wwemaxi.nl",
+    "nationality": "NL",
+    "dateOfBirth": "1985-05-15",
+    "mobile": "6123456021",
+    "mobileCountryCode": "31",
+    "incomeSourceType": "STUDENT",
+    "annualIncome": "EU002",
+    "sourceOfFunds": null,
+    "taxDetails": [],
+    "website": null,
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS244"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVEU01",
+            "monthlyTransactions": "ATC01",
+            "averageTransactionValue": "ATVEU01"
+        },
+        "intendedUses": [
+            "IU100"
+        ],
+        "intendedUsesDescription": null
+    },
+    "billingAddress": {
+        "addressLine1": "Zuidas 1",
+        "addressLine2": null,
+        "city": "Amsterdam",
+        "postcode": "1077XX",
+        "country": "NL",
+        "state": "NL-NH"
+    },
+    "documents": [
+        {
+            "type": "passport",
+            "identificationNumber": "NL88776655",
+            "issuanceCountry": "NL",
+            "expiryDate": "2030-09-23"
+        }
+    ]
+}

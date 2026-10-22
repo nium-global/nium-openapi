@@ -1,0 +1,69 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "e90443ae-73d0-489b-b4f7-d69b0b792410",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "3a76819c-b687-438c-ba9f-47171235ea7f",
+    "referenceId": "ab0f719f-c08a-4273-88ba-43511849f860",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "minimum",
+    "region": "NZ",
+    "externalId": "IND-NZ-MIN-BANK-001",
+    "tags": [],
+    "segment": null,
+    "oddResponse": null,
+    "firstName": "Aroha",
+    "middleName": null,
+    "lastName": "Walker",
+    "email": "aroha.nz.ind.min.001@aucklandtech.co.nz",
+    "nationality": "NZ",
+    "dateOfBirth": "1985-05-15",
+    "mobile": "211234570",
+    "mobileCountryCode": "64",
+    "incomeSourceType": "STUDENT",
+    "annualIncome": "NZ008",
+    "sourceOfFunds": null,
+    "taxDetails": [],
+    "website": "https://www.arohawalker-nz.com",
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS028"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVNZ01",
+            "monthlyTransactions": "ATC06",
+            "averageTransactionValue": "ATVNZ03"
+        },
+        "intendedUses": [
+            "IU106"
+        ],
+        "intendedUsesDescription": null
+    },
+    "billingAddress": {
+        "addressLine1": "15 Queen Street",
+        "addressLine2": "Level 4",
+        "city": "Auckland",
+        "postcode": "1010",
+        "country": "NZ",
+        "state": "NZ-AUK",
+        "streetType": "Street"
+    },
+    "documents": [
+        {
+            "type": "passport",
+            "identificationNumber": "NZ12345679",
+            "issuanceCountry": "NZ",
+            "expiryDate": "2030-09-23"
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "MX",
+  "externalId": "IND-MX-FULL-12",
+  "firstName": "Carlos",
+  "lastName": "Hernandez",
+  "dateOfBirth": "1985-03-12",
+  "nationality": "MX",
+  "email": "carlos.mx.in.fu1ll.002@mexicotech.mx",
+  "mobile": "5512345628",
+  "mobileCountryCode": "52",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "MX",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-mx-ind-full-002"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "intendedUsesDescription": "Personal payments and international transfers",
+    "credit": {
+      "monthlyTransactionVolume": "MVMX01",
+      "topTransactionCountries": ["MX"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVMX01",
+      "topTransactionCountries": ["MX"]
+    }
+  },
+  "bankAccountDetails": {
+    "accountName": "Carlos Hernandez",
+    "accountNumber": "072680000167019094",
+    "bankAccountType": "current",
+    "bankName": "BBVA Mexico",
+    "bankCountry": "MX",
+    "currency": "MXN"
+  },
+  "billingAddress": {
+    "addressLine1": "Paseo de la Reforma 250",
+    "city": "Mexico City",
+    "state": "MX-CMX",
+    "country": "MX",
+    "postcode": "06600"
+  }
+}

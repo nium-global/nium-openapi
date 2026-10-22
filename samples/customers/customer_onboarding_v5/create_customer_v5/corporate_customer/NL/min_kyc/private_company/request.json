@@ -1,0 +1,67 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "NL",
+  "externalId": "CORP-NL-MIN-BANK-001",
+  "businessName": "Amsterdam Tech B",
+  "businessRegistrationNumber": "NL887766554",
+  "registeredDate": "2020-07-20",
+  "registeredCountry": "NL",
+  "businessType": "private_company",
+  "website": "https://www.amsterdamtech.nl",
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "Zuidas 1",
+      "addressLine2": "Verdieping 20",
+      "city": "Amsterdam",
+      "state": "NL-NH",
+      "postcode": "1077XX",
+      "country": "NL"
+    }
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "credit": {
+      "averageTransactionValue": "ATVEU01",
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "sizeOfBusiness": {
+    "annualTurnover": "eu009"
+  },
+  "applicant": {
+    "firstName": "Pieter",
+    "lastName": "van der Berg",
+    "dateOfBirth": "1979-11-03",
+    "nationality": "NL",
+    "email": "pieter.nl.min.bank.001@amsterdamtech.nl",
+    "mobile": "612345601",
+    "mobileCountryCode": "31",
+    "address": {
+      "addressLine1": "Zuidas 1",
+      "city": "Amsterdam",
+      "state": "NL-NH",
+      "postcode": "1077XX",
+      "country": "NL"
+    },
+    "positions": [
+      { "title": "director" }
+    ]
+  },
+  "bankAccountDetails": {
+    "accountName": "Amsterdam Tech BV",
+    "accountNumber": "NL91ABNA0417164300",
+    "bankAccountType": "current",
+    "bankName": "ABN AMRO",
+    "bankCountry": "NL",
+    "currency": "EUR",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "ABNANL2A" }
+    ]
+  }
+}

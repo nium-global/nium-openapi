@@ -1,0 +1,65 @@
+{
+  "type": "corporate",
+  "kycType": "minimum",
+  "region": "MX",
+  "externalId": "CORP-MX-MIN-BANK-2",
+  "businessName": "CDMX Ledger SAde CV",
+  "businessRegistrationNumber": "CDL260928AB2",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "MX",
+  "businessType": "private_company",
+  "website": "https://www.cdmxledger.mx",
+  "sizeOfBusiness": {
+    "annualTurnover": "MX01"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS134"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU001"],
+    "credit": {
+      "averageTransactionValue": "ATVMX02",
+      "monthlyTransactionVolume": "MVMX01",
+      "monthlyTransactions": "ATC02"
+    }
+  },
+  "addresses": {
+    "registeredAddress": {
+      "addressLine1": "Paseo de la Reforma 250",
+      "city": "Mexico City",
+      "state": "MX-CMX",
+      "postcode": "06600",
+      "country": "MX"
+    }
+  },
+  "applicant": {
+    "firstName": "Ana",
+    "lastName": "Lopez",
+    "email": "ana.mx.corp.min.bank.002@cdmxledger.mx",
+    "mobile": "5512345681",
+    "mobileCountryCode": "52",
+    "nationality": "MX",
+    "dateOfBirth": "1985-06-15",
+    "address": {
+      "addressLine1": "Paseo de la Reforma 250",
+      "city": "Mexico City",
+      "state": "MX-CMX",
+      "postcode": "06600",
+      "country": "MX"
+    },
+    "positions": [{ "title": "director" }]
+  },
+  "bankAccountDetails": {
+    "accountName": "CDMX Ledger SA de CV",
+    "accountNumber": "002010077777777771",
+    "bankAccountType": "current",
+    "bankName": "Banamex",
+    "bankCountry": "MX",
+    "currency": "MXN",
+    "payoutMethod": "LOCAL",
+    "bankCode": "002",
+    "routingCodes": [
+      { "type": "BANK CODE", "value": "002" }
+    ]
+  }
+}
