@@ -1,0 +1,219 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "83231f07-81e8-49a0-b521-7c279c30db78",
+            "walletType": "base"
+        }
+    ],
+    "customerHashId": "05ddeeb0-716d-41a3-b696-447199c4fdfb",
+    "referenceId": "b4d5b2f5-8870-4efc-b736-346614cbac2a",
+    "userHashId": "d01a901d-b27a-46f0-aa3b-112a44ecab10",
+    "status": "pending",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "corporate",
+    "kycType": "full",
+    "region": "NZ",
+    "externalId": "CORP-NZ-FULL-BANK-001",
+    "tags": null,
+    "segment": null,
+    "oddResponse": null,
+    "searchId": null,
+    "businessName": "Auckland Tech Full Ltd",
+    "businessRegistrationNumber": "1234567890124",
+    "registeredDate": "2018-05-10",
+    "registeredCountry": "NZ",
+    "website": "https://www.aucklandtech.co.nz",
+    "businessType": "private_company",
+    "applicantDeclaration": true,
+    "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+    "tradeName": "AucklandTech",
+    "isMultiLayeredCompany": false,
+    "isCashIntensiveBusiness": false,
+    "hasNominee": false,
+    "trustType": null,
+    "listedExchange": null,
+    "associationName": null,
+    "associationNumber": null,
+    "addresses": {
+        "registeredAddress": {
+            "addressLine1": "15 Queen Street",
+            "addressLine2": "Level 4",
+            "city": "Auckland",
+            "postcode": "1010",
+            "country": "NZ",
+            "state": "NZ-AUK",
+            "streetType": "Street"
+        },
+        "isBusinessAddressSameAsRegisteredAddress": false,
+        "businessAddress": {
+            "addressLine1": "100 Lambton Quay",
+            "addressLine2": "Level 3",
+            "city": "Wellington",
+            "postcode": "6011",
+            "country": "NZ",
+            "state": "NZ-WGN",
+            "streetType": "Street"
+        }
+    },
+    "natureOfBusiness": {
+        "operatingCountries": [
+            "NZ"
+        ],
+        "industryCodes": [
+            "IS244"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "intendedUses": [
+            "IU002"
+        ],
+        "intendedUsesDescription": "Supplier payments and operating expenses",
+        "credit": {
+            "averageTransactionValue": "ATVNZ01",
+            "monthlyTransactionVolume": "MVNZ01",
+            "monthlyTransactions": "ATC01",
+            "topTransactionCountries": [
+                "NZ"
+            ]
+        },
+        "debit": {
+            "averageTransactionValue": "ATVNZ01",
+            "monthlyTransactionVolume": "MVNZ01",
+            "monthlyTransactions": "ATC01",
+            "topTransactionCountries": [
+                "NZ"
+            ]
+        }
+    },
+    "sizeOfBusiness": {
+        "totalEmployees": "EM001",
+        "annualTurnover": "NZ009"
+    },
+    "deviceDetails": {
+        "ipCountryCode": "NZ",
+        "deviceInfo": "macOS",
+        "ipAddress": "45.48.241.198",
+        "sessionId": "sess-nz-corp-full-001"
+    },
+    "bankAccountDetails": {
+        "accountName": "Auckland Tech Full Ltd",
+        "accountNumber": "xxxxxxxxxxxxxxx",
+        "bankAccountType": "checking",
+        "bankName": "ANZ Bank New Zealand",
+        "bankCountry": "NZ",
+        "currency": "NZD",
+        "bankCode": null,
+        "identificationType": null,
+        "identificationValue": null,
+        "localRegisteredName": null,
+        "payoutMethod": "LOCAL",
+        "routingCodes": [
+            {
+                "type": "SWIFT",
+                "value": "xxxxxxxx"
+            }
+        ]
+    },
+    "applicant": {
+        "externalId": null,
+        "firstName": "Aroha",
+        "middleName": null,
+        "lastName": "Walker",
+        "dateOfBirth": "1980-05-15",
+        "nationality": "NZ",
+        "email": "aroha.nz.corp.full.001@aucklandtech.co.nz",
+        "mobile": "211234569",
+        "mobileCountryCode": "64",
+        "sharePercentage": "51",
+        "capitalContribution": null,
+        "hasDistributionRight": null,
+        "interestPercentage": null,
+        "votingRights": null,
+        "trustBeneficiaryClass": null,
+        "settlorProtectorRights": null,
+        "address": {
+            "addressLine1": "15 Queen Street",
+            "addressLine2": "Level 4",
+            "city": "Auckland",
+            "postcode": "1010",
+            "country": "NZ",
+            "state": "NZ-AUK",
+            "streetType": "Street"
+        },
+        "kycMode": null,
+        "positions": [
+            {
+                "title": "director"
+            }
+        ],
+        "referenceId": "461e0543-0e70-4b05-a636-688556ab49b8",
+        "kycStatus": "kyc_required",
+        "documents": [
+            {
+                "type": "passport",
+                "fileIds": [
+                    "6ff094d7-1fa8-4645-833f-33093a3458c6"
+                ],
+                "identificationNumber": null,
+                "issuanceCountry": null,
+                "expiryDate": null
+            }
+        ],
+        "biometricUrl": null
+    },
+    "stakeholders": {
+        "individual": [
+            {
+                "externalId": "nz-ubo-full-001",
+                "firstName": "Tane",
+                "middleName": null,
+                "lastName": "Wilson",
+                "dateOfBirth": "1985-08-22",
+                "nationality": "NZ",
+                "email": "tane.ubo.001@aucklandtech.co.nz",
+                "mobile": "212345679",
+                "mobileCountryCode": "64",
+                "sharePercentage": "35",
+                "capitalContribution": "NZ008",
+                "hasDistributionRight": true,
+                "interestPercentage": null,
+                "votingRights": [
+                    "VTR01"
+                ],
+                "trustBeneficiaryClass": null,
+                "settlorProtectorRights": null,
+                "address": {
+                    "addressLine1": "100 Lambton Quay",
+                    "addressLine2": "Level 3",
+                    "city": "Wellington",
+                    "postcode": "6011",
+                    "country": "NZ",
+                    "state": "NZ-WGN",
+                    "streetType": "Street"
+                },
+                "positions": [
+                    {
+                        "title": "ubo"
+                    }
+                ],
+                "documents": null,
+                "referenceId": "7d21ced8-1766-4827-bfaf-98f0481d1d16",
+                "kycMode": null,
+                "kycStatus": "kyc_required",
+                "biometricUrl": null
+            }
+        ],
+        "corporate": null
+    },
+    "documents": [
+        {
+            "type": "business_registration_doc",
+            "fileIds": [
+                "6ff094d7-1fa8-4645-833f-33093a3458c6"
+            ]
+        }
+    ]
+}

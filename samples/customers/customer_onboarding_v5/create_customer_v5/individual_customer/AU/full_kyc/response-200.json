@@ -1,0 +1,88 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "6b2debbc-a937-4a42-b7de-e61df8e091d6",
+            "walletType": "base"
+        }
+    ],
+    "customerHashId": "42c30c32-5f67-49d2-9ae0-a48b373d3794",
+    "referenceId": "231019d9-b598-4069-9496-3ca7854f1b91",
+    "userHashId": "71aeb7c6-97a4-4200-888a-99b5be99d66d",
+    "status": "pending",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "full",
+    "region": "AU",
+    "externalId": "IND-AU-FULL-BANK-003",
+    "tags": null,
+    "segment": null,
+    "oddResponse": null,
+    "firstName": "Daniel",
+    "middleName": null,
+    "lastName": "Wilson",
+    "email": "daniel.au.ind.full.bank.003@sydneytech.com.au",
+    "nationality": "AU",
+    "dateOfBirth": "1985-05-15",
+    "mobile": "412345685",
+    "mobileCountryCode": "61",
+    "kycStatus": "kyc_required",
+    "applicantDeclaration": true,
+    "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+    "deviceDetails": {
+        "ipCountryCode": "AU",
+        "deviceInfo": "macOS",
+        "ipAddress": "192.168.1.1",
+        "sessionId": "sess-au-ind-full-bank-003"
+    },
+    "expectedAccountUsage": {
+        "intendedUses": [
+            "IU106"
+        ],
+        "intendedUsesDescription": "Day-to-day personal spending",
+        "credit": {
+            "monthlyTransactionVolume": "MVAU01",
+            "topTransactionCountries": [
+                "AU"
+            ]
+        },
+        "debit": {
+            "monthlyTransactionVolume": "MVAU01",
+            "topTransactionCountries": [
+                "AU"
+            ]
+        }
+    },
+    "bankAccountDetails": {
+        "accountName": "Daniel Wilson",
+        "accountNumber": "xxxxxxxxx",
+        "bankAccountType": "current",
+        "bankName": "ANZ Bank",
+        "bankCountry": "AU",
+        "currency": "AUD",
+        "bankCode": null,
+        "identificationType": null,
+        "identificationValue": null,
+        "localRegisteredName": null,
+        "payoutMethod": "LOCAL",
+        "routingCodes": [
+            {
+                "type": "BSB CODE",
+                "value": "xxxxxx"
+            }
+        ]
+    },
+    "billingAddress": {
+        "addressLine1": "101 Collins Street",
+        "addressLine2": "Suite 4",
+        "city": "Melbourne",
+        "postcode": "3000",
+        "country": "AU",
+        "state": "AU-VIC",
+        "streetType": "Street"
+    },
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null
+}

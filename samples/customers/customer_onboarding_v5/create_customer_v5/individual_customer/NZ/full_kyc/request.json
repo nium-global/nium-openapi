@@ -1,0 +1,57 @@
+{
+  "type": "individual",
+  "kycType": "full",
+  "region": "NZ",
+  "externalId": "IND-NZ-FULL-BANK-001",
+  "firstName": "Aroha",
+  "lastName": "Walker",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "NZ",
+  "email": "aroha.nz.ind.full.001@aucklandtech.co.nz",
+  "mobile": "211234571",
+  "mobileCountryCode": "64",
+  "incomeSourceType": "CONTRACTOR",
+  "annualIncome": "90000NZD",
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "deviceDetails": {
+    "ipCountryCode": "NZ",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-nz-ind-full-001"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU106"],
+    "intendedUsesDescription": "Day-to-day personal spending",
+    "credit": {
+      "monthlyTransactionVolume": "MVNZ01",
+      "topTransactionCountries": ["NZ"]
+    },
+    "debit": {
+      "monthlyTransactionVolume": "MVNZ01",
+      "topTransactionCountries": ["NZ"]
+    }
+  },
+  "billingAddress": {
+    "addressLine1": "15 Queen Street",
+    "addressLine2": "Level 4",
+    "city": "Auckland",
+    "streetType": "Street",
+    "state": "NZ-AUK",
+    "country": "NZ",
+    "postcode": "1010"
+  },
+  "bankAccountDetails": {
+    "accountName": "Aroha Walker",
+    "accountNumber": "123456789012347",
+    "bankAccountType": "Checking",
+    "bankName": "ANZ Bank New Zealand",
+    "bankCountry": "NZ",
+    "currency": "NZD",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [{ "type": "SWIFT", "value": "ANZBNZ22" }]
+  }
+}

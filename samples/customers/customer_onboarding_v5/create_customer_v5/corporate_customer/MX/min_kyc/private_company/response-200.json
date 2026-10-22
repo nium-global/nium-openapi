@@ -1,0 +1,59 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "0a06ac0d-1e2c-424f-abd7-494bf5a83f3f",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "4b85523f-b48b-498f-b570-05645ffe2107",
+    "referenceId": "7b47db7f-6687-47df-a23f-a1437245bdcf",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "corporate",
+    "kycType": "minimum",
+    "region": "MX",
+    "tags": null,
+    "externalId": "CORP-MX-MIN-BANK-2",
+    "searchId": null,
+    "businessName": "CDMX Ledger SAde CV",
+    "businessRegistrationNumber": "CDL260928AB2",
+    "registeredDate": "2018-05-10",
+    "registeredCountry": "MX",
+    "website": "https://www.cdmxledger.mx",
+    "sizeOfBusiness": {
+        "annualTurnover": "MX01"
+    },
+    "sourceOfFunds": null,
+    "businessType": "private_company",
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS134"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVMX01",
+            "monthlyTransactions": "ATC02",
+            "averageTransactionValue": "ATVMX02"
+        },
+        "intendedUses": [
+            "IU001"
+        ],
+        "intendedUsesDescription": null
+    },
+    "addresses": {
+        "businessAddress": null,
+        "registeredAddress": {
+            "addressLine1": "Paseo de la Reforma 250",
+            "addressLine2": null,
+            "city": "Mexico City",
+            "postcode": "06600",
+            "country": "MX",
+            "state": "MX-CMX"
+        }
+    }
+}

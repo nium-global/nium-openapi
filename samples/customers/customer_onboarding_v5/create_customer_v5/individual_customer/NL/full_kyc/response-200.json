@@ -1,0 +1,96 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "6b04dd5b-9895-45fc-b0fe-d708e9682424",
+            "walletType": "base"
+        }
+    ],
+    "customerHashId": "d1093ce8-0e70-4341-8a64-3cb29650f6ff",
+    "referenceId": "694a7e3b-def4-444d-87d1-c03d2a25d085",
+    "userHashId": "57dc1607-a135-43af-a658-4590d9fe9d76",
+    "status": "pending",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "full",
+    "region": "NL",
+    "externalId": "189c33e9-c113-5820-bd81-3be92c695e85",
+    "tags": [
+        {
+            "key": "key_XYZ",
+            "value": "value for key_XYZ"
+        }
+    ],
+    "segment": null,
+    "oddResponse": null,
+    "firstName": "Naveen",
+    "middleName": "Kumar",
+    "lastName": "Reddy",
+    "email": "user17482694167810@nium.com",
+    "nationality": "NL",
+    "dateOfBirth": "1980-04-17",
+    "mobile": "877530531",
+    "mobileCountryCode": "31",
+    "kycStatus": "kyc_required",
+    "applicantDeclaration": true,
+    "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+    "deviceDetails": {
+        "ipCountryCode": "nl",
+        "deviceInfo": "MAC",
+        "ipAddress": "192.168.1.1",
+        "sessionId": "40531ac01a6f11edafc28dba55d51275"
+    },
+    "expectedAccountUsage": {
+        "intendedUses": [
+            "IU103",
+            "IU104"
+        ],
+        "intendedUsesDescription": "Intended uses description",
+        "credit": {
+            "averageTransactionValue": null,
+            "monthlyTransactionVolume": "MVEU02",
+            "topTransactionCountries": [
+                "NL"
+            ]
+        },
+        "debit": {
+            "averageTransactionValue": null,
+            "monthlyTransactionVolume": "MVEU02",
+            "topTransactionCountries": [
+                "IN",
+                "FR"
+            ]
+        }
+    },
+    "bankAccountDetails": {
+        "accountName": "Naveen Kumar Reddy",
+        "accountNumber": "xxxxxxxxxxxxxxxxxx",
+        "bankAccountType": "current",
+        "bankName": "ABN AMRO",
+        "bankCountry": "NL",
+        "currency": "EUR",
+        "bankCode": null,
+        "identificationType": null,
+        "identificationValue": null,
+        "localRegisteredName": null,
+        "payoutMethod": "LOCAL",
+        "routingCodes": [
+            {
+                "type": "SWIFT",
+                "value": "xxxxxxxx"
+            }
+        ]
+    },
+    "billingAddress": {
+        "addressLine1": "Billing Address Line 1",
+        "addressLine2": "Billing Address Line 2",
+        "city": "Amsterdam",
+        "postcode": "1012AB",
+        "country": "NL",
+        "state": "NL-NH"
+    },
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null
+}

@@ -1,0 +1,40 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "MX",
+  "externalId": "IND-MX-MIN-SB-0206",
+  "firstName": "Carlos",
+  "lastName": "Hernandez",
+  "dateOfBirth": "1987-08-12",
+  "nationality": "MX",
+  "email": "carlos.mx.min.1sb001@cdmxtech.mx",
+  "mobile": "5512340679",
+  "mobileCountryCode": "52",
+  "annualIncome": "MX03",
+  "incomeSourceType": "STUDENT",
+  "billingAddress": {
+    "addressLine1": "Paseo de la Reforma 505",
+    "addressLine2": "Piso 8",
+    "city": "Mexico City",
+    "state": "MX-CMX",
+    "postcode": "06600",
+    "country": "MX"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS136"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "credit": {
+      "averageTransactionValue": "ATVMX01",
+      "monthlyTransactionVolume": "MVMX01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "documents": [{
+    "type": "passport",
+    "identificationNumber": "G12345678",
+    "issuanceCountry": "MX",
+    "expiryDate": "2032-12-31"
+  }]
+}

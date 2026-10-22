@@ -1,0 +1,64 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "1b6cd6c3-2327-403f-8b98-77edc3cdc7af",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "40d674b7-8155-4240-8494-9351930101cf",
+    "referenceId": "890fd4c1-e333-4874-8fab-7cfb90a40034",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "minimum",
+    "region": "MX",
+    "tags": [],
+    "externalId": "IND-MX-MIN-SB-0206",
+    "firstName": "Carlos",
+    "middleName": null,
+    "lastName": "Hernandez",
+    "email": "carlos.mx.min.1sb001@cdmxtech.mx",
+    "nationality": "MX",
+    "dateOfBirth": "1987-08-12",
+    "mobile": "5512340679",
+    "mobileCountryCode": "52",
+    "incomeSourceType": "STUDENT",
+    "annualIncome": "MX03",
+    "website": null,
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS136"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVMX01",
+            "monthlyTransactions": "ATC01",
+            "averageTransactionValue": "ATVMX01"
+        },
+        "intendedUses": [
+            "iu002"
+        ],
+        "intendedUsesDescription": null
+    },
+    "billingAddress": {
+        "addressLine1": "Paseo de la Reforma 505",
+        "addressLine2": "Piso 8",
+        "city": "Mexico City",
+        "postcode": "06600",
+        "country": "MX",
+        "state": "MX-CMX"
+    },
+    "documents": [
+        {
+            "type": "passport",
+            "identificationNumber": "G12345678",
+            "issuanceCountry": "MX",
+            "expiryDate": "2032-12-31"
+        }
+    ]
+}

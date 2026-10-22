@@ -1,0 +1,126 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "NL",
+  "externalId": "CORP-NL-FULL-002",
+  "businessName": "Rotterdam Ledger BV",
+  "businessRegistrationNumber": "NL223344556",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "NL",
+  "businessType": "private_company",
+  "tradeName": "RdamLedger",
+  "website": "https://www.rotterdamledger.nl",
+  "isMultiLayeredCompany": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": true,
+    "registeredAddress": {
+      "addressLine1": "Keizersgracht 50",
+      "addressLine2": "Level 1",
+      "city": "Amsterdam",
+      "state": "NL-NH",
+      "postcode": "1016CS",
+      "country": "NL"
+    }
+  },
+  "natureOfBusiness": {
+    "operatingCountries": ["NL"],
+    "industryCodes": ["IS244"],
+    "industryDescription": "Software consulting and technology services"
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "intendedUsesDescription": "Business payments and international transfers",
+    "credit": {
+      "averageTransactionValue": "ATVEU01",
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": ["NL"]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVEU01",
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": ["NL"]
+    }
+  },
+  "sizeOfBusiness": {
+    "totalEmployees": "em009",
+    "annualTurnover": "eu009"
+  },
+  "deviceDetails": {
+    "ipCountryCode": "NL",
+    "deviceInfo": "MAC",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-nl-corp-full-002"
+  },
+  "bankAccountDetails": {
+    "accountName": "Rotterdam Ledger BV",
+    "accountNumber": "NL91ABNA0417164300",
+    "bankAccountType": "current",
+    "bankName": "ABN AMRO",
+    "bankCountry": "NL",
+    "currency": "EUR",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "ABNANL2A" }
+    ]
+  },
+  "applicant": {
+    "firstName": "Pieter",
+    "lastName": "van der Berg",
+    "dateOfBirth": "1979-11-03",
+    "nationality": "NL",
+    "email": "pieter.nl.full.002@rotterdamledger.nl",
+    "mobile": "612345680",
+    "mobileCountryCode": "31",
+    "sharePercentage": "20.00",
+    "address": {
+      "addressLine1": "Prinsengracht 20",
+      "city": "Amsterdam",
+      "state": "NL-NH",
+      "postcode": "1015DV",
+      "country": "NL"
+    },
+    "positions": [
+      { "title": "director" }
+    ],
+    "documents": [
+      {
+        "type": "passport",
+        "fileIds": ["6ff094d7-1fa8-4645-833f-33093a3458c6"]
+      }
+    ]
+  },
+  "stakeholders": {
+    "individual": [
+      {
+        "externalId": "UBO-NL-FULL-002",
+        "firstName": "Anna",
+        "lastName": "de Vries",
+        "dateOfBirth": "1984-08-14",
+        "nationality": "NL",
+        "email": "anna.nl.full.002@rotterdamledger.nl",
+        "mobile": "687654322",
+        "mobileCountryCode": "31",
+        "sharePercentage": 80,
+        "address": {
+          "addressLine1": "Herengracht 501",
+          "city": "Amsterdam",
+          "state": "NL-NH",
+          "postcode": "1017BV",
+          "country": "NL"
+        },
+        "positions": [
+          { "title": "UBO" }
+        ]
+      }
+    ]
+  },
+  "documents": [
+    {
+      "type": "business_registration_doc",
+      "fileIds": ["afe29573-4ff3-4d0e-a103-ba09fdb55539"]
+    }
+  ]
+}
