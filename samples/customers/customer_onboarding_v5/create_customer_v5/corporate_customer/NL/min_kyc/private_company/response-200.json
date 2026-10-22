@@ -1,0 +1,62 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "ab3e3f3e-de4a-4dea-8d59-eee4f69e59d1",
+            "walletType": "virtual"
+        }
+    ],
+    "customerHashId": "b99b3b14-54fd-4810-9ecb-2b6241cb01d9",
+    "referenceId": "0a1396d1-189e-4fb4-9ae3-45ab6b8ef746",
+    "userHashId": null,
+    "status": "clear",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "corporate",
+    "kycType": "minimum",
+    "region": "NL",
+    "externalId": "CORP-NL-MIN-BANK-001",
+    "tags": null,
+    "segment": null,
+    "oddResponse": null,
+    "searchId": null,
+    "businessName": "Amsterdam Tech B",
+    "businessRegistrationNumber": "NL887766554",
+    "registeredDate": "2020-07-20",
+    "registeredCountry": "NL",
+    "website": "https://www.amsterdamtech.nl",
+    "sizeOfBusiness": {
+        "annualTurnover": "eu009"
+    },
+    "sourceOfFunds": null,
+    "taxDetails": null,
+    "businessType": "private_company",
+    "natureOfBusiness": {
+        "industryCodes": [
+            "IS244"
+        ],
+        "industryDescription": null
+    },
+    "expectedAccountUsage": {
+        "credit": {
+            "monthlyTransactionVolume": "MVEU01",
+            "monthlyTransactions": "ATC01",
+            "averageTransactionValue": "ATVEU01"
+        },
+        "intendedUses": [
+            "iu002"
+        ],
+        "intendedUsesDescription": null
+    },
+    "addresses": {
+        "businessAddress": null,
+        "registeredAddress": {
+            "addressLine1": "Zuidas 1",
+            "addressLine2": "Verdieping 20",
+            "city": "Amsterdam",
+            "postcode": "1077XX",
+            "country": "NL",
+            "state": "NL-NH"
+        }
+    }
+}

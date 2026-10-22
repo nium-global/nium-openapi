@@ -1,0 +1,55 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "NL",
+  "externalId": "IND-NL-MIN-BANK-1001",
+  "firstName": "Pieter",
+  "lastName": "van der Berg",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "NL",
+  "email": "pieter.ind.min.bank.1001@wwemaxi.nl",
+  "mobile": "6123456021",
+  "mobileCountryCode": "31",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "EU002",
+  "billingAddress": {
+    "addressLine1": "Zuidas 1",
+    "city": "Amsterdam",
+    "state": "NL-NH",
+    "postcode": "1077XX",
+    "country": "NL"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": [
+      "IU100"
+    ],
+    "credit": {
+      "averageTransactionValue": "ATVEU01",
+      "monthlyTransactionVolume": "MVEU01",
+      "monthlyTransactions": "ATC01"
+    }
+  },
+  "documents": [
+    {
+      "type": "passport",
+      "identificationNumber": "NL88776655",
+      "issuanceCountry": "NL",
+      "expiryDate": "2030-09-23"
+    }
+  ],
+  "bankAccountDetails": {
+    "accountName": "Pieter van der Berg",
+    "accountNumber": "NL91ABNA0417164300",
+    "bankAccountType": "current",
+    "bankName": "ABN AMRO",
+    "bankCountry": "NL",
+    "currency": "EUR",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [
+      { "type": "SWIFT", "value": "ABNANL2A" }
+    ]
+  }
+}

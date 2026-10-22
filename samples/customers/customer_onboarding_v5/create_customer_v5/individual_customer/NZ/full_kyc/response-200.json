@@ -1,0 +1,88 @@
+{
+    "wallets": [
+        {
+            "walletHashId": "eebe12e5-ff96-4315-bb2a-95a3fbcac629",
+            "walletType": "base"
+        }
+    ],
+    "customerHashId": "40894fbd-0ae2-49ec-9c1c-bfb0b68ec591",
+    "referenceId": "652407cb-7aff-44c3-91bd-c720a8fe421c",
+    "userHashId": "8e1bf106-ebe6-403d-9cf3-336a30b2b942",
+    "status": "pending",
+    "subStatus": null,
+    "oddStatus": null,
+    "oddDueDate": null,
+    "type": "individual",
+    "kycType": "full",
+    "region": "NZ",
+    "externalId": "IND-NZ-FULL-BANK-001",
+    "tags": null,
+    "segment": null,
+    "oddResponse": null,
+    "firstName": "Aroha",
+    "middleName": null,
+    "lastName": "Walker",
+    "email": "aroha.nz.ind.full.001@aucklandtech.co.nz",
+    "nationality": "NZ",
+    "dateOfBirth": "1985-05-15",
+    "mobile": "211234571",
+    "mobileCountryCode": "64",
+    "kycStatus": "kyc_required",
+    "applicantDeclaration": true,
+    "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+    "deviceDetails": {
+        "ipCountryCode": "NZ",
+        "deviceInfo": "macOS",
+        "ipAddress": "192.168.1.1",
+        "sessionId": "sess-nz-ind-full-001"
+    },
+    "expectedAccountUsage": {
+        "intendedUses": [
+            "IU106"
+        ],
+        "intendedUsesDescription": "Day-to-day personal spending",
+        "credit": {
+            "monthlyTransactionVolume": "MVNZ01",
+            "topTransactionCountries": [
+                "NZ"
+            ]
+        },
+        "debit": {
+            "monthlyTransactionVolume": "MVNZ01",
+            "topTransactionCountries": [
+                "NZ"
+            ]
+        }
+    },
+    "bankAccountDetails": {
+        "accountName": "Aroha Walker",
+        "accountNumber": "xxxxxxxxxxxxxxx",
+        "bankAccountType": "checking",
+        "bankName": "ANZ Bank New Zealand",
+        "bankCountry": "NZ",
+        "currency": "NZD",
+        "bankCode": null,
+        "identificationType": null,
+        "identificationValue": null,
+        "localRegisteredName": null,
+        "payoutMethod": "LOCAL",
+        "routingCodes": [
+            {
+                "type": "SWIFT",
+                "value": "xxxxxxxx"
+            }
+        ]
+    },
+    "billingAddress": {
+        "addressLine1": "15 Queen Street",
+        "addressLine2": "Level 4",
+        "city": "Auckland",
+        "postcode": "1010",
+        "country": "NZ",
+        "state": "NZ-AUK",
+        "streetType": "Street"
+    },
+    "kycMode": null,
+    "documents": null,
+    "biometricUrl": null
+}

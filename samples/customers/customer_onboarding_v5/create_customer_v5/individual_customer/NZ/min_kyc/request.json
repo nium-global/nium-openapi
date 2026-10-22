@@ -1,0 +1,52 @@
+{
+  "type": "individual",
+  "kycType": "minimum",
+  "region": "NZ",
+  "externalId": "IND-NZ-MIN-BANK-001",
+  "firstName": "Aroha",
+  "lastName": "Walker",
+  "dateOfBirth": "1985-05-15",
+  "nationality": "NZ",
+  "email": "aroha.nz.ind.min.001@aucklandtech.co.nz",
+  "mobile": "211234570",
+  "mobileCountryCode": "64",
+  "incomeSourceType": "STUDENT",
+  "annualIncome": "NZ008",
+  "website": "https://www.arohawalker-nz.com",
+  "billingAddress": {
+    "addressLine1": "15 Queen Street",
+    "addressLine2": "Level 4",
+    "city": "Auckland",
+    "streetType": "Street",
+    "state": "NZ-AUK",
+    "country": "NZ",
+    "postcode": "1010"
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS028"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["IU106"],
+    "credit": {
+      "monthlyTransactionVolume": "MVNZ01",
+      "monthlyTransactions": "ATC06",
+      "averageTransactionValue": "ATVNZ03"
+    }
+  },
+  "documents": [{
+    "type": "passport",
+    "identificationNumber": "NZ12345679",
+    "issuanceCountry": "NZ",
+    "expiryDate": "2030-09-23"
+  }],
+  "bankAccountDetails": {
+    "accountName": "Aroha Walker",
+    "accountNumber": "123456789012346",
+    "bankAccountType": "Checking",
+    "bankName": "ANZ Bank New Zealand",
+    "bankCountry": "NZ",
+    "currency": "NZD",
+    "payoutMethod": "LOCAL",
+    "routingCodes": [{ "type": "SWIFT", "value": "ANZBNZ22" }]
+  }
+}

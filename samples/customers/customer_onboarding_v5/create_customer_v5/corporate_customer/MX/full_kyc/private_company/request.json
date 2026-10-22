@@ -1,0 +1,104 @@
+{
+  "type": "corporate",
+  "kycType": "full",
+  "region": "MX",
+  "externalId": "CORP-MX-FULL-CONTACT-001",
+  "businessName": "Reforma Contact Test SA de CV",
+  "businessRegistrationNumber": "1234567",
+  "registeredDate": "2018-05-10",
+  "registeredCountry": "MX",
+  "businessType": "private_company",
+  "tradeName": "ReformaContact",
+  "website": "https://www.reformacontact.mx",
+  "isMultiLayeredCompany": false,
+  "applicantDeclaration": true,
+  "applicantDeclarationTimeStamp": "2026-03-30 10:00:00",
+  "addresses": {
+    "isBusinessAddressSameAsRegisteredAddress": true,
+    "registeredAddress": {
+      "addressLine1": "Paseo de la Reforma 505",
+      "city": "Mexico City",
+      "state": "MX-CMX",
+      "postcode": "06500",
+      "country": "MX"
+    }
+  },
+  "natureOfBusiness": {
+    "industryCodes": ["IS244"],
+    "industryDescription": "Software consulting and technology services",
+    "operatingCountries": ["MX"]
+  },
+  "expectedAccountUsage": {
+    "intendedUses": ["iu002"],
+    "intendedUsesDescription": "Supplier payments and operating expenses",
+    "credit": {
+      "averageTransactionValue": "ATVMX01",
+      "monthlyTransactionVolume": "MVMX01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": ["MX"]
+    },
+    "debit": {
+      "averageTransactionValue": "ATVMX01",
+      "monthlyTransactionVolume": "MVMX01",
+      "monthlyTransactions": "ATC01",
+      "topTransactionCountries": ["MX"]
+    }
+  },
+  "sizeOfBusiness": { "annualTurnover": "MX01", "totalEmployees": "EM001" },
+  "deviceDetails": {
+    "ipCountryCode": "MX",
+    "deviceInfo": "macOS",
+    "ipAddress": "192.168.1.1",
+    "sessionId": "sess-mx-corp-full-contact-001"
+  },
+  "bankAccountDetails": {
+    "accountName": "Carlos Hernandez",
+    "accountNumber": "072680000167019094",
+    "bankAccountType": "current",
+    "bankName": "BBVA Mexico",
+    "bankCountry": "MX",
+    "currency": "MXN"
+  },
+  "documents": [{
+    "type": "business_registration_doc",
+    "fileIds": ["6ff094d7-1fa8-4645-833f-33093a3458c6"]
+  }],
+  "applicant": {
+    "firstName": "Carlos",
+    "lastName": "Hernandez",
+    "dateOfBirth": "1982-03-15",
+    "nationality": "MX",
+    "email": "carlos.mx.contact.001@reformacontact.mx",
+    "mobile": "5512345699",
+    "mobileCountryCode": "52",
+    "address": {
+      "addressLine1": "Av Insurgentes Sur 300",
+      "city": "Mexico City",
+      "state": "MX-CMX",
+      "postcode": "06700",
+      "country": "MX"
+    },
+    "positions": [{ "title": "DIRECTOR" }]
+  },
+  "stakeholders": {
+    "individual": [{
+      "externalId": "UBO-MX-CONTACT-001",
+      "firstName": "Lucia",
+      "lastName": "Martinez",
+      "dateOfBirth": "1980-06-20",
+      "nationality": "MX",
+      "email": "lucia.mx.contact.001@reformacontact.mx",
+      "mobile": "5512345698",
+      "mobileCountryCode": "52",
+      "sharePercentage": "20",
+      "address": {
+        "addressLine1": "Av Insurgentes Sur 300",
+        "city": "Mexico City",
+        "state": "MX-CMX",
+        "postcode": "06700",
+        "country": "MX"
+      },
+      "positions": [{ "title": "UBO" }]
+    }]
+  }
+}
