@@ -1,0 +1,7 @@
+{
+    "region": "MX",
+    "entityType": "individual_customer",
+    "entityReferenceId": "a471ab2d-6cf8-48dd-8f33-e8fad3b30c08",
+    "isResident": true,
+    "kycMode": "biometric_kyc"
+}

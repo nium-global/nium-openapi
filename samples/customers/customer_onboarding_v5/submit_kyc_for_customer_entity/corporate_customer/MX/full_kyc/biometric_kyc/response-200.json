@@ -1,0 +1,9 @@
+{
+    "customerHashId": "4ff4fcb3-a1ba-45cf-a8d3-3738e69c0121",
+    "kycStatus": "initiated",
+    "externalId": "UBO-MX-CONTACT-001",
+    "referenceId": "5b4d099e-9375-493a-bfb7-0adebc12d71b",
+    "entityType": "individual_stakeholder",
+    "kycMode": "biometric_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/jumio/start?referenceNumber=832726da-5ba8-4559-808c-20e0851cc921"
+}

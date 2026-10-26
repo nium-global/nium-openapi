@@ -1,0 +1,19 @@
+{
+    "region": "AU",
+    "entityType": "applicant",
+    "entityReferenceId": "25ef2e09-29ff-4644-b65f-ecff34f6c7fb",
+    "isResident": true,
+    "kycMode": "manual_kyc",
+    "proofOfIdentityDocument": [
+        {
+            "type": "PASSPORT",
+            "identificationNumber": "343241212",
+            "issuanceCountry": "AU",
+            "fileIds": [
+                "697e8549-4791-4e0a-b971-80b5c97734bf",
+                "697e8549-4791-4e0a-b971-80b5c97734bf"
+            ],
+            "expiryDate": "2028-03-06"
+        }
+    ]
+}

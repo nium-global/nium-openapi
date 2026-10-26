@@ -1,0 +1,7 @@
+{
+    "region": "CA",
+    "entityType": "individual_customer",
+    "entityReferenceId": "20d9177d-d2f2-4b4f-9aea-9484dc89b6c1",
+    "isResident": true,
+    "kycMode": "biometric_kyc"
+}

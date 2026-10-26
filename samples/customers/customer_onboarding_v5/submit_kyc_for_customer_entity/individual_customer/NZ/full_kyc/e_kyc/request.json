@@ -1,0 +1,7 @@
+{
+    "region": "NZ",
+    "entityType": "individual_customer",
+    "entityReferenceId": "652407cb-7aff-44c3-91bd-c720a8fe421c",
+    "isResident": true,
+    "kycMode": "e_kyc"
+}

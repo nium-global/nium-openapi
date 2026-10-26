@@ -1,0 +1,7 @@
+{
+    "region": "HK",
+    "entityType": "applicant",
+    "entityReferenceId": "557b28eb-3d0b-4b14-9ccb-6b90065c2cd4",
+    "isResident": true,
+    "kycMode": "biometric_kyc"
+}

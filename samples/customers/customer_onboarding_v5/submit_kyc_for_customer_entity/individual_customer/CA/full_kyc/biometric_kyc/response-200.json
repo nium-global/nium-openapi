@@ -1,0 +1,9 @@
+{
+    "customerHashId": "4f9d7cd6-6ab5-424e-a3b7-26a7986c0568",
+    "kycStatus": "initiated",
+    "externalId": "50bede75-973d-5543-b47c-d147d362bd15",
+    "referenceId": "20d9177d-d2f2-4b4f-9aea-9484dc89b6c1",
+    "entityType": "individual_customer",
+    "kycMode": "biometric_kyc",
+    "biometricUrl": "https://idv.sandbox.nium.com/sandbox/compliance/callback/load?referenceNumber=40a8d420-1dca-47de-b0a2-4a514a17c182"
+}
